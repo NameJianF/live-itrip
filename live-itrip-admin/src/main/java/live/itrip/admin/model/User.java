@@ -1,7 +1,6 @@
 package live.itrip.admin.model;
 
-public class BaseUsers  extends BaseModel{
-    private Integer id;
+public class User extends BaseModel{
 
     private String userName;
 
@@ -24,16 +23,6 @@ public class BaseUsers  extends BaseModel{
     private String level;
 
     private String status;
-
-    private Long createTime;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getUserName() {
         return userName;
@@ -123,11 +112,4 @@ public class BaseUsers  extends BaseModel{
         this.status = status == null ? null : status.trim();
     }
 
-    public Long getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Long createTime) {
-        this.createTime = createTime;
-    }
 }

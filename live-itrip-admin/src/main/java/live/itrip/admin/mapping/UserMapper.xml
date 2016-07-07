@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="live.itrip.admin.dao.BaseUsersMapper">
+<mapper namespace="live.itrip.admin.dao.UserMapper">
 
     <!--redis 缓存-->
     <cache eviction="LRU" type="live.itrip.admin.cache.MybatisRedisCache"/>
 
-    <resultMap id="BaseResultMap" type="live.itrip.admin.model.BaseUsers">
+    <resultMap id="BaseResultMap" type="live.itrip.admin.model.User">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
         <result column="email" property="email" jdbcType="VARCHAR"/>
@@ -38,7 +38,7 @@
 		sys_base.base_users
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
-    <insert id="insert" parameterType="live.itrip.admin.model.BaseUsers">
+    <insert id="insert" parameterType="live.itrip.admin.model.User">
 		insert into
 		sys_base.base_users (id, user_name, email,
 		mobile, password, salt,
@@ -56,7 +56,7 @@
 		#{createTime,jdbcType=BIGINT}
 		)
 	</insert>
-    <insert id="insertSelective" parameterType="live.itrip.admin.model.BaseUsers">
+    <insert id="insertSelective" parameterType="live.itrip.admin.model.User">
         insert into sys_base.base_users
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -141,7 +141,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.admin.model.BaseUsers">
+    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.admin.model.User">
         update sys_base.base_users
         <set>
             <if test="userName != null">
@@ -183,7 +183,7 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.BaseUsers">
+    <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.User">
 		update
 		sys_base.base_users
 		set user_name = #{userName,jdbcType=VARCHAR},

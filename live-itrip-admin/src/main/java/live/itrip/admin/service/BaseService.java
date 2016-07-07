@@ -1,33 +1,29 @@
-package live.itrip.admin.controller.base;
+package live.itrip.admin.service;
 
 import com.alibaba.fastjson.JSON;
 import live.itrip.admin.interfaces.IWriteResponse;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.concurrent.atomic.AtomicReference;
-
 import live.itrip.common.Encoding;
 import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
 
-/**
- * Created by Feng on 2016/7/5.
- * <p/>
- * Controller 基类
- */
-public abstract class AbstractController implements IWriteResponse {
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
+/**
+ * Created by 建锋 on 2016/7/7.
+ */
+public class BaseService implements IWriteResponse {
     @Override
     public void writeResponse(HttpServletResponse response, Object obj) {
         try {
-            AtomicReference<String> json = new AtomicReference<String>(JSON.toJSONString(obj));
+            String json = JSON.toJSONString(obj);
+            Logger.debug("Write Response Json:" + json);
             response.setCharacterEncoding(Encoding.UTF8);
             PrintWriter out;
             out = response.getWriter();
-            out.print(json.get());
+            out.print(json);
             out.flush();
             out.close();
         } catch (IOException e) {
@@ -35,12 +31,6 @@ public abstract class AbstractController implements IWriteResponse {
         }
     }
 
-    /**
-     * 参数无效
-     *
-     * @param response
-     * @param paramName
-     */
     @Override
     public void paramInvalid(HttpServletResponse response, String paramName) {
         BaseResult result = new BaseResult();
