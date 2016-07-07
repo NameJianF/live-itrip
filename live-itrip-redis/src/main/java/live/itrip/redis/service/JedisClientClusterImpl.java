@@ -67,6 +67,11 @@ public class JedisClientClusterImpl implements JedisClient {
     }
 
     @Override
+    public long expire(byte[] key, int second) {
+        return jedisCluster.expire(key, second);
+    }
+
+    @Override
     public long ttl(String key) {
         return jedisCluster.ttl(key);
     }

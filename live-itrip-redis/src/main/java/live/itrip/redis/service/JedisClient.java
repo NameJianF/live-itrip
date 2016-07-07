@@ -77,6 +77,16 @@ public interface JedisClient {
     long expire(String key, int second);
 
     /**
+     * 设置有效期
+     *
+     * @param key
+     * @param second
+     * @return
+     */
+    long expire(byte[] key, int second);
+
+
+    /**
      * 获取有效期
      *
      * @param key

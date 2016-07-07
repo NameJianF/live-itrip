@@ -16,11 +16,11 @@ public class Logger {
         logger.debug(message, throwable);
     }
 
-    public static void info(Objects message) {
+    public static void info(Object message) {
         logger.info(message);
     }
 
-    public static void info(Objects message, Throwable throwable) {
+    public static void info(Object message, Throwable throwable) {
         logger.info(message, throwable);
     }
 

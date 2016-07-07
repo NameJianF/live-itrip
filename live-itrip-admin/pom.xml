@@ -11,7 +11,16 @@
     <name>live-itrip-admin</name>
     <url>http://maven.apache.org</url>
     <dependencies>
-
+        <dependency>
+            <groupId>live-itrip</groupId>
+            <artifactId>live-itrip-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>live-itrip</groupId>
+            <artifactId>live-itrip-redis</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>live-itrip-admin</finalName>
