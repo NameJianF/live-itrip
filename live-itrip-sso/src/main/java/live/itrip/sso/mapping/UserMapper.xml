@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="live.itrip.api.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="live.itrip.api.model.Users">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="CHAR"/>
+        <result column="salt" property="salt" jdbcType="VARCHAR"/>
+        <result column="uid_qq" property="uidQq" jdbcType="VARCHAR"/>
+        <result column="uid_weibo" property="uidWeibo" jdbcType="VARCHAR"/>
+        <result column="uid_weixin" property="uidWeixin" jdbcType="VARCHAR"/>
+        <result column="uid_ali" property="uidAli" jdbcType="VARCHAR"/>
+        <result column="source" property="source" jdbcType="VARCHAR"/>
+        <result column="subsource" property="subsource" jdbcType="VARCHAR"/>
+        <result column="level" property="level" jdbcType="CHAR"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
+        <result column="identity" property="identity" jdbcType="CHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_name, email, mobile, password, salt, uid_qq, uid_weibo, uid_weixin, uid_ali,
+        source, subsource, level, status, identity, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from user
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="live.itrip.api.model.Users" useGeneratedKeys="true" keyProperty="id">
+        insert into user (id, user_name, email,
+        mobile, password, salt,
+        uid_qq, uid_weibo, uid_weixin,
+        uid_ali, source, subsource,
+        level, status, identity, create_time,
+        update_time)
+        values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+        #{mobile,jdbcType=VARCHAR}, #{password,jdbcType=CHAR}, #{salt,jdbcType=VARCHAR},
+        #{uidQq,jdbcType=VARCHAR}, #{uidWeibo,jdbcType=VARCHAR}, #{uidWeixin,jdbcType=VARCHAR},
+        #{uidAli,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, #{subsource,jdbcType=VARCHAR},
+        #{level,jdbcType=CHAR}, #{status,jdbcType=CHAR}, #{identity,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT},
+        #{updateTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="live.itrip.api.model.Users" useGeneratedKeys="true" keyProperty="id">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="salt != null">
+                salt,
+            </if>
+            <if test="uidQq != null">
+                uid_qq,
+            </if>
+            <if test="uidWeibo != null">
+                uid_weibo,
+            </if>
+            <if test="uidWeixin != null">
+                uid_weixin,
+            </if>
+            <if test="uidAli != null">
+                uid_ali,
+            </if>
+            <if test="source != null">
+                source,
+            </if>
+            <if test="subsource != null">
+                subsource,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="identity != null">
+                identity,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=CHAR},
+            </if>
+            <if test="salt != null">
+                #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="uidQq != null">
+                #{uidQq,jdbcType=VARCHAR},
+            </if>
+            <if test="uidWeibo != null">
+                #{uidWeibo,jdbcType=VARCHAR},
+            </if>
+            <if test="uidWeixin != null">
+                #{uidWeixin,jdbcType=VARCHAR},
+            </if>
+            <if test="uidAli != null">
+                #{uidAli,jdbcType=VARCHAR},
+            </if>
+            <if test="source != null">
+                #{source,jdbcType=VARCHAR},
+            </if>
+            <if test="subsource != null">
+                #{subsource,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=CHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="identity != null">
+                #{identity,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.api.model.Users">
+        update user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=CHAR},
+            </if>
+            <if test="salt != null">
+                salt = #{salt,jdbcType=VARCHAR},
+            </if>
+            <if test="uidQq != null">
+                uid_qq = #{uidQq,jdbcType=VARCHAR},
+            </if>
+            <if test="uidWeibo != null">
+                uid_weibo = #{uidWeibo,jdbcType=VARCHAR},
+            </if>
+            <if test="uidWeixin != null">
+                uid_weixin = #{uidWeixin,jdbcType=VARCHAR},
+            </if>
+            <if test="uidAli != null">
+                uid_ali = #{uidAli,jdbcType=VARCHAR},
+            </if>
+            <if test="source != null">
+                source = #{source,jdbcType=VARCHAR},
+            </if>
+            <if test="subsource != null">
+                subsource = #{subsource,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=CHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=CHAR},
+            </if>
+            <if test="identity != null">
+                identity = #{identity,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="live.itrip.api.model.Users">
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      password = #{password,jdbcType=CHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      uid_qq = #{uidQq,jdbcType=VARCHAR},
+      uid_weibo = #{uidWeibo,jdbcType=VARCHAR},
+      uid_weixin = #{uidWeixin,jdbcType=VARCHAR},
+      uid_ali = #{uidAli,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      subsource = #{subsource,jdbcType=VARCHAR},
+      level = #{level,jdbcType=CHAR},
+      status = #{status,jdbcType=CHAR},
+      identity = #{identity,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+    <!-- add functions -->
+    <!-- select by username or mobile or email -->
+    <select id="selectByUserName" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        where user_name = '${userName}'
+        or email = '${userName}'
+        or mobile = '${userName}' ;
+    </select>
+
+    <update id="updatePasswordById" parameterType="map">
+        UPDATE user
+        SET password = ${pwd}
+        WHERE id = ${uid}
+    </update>
+</mapper>
