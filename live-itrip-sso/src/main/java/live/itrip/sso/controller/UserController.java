@@ -7,7 +7,7 @@ import live.itrip.common.request.RequestHeader;
 import live.itrip.common.response.BaseResult;
 import live.itrip.common.util.JsonStringUtils;
 import live.itrip.sso.common.UserOprations;
-import live.itrip.sso.service.interfaces.IUsersService;
+import live.itrip.sso.service.interfaces.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UserController extends BaseController {
 
     @Autowired
-    private IUsersService iUserService;
+    private IUserService iUserService;
 
     /**
      * 测试接口是否连通

@@ -66,7 +66,7 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="live.itrip.api.dao"/>
+        <property name="basePackage" value="live.itrip.sso.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
@@ -120,7 +120,7 @@ http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
           scope="prototype">
         <property name="patterns">
             <list>
-                <value>live.itrip.api.service.*</value>
+                <value>live.itrip.sso.service.*</value>
             </list>
         </property>
     </bean>

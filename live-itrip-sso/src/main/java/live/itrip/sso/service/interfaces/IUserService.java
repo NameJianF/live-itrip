@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by Feng on 2016/2/14.
  */
-public interface IUsersService {
+public interface IUserService {
     void test();
 
     void register(String decodeJson, HttpServletResponse response,

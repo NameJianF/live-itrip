@@ -14,7 +14,7 @@ import live.itrip.sso.common.exception.ApiException;
 import live.itrip.sso.dao.UserMapper;
 import live.itrip.sso.model.User;
 import live.itrip.sso.service.BaseService;
-import live.itrip.sso.service.interfaces.IUsersService;
+import live.itrip.sso.service.interfaces.IUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,13 +26,13 @@ import javax.servlet.http.HttpServletResponse;
  * Created by JianF on 2015/12/22.
  */
 @Service
-public class UserService extends BaseService implements IUsersService {
+public class UserService extends BaseService implements IUserService {
     @Autowired
-    private UserMapper usersMapper;
+    private UserMapper userMapper;
 
     @Override
     public void test() {
-        User user = usersMapper.selectByUserName("admin");
+        User user = userMapper.selectByUserName("admin");
         System.err.println(user.toString());
     }
 
@@ -59,7 +59,7 @@ public class UserService extends BaseService implements IUsersService {
                 user.setSalt(salt);
                 user.setCreateTime(System.currentTimeMillis());
 
-                int userid = usersMapper.insertSelective(userRegisterRequest.getData());
+                int userid = userMapper.insertSelective(userRegisterRequest.getData());
                 if (userid > 0) {
                     userRegisterResponse.setCode(ErrorCode.SUCCESS.getCode());
 
@@ -106,7 +106,7 @@ public class UserService extends BaseService implements IUsersService {
                 return;
             }
 
-            User user = this.usersMapper.selectByPrimaryKey(userUpdatePwdRequest.getUid());
+            User user = this.userMapper.selectByPrimaryKey(userUpdatePwdRequest.getUid());
             if (user == null) {
                 userUpdatePwdResponse.setCode(ErrorCode.USER_AUTH_INVALID.getCode());
                 userUpdatePwdResponse.setMsg(String.format("参数uid(%s)无效,无此用户。", userUpdatePwdRequest.getUid()));
@@ -117,7 +117,7 @@ public class UserService extends BaseService implements IUsersService {
             if (Md5Utils.getStringMD5(user.getSalt() + userUpdatePwdRequest.getOriginPwd()).equals(user.getPassword())) {
                 // 原密码正确
                 String pwd = Md5Utils.getStringMD5(user.getSalt() + userUpdatePwdRequest.getPassword());
-                int ret = this.usersMapper.updatePasswordById(user.getId(), pwd);
+                int ret = this.userMapper.updatePasswordById(user.getId(), pwd);
                 if (ret > 0) {
                     // success
                     userUpdatePwdResponse.setCode(ErrorCode.SUCCESS.getCode());
@@ -167,7 +167,7 @@ public class UserService extends BaseService implements IUsersService {
             user.setPassword(null); // 不修改密码
             user.setSalt(null);
 
-            int ret = this.usersMapper.updateByPrimaryKeySelective(user);
+            int ret = this.userMapper.updateByPrimaryKeySelective(user);
             if (ret > 0) {
                 // success
                 userUpdateResponse.setCode(ErrorCode.SUCCESS.getCode());
@@ -198,11 +198,11 @@ public class UserService extends BaseService implements IUsersService {
 
             // 发送邮件
             if (!StringUtils.isEmpty(retrievePwdRequest.getEmail())) {
-                User user = this.usersMapper.selectByUserName(retrievePwdRequest.getEmail());
+                User user = this.userMapper.selectByUserName(retrievePwdRequest.getEmail());
                 String initpwd = UuidUtils.getUuidLowerCase(false).substring(0, 6);
                 String pwd = Md5Utils.getStringMD5(user.getSalt() + initpwd);
 
-                int ret = this.usersMapper.updatePasswordById(user.getId(), pwd);
+                int ret = this.userMapper.updatePasswordById(user.getId(), pwd);
                 if (ret > 0) {
                     // success
                     retrievePwdResponse.setCode(ErrorCode.SUCCESS.getCode());
@@ -219,11 +219,11 @@ public class UserService extends BaseService implements IUsersService {
 
             // 发送短信
             if (!StringUtils.isEmpty(retrievePwdRequest.getMobile())) {
-                User user = this.usersMapper.selectByUserName(retrievePwdRequest.getEmail());
+                User user = this.userMapper.selectByUserName(retrievePwdRequest.getEmail());
                 String initpwd = UuidUtils.getUuidLowerCase(false).substring(0, 6);
                 String pwd = Md5Utils.getStringMD5(user.getSalt() + initpwd);
 
-                int ret = this.usersMapper.updatePasswordById(user.getId(), pwd);
+                int ret = this.userMapper.updatePasswordById(user.getId(), pwd);
                 if (ret > 0) {
                     // success
                     retrievePwdResponse.setCode(ErrorCode.SUCCESS.getCode());
