@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="live.itrip.api.dao.UserMapper">
-    <resultMap id="BaseResultMap" type="live.itrip.api.model.Users">
+<mapper namespace="live.itrip.sso.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="live.itrip.sso.model.User">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
         <result column="email" property="email" jdbcType="VARCHAR"/>
@@ -34,7 +34,7 @@
         delete from user
         where id = #{id,jdbcType=BIGINT}
     </delete>
-    <insert id="insert" parameterType="live.itrip.api.model.Users" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="live.itrip.sso.model.User" useGeneratedKeys="true" keyProperty="id">
         insert into user (id, user_name, email,
         mobile, password, salt,
         uid_qq, uid_weibo, uid_weixin,
@@ -48,7 +48,7 @@
         #{level,jdbcType=CHAR}, #{status,jdbcType=CHAR}, #{identity,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT},
         #{updateTime,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="live.itrip.api.model.Users" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" parameterType="live.itrip.sso.model.User" useGeneratedKeys="true" keyProperty="id">
         insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -157,7 +157,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.api.model.Users">
+    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.sso.model.User">
         update user
         <set>
             <if test="userName != null">
@@ -211,7 +211,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="live.itrip.api.model.Users">
+    <update id="updateByPrimaryKey" parameterType="live.itrip.sso.model.User">
     update user
     set user_name = #{userName,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},

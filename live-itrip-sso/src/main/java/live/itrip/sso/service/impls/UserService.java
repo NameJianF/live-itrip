@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by JianF on 2015/12/22.
  */
-@Service("apiUserService")
+@Service
 public class UserService extends BaseService implements IUsersService {
     @Autowired
     private UserMapper usersMapper;

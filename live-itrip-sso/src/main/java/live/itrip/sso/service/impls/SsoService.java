@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by Feng on 2016/3/8.
  */
-@Service("ssoService")
+@Service
 public class SsoService extends BaseService implements ISsoService {
     @Autowired
     private UserMapper userMapper;

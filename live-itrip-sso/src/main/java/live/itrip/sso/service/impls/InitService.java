@@ -11,7 +11,7 @@ import java.util.Map;
  * 1. 调用admin接口验证apikey合法性
  * 2. 缓存合法的apikey
  */
-@Service("initService")
+@Service
 public class InitService {
 
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="live.itrip.api.dao.UserTokenMapper">
-    <resultMap id="BaseResultMap" type="live.itrip.api.model.UserToken">
+<mapper namespace="live.itrip.sso.dao.UserTokenMapper">
+    <resultMap id="BaseResultMap" type="live.itrip.sso.model.UserToken">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="auth_token" property="authToken" jdbcType="CHAR"/>
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
@@ -27,7 +27,7 @@
     delete from user_token
     where id = #{id,jdbcType=BIGINT}
   </delete>
-    <insert id="insert" parameterType="live.itrip.api.model.UserToken" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="live.itrip.sso.model.UserToken" useGeneratedKeys="true" keyProperty="id">
     insert into user_token (id, auth_token, user_id, 
       user_email, api_key, source, 
       domain, client_version, expire_time, 
@@ -37,7 +37,7 @@
       #{domain,jdbcType=VARCHAR}, #{clientVersion,jdbcType=VARCHAR}, #{expireTime,jdbcType=BIGINT}, 
       #{createTime,jdbcType=BIGINT})
   </insert>
-    <insert id="insertSelective" parameterType="live.itrip.api.model.UserToken" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" parameterType="live.itrip.sso.model.UserToken" useGeneratedKeys="true" keyProperty="id">
         insert into user_token
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -104,7 +104,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.api.model.UserToken">
+    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.sso.model.UserToken">
         update user_token
         <set>
             <if test="authToken != null">
@@ -137,7 +137,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="live.itrip.api.model.UserToken">
+    <update id="updateByPrimaryKey" parameterType="live.itrip.sso.model.UserToken">
     update user_token
     set auth_token = #{authToken,jdbcType=CHAR},
       user_id = #{userId,jdbcType=BIGINT},

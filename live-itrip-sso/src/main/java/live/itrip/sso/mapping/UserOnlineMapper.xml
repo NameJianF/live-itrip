@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="live.itrip.api.dao.UserOnlineMapper">
-    <resultMap id="BaseResultMap" type="live.itrip.api.model.UserOnline">
+<mapper namespace="live.itrip.sso.dao.UserOnlineMapper">
+    <resultMap id="BaseResultMap" type="live.itrip.sso.model.UserOnline">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
         <result column="user_email" property="userEmail" jdbcType="VARCHAR"/>
@@ -23,7 +23,7 @@
     delete from user_online
     where id = #{id,jdbcType=BIGINT}
   </delete>
-    <insert id="insert" parameterType="live.itrip.api.model.UserOnline" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" parameterType="live.itrip.sso.model.UserOnline" useGeneratedKeys="true" keyProperty="id">
     insert into user_online (id, user_id, user_email, 
       user_name, user_source, user_subsource, 
       create_time)
@@ -31,7 +31,7 @@
       #{userName,jdbcType=VARCHAR}, #{userSource,jdbcType=VARCHAR}, #{userSubsource,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
-    <insert id="insertSelective" parameterType="live.itrip.api.model.UserOnline" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" parameterType="live.itrip.sso.model.UserOnline" useGeneratedKeys="true" keyProperty="id">
         insert into user_online
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -80,7 +80,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.api.model.UserOnline">
+    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.sso.model.UserOnline">
         update user_online
         <set>
             <if test="userId != null">
@@ -104,7 +104,7 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-    <update id="updateByPrimaryKey" parameterType="live.itrip.api.model.UserOnline">
+    <update id="updateByPrimaryKey" parameterType="live.itrip.sso.model.UserOnline">
     update user_online
     set user_id = #{userId,jdbcType=BIGINT},
       user_email = #{userEmail,jdbcType=VARCHAR},

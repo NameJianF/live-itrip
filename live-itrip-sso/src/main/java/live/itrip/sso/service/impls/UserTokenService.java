@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 /**
  * Created by Feng on 2016/3/8.
  */
-@Service("userTokenService")
+@Service
 public class UserTokenService extends BaseService implements IUserTokenService {
 
 
