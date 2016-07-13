@@ -2,6 +2,8 @@ package live.itrip.admin.controller;
 
 import com.alibaba.fastjson.JSON;
 import live.itrip.admin.controller.base.AbstractController;
+import live.itrip.admin.dao.UserMapper;
+import live.itrip.admin.model.User;
 import live.itrip.admin.service.intefaces.IUserService;
 import live.itrip.common.Logger;
 import live.itrip.common.request.RequestHeader;
@@ -18,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Feng on 2016/7/5.
- * <p/>
+ * <p>
  * 用户操作相关
  */
 @Controller
@@ -26,6 +28,9 @@ public class UserController extends AbstractController {
 
     @Autowired
     private IUserService iUserService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * 测试接口是否连通
@@ -38,13 +43,12 @@ public class UserController extends AbstractController {
     @ResponseBody
     void test(HttpServletResponse response, HttpServletRequest request) {
 
-//        JedisClientSingleImpl jedisClientSingle = new JedisClientSingleImpl();
-//        jedisClientSingle.set("feng", "feng-vale");
-//        String value = jedisClientSingle.get("feng");
-//        System.err.println("-------------: " + value);
-//
-//        System.err.println("-------------: " + jedisClientSingle.dbSize());
+        User user = this.userMapper.selectByUserName("admin");
+        System.err.println(JSON.toJSON(user));
 
+//        System.err.println("hello ---------");
+
+        this.writeResponse(response,"hello ---------");
     }
 
 

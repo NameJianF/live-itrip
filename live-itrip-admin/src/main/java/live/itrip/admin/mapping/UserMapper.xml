@@ -3,7 +3,7 @@
 <mapper namespace="live.itrip.admin.dao.UserMapper">
 
     <!--redis 缓存-->
-    <cache eviction="LRU" type="live.itrip.admin.cache.MybatisRedisCache"/>
+    <cache type="live.itrip.admin.cache.RedisCache"/>
 
     <resultMap id="BaseResultMap" type="live.itrip.admin.model.User">
         <id column="id" property="id" jdbcType="INTEGER"/>
@@ -30,17 +30,17 @@
             parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
-        from sys_base.base_users
+        from USER
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
 		delete from
-		sys_base.base_users
+		user
 		where id = #{id,jdbcType=INTEGER}
 	</delete>
     <insert id="insert" parameterType="live.itrip.admin.model.User">
 		insert into
-		sys_base.base_users (id, user_name, email,
+		user (id, user_name, email,
 		mobile, password, salt,
 		uid_qq, uid_weibo, uid_weixin,
 		uid_ali, level, status, create_time
@@ -57,7 +57,7 @@
 		)
 	</insert>
     <insert id="insertSelective" parameterType="live.itrip.admin.model.User">
-        insert into sys_base.base_users
+        insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -142,7 +142,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="live.itrip.admin.model.User">
-        update sys_base.base_users
+        update user
         <set>
             <if test="userName != null">
                 user_name = #{userName,jdbcType=VARCHAR},
@@ -185,7 +185,7 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.User">
 		update
-		sys_base.base_users
+		user
 		set user_name = #{userName,jdbcType=VARCHAR},
 		email
 		= #{email,jdbcType=VARCHAR},
@@ -212,7 +212,7 @@
             parameterType="map">
         select
         <include refid="Base_Column_List"/>
-        from sys_base.base_users
+        from user
         where user_name = '${userName}'
         or email = '${userName}'
         or mobile = '${userName}' ;

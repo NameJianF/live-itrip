@@ -12,6 +12,7 @@ import java.util.Set;
  * redis 操作
  */
 public class JedisClientSingleImpl implements JedisClient {
+
     @Autowired
     private JedisPool jedisPool;
 
