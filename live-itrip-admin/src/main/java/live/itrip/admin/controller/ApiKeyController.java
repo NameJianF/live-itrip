@@ -2,9 +2,7 @@ package live.itrip.admin.controller;
 
 import com.alibaba.fastjson.JSON;
 import live.itrip.admin.controller.base.AbstractController;
-import live.itrip.admin.dao.UserMapper;
-import live.itrip.admin.model.User;
-import live.itrip.admin.service.intefaces.IUserService;
+import live.itrip.admin.service.intefaces.IClientApiKeyService;
 import live.itrip.common.Logger;
 import live.itrip.common.request.RequestHeader;
 import live.itrip.common.util.JsonStringUtils;
@@ -19,57 +17,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by Feng on 2016/7/5.
- * <p>
- * 用户操作相关
+ * Created by Feng on 2016/7/14.
  */
 @Controller
-public class UserController extends AbstractController {
-
+public class ApiKeyController extends AbstractController {
     @Autowired
-    private IUserService iUserService;
-
-    @Autowired
-    private UserMapper userMapper;
+    private IClientApiKeyService iClientApiKeyService;
 
     /**
-     * 测试接口是否连通
-     *
      * @param response
      * @param request
      */
-    @RequestMapping("/test")
+    @RequestMapping("/apikeys")
     public
     @ResponseBody
-    void test(HttpServletResponse response, HttpServletRequest request) {
-
-        User user = this.userMapper.selectByUserName("admin");
-        System.err.println(JSON.toJSON(user));
-
-
-//        User newUser = new User();
-//        newUser.setEmail("349748416@qq.com");
-//        newUser.setPassword("feng");
-//        this.userMapper.insert(newUser);
-
-
-        user = this.userMapper.selectByUserName("349748416@qq.com");
-        System.err.println(JSON.toJSON(user));
-
-        this.writeResponse(response, "hello ---------");
-    }
-
-
-    /**
-     *
-     *
-     * @param response
-     * @param request
-     */
-    @RequestMapping("/user")
-    public
-    @ResponseBody
-    void user(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+    void apikeys(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
         String decodeJson = JsonStringUtils.URLDecoderForJsonString(json);
         Logger.debug(
                 String.format("timestamp:%s action:%s json:%s",
@@ -83,13 +45,14 @@ public class UserController extends AbstractController {
             RequestHeader header = JSON.parseObject(decodeJson, RequestHeader.class);
             if (header != null && StringUtils.isNotEmpty(header.getOp())) {
                 String op = header.getOp();
-                if ("user.login".equalsIgnoreCase(op)) {
+                if ("ApiKey.list".equalsIgnoreCase(op)) {
                     // login
-                    iUserService.login(decodeJson, response, request);
+                    iClientApiKeyService.selectKeyList(decodeJson, response, request);
                 }
             }
         } catch (Exception ex) {
             Logger.error("", ex);
         }
     }
+
 }
