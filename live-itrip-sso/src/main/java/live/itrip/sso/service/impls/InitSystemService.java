@@ -1,7 +1,7 @@
-package live.itrip.admin.service.impls;
+package live.itrip.sso.service.impls;
 
-import live.itrip.admin.common.Config;
 import live.itrip.common.Logger;
+import live.itrip.sso.common.Config;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
@@ -18,12 +18,16 @@ import java.util.jar.JarFile;
 @Service
 public class InitSystemService {
 
+    private static final Long THREAD_SLEEP = 1000L * 60 * 5;
+
     public InitSystemService() {
         initSystem();
     }
 
     private void initSystem() {
         this.loadConfig();
+
+        this.loadListApiKey();
     }
 
     private void loadConfig() {
@@ -54,12 +58,26 @@ public class InitSystemService {
 
             Config.MODULE_APP_APIKEY = prop.getProperty("module.app.apikey");
             Config.MODULE_APP_SECRET = prop.getProperty("module.app.secret");
-            Config.SSO_URL = prop.getProperty("sso.url");
+            Config.ADMIN_URL = prop.getProperty("admin.url");
 
         } catch (Exception e) {
             Logger.error(e.getMessage());
         }
     }
 
+    private void loadListApiKey() {
+        Thread loadAdminListApiKey = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
+
+                try {
+                    Thread.sleep(THREAD_SLEEP);
+                } catch (InterruptedException e) {
+                    Logger.error(e);
+                }
+            }
+        }, "SSOLoadAdminListApiKey");
+        loadAdminListApiKey.start();
+    }
 }

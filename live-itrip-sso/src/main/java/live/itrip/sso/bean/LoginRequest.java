@@ -58,7 +58,7 @@ public class LoginRequest {
         this.sig = sig;
     }
 
-    public static class LoginData implements IJsonObjectData {
+    public static class LoginData {
         public String email;// 用户帐号
         public String password;// 用户密码
         public String source;// 来源包括第三方

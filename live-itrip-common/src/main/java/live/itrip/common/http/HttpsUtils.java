@@ -1,4 +1,4 @@
-package live.itrip.common.util;
+package live.itrip.common.http;
 
 import live.itrip.common.Logger;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +18,9 @@ import java.security.cert.X509Certificate;
  * https 访问网络用到的工具类
  */
 public class HttpsUtils {
+
+    public static final String REQUEST_METHOD_GET = "GET";
+    public static final String REQUEST_METHOD_POST = "POST";
 
     private static HttpsUtils instance;
 
@@ -40,12 +43,11 @@ public class HttpsUtils {
      * @param outputStr     提交的数据
      * @return JSONObject(通过JSONObject.get(key)的方式获取json对象的属性值)
      */
-    public String httpsRequest(String requestUrl,
-                               String requestMethod, String outputStr) {
+    public String httpsRequest(String requestUrl, String requestMethod, String outputStr) {
         StringBuffer buffer = new StringBuffer();
         try {
             if (StringUtils.isEmpty(requestMethod)) {
-                requestMethod = "GET";
+                requestMethod = REQUEST_METHOD_GET;
             }
 
             // 创建SSLContext对象，并使用我们指定的信任管理器初始化
@@ -66,7 +68,7 @@ public class HttpsUtils {
             // 设置请求方式（GET/POST）
             httpUrlConn.setRequestMethod(requestMethod);
 
-            if ("GET".equalsIgnoreCase(requestMethod)) {
+            if (REQUEST_METHOD_GET.equalsIgnoreCase(requestMethod)) {
                 httpUrlConn.connect();
             }
 

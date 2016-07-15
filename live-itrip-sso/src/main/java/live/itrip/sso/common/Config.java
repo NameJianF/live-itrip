@@ -1,27 +1,20 @@
 package live.itrip.sso.common;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 /**
- * Created by Feng on 2016/7/11.
+ * Created by Feng on 2016/7/14.
  */
 public class Config {
-    /**
-     * 正常登录
-     */
-    public static final String NORMAL = "normal";
+
+    public static String MODULE_APP_APIKEY;
+
+    public static String MODULE_APP_SECRET;
+
+    public static String ADMIN_URL;
 
     /**
-     * 微信
+     * admin 获取到的 apikey 列表
      */
-    public static final String WEICHAT = "weichat";
-
-
-    /**
-     * apikey-secretkey list
-     */
-    public static final Map<String, String> API_KEY = new HashMap<String, String>(20);
-
-
+    public static List<String> LIST_APIKEY;
 }

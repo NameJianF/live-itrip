@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import live.itrip.common.ErrorCode;
 import live.itrip.common.response.BaseResult;
-import live.itrip.common.util.Md5Utils;
+import live.itrip.common.security.Md5Utils;
 import live.itrip.common.util.UuidUtils;
 import live.itrip.sso.bean.RetrievePwdRequest;
 import live.itrip.sso.bean.UserRegisterRequest;

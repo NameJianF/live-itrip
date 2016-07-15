@@ -1,4 +1,4 @@
-package live.itrip.common.util;
+package live.itrip.common.security;
 
 import java.io.File;
 import java.io.FileInputStream;

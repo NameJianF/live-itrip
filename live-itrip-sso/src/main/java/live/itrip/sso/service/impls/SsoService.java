@@ -3,12 +3,11 @@ package live.itrip.sso.service.impls;
 import com.alibaba.fastjson.JSON;
 import live.itrip.common.ErrorCode;
 import live.itrip.common.response.BaseResult;
-import live.itrip.common.util.Md5Utils;
+import live.itrip.common.security.Md5Utils;
 import live.itrip.common.util.UuidUtils;
 import live.itrip.sso.bean.AuthUserRequest;
 import live.itrip.sso.bean.LoginRequest;
 import live.itrip.sso.bean.LogoutRequest;
-import live.itrip.sso.common.Config;
 import live.itrip.sso.common.Constants;
 import live.itrip.sso.common.exception.ApiException;
 import live.itrip.sso.dao.UserMapper;
@@ -54,7 +53,7 @@ public class SsoService extends BaseService implements ISsoService {
             BaseResult result = new BaseResult();
             result.setOp(loginRequest.getOp());
 
-            if (Config.NORMAL.equals(loginRequest.getData().getSource())) {
+            if (Constants.NORMAL.equals(loginRequest.getData().getSource())) {
                 // 正常登录： email/mobile/username
                 User user = this.userMapper.selectByUserName(loginRequest.getData().getEmail());
                 if (user == null) {
@@ -104,7 +103,7 @@ public class SsoService extends BaseService implements ISsoService {
                         result.setMsg(ErrorCode.USER_INVALID.getMessage());
                     }
                 }
-            } else if (Config.WEICHAT.equals(loginRequest.getData().getSource())) {
+            } else if (Constants.WEICHAT.equals(loginRequest.getData().getSource())) {
                 // 微信
             }
 

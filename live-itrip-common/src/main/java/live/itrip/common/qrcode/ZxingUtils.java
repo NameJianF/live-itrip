@@ -1,4 +1,4 @@
-package live.itrip.common.util;
+package live.itrip.common.qrcode;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;

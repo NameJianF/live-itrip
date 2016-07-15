@@ -9,7 +9,7 @@ import live.itrip.admin.service.intefaces.IUserService;
 import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
-import live.itrip.common.util.Md5Utils;
+import live.itrip.common.security.Md5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
