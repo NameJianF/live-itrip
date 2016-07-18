@@ -1,7 +1,9 @@
 package live.itrip.admin.controller;
 
 import com.alibaba.fastjson.JSON;
+import live.itrip.admin.cache.RedisCacheClient;
 import live.itrip.admin.controller.base.AbstractController;
+import live.itrip.admin.model.ClientApiKey;
 import live.itrip.admin.service.intefaces.IClientApiKeyService;
 import live.itrip.common.Logger;
 import live.itrip.common.request.RequestHeader;
@@ -43,7 +45,33 @@ public class ApiKeyController extends AbstractController {
         }
         try {
             RequestHeader header = JSON.parseObject(decodeJson, RequestHeader.class);
-            if (header != null && StringUtils.isNotEmpty(header.getOp())) {
+            // 校验apikey
+            ClientApiKey clientApiKey = this.validateClientApiKey(header.getApikey());
+            if (clientApiKey == null) {
+                this.paramInvalid(response, "apikey");
+                return;
+            }
+            // 校验sig
+            if (!this.validateSig(clientApiKey, header)) {
+                this.paramInvalid(response, "sig");
+                return;
+            }
+
+            // 校验 timestamp
+            if (!this.validateTimestamp(header.getTimestamp())) {
+                this.paramInvalid(response, "timestamp");
+                return;
+            }
+
+            // 校验 token
+            if (!this.validateToken(header.getSid())) {
+                this.paramInvalid(response, "token");
+                return;
+            }
+
+
+            // dispatch op
+            if (StringUtils.isNotEmpty(header.getOp())) {
                 String op = header.getOp();
                 if ("ApiKey.list".equalsIgnoreCase(op)) {
                     // login

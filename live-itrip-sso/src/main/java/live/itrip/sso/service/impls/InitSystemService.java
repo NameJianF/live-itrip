@@ -1,6 +1,7 @@
 package live.itrip.sso.service.impls;
 
 import live.itrip.common.Logger;
+import live.itrip.sso.api.admin.AdminApi;
 import live.itrip.sso.common.Config;
 import org.springframework.stereotype.Service;
 
@@ -37,24 +38,24 @@ public class InitSystemService {
             String file_name = this.getClass().getClassLoader()
                     .getResource("resource/local.properties").getFile();
 
-            if (file_name.toString().startsWith("file:")) {
-
-                file_name = file_name.substring(5);
-                if (file_name.indexOf("!") != -1) {
-                    file_name = file_name.substring(0, file_name.indexOf("!"));
-                }
-
-                JarFile currentJar = new JarFile(file_name);
-                JarEntry configEntry = currentJar.getJarEntry("config_test.properties");
-
-                InputStream in = currentJar.getInputStream(configEntry);
-                if (in != null) {
-                    prop.load(in);
-                }
-
-            } else {
-                prop.load(new FileInputStream(file_name));
-            }
+//            if (file_name.toString().startsWith("file:")) {
+//
+//                file_name = file_name.substring(5);
+//                if (file_name.indexOf("!") != -1) {
+//                    file_name = file_name.substring(0, file_name.indexOf("!"));
+//                }
+//
+//                JarFile currentJar = new JarFile(file_name);
+//                JarEntry configEntry = currentJar.getJarEntry("config_test.properties");
+//
+//                InputStream in = currentJar.getInputStream(configEntry);
+//                if (in != null) {
+//                    prop.load(in);
+//                }
+//
+//            } else {
+            prop.load(new FileInputStream(file_name));
+//            }
 
             Config.MODULE_APP_APIKEY = prop.getProperty("module.app.apikey");
             Config.MODULE_APP_SECRET = prop.getProperty("module.app.secret");
@@ -66,13 +67,23 @@ public class InitSystemService {
     }
 
     private void loadListApiKey() {
+        final AdminApi adminApi = new AdminApi();
         Thread loadAdminListApiKey = new Thread(new Runnable() {
             @Override
             public void run() {
 
+                try {
+                    adminApi.selectApiKeys();
+                } catch (Exception ex) {
+                    Logger.error(ex);
+                }
 
                 try {
-                    Thread.sleep(THREAD_SLEEP);
+                    if (Config.LIST_APIKEY != null) {
+                        Thread.sleep(THREAD_SLEEP);
+                    } else {
+                        Thread.sleep(1000);
+                    }
                 } catch (InterruptedException e) {
                     Logger.error(e);
                 }

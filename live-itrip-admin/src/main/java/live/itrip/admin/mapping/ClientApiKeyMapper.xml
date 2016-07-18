@@ -3,7 +3,7 @@
 <mapper namespace="live.itrip.admin.dao.ClientApiKeyMapper">
 
     <!--redis 缓存-->
-    <cache type="live.itrip.admin.cache.RedisCache"/>
+    <cache type="live.itrip.admin.cache.RedisCache" eviction="LRU" />
 
     <resultMap id="BaseResultMap" type="live.itrip.admin.model.ClientApiKey">
         <id column="id" property="id" jdbcType="INTEGER"/>
@@ -11,13 +11,13 @@
         <result column="api_key" property="apiKey" jdbcType="CHAR"/>
         <result column="secret_key" property="secretKey" jdbcType="CHAR"/>
         <result column="source" property="source" jdbcType="VARCHAR"/>
-        <result column="desc" property="desc" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
         <result column="is_delete" property="isDelete" jdbcType="CHAR"/>
         <result column="create_time" property="createTime" jdbcType="BIGINT"/>
         <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, client_name, api_key, secret_key, source, desc, is_delete, create_time, update_time
+    id, client_name, api_key, secret_key, source, description, is_delete, create_time, update_time
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -31,11 +31,11 @@
   </delete>
     <insert id="insert" parameterType="live.itrip.admin.model.ClientApiKey">
     insert into client_api_key (id, client_name, api_key, 
-      secret_key, source, desc, 
+      secret_key, source, description,
       is_delete, create_time, update_time
       )
     values (#{id,jdbcType=INTEGER}, #{clientName,jdbcType=VARCHAR}, #{apiKey,jdbcType=CHAR}, 
-      #{secretKey,jdbcType=CHAR}, #{source,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, 
+      #{secretKey,jdbcType=CHAR}, #{source,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
       #{isDelete,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}
       )
   </insert>
@@ -57,8 +57,8 @@
             <if test="source != null">
                 source,
             </if>
-            <if test="desc != null">
-                desc,
+            <if test="description != null">
+                description,
             </if>
             <if test="isDelete != null">
                 is_delete,
@@ -86,8 +86,8 @@
             <if test="source != null">
                 #{source,jdbcType=VARCHAR},
             </if>
-            <if test="desc != null">
-                #{desc,jdbcType=VARCHAR},
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
             </if>
             <if test="isDelete != null">
                 #{isDelete,jdbcType=CHAR},
@@ -115,8 +115,8 @@
             <if test="source != null">
                 source = #{source,jdbcType=VARCHAR},
             </if>
-            <if test="desc != null">
-                desc = #{desc,jdbcType=VARCHAR},
+            <if test="description != null">
+                desc = #{description,jdbcType=VARCHAR},
             </if>
             <if test="isDelete != null">
                 is_delete = #{isDelete,jdbcType=CHAR},
@@ -136,10 +136,18 @@
       api_key = #{apiKey,jdbcType=CHAR},
       secret_key = #{secretKey,jdbcType=CHAR},
       source = #{source,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
       is_delete = #{isDelete,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+    <!--自定义查询-->
+    <select id="selectAllKeys" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from client_api_key
+    </select>
 </mapper>

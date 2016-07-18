@@ -1,4 +1,6 @@
-package live.itrip.admin.model;
+package live.itrip.sso.api.admin.bean;
+
+import live.itrip.sso.model.BaseModel;
 
 public class ClientApiKey extends BaseModel {
     private String clientName;

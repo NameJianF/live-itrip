@@ -2,8 +2,6 @@ package live.itrip.admin.controller;
 
 import com.alibaba.fastjson.JSON;
 import live.itrip.admin.controller.base.AbstractController;
-import live.itrip.admin.dao.UserMapper;
-import live.itrip.admin.model.User;
 import live.itrip.admin.service.intefaces.IUserService;
 import live.itrip.common.Logger;
 import live.itrip.common.request.RequestHeader;
@@ -29,8 +27,6 @@ public class UserController extends AbstractController {
     @Autowired
     private IUserService iUserService;
 
-    @Autowired
-    private UserMapper userMapper;
 
     /**
      * 测试接口是否连通
@@ -42,27 +38,11 @@ public class UserController extends AbstractController {
     public
     @ResponseBody
     void test(HttpServletResponse response, HttpServletRequest request) {
-
-        User user = this.userMapper.selectByUserName("admin");
-        System.err.println(JSON.toJSON(user));
-
-
-//        User newUser = new User();
-//        newUser.setEmail("349748416@qq.com");
-//        newUser.setPassword("feng");
-//        this.userMapper.insert(newUser);
-
-
-        user = this.userMapper.selectByUserName("349748416@qq.com");
-        System.err.println(JSON.toJSON(user));
-
         this.writeResponse(response, "hello ---------");
     }
 
 
     /**
-     *
-     *
      * @param response
      * @param request
      */

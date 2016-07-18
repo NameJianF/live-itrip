@@ -11,7 +11,22 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class SystemInterceptor implements HandlerInterceptor {
     @Override
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+//        request.setCharacterEncoding("UTF-8");
+//        response.setCharacterEncoding("UTF-8");
+//
+//        String action = request.getServletPath();
+//
+//        if (action.equals("/user/login.htm")
+//                || action.equals("/settings/dologin.htm")
+//                || action.equals("/task/create.htm")
+//                || action.equals("/task/taskDatas.htm")
+//                || action.equals("/report.htm")
+//                || action.equals("/clearCache.htm")) {
+//            return true;
+//        }
+
+
         return true;
     }
 

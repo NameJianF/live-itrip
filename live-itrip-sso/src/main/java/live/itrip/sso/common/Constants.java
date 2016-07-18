@@ -4,6 +4,8 @@ package live.itrip.sso.common;
  * 常量
  */
 public class Constants {
+    public static final String DES_KEY = "feng2016";
+
 
     /**
      * session 中存储的用户信息标识

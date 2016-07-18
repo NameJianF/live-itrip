@@ -134,4 +134,38 @@ public class RedisCache implements Cache {
     public static void setJedisConnectionFactory(JedisConnectionFactory jedisConnectionFactory) {
         RedisCache.jedisConnectionFactory = jedisConnectionFactory;
     }
+
+    public static JedisConnectionFactory getJedisConnectionFactory() {
+        return RedisCache.jedisConnectionFactory;
+    }
+
+    // ======================= ADD ==============
+
+    public void flushDb() {
+        JedisConnection connection = null;
+        try {
+            connection = (JedisConnection) jedisConnectionFactory.getConnection();
+            connection.flushDb();
+        } catch (JedisConnectionException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+    public void flushAll() {
+        JedisConnection connection = null;
+        try {
+            connection = (JedisConnection) jedisConnectionFactory.getConnection();
+            connection.flushAll();
+        } catch (JedisConnectionException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
 }

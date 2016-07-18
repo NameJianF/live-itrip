@@ -1,5 +1,7 @@
 package live.itrip.admin.service.intefaces;
 
+import live.itrip.admin.model.ClientApiKey;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,5 +16,8 @@ public interface IClientApiKeyService {
      * @param response
      * @param request
      */
-    void selectKeyList(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+    void selectKeyList(String decodeJson, HttpServletResponse response, HttpServletRequest request) throws Exception;
+
+    ClientApiKey selectClientKey(String clientapikey);
+
 }

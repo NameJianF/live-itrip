@@ -4,7 +4,7 @@ import live.itrip.common.Encoding;
 
 import java.io.UnsupportedEncodingException;
 
-public class Base64 {
+public class Base64Utils {
     public static String DEFAULT = Encoding.UTF8;
 
     private static char[] base64EncodeChars = new char[]{'A', 'B', 'C', 'D',
@@ -58,10 +58,10 @@ public class Base64 {
     }
 
     // 解码
-    public static byte[] decode(String str, String chatset)
+    public static byte[] decode(String str)
             throws UnsupportedEncodingException {
         StringBuffer sb = new StringBuffer();
-        byte[] data = str.getBytes("utf-8");
+        byte[] data = str.getBytes(DEFAULT);
         int len = data.length;
         int i = 0;
         int b1, b2, b3, b4;

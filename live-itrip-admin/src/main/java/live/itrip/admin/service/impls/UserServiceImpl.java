@@ -1,16 +1,17 @@
 package live.itrip.admin.service.impls;
 
 import com.alibaba.fastjson.JSON;
+import live.itrip.admin.api.sso.SsoApi;
+import live.itrip.admin.api.sso.bean.LoginResponse;
+import live.itrip.admin.api.sso.bean.User;
 import live.itrip.admin.common.Constants;
-import live.itrip.admin.dao.UserMapper;
-import live.itrip.admin.model.User;
 import live.itrip.admin.service.BaseService;
 import live.itrip.admin.service.intefaces.IUserService;
 import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
 import live.itrip.common.security.Md5Utils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,44 +19,60 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by 建锋 on 2016/7/7.
+ * <p>
+ * admin  用户操作服务
  */
 @Service
 public class UserServiceImpl extends BaseService implements IUserService {
 
-    @Autowired
-    private UserMapper userMapper;
-
     @Override
     public void login(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
-        LoginData reqModel = JSON.parseObject(decodeJson, LoginData.class);
+        LoginData loginData = JSON.parseObject(decodeJson, LoginData.class);
         BaseResult result = new BaseResult();
 
-        // 校验验证码
+        if (loginData == null) {
+            this.paramInvalid(response, "Login Datas");
+            return;
+        }
 
-        // 校验账号密码
-        User user = this.userMapper.selectByUserName(reqModel.getUserName());
-        if (user == null) {
-            // 用户名错误
-            result.setCode(ErrorCode.USERNAME_PWD_INVALID.getCode());
-            result.setMsg(ErrorCode.USERNAME_PWD_INVALID.getMessage());
-        } else {
-            // 验证密码
-            String password = Md5Utils.getStringMD5(user.getSalt() + reqModel.getPwd());
-            try {
-                if (password.equals(user.getPassword())) {
-                    // 密码正确，保存session信息
-                    request.getSession().setAttribute(Constants.SESSION_USER, user);
-                    // 写入 cookie
+        if (StringUtils.isEmpty(loginData.getUserName()) || StringUtils.isEmpty(loginData.getPwd())) {
+            this.paramInvalid(response, "Email or Password");
+            return;
+        }
+//        if (StringUtils.isEmpty(loginData.getCaptcha())) {
+//            this.paramInvalid(response, "Captcha");
+//            return;
+//        }
 
-                    result.setCode(ErrorCode.SUCCESS.getCode());
-                } else {
-                    // 密码错误
-                    result.setCode(ErrorCode.USERNAME_PWD_INVALID.getCode());
-                    result.setMsg(ErrorCode.USERNAME_PWD_INVALID.getMessage());
+        SsoApi ssoApi = new SsoApi();
+        LoginResponse loginResponse = ssoApi.userLogin(loginData.getUserName(), loginData.getPwd());
+
+        if (loginResponse.getCode() != null && loginResponse.getCode() == 0) {
+            // 校验账号密码
+            User user = loginResponse.getData();
+            if (user == null) {
+                // 用户名错误
+                result.setCode(ErrorCode.USERNAME_PWD_INVALID.getCode());
+                result.setMsg(ErrorCode.USERNAME_PWD_INVALID.getMessage());
+            } else {
+                // 验证密码
+                String password = Md5Utils.getStringMD5(user.getSalt() + loginData.getPwd());
+                try {
+                    if (password.equals(user.getPassword())) {
+                        // 密码正确，保存session信息
+                        request.getSession().setAttribute(Constants.SESSION_USER, user);
+                        // 写入 cookie
+
+                        result.setCode(ErrorCode.SUCCESS.getCode());
+                    } else {
+                        // 密码错误
+                        result.setCode(ErrorCode.USERNAME_PWD_INVALID.getCode());
+                        result.setMsg(ErrorCode.USERNAME_PWD_INVALID.getMessage());
+                    }
+                } catch (Exception e) {
+                    Logger.error(e.getMessage(), e);
+                    result.setCode(ErrorCode.UNKNOWN.getCode());
                 }
-            } catch (Exception e) {
-                Logger.error(e.getMessage(), e);
-                result.setCode(ErrorCode.UNKNOWN.getCode());
             }
         }
 

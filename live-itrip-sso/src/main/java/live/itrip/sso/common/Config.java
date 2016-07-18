@@ -1,5 +1,7 @@
 package live.itrip.sso.common;
 
+import live.itrip.sso.api.admin.bean.ClientApiKey;
+
 import java.util.List;
 
 /**
@@ -16,5 +18,5 @@ public class Config {
     /**
      * admin 获取到的 apikey 列表
      */
-    public static List<String> LIST_APIKEY;
+    public static List<ClientApiKey> LIST_APIKEY;
 }

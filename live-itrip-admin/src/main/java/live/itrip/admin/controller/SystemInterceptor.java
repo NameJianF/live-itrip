@@ -11,7 +11,15 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class SystemInterceptor implements HandlerInterceptor {
     @Override
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        String action = request.getServletPath();
+        // 不检测登录用户的 action
+        if (action.equals("/apikeys.action")) {
+            return true;
+        }
+
         return true;
     }
 

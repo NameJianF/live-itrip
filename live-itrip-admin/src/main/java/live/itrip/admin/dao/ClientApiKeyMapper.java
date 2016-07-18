@@ -1,5 +1,7 @@
 package live.itrip.admin.dao;
 
+import java.util.List;
+
 import live.itrip.admin.model.ClientApiKey;
 
 public interface ClientApiKeyMapper {
@@ -14,4 +16,11 @@ public interface ClientApiKeyMapper {
     int updateByPrimaryKeySelective(ClientApiKey record);
 
     int updateByPrimaryKey(ClientApiKey record);
+
+    /**
+     * 查询全部apikey
+     *
+     * @return
+     */
+    List<ClientApiKey> selectAllKeys();
 }
