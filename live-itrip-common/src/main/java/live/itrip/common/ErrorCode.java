@@ -2,7 +2,7 @@ package live.itrip.common;
 
 /**
  * Created by Feng on 2016/7/7.
- * <p/>
+ * <p>
  * 错误码列表
  */
 public enum ErrorCode {
@@ -10,6 +10,7 @@ public enum ErrorCode {
     SUCCESS(0, "success"),
     UNKNOWN(-1, "未知错误"),
     PARAM_INVALID(1000, "参数无效"),
+    SERVICE_INITING(9999, "系统初始化中..."),
 
     // ========= 100---200 用户相关错误码
     USERNAME_PWD_INVALID(100, "用户名/密码错误"),

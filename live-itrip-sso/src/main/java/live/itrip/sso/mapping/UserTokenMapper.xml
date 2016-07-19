@@ -37,7 +37,8 @@
       #{domain,jdbcType=VARCHAR}, #{clientVersion,jdbcType=VARCHAR}, #{expireTime,jdbcType=BIGINT}, 
       #{createTime,jdbcType=BIGINT})
   </insert>
-    <insert id="insertSelective" parameterType="live.itrip.sso.model.UserToken" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" parameterType="live.itrip.sso.model.UserToken" useGeneratedKeys="true"
+            keyProperty="id">
         insert into user_token
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -149,5 +150,14 @@
       expire_time = #{expireTime,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
-  </update>
+    </update>
+
+
+    <!--自定义查询-->
+    <select id="selectByToken" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from user_token
+        where auth_token = '${token}'
+    </select>
 </mapper>

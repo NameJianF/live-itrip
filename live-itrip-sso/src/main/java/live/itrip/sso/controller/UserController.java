@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  * 只提供接口调用，api管理平台不使用
  */
 @Controller
-public class UserController extends BaseController {
+public class UserController extends AbstractController {
 
     @Autowired
     private IUserService iUserService;
@@ -71,35 +71,28 @@ public class UserController extends BaseController {
                     .parseObject(decodeJson, RequestHeader.class);
 
             String op = header.getOp();
+            // validate Api Params
+            BaseResult error = this.validateParams(header);
+            if (error.getCode() == ErrorCode.SUCCESS.getCode()) {
+                if (UserOprations.OP_API_USER_REGISTER.equalsIgnoreCase(op)
+                        || UserOprations.OP_API_USER_RETRIEVE_PWD.equalsIgnoreCase(op)) {
 
-            if (UserOprations.OP_API_USER_REGISTER.equalsIgnoreCase(op)
-                    || UserOprations.OP_API_USER_RETRIEVE_PWD.equalsIgnoreCase(op)) {
-                // validate Api Params,not validate token
-                BaseResult error = this.validateParams(header);
-                if (error == null) {
                     if (UserOprations.OP_API_USER_REGISTER.equalsIgnoreCase(op)) {
                         // 注册
                         iUserService.register(decodeJson, response, request);
                     } else if (UserOprations.OP_API_USER_RETRIEVE_PWD.equalsIgnoreCase(op)) {
                         // 找回密码
                         iUserService.retrievePassword(decodeJson, response, request);
-                    }
-                } else {
-                    this.writeResponseErrorApp(response, error);
-                }
-            } else {
-                BaseResult error = this.validateParams(header);
-                if (error == null) {
-                    if (UserOprations.OP_API_USER_UPDATE_INFO.equalsIgnoreCase(op)) {
+                    } else if (UserOprations.OP_API_USER_UPDATE_INFO.equalsIgnoreCase(op)) {
                         // 用户信息修改
                         iUserService.updateUserInfo(decodeJson, response, request);
                     } else if (UserOprations.OP_API_USER_UPDATE_PWD.equalsIgnoreCase(op)) {
                         // 修改用户密码
                         iUserService.updatePassword(decodeJson, response, request);
                     }
-                } else {
-                    this.writeResponseErrorApp(response, error);
                 }
+            } else {
+                this.writeResponseErrorApp(response, error);
             }
         } catch (Exception ex) {
         }

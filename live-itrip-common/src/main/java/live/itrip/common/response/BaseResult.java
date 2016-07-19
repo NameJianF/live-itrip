@@ -1,5 +1,7 @@
 package live.itrip.common.response;
 
+import live.itrip.common.ErrorCode;
+
 /**
  * Created by 建锋 on 2016/7/7.
  * <p>
@@ -41,5 +43,10 @@ public class BaseResult {
 
     public void setData(Object data) {
         this.data = data;
+    }
+
+    public void setError(ErrorCode code) {
+        this.setCode(code.getCode());
+        this.setMsg(code.getMessage());
     }
 }

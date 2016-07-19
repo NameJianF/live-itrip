@@ -53,7 +53,7 @@ public class HttpUtils {
 
             connection.setRequestProperty("Content-Length",
                     "" + Integer.toString(outputStr.getBytes().length));
-            connection.setRequestProperty("Content-Language", "en-US");
+//            connection.setRequestProperty("Content-Language", "en-US");
 
             connection.setUseCaches(false);
             connection.setDoInput(true);
@@ -68,7 +68,7 @@ public class HttpUtils {
 
             // Get Response
             InputStream is = connection.getInputStream();
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+            BufferedReader rd = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             String line;
             StringBuffer response = new StringBuffer();
             while ((line = rd.readLine()) != null) {

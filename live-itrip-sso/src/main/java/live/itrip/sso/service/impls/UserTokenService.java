@@ -28,4 +28,9 @@ public class UserTokenService extends BaseService implements IUserTokenService {
     public int insertSelective(UserToken record) {
         return userTokenMapper.insertSelective(record);
     }
+
+    @Override
+    public UserToken selectByToken(String token) {
+        return userTokenMapper.selectByToken(token);
+    }
 }

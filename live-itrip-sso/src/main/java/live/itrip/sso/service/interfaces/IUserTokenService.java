@@ -13,4 +13,12 @@ public interface IUserTokenService {
      * @return
      */
     int insertSelective(UserToken record);
+
+    /**
+     * selectByToken
+     *
+     * @param token
+     * @return
+     */
+    UserToken selectByToken(String token);
 }

@@ -2,6 +2,7 @@ package live.itrip.sso.dao;
 
 
 import live.itrip.sso.model.UserToken;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserTokenMapper {
     int deleteByPrimaryKey(Long id);
@@ -15,4 +16,6 @@ public interface UserTokenMapper {
     int updateByPrimaryKeySelective(UserToken record);
 
     int updateByPrimaryKey(UserToken record);
+
+    UserToken selectByToken(@Param("token") String token);
 }

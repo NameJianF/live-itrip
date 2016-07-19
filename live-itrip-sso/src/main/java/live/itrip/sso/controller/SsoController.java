@@ -3,6 +3,7 @@ package live.itrip.sso.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.request.RequestHeader;
 import live.itrip.common.response.BaseResult;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 
 @Controller
-public class SsoController extends BaseController {
+public class SsoController extends AbstractController {
 
     @Autowired
     private ISsoService iSsoService;
@@ -54,7 +55,7 @@ public class SsoController extends BaseController {
 
             // validate Api Params
             BaseResult error = this.validateParams(header);
-            if (error == null) {
+            if (error.getCode() == ErrorCode.SUCCESS.getCode()) {
                 if (SsoOprations.OP_SSO_LOGIN.equalsIgnoreCase(op)) {
                     // login
                     iSsoService.login(decodeJson, response, request);
@@ -69,6 +70,7 @@ public class SsoController extends BaseController {
             }
 
         } catch (Exception ex) {
+            Logger.error(ex.getMessage(), ex);
         }
     }
 }

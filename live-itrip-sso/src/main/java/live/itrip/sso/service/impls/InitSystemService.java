@@ -73,12 +73,10 @@ public class InitSystemService {
             public void run() {
 
                 try {
-                    adminApi.selectApiKeys();
-                } catch (Exception ex) {
-                    Logger.error(ex);
-                }
+                    Thread.sleep(5 * 1000);
 
-                try {
+                    adminApi.selectApiKeys();
+
                     if (Config.LIST_APIKEY != null) {
                         Thread.sleep(THREAD_SLEEP);
                     } else {
@@ -86,6 +84,8 @@ public class InitSystemService {
                     }
                 } catch (InterruptedException e) {
                     Logger.error(e);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }, "SSOLoadAdminListApiKey");
