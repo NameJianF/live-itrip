@@ -8,6 +8,7 @@ import live.itrip.admin.model.ClientApiKey;
 import live.itrip.admin.request.ApiKeyRequest;
 import live.itrip.admin.service.BaseService;
 import live.itrip.admin.service.intefaces.IClientApiKeyService;
+import live.itrip.common.ErrorCode;
 import live.itrip.common.response.BaseResult;
 import live.itrip.common.security.DESUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,8 @@ public class ClientApiKeyServiceImpl extends BaseService implements IClientApiKe
         }
 
         result.setData(keyListCopy);
+        result.setCode(ErrorCode.SUCCESS.getCode());
+//        result.setMsg("");
         this.writeResponse(response, result);
     }
 

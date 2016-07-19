@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Controller 基类
  */
 public abstract class AbstractController implements IWriteResponse {
+    private static final Long TIMEOUT = 1000L * 60;
 
     @Autowired
     private IClientApiKeyService iClientApiKeyService;
@@ -70,13 +71,13 @@ public abstract class AbstractController implements IWriteResponse {
      * @return
      */
     public boolean validateTimestamp(Long timestamp) {
-//        if (timestamp == null) {
-//            return false;
-//        }
-//        if (System.currentTimeMillis() - timestamp > 1000L * 60) {
-//            // 时间超时
-//            return false;
-//        }
+        if (timestamp == null) {
+            return false;
+        }
+        if (System.currentTimeMillis() - timestamp > TIMEOUT) {
+            // 时间超时
+            return false;
+        }
         return true;
     }
 
