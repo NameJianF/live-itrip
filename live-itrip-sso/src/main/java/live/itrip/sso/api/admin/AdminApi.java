@@ -31,7 +31,8 @@ public class AdminApi extends AbstractApi {
         header.setOp("ApiKey.list");
         header.setTimestamp(System.currentTimeMillis());
 
-        String res = postJsonString(header, Config.ADMIN_URL, ACTION_APIKEY_URL);
+//        String res = postJsonString(header, Config.ADMIN_URL, ACTION_APIKEY_URL);
+        String res = "{\"code\":0,\"data\":[{\"apiKey\":\"c5sBARg3nDpVKTbP/VXBzcGviNa06lAxKkKgx1PK7Hp+h6WDDJRprw==\",\"clientName\":\"AndroidClient\",\"createTime\":0,\"description\":\"android 客户端\",\"id\":1,\"secretKey\":\"R/0WT9LSI4iDxfL8kPeeyuyFmHtfmiIf\",\"source\":\"tourin.cn\"},{\"apiKey\":\"cYJ6cKfWz/+qZUp6+6MvAtjIY7j2YJ8AITAp5SflDXGoLpxWp1XEXQ==\",\"clientName\":\"sso\",\"createTime\":0,\"description\":\"sso 服务\",\"id\":2,\"secretKey\":\"++YLfH6QG2a7Es3Igxazqm7xcCOty1ID\",\"source\":\"sso.itrip.live\"},{\"apiKey\":\"xdbjiODERrUs3gkYGyzYz6tFrB6KqlLQnPrWCQds/o0JVxZAPmo2+A==\",\"clientName\":\"admin\",\"createTime\":0,\"description\":\"admin管理端\",\"id\":3,\"secretKey\":\"/Q4TJC1qfzfF1ByXhsaGX2Mvv/KxSHUt\",\"source\":\"admin.itrip.live\"}],\"op\":\"ApiKey.list\"}";
         ClientApiKeyResponse clientApiKeyResponse = JSON.parseObject(res, ClientApiKeyResponse.class);
 
         if (clientApiKeyResponse != null

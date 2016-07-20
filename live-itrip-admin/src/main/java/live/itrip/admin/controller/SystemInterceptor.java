@@ -16,7 +16,8 @@ public class SystemInterceptor implements HandlerInterceptor {
         response.setCharacterEncoding("UTF-8");
         String action = request.getServletPath();
         // 不检测登录用户的 action
-        if (action.equals("/apikeys.action")) {
+        if (action.equals("/apikeys.action")
+                || action.equals("/user.action")) {
             return true;
         }
 

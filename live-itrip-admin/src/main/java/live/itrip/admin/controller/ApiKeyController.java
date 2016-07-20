@@ -52,7 +52,7 @@ public class ApiKeyController extends AbstractController {
                 return;
             }
             // 校验sig
-            if (!this.validateSig(clientApiKey, header)) {
+            if (!this.validateSig(clientApiKey, header, decodeJson)) {
                 this.paramInvalid(response, "sig");
                 return;
             }

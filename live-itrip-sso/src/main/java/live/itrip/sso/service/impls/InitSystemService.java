@@ -2,11 +2,14 @@ package live.itrip.sso.service.impls;
 
 import live.itrip.common.Logger;
 import live.itrip.sso.api.admin.AdminApi;
+import live.itrip.sso.api.admin.bean.ClientApiKey;
 import live.itrip.sso.common.Config;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -38,24 +41,7 @@ public class InitSystemService {
             String file_name = this.getClass().getClassLoader()
                     .getResource("resource/local.properties").getFile();
 
-//            if (file_name.toString().startsWith("file:")) {
-//
-//                file_name = file_name.substring(5);
-//                if (file_name.indexOf("!") != -1) {
-//                    file_name = file_name.substring(0, file_name.indexOf("!"));
-//                }
-//
-//                JarFile currentJar = new JarFile(file_name);
-//                JarEntry configEntry = currentJar.getJarEntry("config_test.properties");
-//
-//                InputStream in = currentJar.getInputStream(configEntry);
-//                if (in != null) {
-//                    prop.load(in);
-//                }
-//
-//            } else {
             prop.load(new FileInputStream(file_name));
-//            }
 
             Config.MODULE_APP_APIKEY = prop.getProperty("module.app.apikey");
             Config.MODULE_APP_SECRET = prop.getProperty("module.app.secret");

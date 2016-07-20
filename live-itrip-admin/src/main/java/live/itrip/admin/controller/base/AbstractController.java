@@ -1,6 +1,6 @@
 package live.itrip.admin.controller.base;
 
-import cn.tourin.tools.SigUtils;
+
 import com.alibaba.fastjson.JSON;
 import live.itrip.admin.interfaces.IWriteResponse;
 
@@ -16,6 +16,7 @@ import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.request.RequestHeader;
 import live.itrip.common.response.BaseResult;
+import live.itrip.common.util.SigUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -52,11 +53,11 @@ public abstract class AbstractController implements IWriteResponse {
      * @param baseClientKey
      * @param header
      */
-    public boolean validateSig(ClientApiKey baseClientKey, RequestHeader header) {
+    public boolean validateSig(ClientApiKey baseClientKey, RequestHeader header, String jsonString) {
         String secretkey = baseClientKey.getSecretKey();
 
         // 计算sig
-        String sig = SigUtils.getSig(header, secretkey);
+        String sig = SigUtils.getSig(jsonString, secretkey);
         if (!sig.equals(header.getSig())) {
             return false;
         }

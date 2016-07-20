@@ -23,7 +23,7 @@ function getRootPath() {
  * @param async
  * @param callback
  */
-function execAjaxData(url, jsondata, async, callback) {
+function execAjaxData(url, jsondata, async, error, success, complete) {
     $.ajax({
         cache: false,
         url: url,
@@ -33,11 +33,13 @@ function execAjaxData(url, jsondata, async, callback) {
         async: true,
         error: function (data) {
             console.log(data);
+            error(data)
         },
         success: function (data) {
-            callback(data);
+            success(data);
         },
         complete: function () {
+            complete();
         }
     });
 }

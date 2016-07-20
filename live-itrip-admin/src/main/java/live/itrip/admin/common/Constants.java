@@ -11,4 +11,14 @@ public class Constants {
      * session 中存储的用户信息标识
      */
     public static final String SESSION_USER = "sessionuser";
+
+    /**
+     * 正常登录
+     */
+    public static final String NORMAL = "normal";
+
+    /**
+     * 微信
+     */
+    public static final String WEICHAT = "weichat";
 }

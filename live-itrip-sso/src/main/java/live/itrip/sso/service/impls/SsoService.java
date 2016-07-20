@@ -2,6 +2,7 @@ package live.itrip.sso.service.impls;
 
 import com.alibaba.fastjson.JSON;
 import live.itrip.common.ErrorCode;
+import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
 import live.itrip.common.security.Md5Utils;
 import live.itrip.common.util.UuidUtils;
@@ -48,16 +49,26 @@ public class SsoService extends BaseService implements ISsoService {
      */
     @Override
     public void login(String decodeJson, HttpServletResponse response, HttpServletRequest request) throws ApiException {
+        BaseResult result = new BaseResult();
+
         try {
             LoginRequest loginRequest = JSON.parseObject(decodeJson, LoginRequest.class);
-            BaseResult result = new BaseResult();
             result.setOp(loginRequest.getOp());
 
             if (Constants.NORMAL.equals(loginRequest.getData().getSource())) {
                 // 正常登录： email/mobile/username
-                User user = this.userMapper.selectByUserName(loginRequest.getData().getEmail());
+                User user = null;
+                try {
+                    Logger.info("------------- login select ----------");
+                    user = this.userMapper.selectByUserName(loginRequest.getData().getEmail());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                Logger.info("------------- login select end ----------");
                 if (user == null) {
                     // 该用户不存在
+                    Logger.info("------------- login 该用户不存在----------");
+
                     result.setCode(ErrorCode.USERNAME_PWD_INVALID.getCode());
                     result.setMsg(ErrorCode.USERNAME_PWD_INVALID.getMessage());
                 } else {
@@ -89,6 +100,10 @@ public class SsoService extends BaseService implements ISsoService {
 
                             // 设置用户信息
                             result.setData(user);
+
+                            result.setCode(ErrorCode.SUCCESS.getCode());
+                            this.writeResponse(response, result);
+                            return;
                         } else {
                             // 密码错误
                             result.setCode(ErrorCode.USERNAME_PWD_INVALID.getCode());
@@ -107,10 +122,13 @@ public class SsoService extends BaseService implements ISsoService {
                 // 微信
             }
 
-            this.writeResponse(response, result);
+
         } catch (Exception e) {
-            throw new ApiException(e.getMessage(), e, true);
+            Logger.error(e.getMessage(), e);
         }
+
+        Logger.info("------------- login end----------");
+        this.writeResponse(response, result);
     }
 
     /**

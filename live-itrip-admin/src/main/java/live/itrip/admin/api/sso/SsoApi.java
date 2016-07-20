@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import live.itrip.admin.api.AbstractApi;
 import live.itrip.admin.api.sso.bean.LoginRequest;
 import live.itrip.admin.api.sso.bean.LoginResponse;
+import live.itrip.admin.common.Constants;
 
 /**
  * Created by Feng on 2016/7/14.
@@ -24,10 +25,10 @@ public class SsoApi extends AbstractApi {
         LoginRequest.LoginData data = new LoginRequest.LoginData();
         data.setEmail(email);
         data.setPassword(password);
+        data.setSource(Constants.NORMAL);
+        loginRequest.setData(data);
 
         String res = postJsonString(loginRequest, USER_ACTION);
-        LoginResponse loginResponse = JSON.parseObject(res, LoginResponse.class);
-
-        return loginResponse;
+        return JSON.parseObject(res, LoginResponse.class);
     }
 }

@@ -72,7 +72,7 @@ public class UserController extends AbstractController {
 
             String op = header.getOp();
             // validate Api Params
-            BaseResult error = this.validateParams(header);
+            BaseResult error = this.validateParams(header, decodeJson);
             if (error.getCode() == ErrorCode.SUCCESS.getCode()) {
                 if (UserOprations.OP_API_USER_REGISTER.equalsIgnoreCase(op)
                         || UserOprations.OP_API_USER_RETRIEVE_PWD.equalsIgnoreCase(op)) {

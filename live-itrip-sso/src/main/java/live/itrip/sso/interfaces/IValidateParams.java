@@ -9,5 +9,5 @@ import live.itrip.common.response.BaseResult;
  * @author JianF
  */
 public interface IValidateParams {
-    BaseResult validateParams(RequestHeader header);
+    BaseResult validateParams(RequestHeader header, String jsonString);
 }

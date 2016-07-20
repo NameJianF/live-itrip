@@ -54,7 +54,7 @@ public class SsoController extends AbstractController {
             String op = header.getOp();
 
             // validate Api Params
-            BaseResult error = this.validateParams(header);
+            BaseResult error = this.validateParams(header, decodeJson);
             if (error.getCode() == ErrorCode.SUCCESS.getCode()) {
                 if (SsoOprations.OP_SSO_LOGIN.equalsIgnoreCase(op)) {
                     // login

@@ -6,7 +6,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import javax.servlet.http.HttpServletResponse;
 
-import cn.tourin.tools.SigUtils;
 import com.alibaba.fastjson.JSON;
 
 import live.itrip.common.Encoding;
@@ -14,9 +13,11 @@ import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.request.RequestHeader;
 import live.itrip.common.response.BaseResult;
+import live.itrip.common.util.SigUtils;
 import live.itrip.sso.api.admin.bean.ClientApiKey;
 import live.itrip.sso.common.Config;
 import live.itrip.sso.common.Constants;
+import live.itrip.sso.common.SsoOprations;
 import live.itrip.sso.interfaces.IValidateParams;
 import live.itrip.sso.model.UserToken;
 import live.itrip.sso.service.interfaces.IUserTokenService;
@@ -25,14 +26,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class AbstractController implements IValidateParams {
 
-    private static final Long TIMEOUT = 1000L * 60;
+    private static final Long TIMEOUT = 1000L * 1000 * 60 * 5;
 
     @Autowired
     private IUserTokenService iUserTokenService;
 
     public void writeResponse(HttpServletResponse response, Object obj) {
         try {
-            AtomicReference<String> json = new AtomicReference<String>(JSON.toJSONString(obj));
+            String msg = JSON.toJSONString(obj);
+            Logger.debug(msg);
+            AtomicReference<String> json = new AtomicReference<String>(msg);
             response.setCharacterEncoding(Encoding.UTF8);
             PrintWriter out;
             out = response.getWriter();
@@ -81,7 +84,7 @@ public class AbstractController implements IValidateParams {
     }
 
     @Override
-    public BaseResult validateParams(RequestHeader header) {
+    public BaseResult validateParams(RequestHeader header, String jsonString) {
         BaseResult error = new BaseResult();
 
         if (header == null) {
@@ -97,36 +100,38 @@ public class AbstractController implements IValidateParams {
             return error;
         }
 
-        if (validateSig(clientApiKey, header)) {
+        if (!validateSig(clientApiKey, header, jsonString)) {
             error.setCode(ErrorCode.PARAM_INVALID.getCode());
             error.setMsg(String.format("%s(sig)", ErrorCode.PARAM_INVALID.getMessage()));
             return error;
         }
 
-        if (validateTimestamp(header.getTimestamp())) {
+        if (!validateTimestamp(header.getTimestamp())) {
             error.setCode(ErrorCode.PARAM_INVALID.getCode());
             error.setMsg(String.format("%s(timestamp)", ErrorCode.PARAM_INVALID.getMessage()));
             return error;
         }
 
-        if (validateToken(header.getSid())) {
-            error.setCode(ErrorCode.PARAM_INVALID.getCode());
-            error.setMsg(String.format("%s(sid)", ErrorCode.PARAM_INVALID.getMessage()));
-            return error;
+        if (!SsoOprations.OP_SSO_LOGIN.equalsIgnoreCase(header.getOp())) {
+            if (!validateToken(header.getSid())) {
+                error.setCode(ErrorCode.PARAM_INVALID.getCode());
+                error.setMsg(String.format("%s(sid)", ErrorCode.PARAM_INVALID.getMessage()));
+                return error;
+            }
         }
 
         error.setError(ErrorCode.SUCCESS);
         return error;
     }
 
-    private boolean validateSig(ClientApiKey clientApiKey, RequestHeader header) {
+    private boolean validateSig(ClientApiKey clientApiKey, RequestHeader header, String jsonString) {
         if (StringUtils.isEmpty(header.getSig())) {
             return false;
         }
         String secretkey = clientApiKey.getSecretKey();
 
         // 计算sig
-        String sig = SigUtils.getSig(header, secretkey);
+        String sig = SigUtils.getSig(jsonString, secretkey);
         if (!sig.equals(header.getSig())) {
             return false;
         }
@@ -139,7 +144,7 @@ public class AbstractController implements IValidateParams {
             return null;
         }
         for (ClientApiKey client : Config.LIST_APIKEY) {
-            if (client.getSecretKey().equals(apiKey)) {
+            if (client.getApiKey().equals(apiKey)) {
                 return client;
             }
         }
@@ -157,7 +162,8 @@ public class AbstractController implements IValidateParams {
         if (timestamp == null) {
             return false;
         }
-        if (System.currentTimeMillis() - timestamp > TIMEOUT) {
+        Long time = System.currentTimeMillis();
+        if (time - timestamp > TIMEOUT) {
             // 时间超时
             return false;
         }
