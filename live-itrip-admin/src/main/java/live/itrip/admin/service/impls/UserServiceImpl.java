@@ -55,25 +55,17 @@ public class UserServiceImpl extends BaseService implements IUserService {
                 result.setCode(ErrorCode.USERNAME_PWD_INVALID.getCode());
                 result.setMsg(ErrorCode.USERNAME_PWD_INVALID.getMessage());
             } else {
-                // 验证密码
-                String password = Md5Utils.getStringMD5(user.getSalt() + loginData.getPwd());
-                try {
-                    if (password.equals(user.getPassword())) {
-                        // 密码正确，保存session信息
-                        request.getSession().setAttribute(Constants.SESSION_USER, user);
-                        // 写入 cookie
-
-                        result.setCode(ErrorCode.SUCCESS.getCode());
-                    } else {
-                        // 密码错误
-                        result.setCode(ErrorCode.USERNAME_PWD_INVALID.getCode());
-                        result.setMsg(ErrorCode.USERNAME_PWD_INVALID.getMessage());
-                    }
-                } catch (Exception e) {
-                    Logger.error(e.getMessage(), e);
-                    result.setCode(ErrorCode.UNKNOWN.getCode());
-                }
+                // 用户信息正确
+                request.getSession().setAttribute(Constants.SESSION_USER, user);
+                // 写入 cookie
+                result.setCode(ErrorCode.SUCCESS.getCode());
+                this.writeResponse(response, result);
+                return;
             }
+        } else {
+            // 用户名错误
+            result.setCode(ErrorCode.USERNAME_PWD_INVALID.getCode());
+            result.setMsg(ErrorCode.USERNAME_PWD_INVALID.getMessage());
         }
 
         this.writeResponse(response, result);
