@@ -10,7 +10,7 @@ import live.itrip.admin.common.Constants;
  * Created by Feng on 2016/7/14.
  */
 public class SsoApi extends AbstractApi {
-    private static final String USER_ACTION = "user.action";
+    private static final String USER_ACTION = "sso.action";
 
     /**
      * 用户登录

@@ -59,16 +59,12 @@ public class SsoService extends BaseService implements ISsoService {
                 // 正常登录： email/mobile/username
                 User user = null;
                 try {
-                    Logger.info("------------- login select ----------");
                     user = this.userMapper.selectByUserName(loginRequest.getData().getEmail());
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
-                Logger.info("------------- login select end ----------");
                 if (user == null) {
                     // 该用户不存在
-                    Logger.info("------------- login 该用户不存在----------");
-
                     result.setCode(ErrorCode.USERNAME_PWD_INVALID.getCode());
                     result.setMsg(ErrorCode.USERNAME_PWD_INVALID.getMessage());
                 } else {
@@ -127,7 +123,6 @@ public class SsoService extends BaseService implements ISsoService {
             Logger.error(e.getMessage(), e);
         }
 
-        Logger.info("------------- login end----------");
         this.writeResponse(response, result);
     }
 

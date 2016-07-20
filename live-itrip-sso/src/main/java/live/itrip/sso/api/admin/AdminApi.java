@@ -46,7 +46,7 @@ public class AdminApi extends AbstractApi {
                     apiKey.setSecretKey(DESUtils.decryptDES(apiKey.getSecretKey(), Constants.DES_KEY));
                 }
                 Config.LIST_APIKEY = list;
-                Logger.info(JSON.toJSONString(Config.LIST_APIKEY));
+//                Logger.info(JSON.toJSONString(Config.LIST_APIKEY));
             }
         }
     }

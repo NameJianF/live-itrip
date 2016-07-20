@@ -50,7 +50,6 @@ public class SsoController extends AbstractController {
         try {
             RequestHeader header = JSON
                     .parseObject(decodeJson, RequestHeader.class);
-
             String op = header.getOp();
 
             // validate Api Params
