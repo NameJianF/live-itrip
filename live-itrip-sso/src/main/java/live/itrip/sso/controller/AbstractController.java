@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class AbstractController implements IValidateParams {
 
-    private static final Long TIMEOUT = 1000L * 1000 * 60 * 5;
+    private static final Long TIMEOUT = 1000L * 60 * 5;
 
     @Autowired
     private IUserTokenService iUserTokenService;
