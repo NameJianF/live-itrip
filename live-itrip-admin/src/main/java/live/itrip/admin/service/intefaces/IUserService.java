@@ -8,4 +8,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface IUserService {
     void login(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void selectModules(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 }

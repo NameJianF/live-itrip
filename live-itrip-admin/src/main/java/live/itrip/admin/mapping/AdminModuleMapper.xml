@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="live.itrip.admin.dao.AdminModuleMapper">
+
+    <!--redis 缓存-->
+    <cache type="live.itrip.admin.cache.RedisCache" eviction="LRU"/>
+
+    <resultMap id="BaseResultMap" type="live.itrip.admin.model.AdminModule">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="module_name" property="moduleName" jdbcType="VARCHAR"/>
+        <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
+        <result column="module_url" property="moduleUrl" jdbcType="VARCHAR"/>
+        <result column="available" property="available" jdbcType="CHAR"/>
+        <result column="module_order" property="moduleOrder" jdbcType="INTEGER"/>
+        <result column="module_image" property="moduleImage" jdbcType="VARCHAR"/>
+        <result column="selected_image" property="selectedImage" jdbcType="VARCHAR"/>
+        <result column="disable_image" property="disableImage" jdbcType="VARCHAR"/>
+        <result column="expansion_image" property="expansionImage" jdbcType="VARCHAR"/>
+        <result column="expand" property="expand" jdbcType="CHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="CHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, module_name, parent_id, module_url, available, module_order, module_image, selected_image, 
+    disable_image, expansion_image, expand, description, is_delete, create_time, update_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from admin_module
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from admin_module
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="live.itrip.admin.model.AdminModule" keyProperty="id" useGeneratedKeys="true">
+    insert into admin_module (id, module_name, parent_id, 
+      module_url, available, module_order, 
+      module_image, selected_image, disable_image, 
+      expansion_image, expand, description, 
+      is_delete, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{moduleName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{moduleUrl,jdbcType=VARCHAR}, #{available,jdbcType=CHAR}, #{moduleOrder,jdbcType=INTEGER}, 
+      #{moduleImage,jdbcType=VARCHAR}, #{selectedImage,jdbcType=VARCHAR}, #{disableImage,jdbcType=VARCHAR}, 
+      #{expansionImage,jdbcType=VARCHAR}, #{expand,jdbcType=CHAR}, #{description,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="live.itrip.admin.model.AdminModule" keyProperty="id"
+            useGeneratedKeys="true">
+        insert into admin_module
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="moduleName != null">
+                module_name,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="moduleUrl != null">
+                module_url,
+            </if>
+            <if test="available != null">
+                available,
+            </if>
+            <if test="moduleOrder != null">
+                module_order,
+            </if>
+            <if test="moduleImage != null">
+                module_image,
+            </if>
+            <if test="selectedImage != null">
+                selected_image,
+            </if>
+            <if test="disableImage != null">
+                disable_image,
+            </if>
+            <if test="expansionImage != null">
+                expansion_image,
+            </if>
+            <if test="expand != null">
+                expand,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="moduleName != null">
+                #{moduleName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="moduleUrl != null">
+                #{moduleUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="available != null">
+                #{available,jdbcType=CHAR},
+            </if>
+            <if test="moduleOrder != null">
+                #{moduleOrder,jdbcType=INTEGER},
+            </if>
+            <if test="moduleImage != null">
+                #{moduleImage,jdbcType=VARCHAR},
+            </if>
+            <if test="selectedImage != null">
+                #{selectedImage,jdbcType=VARCHAR},
+            </if>
+            <if test="disableImage != null">
+                #{disableImage,jdbcType=VARCHAR},
+            </if>
+            <if test="expansionImage != null">
+                #{expansionImage,jdbcType=VARCHAR},
+            </if>
+            <if test="expand != null">
+                #{expand,jdbcType=CHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.admin.model.AdminModule">
+        update admin_module
+        <set>
+            <if test="moduleName != null">
+                module_name = #{moduleName,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                parent_id = #{parentId,jdbcType=INTEGER},
+            </if>
+            <if test="moduleUrl != null">
+                module_url = #{moduleUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="available != null">
+                available = #{available,jdbcType=CHAR},
+            </if>
+            <if test="moduleOrder != null">
+                module_order = #{moduleOrder,jdbcType=INTEGER},
+            </if>
+            <if test="moduleImage != null">
+                module_image = #{moduleImage,jdbcType=VARCHAR},
+            </if>
+            <if test="selectedImage != null">
+                selected_image = #{selectedImage,jdbcType=VARCHAR},
+            </if>
+            <if test="disableImage != null">
+                disable_image = #{disableImage,jdbcType=VARCHAR},
+            </if>
+            <if test="expansionImage != null">
+                expansion_image = #{expansionImage,jdbcType=VARCHAR},
+            </if>
+            <if test="expand != null">
+                expand = #{expand,jdbcType=CHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.AdminModule">
+    update admin_module
+    set module_name = #{moduleName,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      module_url = #{moduleUrl,jdbcType=VARCHAR},
+      available = #{available,jdbcType=CHAR},
+      module_order = #{moduleOrder,jdbcType=INTEGER},
+      module_image = #{moduleImage,jdbcType=VARCHAR},
+      selected_image = #{selectedImage,jdbcType=VARCHAR},
+      disable_image = #{disableImage,jdbcType=VARCHAR},
+      expansion_image = #{expansionImage,jdbcType=VARCHAR},
+      expand = #{expand,jdbcType=CHAR},
+      description = #{description,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+    <!--自定义查询-->
+    <select id="selectModules" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from admin_module
+        where is_delete = '${flag}'
+    </select>
+
+</mapper>

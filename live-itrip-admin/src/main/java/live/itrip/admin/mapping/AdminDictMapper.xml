@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="live.itrip.admin.dao.AdminDictMapper">
+
+    <!--redis 缓存-->
+    <cache type="live.itrip.admin.cache.RedisCache" eviction="LRU"/>
+
+    <resultMap id="BaseResultMap" type="live.itrip.admin.model.AdminDict">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="dict_name" property="dictName" jdbcType="VARCHAR"/>
+        <result column="dict_text" property="dictText" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="CHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, dict_name, dict_text, is_delete, create_time, update_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from admin_dict
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from admin_dict
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="live.itrip.admin.model.AdminDict" keyProperty="id" useGeneratedKeys="true">
+    insert into admin_dict (id, dict_name, dict_text, 
+      is_delete, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{dictName,jdbcType=VARCHAR}, #{dictText,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="live.itrip.admin.model.AdminDict" keyProperty="id" useGeneratedKeys="true">
+        insert into admin_dict
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="dictName != null">
+                dict_name,
+            </if>
+            <if test="dictText != null">
+                dict_text,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="dictName != null">
+                #{dictName,jdbcType=VARCHAR},
+            </if>
+            <if test="dictText != null">
+                #{dictText,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.admin.model.AdminDict">
+        update admin_dict
+        <set>
+            <if test="dictName != null">
+                dict_name = #{dictName,jdbcType=VARCHAR},
+            </if>
+            <if test="dictText != null">
+                dict_text = #{dictText,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.AdminDict">
+    update admin_dict
+    set dict_name = #{dictName,jdbcType=VARCHAR},
+      dict_text = #{dictText,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

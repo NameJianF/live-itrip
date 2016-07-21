@@ -5,14 +5,18 @@ import live.itrip.admin.api.sso.SsoApi;
 import live.itrip.admin.api.sso.bean.LoginResponse;
 import live.itrip.admin.api.sso.bean.User;
 import live.itrip.admin.common.Constants;
+import live.itrip.admin.model.AdminModule;
 import live.itrip.admin.service.BaseService;
+import live.itrip.admin.service.intefaces.IAdminModuleService;
 import live.itrip.admin.service.intefaces.IUserService;
 import live.itrip.common.ErrorCode;
-import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
-import live.itrip.common.security.Md5Utils;
+import live.itrip.common.util.CookieUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +28,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Service
 public class UserServiceImpl extends BaseService implements IUserService {
+
+    @Autowired
+    private IAdminModuleService iAdminModuleService;
 
     @Override
     public void login(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
@@ -58,6 +65,8 @@ public class UserServiceImpl extends BaseService implements IUserService {
                 // 用户信息正确
                 request.getSession().setAttribute(Constants.SESSION_USER, user);
                 // 写入 cookie
+                CookieUtils.setCookie(request, response, Constants.COOKIE_TOKEN_NAME, user.getToken());
+
                 result.setCode(ErrorCode.SUCCESS.getCode());
                 this.writeResponse(response, result);
                 return;
@@ -69,6 +78,19 @@ public class UserServiceImpl extends BaseService implements IUserService {
         }
 
         this.writeResponse(response, result);
+    }
+
+    /**
+     * 查询模块信息
+     *
+     * @param decodeJson
+     * @param response
+     * @param request
+     */
+    @Override
+    public void selectModules(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        List<AdminModule> list = iAdminModuleService.selectModules("0");
+
     }
 
     /**

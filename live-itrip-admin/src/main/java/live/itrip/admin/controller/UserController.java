@@ -66,6 +66,9 @@ public class UserController extends AbstractController {
                 if ("user.login".equalsIgnoreCase(op)) {
                     // login
                     iUserService.login(decodeJson, response, request);
+                } else if ("module.select".equalsIgnoreCase(op)) {
+                    // 查询模块信息
+                    iUserService.selectModules(decodeJson, response, request);
                 }
             }
         } catch (Exception ex) {

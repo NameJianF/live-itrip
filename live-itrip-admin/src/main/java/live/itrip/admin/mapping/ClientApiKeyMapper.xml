@@ -3,7 +3,7 @@
 <mapper namespace="live.itrip.admin.dao.ClientApiKeyMapper">
 
     <!--redis 缓存-->
-    <cache type="live.itrip.admin.cache.RedisCache" eviction="LRU" />
+    <cache type="live.itrip.admin.cache.RedisCache" eviction="LRU"/>
 
     <resultMap id="BaseResultMap" type="live.itrip.admin.model.ClientApiKey">
         <id column="id" property="id" jdbcType="INTEGER"/>
@@ -29,7 +29,7 @@
     delete from client_api_key
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="live.itrip.admin.model.ClientApiKey">
+    <insert id="insert" parameterType="live.itrip.admin.model.ClientApiKey" keyProperty="id" useGeneratedKeys="true">
     insert into client_api_key (id, client_name, api_key, 
       secret_key, source, description,
       is_delete, create_time, update_time
@@ -39,7 +39,7 @@
       #{isDelete,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}
       )
   </insert>
-    <insert id="insertSelective" parameterType="live.itrip.admin.model.ClientApiKey">
+    <insert id="insertSelective" parameterType="live.itrip.admin.model.ClientApiKey" keyProperty="id" useGeneratedKeys="true">
         insert into client_api_key
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">

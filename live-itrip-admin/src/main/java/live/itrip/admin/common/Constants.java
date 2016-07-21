@@ -12,6 +12,8 @@ public class Constants {
      */
     public static final String SESSION_USER = "sessionuser";
 
+    public static final String COOKIE_TOKEN_NAME = "userToken";
+
     /**
      * 正常登录
      */
