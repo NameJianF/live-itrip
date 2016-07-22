@@ -10,6 +10,7 @@ import live.itrip.admin.service.BaseService;
 import live.itrip.admin.service.intefaces.IAdminModuleService;
 import live.itrip.admin.service.intefaces.IUserService;
 import live.itrip.common.ErrorCode;
+import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
 import live.itrip.common.util.CookieUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -89,8 +90,22 @@ public class UserServiceImpl extends BaseService implements IUserService {
      */
     @Override
     public void selectModules(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
-        List<AdminModule> list = iAdminModuleService.selectModules("0");
+        BaseResult result = new BaseResult();
 
+        try {
+            List<AdminModule> list = iAdminModuleService.selectModules("0");
+            if (list != null) {
+                result.setCode(ErrorCode.SUCCESS.getCode());
+                result.setData(list);
+                this.writeResponse(response, result);
+                return;
+            }
+        } catch (Exception ex) {
+            Logger.error(ex.getMessage(), ex);
+        }
+
+        result.setError(ErrorCode.UNKNOWN);
+        this.writeResponse(response, result);
     }
 
     /**

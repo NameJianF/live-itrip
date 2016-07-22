@@ -1,6 +1,7 @@
 package live.itrip.admin.dao;
 
 import live.itrip.admin.model.AdminModule;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,5 +24,5 @@ public interface AdminModuleMapper {
      * @param flag 是否标记删除的， 删除：1，正常：0
      * @return
      */
-    List<AdminModule> selectModules(String flag);
+    List<AdminModule> selectModules(@Param("flag") String flag);
 }

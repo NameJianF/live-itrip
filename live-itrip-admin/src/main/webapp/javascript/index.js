@@ -9,7 +9,7 @@ function loadModules() {
     var token = $.cookie('userToken');
 
     console.log("token:" + token)
-    
+
     var jsondata = {
         'op': 'module.select',
         'token': token
@@ -44,7 +44,7 @@ function loadModules() {
                             if (id == jsonarray[j].parentId) {
                                 var moduleurl = jsonarray[j].moduleUrl;
                                 if (moduleurl != null) {
-                                    strmenu += "<li><a class=\"J_menuItem\" href=\"" + moduleurl + "\">" + jsonarray[j].moduleName + "</a></li>";
+                                    strmenu += "<li><a class=\"J_menuItem\" href=\"" + moduleurl + "\" data-index='" + jsonarray[j].id + "'>" + jsonarray[j].moduleName + "</a></li>";
                                 }
                             }
                         }
@@ -52,7 +52,7 @@ function loadModules() {
                         strmenu += "</li>";
                     }
                 }
-                $("#side-menu").append(strmenu);
+                //$("#side-menu").append(strmenu);
 
             } else {
                 alert(response.message)

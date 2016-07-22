@@ -19,12 +19,11 @@
     <link href="/css/animate.min.css" rel="stylesheet">
     <link href="/css/style.min862f.css?v=4.1.0" rel="stylesheet">
 
-
     <script src="/javascript/common.js"></script>
     <script src="/javascript/index.js"></script>
 </head>
 
-<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden" onload="loadModules();">
 <div id="wrapper">
     <!--左侧导航开始-->
     <nav class="navbar-default navbar-static-side" role="navigation">
@@ -62,12 +61,11 @@
                         <span class="nav-label">首页</span>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa fa-bar-chart-o"></i>
-                        <span class="nav-label">系统设置</span>
-                        <span class="fa arrow"></span>
-                    </a>
+                <li><a href="#"><i class="fa fa fa-bar-chart-o"></i><span class="nav-label">系统设置</span><span
+                        class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="system/module.html" data-index="2">模块管理</a></li>
+                    </ul>
                 </li>
             </ul>
         </div>
@@ -80,7 +78,7 @@
                 <div class="navbar-header"><a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i
                         class="fa fa-bars"></i> </a>
                     <form role="search" class="navbar-form-custom" method="post"
-                          action="http://www.zi-han.net/theme/hplus/search_results.html">
+                          action="search.action">
                         <div class="form-group">
                             <input type="text" placeholder="请输入您需要查找的内容 …" class="form-control" name="top-search"
                                    id="top-search">
@@ -163,10 +161,10 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="hidden-xs">
-                        <a href="index_v1.html" class="J_menuItem" data-index="0"><i class="fa fa-cart-arrow-down"></i>
-                            购买</a>
-                    </li>
+                    <!--<li class="hidden-xs">-->
+                    <!--<a href="index_v1.html" class="J_menuItem" data-index="0"><i class="fa fa-cart-arrow-down"></i>-->
+                    <!--购买</a>-->
+                    <!--</li>-->
                     <li class="dropdown hidden-xs">
                         <a class="right-sidebar-toggle" aria-expanded="false">
                             <i class="fa fa-tasks"></i> 主题
@@ -637,7 +635,7 @@
 <script src="/js/plugins/pace/pace.min.js"></script>
 <script src="/js/jQueryCookie/jquery.cookie.js"></script>
 <script type="text/javascript">
-    loadModules();
+    //    loadModules();
 </script>
 
 </body>
