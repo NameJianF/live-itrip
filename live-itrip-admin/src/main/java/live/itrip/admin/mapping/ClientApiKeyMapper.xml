@@ -5,6 +5,14 @@
     <!--redis 缓存-->
     <cache type="live.itrip.admin.cache.RedisCache" eviction="LRU"/>
 
+
+    <!--（1）当为select语句时：-->
+    <!--flushCache默认为false，表示任何时候语句被调用，都不会去清空本地缓存和二级缓存。-->
+    <!--useCache默认为true，表示会将本条语句的结果进行二级缓存。-->
+    <!--（2）当为insert、update、delete语句时：-->
+    <!--flushCache默认为true，表示任何时候语句被调用，都会导致本地缓存和二级缓存被清空。-->
+    <!--useCache属性在该情况下没有。-->
+
     <resultMap id="BaseResultMap" type="live.itrip.admin.model.ClientApiKey">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="client_name" property="clientName" jdbcType="VARCHAR"/>
@@ -19,17 +27,19 @@
     <sql id="Base_Column_List">
     id, client_name, api_key, secret_key, source, description, is_delete, create_time, update_time
   </sql>
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer"
+            flushCache="false" useCache="true">
         select
         <include refid="Base_Column_List"/>
         from client_api_key
         where id = #{id,jdbcType=INTEGER}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" flushCache="true">
     delete from client_api_key
     where id = #{id,jdbcType=INTEGER}
   </delete>
-    <insert id="insert" parameterType="live.itrip.admin.model.ClientApiKey" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insert" parameterType="live.itrip.admin.model.ClientApiKey"
+            keyProperty="id" useGeneratedKeys="true" flushCache="true">
     insert into client_api_key (id, client_name, api_key, 
       secret_key, source, description,
       is_delete, create_time, update_time
@@ -39,7 +49,8 @@
       #{isDelete,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}
       )
   </insert>
-    <insert id="insertSelective" parameterType="live.itrip.admin.model.ClientApiKey" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insertSelective" parameterType="live.itrip.admin.model.ClientApiKey"
+            keyProperty="id" useGeneratedKeys="true" flushCache="true">
         insert into client_api_key
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -100,7 +111,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.admin.model.ClientApiKey">
+    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.admin.model.ClientApiKey" flushCache="true">
         update client_api_key
         <set>
             <if test="clientName != null">
@@ -130,7 +141,7 @@
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.ClientApiKey">
+    <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.ClientApiKey" flushCache="true">
     update client_api_key
     set client_name = #{clientName,jdbcType=VARCHAR},
       api_key = #{apiKey,jdbcType=CHAR},
@@ -145,7 +156,8 @@
 
 
     <!--自定义查询-->
-    <select id="selectAllKeys" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectAllKeys" resultMap="BaseResultMap" parameterType="java.lang.Integer"
+            flushCache="false" useCache="true">
         select
         <include refid="Base_Column_List"/>
         from client_api_key
