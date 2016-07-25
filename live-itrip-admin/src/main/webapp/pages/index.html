@@ -20,10 +20,9 @@
     <link href="/css/style.min862f.css?v=4.1.0" rel="stylesheet">
 
     <script src="/javascript/common.js"></script>
-    <script src="/javascript/index.js"></script>
 </head>
 
-<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden" onload="loadModules();">
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
 <div id="wrapper">
     <!--左侧导航开始-->
     <nav class="navbar-default navbar-static-side" role="navigation">
@@ -60,12 +59,6 @@
                         <i class="fa fa-home"></i>
                         <span class="nav-label">首页</span>
                     </a>
-                </li>
-                <li><a href="#"><i class="fa fa fa-bar-chart-o"></i><span class="nav-label">系统设置</span><span
-                        class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
-                        <li><a class="J_menuItem" href="system/module.html" data-index="2">模块管理</a></li>
-                    </ul>
                 </li>
             </ul>
         </div>
@@ -631,11 +624,15 @@
 <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="/js/plugins/layer/layer.min.js"></script>
 <script src="/js/hplus.min862f.js?v=4.1.0"></script>
-<script type="text/javascript" src="/js/contabs.min.js"></script>
+
 <script src="/js/plugins/pace/pace.min.js"></script>
 <script src="/js/jQueryCookie/jquery.cookie.js"></script>
+
+<!--<script type="text/javascript" src="/js/contabs.js"></script>-->
+<script src="/javascript/index.js"></script>
+
 <script type="text/javascript">
-    //    loadModules();
+    loadModules();
 </script>
 
 </body>
