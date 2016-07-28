@@ -15,6 +15,9 @@
         <module>live-itrip-sso</module>
         <module>live-itrip-web</module>
         <module>live-itrip-wechat</module>
+        <module>live-itrip-shiro</module>
+        <module>live-itrip-email</module>
+        <module>mybatis-generator</module>
     </modules>
     <url>http://maven.apache.org</url>
     <build>

@@ -12,5 +12,4 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     <!-- 自动扫描(自动注入) -->
     <context:component-scan base-package="live.itrip.admin.service"/>
 
-    <import resource="spring-redis.xml"/>
 </beans>

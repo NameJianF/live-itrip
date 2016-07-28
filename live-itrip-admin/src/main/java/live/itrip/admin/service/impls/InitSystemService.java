@@ -2,6 +2,7 @@ package live.itrip.admin.service.impls;
 
 import live.itrip.admin.common.Config;
 import live.itrip.common.Logger;
+import org.mybatis.caches.redis.RedisConfigurationBuilder;
 import org.springframework.stereotype.Service;
 
 import java.io.FileInputStream;
@@ -21,6 +22,7 @@ public class InitSystemService {
 
     private void initSystem() {
         this.loadConfig();
+        RedisConfigurationBuilder.getInstance().parseConfiguration();
     }
 
     private void loadConfig() {

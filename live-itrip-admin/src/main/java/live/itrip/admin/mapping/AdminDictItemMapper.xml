@@ -3,7 +3,7 @@
 <mapper namespace="live.itrip.admin.dao.AdminDictItemMapper">
 
     <!--redis 缓存-->
-    <cache type="live.itrip.admin.cache.RedisCache" eviction="LRU"/>
+    <cache type="org.mybatis.caches.redis.RedisCache" eviction="LRU"/>
 
     <resultMap id="BaseResultMap" type="live.itrip.admin.model.AdminDictItem">
         <id column="id" property="id" jdbcType="INTEGER"/>

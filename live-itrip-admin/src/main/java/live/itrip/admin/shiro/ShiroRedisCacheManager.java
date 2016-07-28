@@ -1,0 +1,73 @@
+package live.itrip.admin.shiro;
+
+import live.itrip.common.Logger;
+import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.CacheException;
+import org.apache.shiro.cache.CacheManager;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
+/**
+ * Created by Feng on 2016/7/28.
+ */
+public class ShiroRedisCacheManager implements CacheManager {
+
+    // fast lookup by name map
+    private final ConcurrentMap<String, Cache> caches = new ConcurrentHashMap<String, Cache>();
+
+    private ShiroRedisManager redisManager;
+
+    /**
+     * The Redis key prefix for caches
+     */
+    private String keyPrefix = "shiro_redis_cache:";
+
+    /**
+     * Returns the Redis session keys
+     * prefix.
+     *
+     * @return The prefix
+     */
+    public String getKeyPrefix() {
+        return keyPrefix;
+    }
+
+    /**
+     * Sets the Redis sessions key
+     * prefix.
+     *
+     * @param keyPrefix The prefix
+     */
+    public void setKeyPrefix(String keyPrefix) {
+        this.keyPrefix = keyPrefix;
+    }
+
+    @Override
+    public <K, V> Cache<K, V> getCache(String name) throws CacheException {
+        Logger.debug("获取名称为: " + name + " 的RedisCache实例");
+
+        Cache c = caches.get(name);
+
+        if (c == null) {
+
+            // initialize the Redis manager instance
+//            redisManager.init();
+
+            // create a new cache instance
+            c = new ShiroRedisCache<K, V>(redisManager, keyPrefix);
+
+            // add it to the cache collection
+            caches.put(name, c);
+        }
+        return c;
+    }
+
+    public ShiroRedisManager getRedisManager() {
+        return redisManager;
+    }
+
+    public void setRedisManager(ShiroRedisManager redisManager) {
+        this.redisManager = redisManager;
+    }
+}

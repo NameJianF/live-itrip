@@ -1,7 +1,6 @@
 package live.itrip.admin.controller;
 
 import com.alibaba.fastjson.JSON;
-import live.itrip.admin.cache.RedisCacheClient;
 import live.itrip.admin.controller.base.AbstractController;
 import live.itrip.admin.model.ClientApiKey;
 import live.itrip.admin.service.intefaces.IClientApiKeyService;

@@ -8,7 +8,8 @@
     <!-- 声明spring配置文件 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring/spring.xml,classpath:spring/spring-mybatis.xml</param-value>
+        <param-value>classpath:spring/spring.xml,classpath:spring/spring-mybatis.xml,classpath:spring/spring-shiro.xml
+        </param-value>
     </context-param>
 
     <!-- 使用UTF-8编码 -->
@@ -49,6 +50,21 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <!-- shiro 安全过滤器 -->
+    <filter>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <!-- .action 配置 -->
     <servlet-mapping>
         <servlet-name>springMvc</servlet-name>
@@ -66,5 +82,18 @@
         <welcome-file>/index.htm</welcome-file>
     </welcome-file-list>
 
+    <!-- 错误页 -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/pages/404.html</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/pages/500.html</location>
+    </error-page>
+    <error-page>
+        <exception-type>org.apache.shiro.authz.AuthorizationException</exception-type>
+        <location>/pages/401.html</location>
+    </error-page>
 
 </web-app>

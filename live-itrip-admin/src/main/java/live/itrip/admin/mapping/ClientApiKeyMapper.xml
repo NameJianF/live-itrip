@@ -3,7 +3,7 @@
 <mapper namespace="live.itrip.admin.dao.ClientApiKeyMapper">
 
     <!--redis 缓存-->
-    <cache type="live.itrip.admin.cache.RedisCache" eviction="LRU"/>
+    <cache type="org.mybatis.caches.redis.RedisCache" eviction="LRU"/>
 
 
     <!--（1）当为select语句时：-->
