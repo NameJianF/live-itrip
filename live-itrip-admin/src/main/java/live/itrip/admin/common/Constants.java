@@ -10,7 +10,7 @@ public class Constants {
     /**
      * session 中存储的用户信息标识
      */
-    public static final String SESSION_USER = "sessionuser";
+    public static final String SESSION_USER = "SessionUserInfo";
 
     public static final String COOKIE_TOKEN_NAME = "userToken";
 

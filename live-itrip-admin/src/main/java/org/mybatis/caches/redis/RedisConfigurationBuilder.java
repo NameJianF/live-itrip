@@ -86,7 +86,7 @@ public final class RedisConfigurationBuilder {
 				throw new RuntimeException(
 						"An error occurred while reading classpath property '"
 								+ redisPropertiesFilename
-								+ "', see nested exceptions", e);
+								+ "', see nested exception", e);
 			} finally {
 				try {
 					input.close();

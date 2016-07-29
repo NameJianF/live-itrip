@@ -24,7 +24,7 @@ import java.util.List;
  * apikey 服务类
  */
 @Service
-public class ClientApiKeyServiceImpl extends BaseService implements IClientApiKeyService {
+public class ClientApiKeyService extends BaseService implements IClientApiKeyService {
     @Autowired
     private ClientApiKeyMapper clientApiKeyMapper;
 

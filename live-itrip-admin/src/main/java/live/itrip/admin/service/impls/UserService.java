@@ -1,10 +1,9 @@
 package live.itrip.admin.service.impls;
 
 import com.alibaba.fastjson.JSON;
-import live.itrip.admin.api.sso.SsoApi;
-import live.itrip.admin.api.sso.bean.LoginResponse;
 import live.itrip.admin.api.sso.bean.User;
 import live.itrip.admin.common.Constants;
+import live.itrip.admin.exception.BaseResultAuthenticationException;
 import live.itrip.admin.model.AdminModule;
 import live.itrip.admin.service.BaseService;
 import live.itrip.admin.service.intefaces.IAdminModuleService;
@@ -14,6 +13,9 @@ import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
 import live.itrip.common.util.CookieUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
  * admin  用户操作服务
  */
 @Service
-public class UserServiceImpl extends BaseService implements IUserService {
+public class UserService extends BaseService implements IUserService {
 
     @Autowired
     private IAdminModuleService iAdminModuleService;
@@ -52,30 +54,38 @@ public class UserServiceImpl extends BaseService implements IUserService {
 //            return;
 //        }
 
-        SsoApi ssoApi = new SsoApi();
-        LoginResponse loginResponse = ssoApi.userLogin(loginData.getUserName(), loginData.getPwd());
+        Subject currentSubject = SecurityUtils.getSubject();
+        if (currentSubject.isAuthenticated()) {
+            result.setCode(ErrorCode.SUCCESS.getCode());
+            this.writeResponse(response, result);
+            return;
+        }
 
-        if (loginResponse.getCode() != null && loginResponse.getCode() == 0) {
-            // 校验账号密码
-            User user = loginResponse.getData();
-            if (user == null) {
-                // 用户名错误
-                result.setCode(ErrorCode.USERNAME_PWD_INVALID.getCode());
-                result.setMsg(ErrorCode.USERNAME_PWD_INVALID.getMessage());
-            } else {
-                // 用户信息正确
-                request.getSession().setAttribute(Constants.SESSION_USER, user);
-                // 写入 cookie
-                CookieUtils.setCookie(request, response, Constants.COOKIE_TOKEN_NAME, user.getToken());
+        try {
+            // 身份验证
+            UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(loginData.getUserName(), loginData.getPwd());
+            // 记住我
+//            boolean rememberMe = true;
+//            if (rememberMe) {
+//                usernamePasswordToken.setRememberMe(rememberMe);
+//            }
+            currentSubject.login(usernamePasswordToken);
 
-                result.setCode(ErrorCode.SUCCESS.getCode());
-                this.writeResponse(response, result);
-                return;
-            }
-        } else {
-            // 用户名错误
-            result.setCode(ErrorCode.USERNAME_PWD_INVALID.getCode());
-            result.setMsg(ErrorCode.USERNAME_PWD_INVALID.getMessage());
+            // 用户信息正确,通过验证
+            User user = (User) currentSubject.getPrincipal();
+            // 写入session
+            currentSubject.getSession().setAttribute(Constants.SESSION_USER, user);
+            // 写入 cookie
+            CookieUtils.setCookie(request, response, Constants.COOKIE_TOKEN_NAME, user.getToken());
+
+            result.setCode(ErrorCode.SUCCESS.getCode());
+            this.writeResponse(response, result);
+            return;
+        } catch (BaseResultAuthenticationException e) {
+            // 身份验证失败
+            result = e.getResult();
+            // logout
+            currentSubject.logout();
         }
 
         this.writeResponse(response, result);
@@ -93,6 +103,10 @@ public class UserServiceImpl extends BaseService implements IUserService {
         BaseResult result = new BaseResult();
 
         try {
+
+            Subject subject = SecurityUtils.getSubject();
+            subject.isPermitted();
+
             List<AdminModule> list = iAdminModuleService.selectModules("0");
             if (list != null) {
                 result.setCode(ErrorCode.SUCCESS.getCode());

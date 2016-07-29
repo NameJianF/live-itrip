@@ -72,4 +72,7 @@
       role_id = #{roleId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+
+    <!--自定义查询-->
 </mapper>

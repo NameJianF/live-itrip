@@ -83,4 +83,14 @@
       description = #{description,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+    <!--自定义查询-->
+
+    <select id="selectRolesByUserId" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM admin_role INNER JOIN admin_user_role ON admin_role.id = admin_user_role.role_id
+        WHERE admin_user_role.user_id = ${userId}
+    </select>
+
 </mapper>

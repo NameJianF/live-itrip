@@ -1,11 +1,12 @@
 package live.itrip.admin.api.sso.bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Feng on 2016/7/15.
  */
-public class User {
+public class User implements Serializable {
     private Long id;
 
     private String userName;
@@ -35,10 +36,6 @@ public class User {
     private String status;
 
     private String identity;
-
-    private Long createTime;
-
-    private Date updateTime;
 
     private String token;
 
@@ -160,22 +157,6 @@ public class User {
 
     public void setIdentity(String identity) {
         this.identity = identity == null ? null : identity.trim();
-    }
-
-    public Long getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Long createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 
     public String getToken() {

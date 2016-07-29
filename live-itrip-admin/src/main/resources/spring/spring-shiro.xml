@@ -9,26 +9,35 @@
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <property name="loginUrl" value="/rest/page/login"/>
-        <property name="successUrl" value="/rest/index"/>
-        <property name="unauthorizedUrl" value="/rest/page/401"/>
+        <property name="loginUrl" value="/pages/login.html"/>
+        <property name="successUrl" value="/pages/index.html"/>
+        <property name="unauthorizedUrl" value="/pages/401.html"/>
         <property name="filterChainDefinitions">
             <value>
                 <!-- 静态资源允许访问 -->
-                /app/** = anon
-                /assets/** = anon
+                <!--/app/** = anon-->
+                <!--/assets/** = anon-->
                 <!-- 登录页允许访问 -->
-                /rest/user/login = anon
+                <!--/rest/user/login = anon-->
                 <!-- 其他资源需要认证 -->
-                /** = authc
+                <!--/** = authc-->
             </value>
         </property>
     </bean>
 
+    <!--realm配置，realm是shiro的桥梁，它主要是用来判断subject是否可以登录及权限等-->
+    <bean id="securityRealm" class="live.itrip.admin.shiro.realm.SecurityRealm">
+        <!--<property name="userService" ref="userService" />-->
+    </bean>
+
     <!-- shiro securityManager -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-
         <!-- Single realm app.  If you have multiple realms, use the 'realms' property instead. -->
+        <property name="realms">
+            <list>
+                <ref bean="securityRealm"/>
+            </list>
+        </property>
 
         <!-- sessionManager -->
         <property name="sessionManager" ref="sessionManager"/>
