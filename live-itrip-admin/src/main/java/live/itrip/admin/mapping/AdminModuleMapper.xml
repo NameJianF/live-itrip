@@ -223,5 +223,9 @@
         from admin_module
         where is_delete = '${flag}'
     </select>
-
+    <select id="selectAllModules" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from admin_module
+    </select>
 </mapper>

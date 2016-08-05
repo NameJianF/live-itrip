@@ -63,7 +63,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
             <!--<mvc:mapping path="/subscribe/*" />-->
             <!--<mvc:mapping path="/recipient/*" />-->
             <!--<mvc:mapping path="/mail/*" />-->
-            <bean class="live.itrip.admin.controller.SystemInterceptor"></bean>
+            <bean class="live.itrip.admin.controller.AuthorizedInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
 

@@ -2,6 +2,8 @@ package live.itrip.admin.service.intefaces;
 
 import live.itrip.admin.model.AdminModule;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -16,4 +18,11 @@ public interface IAdminModuleService {
      * @return
      */
     List<AdminModule> selectModules(String flag);
+
+    /**
+     * @param decodeJson
+     * @param response
+     * @param request
+     */
+    void selectModules(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 }

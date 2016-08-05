@@ -25,4 +25,11 @@ public interface AdminModuleMapper {
      * @return
      */
     List<AdminModule> selectModules(@Param("flag") String flag);
+
+    /**
+     * 查询全部
+     *
+     * @return
+     */
+    List<AdminModule> selectAllModules();
 }
