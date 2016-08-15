@@ -1,9 +1,8 @@
 var tabModules;
 
-
-function selectModules(sSource, aoData, fnCallback) {
-    console.log("========== selectModules ==========")
-    sSource = "/sysCfg.action?op=module.select";
+function funSelectModules(sSource, aoData, fnCallback) {
+    console.log("========== selectModules ==========");
+    sSource = "/sysCfg.action?flag=1";
 
     // 添加查询条件
     //var queryContent = $("#queryContent").val();
@@ -13,13 +12,11 @@ function selectModules(sSource, aoData, fnCallback) {
     //aoData.push({name: "querySort", value: querySort});
     //aoData.push({name: "queryStatus", value: queryStatus});
 
-    //var token = $.cookie('userToken');
-    //aoData.push({name: "token", value: token});
-    //aoData.push({name: "op", value: "module.select"});
-
+    var token = $.cookie('userToken');
+    aoData.push({name: "token", value: token});
     aoData = JSON.stringify(aoData);
 
-    execAjaxData(sSource, aoData, true
+    execAjaxData(sSource, aoData, false
         , function (response) {
             // error
         }, function (aaData) {
@@ -28,20 +25,48 @@ function selectModules(sSource, aoData, fnCallback) {
         }, function () {
             // complete
         });
+}
 
-    //$.ajax({
-    //    url: sSource, //sAjaxSource
-    //    data: aoData,
-    //    type: 'POST',
-    //    dataType: 'json',
-    //    contentType: 'application/json;charset=UTF-8',
-    //    async: false,
-    //    success: function (aaData) {
-    //        console.log("call data:" + aaData);
-    //        fnCallback(aaData);
-    //    },
-    //    error: function (msg) {
-    //        console.log(msg);
-    //    }
-    //});
+/**
+ * 修改
+ * @param moduleid
+ */
+function funEditModuleInfo(moduleid) {
+    var token = $.cookie('userToken');
+    var jsondata = {
+        'op': 'module.detail',
+        'token': token,
+        'moduleid': moduleid
+    };
+
+    execAjaxData("/sysCfg.action", jsondata, true
+        , function (response) {
+            // error
+        }, function (aaData) {
+            // success
+        }, function () {
+            // complete
+        });
+}
+
+/**
+ * 删除
+ * @param moduleid
+ */
+function funDeleteModuleInfo(moduleid) {
+
+}
+
+/**
+ * 刷新
+ */
+function funRefresh() {
+
+}
+
+/**
+ * 新增
+ */
+function funClickAddRow() {
+    console.log(" fnClickAddRow click ");
 }

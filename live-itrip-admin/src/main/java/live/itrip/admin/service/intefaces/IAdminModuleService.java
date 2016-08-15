@@ -25,4 +25,13 @@ public interface IAdminModuleService {
      * @param request
      */
     void selectModules(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    /**
+     * 查询模块详细信息
+     *
+     * @param decodeJson
+     * @param response
+     * @param request
+     */
+    void selectModuleById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 }

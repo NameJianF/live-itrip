@@ -4,7 +4,7 @@
 <link href="/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
 
 <!-- DataTables -->
-<link rel="stylesheet" href="/js/plugins/datatables/dataTables.bootstrap.css">
+<link rel="stylesheet" href="/css/plugins/dataTables/dataTables.bootstrap.css">
 
 <link href="/css/animate.min.css" rel="stylesheet">
 <link href="/css/style.min862f.css?v=4.1.0" rel="stylesheet">
@@ -12,44 +12,50 @@
 <script src="/javascript/common.js"></script>
 <script src="/javascript/system/module.js"></script>
 
-<div class="col-sm-12 gray-bg">
-    <div class="ibox float-e-margins" style="margin-top: 5px;margin-bottom: -5px;">
-        <div class="ibox-content" style="border:solid 1px #add9c0;">
-            <div>
-                <a onclick="fnClickAddRow();" href="javascript:void(0);" class="btn btn-primary ">添加行</a>
-            </div>
-            <table class="table table-striped table-bordered table-hover" id="tableModules">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Email</th>
-                    <th>姓名</th>
-                    <th>手机号</th>
-                    <th>所属部门</th>
-                    <th>创建时间</th>
-                    <th>状态</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content table-responsive">
+                <div style="border-bottom:solid 1px lightgray; margin-bottom: 4px;">
+                    <a onclick="funClickAddRow();" href="javascript:void(0);" class="btn btn-primary ">刷新</a>
+                    <a onclick="funRefresh();" href="javascript:void(0);" class="btn btn-primary ">添加</a>
+                </div>
+                <table class="table table-hover table-bordered" id="tableModules" style="font-size: 14px;">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>模块名称</th>
+                        <th>父模块</th>
+                        <th>模块地址</th>
+                        <th>是否可用</th>
+                        <th>排序</th>
+                        <th>描述</th>
+                        <th>是否删除</th>
+                        <th>创建时间</th>
+                        <th>更新时间</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
 
-            </table>
+                </table>
+            </div>
         </div>
     </div>
 </div>
-
 <script src="/js/jquery.min63b9.js?v=2.1.4"></script>
 <script src="/js/bootstrap.min14ed.js?v=3.3.6"></script>
-<script src="/js/content.mine209.js?v=1.0.0"></script>
+<script src="/js/jQueryCookie/jquery.cookie.js"></script>
 
 <!-- DataTables -->
-<script src="/js/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="/js/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="/js/plugins/datatables/jquery.dataTables.js"></script>
+<script src="/js/plugins/datatables/dataTables.bootstrap.js"></script>
 
+<script src="/js/content.mine209.js?v=1.0.0"></script>
 
 <script>
-    tabModules = $('#tableModules').DataTable({
+    tabModules = $('#tableModules').dataTable({
         "bProcessing": true, // 是否显示取数据时的那个等待提示
         "bServerSide": true, //这个用来指明是通过服务端来取数据
         "bPaginate": true, // 分页按钮
@@ -57,50 +63,67 @@
         "iDisplayLength": 10,// 每页显示行数
         "bAutoWidth": true,//自动宽度
         "bInfo": true,//页脚信息
-        "fnServerData": selectModules, // 获取数据的处理函数
+        "fnServerData": funSelectModules, // 获取数据的处理函数
         "bFilter": false, // 隐藏筛选框
         "ordering": false,
         "aoColumns": [
-//            {
-//                render: function (data, type, row) {
-//                    if (type === 'display') {
-//                        return '<input type="checkbox">';
-//                    }
-//                    return data;
-//                }
-//            },
+            {"mData": "id"},
+            {"mData": "moduleName"},
+            {"mData": "parentId"},
+            {"mData": "moduleUrl"},
             {
-                "mData": "id"
-            },
-            {"mData": "email"},
-            {"mData": "nickName"},
-            {
-                "mData": "mobile",
+                "mData": "available",
                 render: function (data, type, row) {
-                    if (null == data || "" == data) {
-                        return "未设置";
+                    if (data == 1) {
+                        return "可用";
                     } else {
-                        return data;
+                        return "不可用";
                     }
                 }
             },
-            {"mData": "depart"},
-            {"mData": "createTime"},
+            {"mData": "moduleOrder"},
             {
-                "mData": "status",
+                "mData": "description",
+                render: function (data, type, row) {
+                    if (data == null) {
+                        return "";
+                    }
+                    return data;
+                }
+            },
+            {
+                "mData": "isDelete",
                 render: function (data, type, row) {
                     if (data == 1) {
-                        return "生效";
+                        return "删除";
                     } else {
-                        return "未生效";
+                        return "正常";
                     }
-                    return "未知";
+                }
+            },
+            {
+                "mData": "createTime",
+                render: function (data, type, row) {
+                    if (data == null) {
+                        return "";
+                    }
+                    return data;
+                }
+            },
+            {
+                "mData": "updateTime",
+                render: function (data, type, row) {
+                    if (data == null) {
+                        return "";
+                    }
+                    return data;
                 }
             },
             {
                 render: function (data, type, row) {
                     if (type === 'display') {
-                        return '<button type="button" class="btn btn-link btn-xs" onclick="showModalUserForm(' + row.id + ')">编辑</button>';
+                        return '<button type="button" class="btn btn-link btn-xs" onclick="funEditModuleInfo(' + row.id + ')">编辑</button>' +
+                                '<button type="button" class="btn btn-link btn-xs" onclick="funDeleteModuleInfo(' + row.id + ')">删除</button>';
                     }
                     return data;
                 }
@@ -119,42 +142,5 @@
             "sZeroRecords": "抱歉， 没有数据",
             "sInfoEmpty": "没有数据"
         }
-    });
-    /********************************/
-    //add tooltip for small view action buttons in dropdown menu
-    $('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
-
-    //tooltip placement on right or left
-    function tooltip_placement(context, source) {
-        var $source = $(source);
-        var $parent = $source.closest('table')
-        var off1 = $parent.offset();
-        var w1 = $parent.width();
-
-        var off2 = $source.offset();
-        //var w2 = $source.width();
-
-        if (parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2)) return 'right';
-        return 'left';
-    }
-
-    $('.mailbox-messages input[type="checkbox"]').iCheck({
-        checkboxClass: 'icheckbox_flat-blue',
-        radioClass: 'iradio_flat-blue'
-    });
-
-    //Enable check and uncheck all functionality
-    $(".checkbox-toggle").click(function () {
-        var clicks = $(this).data('clicks');
-        if (clicks) {
-            //Uncheck all checkboxes
-            $(".mailbox-messages input[type='checkbox']").iCheck("uncheck");
-            $(".fa", this).removeClass("fa-check-square-o").addClass('fa-square-o');
-        } else {
-            //Check all checkboxes
-            $(".mailbox-messages input[type='checkbox']").iCheck("check");
-            $(".fa", this).removeClass("fa-square-o").addClass('fa-check-square-o');
-        }
-        $(this).data("clicks", !clicks);
     });
 </script>

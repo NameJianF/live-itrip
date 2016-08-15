@@ -79,4 +79,16 @@ public class AdminModuleService extends BaseService implements IAdminModuleServi
         error.setCode(ErrorCode.UNKNOWN.getCode());
         this.writeResponse(response, error);
     }
+
+    /**
+     * 查询模块详细信息
+     *
+     * @param decodeJson
+     * @param response
+     * @param request
+     */
+    @Override
+    public void selectModuleById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+
+    }
 }

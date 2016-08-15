@@ -103,7 +103,6 @@ public class UserService extends BaseService implements IUserService {
         BaseResult result = new BaseResult();
 
         try {
-
             Subject subject = SecurityUtils.getSubject();
             subject.isPermitted();
 

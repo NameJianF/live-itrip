@@ -44,24 +44,24 @@ public class SystemConfigController extends AbstractController {
             this.paramInvalid(response, "JSON");
             return;
         }
-        String op = request.getParameter("op");
+        String flag = request.getParameter("flag");
+        // 1: from table select
 
-        if (StringUtils.isEmpty(op)) {
-            this.paramInvalid(response, "op");
-            return;
-        }
-        try {
-
-//            RequestHeader header = JSON.parseObject(decodeJson, RequestHeader.class);
-//            if (header != null && StringUtils.isNotEmpty(header.getOp())) {
-//                String op = header.getOp();
-            if ("module.select".equalsIgnoreCase(op)) {
-                // 查询模块信息
-                iAdminModuleService.selectModules(decodeJson, response, request);
+        if ("1".equalsIgnoreCase(flag)) {
+            // 查询模块信息： op = module.select
+            iAdminModuleService.selectModules(decodeJson, response, request);
+        } else {
+            try {
+                RequestHeader header = JSON.parseObject(decodeJson, RequestHeader.class);
+                if (header != null && StringUtils.isNotEmpty(header.getOp())) {
+                    String op = header.getOp();
+                    if ("module.detail".equalsIgnoreCase(op)) {
+                        iAdminModuleService.selectModuleById(decodeJson, response, request);
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.error("", ex);
             }
-//            }
-        } catch (Exception ex) {
-            Logger.error("", ex);
         }
     }
 }
