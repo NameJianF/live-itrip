@@ -1,5 +1,7 @@
 package live.itrip.admin.service.impls;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import live.itrip.admin.common.BootStrapDataTableList;
 import live.itrip.admin.common.PagerInfo;
 import live.itrip.admin.dao.AdminModuleMapper;
@@ -89,6 +91,18 @@ public class AdminModuleService extends BaseService implements IAdminModuleServi
      */
     @Override
     public void selectModuleById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        BaseResult result = new BaseResult();
+        JSONObject jsonObject = JSON.parseObject(decodeJson);
+        Integer moduleid = (Integer) jsonObject.get("moduleid");
+        if (moduleid != null) {
+            AdminModule adminModule = this.adminModuleMapper.selectByPrimaryKey(moduleid);
+            result.setCode(ErrorCode.SUCCESS.getCode());
+            result.setData(adminModule);
+            this.writeResponse(response, result);
+            return;
+        }
 
+        result.setError(ErrorCode.UNKNOWN);
+        this.writeResponse(response, result);
     }
 }

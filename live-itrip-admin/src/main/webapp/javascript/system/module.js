@@ -31,7 +31,7 @@ function funSelectModules(sSource, aoData, fnCallback) {
  * 修改
  * @param moduleid
  */
-function funEditModuleInfo(moduleid) {
+function funEditGetModuleInfo(moduleid) {
     var token = $.cookie('userToken');
     var jsondata = {
         'op': 'module.detail',
@@ -39,14 +39,35 @@ function funEditModuleInfo(moduleid) {
         'moduleid': moduleid
     };
 
-    execAjaxData("/sysCfg.action", jsondata, true
+    execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
-        }, function (aaData) {
+        }, function (datas) {
             // success
+            if (datas.code == 0) {
+                $('#editModuleName').val(datas.data.moduleName);
+                $('#editModuleParent').val(datas.data.parentId);
+                $('#editModuleUrl').val(datas.data.moduleUrl);
+                $('#editModuleAvailable').val(datas.data.available);
+                $('#editModuleOrder').val(datas.data.moduleOrder);
+                $('#editModuleDiscription').val(datas.data.description);
+                $('#editModuleDelete').val(datas.data.isDelete);
+
+                $('#formEditTitle').text("编辑模块");
+                $('#formEditModule').modal('show');
+            }
         }, function () {
             // complete
         });
+}
+
+
+function editSaveModuleInfo(isNew) {
+    if (isNew) {
+        // 新增
+    } else {
+        // 编辑
+    }
 }
 
 /**
@@ -54,14 +75,16 @@ function funEditModuleInfo(moduleid) {
  * @param moduleid
  */
 function funDeleteModuleInfo(moduleid) {
-
+    if (confirm("确定要删除数据吗?")) {
+        console.log("delete module id:" + moduleid);
+    }
 }
 
 /**
  * 刷新
  */
 function funRefresh() {
-
+    tabModules.fnDraw();
 }
 
 /**
@@ -69,4 +92,16 @@ function funRefresh() {
  */
 function funClickAddRow() {
     console.log(" fnClickAddRow click ");
+    // clear
+    $('#formEditTitle').text("新增模块");
+
+    $('#editModuleName').val("");
+    $('#editModuleParent').val("");
+    $('#editModuleUrl').val("");
+    $('#editModuleAvailable').val(0);
+    $('#editModuleOrder').val("");
+    $('#editModuleDiscription').val("");
+    $('#editModuleDelete').val(0);
+
+    $('#formEditModule').modal('show');
 }
