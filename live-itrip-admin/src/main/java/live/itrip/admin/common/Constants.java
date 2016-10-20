@@ -23,4 +23,23 @@ public class Constants {
      * 微信
      */
     public static final String WEICHAT = "weichat";
+
+
+    // ============== flag =========
+    /**
+     * 删除标记
+     */
+    public static final String FLAG_IS_DELETE = "1";
+    /**
+     * 未删除标记
+     */
+    public static final String FLAG_NO_DELETE = "0";
+    /**
+     * 可用标记
+     */
+    public static final String FLAG_AVAILABLE = "1";
+    /**
+     * 不可用标记
+     */
+    public static final String FLAG_UNAVAILABLE = "0";
 }

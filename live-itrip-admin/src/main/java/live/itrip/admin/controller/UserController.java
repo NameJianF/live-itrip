@@ -17,29 +17,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by Feng on 2016/7/5.
+ * Created by Feng on 2016/10/12.
  * <p>
- * 用户操作相关
+ * 用户相关，不需要登录验证的action
  */
 @Controller
 public class UserController extends AbstractController {
-
     @Autowired
     private IUserService iUserService;
-
-
-    /**
-     * 测试接口是否连通
-     *
-     * @param response
-     * @param request
-     */
-    @RequestMapping("/test")
-    public
-    @ResponseBody
-    void test(HttpServletResponse response, HttpServletRequest request) {
-        this.writeResponse(response, "hello ---------");
-    }
 
 
     /**
@@ -61,14 +46,44 @@ public class UserController extends AbstractController {
         }
         try {
             RequestHeader header = JSON.parseObject(decodeJson, RequestHeader.class);
+            // dispatch op
             if (header != null && StringUtils.isNotEmpty(header.getOp())) {
                 String op = header.getOp();
                 if ("user.login".equalsIgnoreCase(op)) {
                     // login
-                    iUserService.login(decodeJson, response, request);
-                } else if ("module.select".equalsIgnoreCase(op)) {
-                    // 查询模块信息
-                    iUserService.selectModules(decodeJson, response, request);
+                    iUserService.userLogin(decodeJson, response, request);
+                }
+            }
+        } catch (Exception ex) {
+            Logger.error("", ex);
+        }
+    }
+
+    /**
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/userInfo")
+    public
+    @ResponseBody
+    void userInfo(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+        String decodeJson = JsonStringUtils.URLDecoderForJsonString(json);
+        Logger.debug(
+                String.format("timestamp:%s action:%s json:%s",
+                        System.currentTimeMillis(), "user", decodeJson));
+
+        if (StringUtils.isEmpty(decodeJson)) {
+            this.paramInvalid(response, "JSON");
+            return;
+        }
+        try {
+            RequestHeader header = JSON.parseObject(decodeJson, RequestHeader.class);
+            // dispatch op
+            if (header != null && StringUtils.isNotEmpty(header.getOp())) {
+                String op = header.getOp();
+                if ("module.select".equalsIgnoreCase(op)) {
+                    // 根据用户查询模块信息
+                    iUserService.selectModulesByUser(decodeJson, response, request);
                 }
             }
         } catch (Exception ex) {

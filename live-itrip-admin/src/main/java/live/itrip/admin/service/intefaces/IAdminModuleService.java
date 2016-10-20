@@ -1,5 +1,6 @@
 package live.itrip.admin.service.intefaces;
 
+import live.itrip.admin.api.sso.bean.User;
 import live.itrip.admin.model.AdminModule;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,23 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Created by Feng on 2016/7/21.
+ * Created by Feng on 2016/10/11.
  */
 public interface IAdminModuleService {
+    List<AdminModule> selectAllModules();
 
-    /**
-     * 查询模块信息
-     *
-     * @param flag 是否标记删除的， 删除：1，正常：0
-     * @return
-     */
-    List<AdminModule> selectModules(String flag);
+    List<AdminModule> selectModulesByUser(User user);
 
-    /**
-     * @param decodeJson
-     * @param response
-     * @param request
-     */
     void selectModules(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 
     /**
@@ -34,4 +25,22 @@ public interface IAdminModuleService {
      * @param request
      */
     void selectModuleById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    /**
+     * 逻辑删除模块信息
+     *
+     * @param decodeJson
+     * @param response
+     * @param request
+     */
+    void deleteModuleById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    /**
+     * 编辑模块信息：添加或修改
+     *
+     * @param decodeJson
+     * @param response
+     * @param request
+     */
+    void editModuleById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 }

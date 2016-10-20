@@ -1,11 +1,19 @@
 package live.itrip.admin.model;
 
-public class AdminRolePermission {
+import java.io.Serializable;
+
+public class AdminRolePermission implements Serializable {
     private Long id;
 
     private Long roleId;
 
-    private Long permissionId;
+    private Long moduleId;
+
+    private String operation;
+
+    private Long createTime;
+
+    private Long updateTime;
 
     public Long getId() {
         return id;
@@ -23,11 +31,35 @@ public class AdminRolePermission {
         this.roleId = roleId;
     }
 
-    public Long getPermissionId() {
-        return permissionId;
+    public Long getModuleId() {
+        return moduleId;
     }
 
-    public void setPermissionId(Long permissionId) {
-        this.permissionId = permissionId;
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+
+    public void setOperation(String operation) {
+        this.operation = operation == null ? null : operation.trim();
+    }
+
+    public Long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Long createTime) {
+        this.createTime = createTime;
+    }
+
+    public Long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Long updateTime) {
+        this.updateTime = updateTime;
     }
 }

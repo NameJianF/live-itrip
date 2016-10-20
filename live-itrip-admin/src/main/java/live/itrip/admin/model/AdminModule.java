@@ -1,8 +1,6 @@
 package live.itrip.admin.model;
 
-import java.io.Serializable;
-
-public class AdminModule implements Serializable {
+public class AdminModule {
     private Integer id;
 
     private String moduleName;
@@ -11,19 +9,9 @@ public class AdminModule implements Serializable {
 
     private String moduleUrl;
 
-    private String available;
-
     private Integer moduleOrder;
 
-    private String moduleImage;
-
-    private String selectedImage;
-
-    private String disableImage;
-
-    private String expansionImage;
-
-    private String expand;
+    private String moduleIcon;
 
     private String description;
 
@@ -65,14 +53,6 @@ public class AdminModule implements Serializable {
         this.moduleUrl = moduleUrl == null ? null : moduleUrl.trim();
     }
 
-    public String getAvailable() {
-        return available;
-    }
-
-    public void setAvailable(String available) {
-        this.available = available == null ? null : available.trim();
-    }
-
     public Integer getModuleOrder() {
         return moduleOrder;
     }
@@ -81,44 +61,12 @@ public class AdminModule implements Serializable {
         this.moduleOrder = moduleOrder;
     }
 
-    public String getModuleImage() {
-        return moduleImage;
+    public String getModuleIcon() {
+        return moduleIcon;
     }
 
-    public void setModuleImage(String moduleImage) {
-        this.moduleImage = moduleImage == null ? null : moduleImage.trim();
-    }
-
-    public String getSelectedImage() {
-        return selectedImage;
-    }
-
-    public void setSelectedImage(String selectedImage) {
-        this.selectedImage = selectedImage == null ? null : selectedImage.trim();
-    }
-
-    public String getDisableImage() {
-        return disableImage;
-    }
-
-    public void setDisableImage(String disableImage) {
-        this.disableImage = disableImage == null ? null : disableImage.trim();
-    }
-
-    public String getExpansionImage() {
-        return expansionImage;
-    }
-
-    public void setExpansionImage(String expansionImage) {
-        this.expansionImage = expansionImage == null ? null : expansionImage.trim();
-    }
-
-    public String getExpand() {
-        return expand;
-    }
-
-    public void setExpand(String expand) {
-        this.expand = expand == null ? null : expand.trim();
+    public void setModuleIcon(String moduleIcon) {
+        this.moduleIcon = moduleIcon == null ? null : moduleIcon.trim();
     }
 
     public String getDescription() {

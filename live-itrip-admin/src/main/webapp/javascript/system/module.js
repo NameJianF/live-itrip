@@ -1,8 +1,110 @@
 var tabModules;
 
+$(function () {
+    tabModules = $('#tableModules').DataTable({
+        //"dom": '<"html5buttons"B>lTfgitp',
+        //"buttons": [
+        //    {extend: 'copy'},
+        //    {extend: 'csv'},
+        //    {extend: 'excel', title: 'ExampleFile'},
+        //    {extend: 'pdf', title: 'ExampleFile'},
+        //    {
+        //        extend: 'print',
+        //        customize: function (win) {
+        //            $(win.document.body).addClass('white-bg');
+        //            $(win.document.body).css('font-size', '10px');
+        //            $(win.document.body).find('table')
+        //                .addClass('compact')
+        //                .css('font-size', 'inherit');
+        //        }
+        //    }
+        //],
+        "bProcessing": true, // 是否显示取数据时的那个等待提示
+        "bServerSide": true, //这个用来指明是通过服务端来取数据
+        "bPaginate": true, // 分页按钮
+        "bLengthChange": true, // 改变每页显示数据数量
+        "iDisplayLength": 10,// 每页显示行数
+        "bInfo": true,//页脚信息
+        "bAutoWidth": true,//自动宽度
+        "fnServerData": funSelectModules, // 获取数据的处理函数
+        "bFilter": false, // 隐藏筛选框
+        "ordering": false,
+        'bStateSave': true,
+        "aoColumns": [
+            {"mData": "id"},
+            {"mData": "moduleName"},
+            {"mData": "parentId"},
+            {"mData": "moduleUrl"},
+            {"mData": "moduleOrder"},
+            {
+                "mData": "description",
+                render: function (data, type, row) {
+                    if (data == null) {
+                        return "";
+                    }
+                    return data;
+                }
+            },
+            {
+                "mData": "isDelete",
+                render: function (data, type, row) {
+                    if (data == 1) {
+                        return "删除";
+                    } else {
+                        return "正常";
+                    }
+                }
+            },
+            {
+                "mData": "createTime",
+                render: function (data, type, row) {
+                    if (data == null) {
+                        return "";
+                    }
+                    return (new Date(data)).Format("yyyy-MM-dd hh:mm:ss");
+                }
+            },
+            {
+                "mData": "updateTime",
+                render: function (data, type, row) {
+                    if (data == null) {
+                        return "";
+                    }
+                    return (new Date(data)).Format("yyyy-MM-dd hh:mm:ss");
+                }
+            },
+            {
+                render: function (data, type, row) {
+                    if (type === 'display') {
+                        return '<button type="button" class="btn btn-link btn-xs" onclick="funEditGetModuleInfo(' + row.id + ')">编辑</button>' +
+                            '<button type="button" class="btn btn-link btn-xs" onclick="funDeleteModuleInfo(' + row.id + ')">删除</button>';
+                    }
+                    return data;
+                }
+            }
+        ],
+        "language": {  //语言设置
+            'sSearch': '筛选:',
+            "sLengthMenu": "每页显示  _MENU_ 条记录",
+            "sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "前一页",
+                "sNext": "后一页",
+                "sLast": "尾页"
+            },
+            "sZeroRecords": "抱歉， 没有数据",
+            "sInfoEmpty": "没有数据"
+        }
+
+    });
+
+});
+
+
 function funSelectModules(sSource, aoData, fnCallback) {
     console.log("========== selectModules ==========");
-    sSource = "/sysCfg.action?flag=1";
+    sSource = "/sysCfg.action?flag=module";
 
     // 添加查询条件
     //var queryContent = $("#queryContent").val();
@@ -16,12 +118,12 @@ function funSelectModules(sSource, aoData, fnCallback) {
     aoData.push({name: "token", value: token});
     aoData = JSON.stringify(aoData);
 
-    execAjaxData(sSource, aoData, false
+    parent.execAjaxData(sSource, aoData, false
         , function (response) {
             // error
-        }, function (aaData) {
+        }, function (response) {
             // success
-            fnCallback(aaData);
+            fnCallback(response);
         }, function () {
             // complete
         });
@@ -39,19 +141,19 @@ function funEditGetModuleInfo(moduleid) {
         'moduleid': moduleid
     };
 
-    execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
+    parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
-        }, function (datas) {
+        }, function (response) {
             // success
-            if (datas.code == 0) {
-                $('#editModuleName').val(datas.data.moduleName);
-                $('#editModuleParent').val(datas.data.parentId);
-                $('#editModuleUrl').val(datas.data.moduleUrl);
-                $('#editModuleAvailable').val(datas.data.available);
-                $('#editModuleOrder').val(datas.data.moduleOrder);
-                $('#editModuleDiscription').val(datas.data.description);
-                $('#editModuleDelete').val(datas.data.isDelete);
+            if (response.code == 0) {
+                $('#editModuleId').val(response.data.id);
+                $('#editModuleName').val(response.data.moduleName);
+                $('#editModuleParent').val(response.data.parentId);
+                $('#editModuleUrl').val(response.data.moduleUrl);
+                $('#editModuleOrder').val(response.data.moduleOrder);
+                $('#editModuleDiscription').val(response.data.description);
+                $('#editModuleDelete').val(response.data.isDelete);
 
                 $('#formEditTitle').text("编辑模块");
                 $('#formEditModule').modal('show');
@@ -62,12 +164,36 @@ function funEditGetModuleInfo(moduleid) {
 }
 
 
-function editSaveModuleInfo(isNew) {
-    if (isNew) {
-        // 新增
-    } else {
-        // 编辑
-    }
+function editSaveModuleInfo() {
+    var token = $.cookie('userToken');
+    var jsondata = {
+        'op': 'module.edit',
+        'token': token,
+        'id': $('#editModuleId').val(),
+        'moduleName': $('#editModuleName').val(),
+        'parentId': $('#editModuleParent').val(),
+        'moduleUrl': $('#editModuleUrl').val(),
+        'moduleOrder': $('#editModuleOrder').val(),
+        'description': $('#editModuleDiscription').val(),
+        'isDelete': $('#editModuleDelete').val()
+    };
+
+    parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
+        , function (response) {
+            // error
+            alert("保存失败。");
+        }, function (response) {
+            // success
+            if (response.code == 0) {
+                alert("保存成功。");
+                funRefresh();
+            } else {
+                alert("保存失败。");
+            }
+        }, function () {
+            // complete
+            $('#formEditModule').modal('hide');
+        });
 }
 
 /**
@@ -77,6 +203,28 @@ function editSaveModuleInfo(isNew) {
 function funDeleteModuleInfo(moduleid) {
     if (confirm("确定要删除数据吗?")) {
         console.log("delete module id:" + moduleid);
+
+        var token = $.cookie('userToken');
+        var jsondata = {
+            'op': 'module.delete',
+            'token': token,
+            'moduleid': moduleid
+        };
+
+        parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
+            , function (response) {
+                // error
+            }, function (response) {
+                // success
+                if (response.code == 0) {
+                    alert("删除成功。")
+                    funRefresh();
+                } else {
+                    alert("删除失败：" + response.msg);
+                }
+            }, function () {
+                // complete
+            });
     }
 }
 
@@ -84,7 +232,7 @@ function funDeleteModuleInfo(moduleid) {
  * 刷新
  */
 function funRefresh() {
-    tabModules.fnDraw();
+    tabModules.ajax.reload();//.fnDraw();
 }
 
 /**
@@ -95,10 +243,10 @@ function funClickAddRow() {
     // clear
     $('#formEditTitle').text("新增模块");
 
+    $('#editModuleId').val(null)
     $('#editModuleName').val("");
     $('#editModuleParent').val("");
     $('#editModuleUrl').val("");
-    $('#editModuleAvailable').val(0);
     $('#editModuleOrder').val("");
     $('#editModuleDiscription').val("");
     $('#editModuleDelete').val(0);

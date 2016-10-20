@@ -7,6 +7,7 @@ public class AdminDictItem implements Serializable {
 
     private Integer dictId;
 
+
     private String dictItemName;
 
     private String dictItemText;
@@ -16,6 +17,16 @@ public class AdminDictItem implements Serializable {
     private Long createTime;
 
     private Long updateTime;
+
+    private String dictName;
+
+    public String getDictName() {
+        return dictName;
+    }
+
+    public void setDictName(String dictName) {
+        this.dictName = dictName;
+    }
 
     public Integer getId() {
         return id;

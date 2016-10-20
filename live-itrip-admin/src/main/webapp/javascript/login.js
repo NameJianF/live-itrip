@@ -17,7 +17,7 @@ function doLogin() {
     execAjaxData("/user.action", JSON.stringify(jsondata), false, function (response) {
     }, function (response) {
         if (response.code == 0) {
-            window.location.href = 'index.html';
+            window.location.href = '/index.action';
         }
     }, function () {
         $("#btnLogin").button('reset');

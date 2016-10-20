@@ -2,9 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="live.itrip.admin.dao.AdminDictItemMapper">
 
-    <!--redis 缓存-->
-    <cache type="org.mybatis.caches.redis.RedisCache" eviction="LRU"/>
-
     <resultMap id="BaseResultMap" type="live.itrip.admin.model.AdminDictItem">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="dict_id" property="dictId" jdbcType="INTEGER"/>
@@ -35,7 +32,8 @@
       #{dictItemText,jdbcType=VARCHAR}, #{isDelete,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT}, 
       #{updateTime,jdbcType=BIGINT})
   </insert>
-    <insert id="insertSelective" parameterType="live.itrip.admin.model.AdminDictItem" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insertSelective" parameterType="live.itrip.admin.model.AdminDictItem" keyProperty="id"
+            useGeneratedKeys="true">
         insert into admin_dict_item
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -117,5 +115,15 @@
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
-  </update>
+    </update>
+
+    <!--自定义查询-->
+    <select id="countAll" resultType="int">
+        select count(id) from admin_dict_item
+    </select>
+    <select id="selectDictItems" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from admin_dict_item limit ${start},${length}
+    </select>
 </mapper>

@@ -3,7 +3,7 @@ package live.itrip.admin.service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import live.itrip.admin.common.PagerInfo;
+import live.itrip.admin.bean.PagerInfo;
 import live.itrip.admin.interfaces.IWriteResponse;
 import live.itrip.common.Encoding;
 import live.itrip.common.ErrorCode;

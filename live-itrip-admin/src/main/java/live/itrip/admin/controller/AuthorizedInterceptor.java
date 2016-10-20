@@ -1,10 +1,15 @@
 package live.itrip.admin.controller;
 
+import live.itrip.admin.api.sso.bean.User;
+import live.itrip.admin.common.Constants;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 
 /**
  * Created by Feng on 2016/6/29.
@@ -15,12 +20,28 @@ public class AuthorizedInterceptor implements HandlerInterceptor {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         String action = request.getServletPath();
-        // 不检测登录用户的 action
-        if (action.equals("/apikeys.action")
-                || action.equals("/user.action")) {
-            return true;
-        }
+        Subject currentSubject = SecurityUtils.getSubject();
+        if (currentSubject != null) {
 
+            User user = (User) currentSubject.getPrincipal();
+            if (user == null) {
+
+                // 不检测登录用户的 action
+                if (action.equals("/apikeys.action")
+                        || action.equals("/login.action")
+                        || action.equals("/user.action")) {
+                    return true;
+                }
+
+//                PrintWriter out;
+//                out = response.getWriter();
+//                out.print("<script>window.location.href='/login.action'</script>");
+//                out.flush();
+//                out.close();
+                response.sendRedirect("/login.action");
+                return false;
+            }
+        }
         return true;
     }
 

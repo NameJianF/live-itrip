@@ -26,7 +26,7 @@
     </bean>
 
     <!--realm配置，realm是shiro的桥梁，它主要是用来判断subject是否可以登录及权限等-->
-    <bean id="securityRealm" class="live.itrip.admin.shiro.realm.SecurityRealm">
+    <bean id="securityRealm" class="live.itrip.admin.shiro.SecurityRealm">
         <!--<property name="userService" ref="userService" />-->
     </bean>
 
@@ -39,9 +39,6 @@
             </list>
         </property>
 
-        <!-- sessionManager -->
-        <property name="sessionManager" ref="sessionManager"/>
-
         <!-- cacheManager -->
         <property name="cacheManager" ref="cacheManager"/>
 
@@ -51,24 +48,7 @@
     </bean>
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 
-    <!-- shiro redisManager -->
-    <bean id="redisManager" class="live.itrip.admin.shiro.ShiroRedisManager">
-        <property name="expire" value="1800"/>
-    </bean>
-
-    <!-- redisSessionDAO -->
-    <bean id="redisSessionDAO" class="live.itrip.admin.shiro.ShiroRedisSessionDAO">
-        <property name="redisManager" ref="redisManager"/>
-    </bean>
-
-    <!-- sessionManager -->
-    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-        <property name="sessionDAO" ref="redisSessionDAO"/>
-    </bean>
-
     <!-- cacheManager -->
-    <bean id="cacheManager" class="live.itrip.admin.shiro.ShiroRedisCacheManager">
-        <property name="redisManager" ref="redisManager"/>
-    </bean>
+    <bean class="org.apache.shiro.cache.ehcache.EhCacheManager" id="cacheManager"> </bean>
 
 </beans>

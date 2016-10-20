@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="live.itrip.admin.dao.AdminRolePermissionMapper">
-
-    <!--redis 缓存-->
-    <cache type="org.mybatis.caches.redis.RedisCache" eviction="LRU"/>
-
     <resultMap id="BaseResultMap" type="live.itrip.admin.model.AdminRolePermission">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="role_id" property="roleId" jdbcType="BIGINT"/>
-        <result column="permission_id" property="permissionId" jdbcType="BIGINT"/>
+        <result column="module_id" property="moduleId" jdbcType="BIGINT"/>
+        <result column="operation" property="operation" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, role_id, permission_id
+    id, role_id, module_id, operation, create_time, update_time
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         select
@@ -24,9 +23,11 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
     <insert id="insert" parameterType="live.itrip.admin.model.AdminRolePermission">
-    insert into admin_role_permission (id, role_id, permission_id
+    insert into admin_role_permission (id, role_id, module_id, 
+      operation, create_time, update_time
       )
-    values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{permissionId,jdbcType=BIGINT}
+    values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{moduleId,jdbcType=BIGINT}, 
+      #{operation,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}
       )
   </insert>
     <insert id="insertSelective" parameterType="live.itrip.admin.model.AdminRolePermission">
@@ -38,8 +39,17 @@
             <if test="roleId != null">
                 role_id,
             </if>
-            <if test="permissionId != null">
-                permission_id,
+            <if test="moduleId != null">
+                module_id,
+            </if>
+            <if test="operation != null">
+                operation,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -49,8 +59,17 @@
             <if test="roleId != null">
                 #{roleId,jdbcType=BIGINT},
             </if>
-            <if test="permissionId != null">
-                #{permissionId,jdbcType=BIGINT},
+            <if test="moduleId != null">
+                #{moduleId,jdbcType=BIGINT},
+            </if>
+            <if test="operation != null">
+                #{operation,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=BIGINT},
             </if>
         </trim>
     </insert>
@@ -60,8 +79,17 @@
             <if test="roleId != null">
                 role_id = #{roleId,jdbcType=BIGINT},
             </if>
-            <if test="permissionId != null">
-                permission_id = #{permissionId,jdbcType=BIGINT},
+            <if test="moduleId != null">
+                module_id = #{moduleId,jdbcType=BIGINT},
+            </if>
+            <if test="operation != null">
+                operation = #{operation,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=BIGINT},
             </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
@@ -69,7 +97,10 @@
     <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.AdminRolePermission">
     update admin_role_permission
     set role_id = #{roleId,jdbcType=BIGINT},
-      permission_id = #{permissionId,jdbcType=BIGINT}
+      module_id = #{moduleId,jdbcType=BIGINT},
+      operation = #{operation,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

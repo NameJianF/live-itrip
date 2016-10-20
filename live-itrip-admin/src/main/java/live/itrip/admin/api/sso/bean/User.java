@@ -1,7 +1,6 @@
 package live.itrip.admin.api.sso.bean;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by Feng on 2016/7/15.

@@ -1,31 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="live.itrip.admin.dao.AdminModuleMapper">
-
-    <!--redis 缓存-->
-    <cache type="org.mybatis.caches.redis.RedisCache" eviction="LRU"/>
-
     <resultMap id="BaseResultMap" type="live.itrip.admin.model.AdminModule">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="module_name" property="moduleName" jdbcType="VARCHAR"/>
         <result column="parent_id" property="parentId" jdbcType="INTEGER"/>
         <result column="module_url" property="moduleUrl" jdbcType="VARCHAR"/>
-        <result column="available" property="available" jdbcType="CHAR"/>
         <result column="module_order" property="moduleOrder" jdbcType="INTEGER"/>
-        <result column="module_image" property="moduleImage" jdbcType="VARCHAR"/>
-        <result column="selected_image" property="selectedImage" jdbcType="VARCHAR"/>
-        <result column="disable_image" property="disableImage" jdbcType="VARCHAR"/>
-        <result column="expansion_image" property="expansionImage" jdbcType="VARCHAR"/>
-        <result column="expand" property="expand" jdbcType="CHAR"/>
+        <result column="module_icon" property="moduleIcon" jdbcType="VARCHAR"/>
         <result column="description" property="description" jdbcType="VARCHAR"/>
         <result column="is_delete" property="isDelete" jdbcType="CHAR"/>
         <result column="create_time" property="createTime" jdbcType="BIGINT"/>
         <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, module_name, parent_id, module_url, available, module_order, module_image, selected_image, 
-    disable_image, expansion_image, expand, description, is_delete, create_time, update_time
-  </sql>
+        id, module_name, parent_id, module_url, module_order, module_icon, description, is_delete,
+        create_time, update_time
+    </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
@@ -33,25 +24,20 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from admin_module
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-    <insert id="insert" parameterType="live.itrip.admin.model.AdminModule" keyProperty="id" useGeneratedKeys="true">
-    insert into admin_module (id, module_name, parent_id, 
-      module_url, available, module_order, 
-      module_image, selected_image, disable_image, 
-      expansion_image, expand, description, 
-      is_delete, create_time, update_time
-      )
-    values (#{id,jdbcType=INTEGER}, #{moduleName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
-      #{moduleUrl,jdbcType=VARCHAR}, #{available,jdbcType=CHAR}, #{moduleOrder,jdbcType=INTEGER}, 
-      #{moduleImage,jdbcType=VARCHAR}, #{selectedImage,jdbcType=VARCHAR}, #{disableImage,jdbcType=VARCHAR}, 
-      #{expansionImage,jdbcType=VARCHAR}, #{expand,jdbcType=CHAR}, #{description,jdbcType=VARCHAR}, 
-      #{isDelete,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}
-      )
-  </insert>
-    <insert id="insertSelective" parameterType="live.itrip.admin.model.AdminModule" keyProperty="id"
-            useGeneratedKeys="true">
+        delete from admin_module
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="live.itrip.admin.model.AdminModule">
+        insert into admin_module (id, module_name, parent_id,
+        module_url, module_order, module_icon,
+        description, is_delete, create_time,
+        update_time)
+        values (#{id,jdbcType=INTEGER}, #{moduleName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER},
+        #{moduleUrl,jdbcType=VARCHAR}, #{moduleOrder,jdbcType=INTEGER}, #{moduleIcon,jdbcType=VARCHAR},
+        #{description,jdbcType=VARCHAR}, #{isDelete,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT},
+        #{updateTime,jdbcType=BIGINT})
+    </insert>
+    <insert id="insertSelective" parameterType="live.itrip.admin.model.AdminModule">
         insert into admin_module
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -66,26 +52,11 @@
             <if test="moduleUrl != null">
                 module_url,
             </if>
-            <if test="available != null">
-                available,
-            </if>
             <if test="moduleOrder != null">
                 module_order,
             </if>
-            <if test="moduleImage != null">
-                module_image,
-            </if>
-            <if test="selectedImage != null">
-                selected_image,
-            </if>
-            <if test="disableImage != null">
-                disable_image,
-            </if>
-            <if test="expansionImage != null">
-                expansion_image,
-            </if>
-            <if test="expand != null">
-                expand,
+            <if test="moduleIcon != null">
+                module_icon,
             </if>
             <if test="description != null">
                 description,
@@ -113,26 +84,11 @@
             <if test="moduleUrl != null">
                 #{moduleUrl,jdbcType=VARCHAR},
             </if>
-            <if test="available != null">
-                #{available,jdbcType=CHAR},
-            </if>
             <if test="moduleOrder != null">
                 #{moduleOrder,jdbcType=INTEGER},
             </if>
-            <if test="moduleImage != null">
-                #{moduleImage,jdbcType=VARCHAR},
-            </if>
-            <if test="selectedImage != null">
-                #{selectedImage,jdbcType=VARCHAR},
-            </if>
-            <if test="disableImage != null">
-                #{disableImage,jdbcType=VARCHAR},
-            </if>
-            <if test="expansionImage != null">
-                #{expansionImage,jdbcType=VARCHAR},
-            </if>
-            <if test="expand != null">
-                #{expand,jdbcType=CHAR},
+            <if test="moduleIcon != null">
+                #{moduleIcon,jdbcType=VARCHAR},
             </if>
             <if test="description != null">
                 #{description,jdbcType=VARCHAR},
@@ -160,26 +116,11 @@
             <if test="moduleUrl != null">
                 module_url = #{moduleUrl,jdbcType=VARCHAR},
             </if>
-            <if test="available != null">
-                available = #{available,jdbcType=CHAR},
-            </if>
             <if test="moduleOrder != null">
                 module_order = #{moduleOrder,jdbcType=INTEGER},
             </if>
-            <if test="moduleImage != null">
-                module_image = #{moduleImage,jdbcType=VARCHAR},
-            </if>
-            <if test="selectedImage != null">
-                selected_image = #{selectedImage,jdbcType=VARCHAR},
-            </if>
-            <if test="disableImage != null">
-                disable_image = #{disableImage,jdbcType=VARCHAR},
-            </if>
-            <if test="expansionImage != null">
-                expansion_image = #{expansionImage,jdbcType=VARCHAR},
-            </if>
-            <if test="expand != null">
-                expand = #{expand,jdbcType=CHAR},
+            <if test="moduleIcon != null">
+                module_icon = #{moduleIcon,jdbcType=VARCHAR},
             </if>
             <if test="description != null">
                 description = #{description,jdbcType=VARCHAR},
@@ -197,35 +138,45 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.AdminModule">
-    update admin_module
-    set module_name = #{moduleName,jdbcType=VARCHAR},
-      parent_id = #{parentId,jdbcType=INTEGER},
-      module_url = #{moduleUrl,jdbcType=VARCHAR},
-      available = #{available,jdbcType=CHAR},
-      module_order = #{moduleOrder,jdbcType=INTEGER},
-      module_image = #{moduleImage,jdbcType=VARCHAR},
-      selected_image = #{selectedImage,jdbcType=VARCHAR},
-      disable_image = #{disableImage,jdbcType=VARCHAR},
-      expansion_image = #{expansionImage,jdbcType=VARCHAR},
-      expand = #{expand,jdbcType=CHAR},
-      description = #{description,jdbcType=VARCHAR},
-      is_delete = #{isDelete,jdbcType=CHAR},
-      create_time = #{createTime,jdbcType=BIGINT},
-      update_time = #{updateTime,jdbcType=BIGINT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        update admin_module
+        set module_name = #{moduleName,jdbcType=VARCHAR},
+        parent_id = #{parentId,jdbcType=INTEGER},
+        module_url = #{moduleUrl,jdbcType=VARCHAR},
+        module_order = #{moduleOrder,jdbcType=INTEGER},
+        module_icon = #{moduleIcon,jdbcType=VARCHAR},
+        description = #{description,jdbcType=VARCHAR},
+        is_delete = #{isDelete,jdbcType=CHAR},
+        create_time = #{createTime,jdbcType=BIGINT},
+        update_time = #{updateTime,jdbcType=BIGINT}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
 
     <!--自定义查询-->
+    <select id="selectAllModules" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from admin_module where is_delete = '${flag}'
+    </select>
+
+    <select id="countAll" resultType="int">
+        select count(id) from admin_module
+    </select>
+
     <select id="selectModules" resultMap="BaseResultMap" parameterType="map">
         select
         <include refid="Base_Column_List"/>
-        from admin_module
-        where is_delete = '${flag}'
+        from admin_module limit ${start},${length}
     </select>
-    <select id="selectAllModules" resultMap="BaseResultMap" parameterType="map">
+
+    <select id="selectModulesByIds" parameterType="map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from admin_module
+        from admin_module where id IN
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
+
 </mapper>

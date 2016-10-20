@@ -2,17 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="live.itrip.admin.dao.ClientApiKeyMapper">
 
-    <!--redis 缓存-->
-    <cache type="org.mybatis.caches.redis.RedisCache" eviction="LRU"/>
-
-
-    <!--（1）当为select语句时：-->
-    <!--flushCache默认为false，表示任何时候语句被调用，都不会去清空本地缓存和二级缓存。-->
-    <!--useCache默认为true，表示会将本条语句的结果进行二级缓存。-->
-    <!--（2）当为insert、update、delete语句时：-->
-    <!--flushCache默认为true，表示任何时候语句被调用，都会导致本地缓存和二级缓存被清空。-->
-    <!--useCache属性在该情况下没有。-->
-
     <resultMap id="BaseResultMap" type="live.itrip.admin.model.ClientApiKey">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="client_name" property="clientName" jdbcType="VARCHAR"/>

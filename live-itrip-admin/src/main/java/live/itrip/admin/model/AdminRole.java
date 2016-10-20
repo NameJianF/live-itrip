@@ -1,19 +1,21 @@
 package live.itrip.admin.model;
 
 public class AdminRole {
-    private Long id;
+    private Integer id;
 
     private String roleName;
 
-    private String roleSign;
+    private String roleText;
 
-    private String description;
+    private Long createTime;
 
-    public Long getId() {
+    private Long updateTime;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -25,19 +27,27 @@ public class AdminRole {
         this.roleName = roleName == null ? null : roleName.trim();
     }
 
-    public String getRoleSign() {
-        return roleSign;
+    public String getRoleText() {
+        return roleText;
     }
 
-    public void setRoleSign(String roleSign) {
-        this.roleSign = roleSign == null ? null : roleSign.trim();
+    public void setRoleText(String roleText) {
+        this.roleText = roleText == null ? null : roleText.trim();
     }
 
-    public String getDescription() {
-        return description;
+    public Long getCreateTime() {
+        return createTime;
     }
 
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
+    public void setCreateTime(Long createTime) {
+        this.createTime = createTime;
+    }
+
+    public Long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Long updateTime) {
+        this.updateTime = updateTime;
     }
 }

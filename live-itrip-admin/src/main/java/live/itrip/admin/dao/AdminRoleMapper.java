@@ -6,18 +6,20 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface AdminRoleMapper {
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(AdminRole record);
 
     int insertSelective(AdminRole record);
 
-    AdminRole selectByPrimaryKey(Long id);
+    AdminRole selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(AdminRole record);
 
     int updateByPrimaryKey(AdminRole record);
 
-    //     --------- add -------
-    List<AdminRole> selectRolesByUserId(@Param("userId") Long userId);
+    // ================= add ==========
+    Integer countAll();
+
+    List<AdminRole> selectRoles(@Param("start") Integer start, @Param("length") Integer length);
 }

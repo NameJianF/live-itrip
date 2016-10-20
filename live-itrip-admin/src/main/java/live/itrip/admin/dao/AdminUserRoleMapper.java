@@ -1,10 +1,6 @@
 package live.itrip.admin.dao;
 
-import live.itrip.admin.model.AdminRole;
 import live.itrip.admin.model.AdminUserRole;
-import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 public interface AdminUserRoleMapper {
     int deleteByPrimaryKey(Long id);
@@ -18,7 +14,4 @@ public interface AdminUserRoleMapper {
     int updateByPrimaryKeySelective(AdminUserRole record);
 
     int updateByPrimaryKey(AdminUserRole record);
-
-    // -------------  add --------
-
 }

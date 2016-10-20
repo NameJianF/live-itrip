@@ -18,18 +18,13 @@ public interface AdminModuleMapper {
 
     int updateByPrimaryKey(AdminModule record);
 
-    /**
-     * 查询模块信息
-     *
-     * @param flag 是否标记删除的， 删除：1，正常：0
-     * @return
-     */
-    List<AdminModule> selectModules(@Param("flag") String flag);
+    // ======================= add ==============
 
-    /**
-     * 查询全部
-     *
-     * @return
-     */
-    List<AdminModule> selectAllModules();
+    List<AdminModule> selectAllModules(@Param("flag") String flag);
+
+    List<AdminModule> selectModulesByIds(@Param("listModuleId") List<Integer> listModuleId);
+
+    List<AdminModule> selectModules(@Param("start") Integer start, @Param("length") Integer length);
+
+    Integer countAll();
 }

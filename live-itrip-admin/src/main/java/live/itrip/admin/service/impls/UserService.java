@@ -2,12 +2,14 @@ package live.itrip.admin.service.impls;
 
 import com.alibaba.fastjson.JSON;
 import live.itrip.admin.api.sso.bean.User;
+import live.itrip.admin.bean.WebLoginData;
 import live.itrip.admin.common.Constants;
-import live.itrip.admin.exception.BaseResultAuthenticationException;
 import live.itrip.admin.model.AdminModule;
 import live.itrip.admin.service.BaseService;
 import live.itrip.admin.service.intefaces.IAdminModuleService;
+import live.itrip.admin.service.intefaces.IAdminUserPermissionService;
 import live.itrip.admin.service.intefaces.IUserService;
+import live.itrip.admin.shiro.BaseResultAuthenticationException;
 import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
@@ -19,15 +21,12 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
- * Created by 建锋 on 2016/7/7.
- * <p>
- * admin  用户操作服务
+ * Created by Feng on 2016/10/12.
  */
 @Service
 public class UserService extends BaseService implements IUserService {
@@ -36,8 +35,28 @@ public class UserService extends BaseService implements IUserService {
     private IAdminModuleService iAdminModuleService;
 
     @Override
-    public void login(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
-        LoginData loginData = JSON.parseObject(decodeJson, LoginData.class);
+    public User getCurrentLoginUser() {
+        try {
+            Subject currentSubject = SecurityUtils.getSubject();
+            currentSubject.isPermitted();
+            User user = (User) currentSubject.getPrincipal();
+            return user;
+        } catch (Exception ex) {
+            Logger.error(ex.getMessage(), ex);
+        }
+        return null;
+    }
+
+    /**
+     * 用户登录
+     *
+     * @param decodeJson
+     * @param response
+     * @param request
+     */
+    @Override
+    public void userLogin(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        WebLoginData loginData = JSON.parseObject(decodeJson, WebLoginData.class);
         BaseResult result = new BaseResult();
 
         if (loginData == null) {
@@ -65,10 +84,10 @@ public class UserService extends BaseService implements IUserService {
             // 身份验证
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(loginData.getUserName(), loginData.getPwd());
             // 记住我
-//            boolean rememberMe = true;
-//            if (rememberMe) {
-//                usernamePasswordToken.setRememberMe(rememberMe);
-//            }
+            boolean rememberMe = true;
+            if (rememberMe) {
+                usernamePasswordToken.setRememberMe(rememberMe);
+            }
             currentSubject.login(usernamePasswordToken);
 
             // 用户信息正确,通过验证
@@ -91,22 +110,16 @@ public class UserService extends BaseService implements IUserService {
         this.writeResponse(response, result);
     }
 
-    /**
-     * 查询模块信息
-     *
-     * @param decodeJson
-     * @param response
-     * @param request
-     */
     @Override
-    public void selectModules(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+    public void selectModulesByUser(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BaseResult result = new BaseResult();
 
         try {
-            Subject subject = SecurityUtils.getSubject();
-            subject.isPermitted();
+            Subject currentSubject = SecurityUtils.getSubject();
+            currentSubject.isPermitted();
+            User user = (User) currentSubject.getPrincipal();
 
-            List<AdminModule> list = iAdminModuleService.selectModules("0");
+            List<AdminModule> list = iAdminModuleService.selectAllModules();// iAdminModuleService.selectModulesByUser(user);
             if (list != null) {
                 result.setCode(ErrorCode.SUCCESS.getCode());
                 result.setData(list);
@@ -119,42 +132,5 @@ public class UserService extends BaseService implements IUserService {
 
         result.setError(ErrorCode.UNKNOWN);
         this.writeResponse(response, result);
-    }
-
-    /**
-     * login datas
-     *
-     * @author JianF
-     */
-    public static class LoginData {
-        private String userName;
-        private String pwd;
-        private String captcha = "";
-
-
-        public String getUserName() {
-            return userName;
-        }
-
-        public void setUserName(String userName) {
-            this.userName = userName;
-        }
-
-        public String getCaptcha() {
-            return captcha;
-        }
-
-        public void setCaptcha(String captcha) {
-            this.captcha = captcha;
-        }
-
-        public String getPwd() {
-            return pwd;
-        }
-
-        public void setPwd(String pwd) {
-            this.pwd = pwd;
-        }
-
     }
 }

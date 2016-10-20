@@ -1,6 +1,9 @@
 package live.itrip.admin.dao;
 
+import java.util.List;
+
 import live.itrip.admin.model.AdminDict;
+import org.apache.ibatis.annotations.Param;
 
 public interface AdminDictMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,11 @@ public interface AdminDictMapper {
     int updateByPrimaryKeySelective(AdminDict record);
 
     int updateByPrimaryKey(AdminDict record);
+
+    // ==================== add ==========
+    Integer countAll();
+
+    List<AdminDict> selectDicts(@Param("start") Integer start, @Param("length") Integer length);
+
+    List<AdminDict> selectAllDicts(@Param("flag") String flag);
 }
