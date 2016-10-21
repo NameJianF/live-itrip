@@ -51,13 +51,13 @@
                         <input id="editOperationId" type="hidden">
                         <label for="editOperationName" class="col-sm-3 control-label">操作名称</label>
                         <div class="col-sm-5">
-                            <input type="email" class="form-control" id="editOperationName">
+                            <input type="text" class="form-control" id="editOperationName">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="editOperationText" class="col-sm-3 control-label">显示</label>
                         <div class="col-sm-5">
-                            <input type="email" class="form-control" id="editOperationText">
+                            <input type="text" class="form-control" id="editOperationText">
                         </div>
                     </div>
                 </form>

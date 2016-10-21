@@ -12,7 +12,7 @@
 function execAjaxData(url, jsondata, async, error, success, complete) {
     console.log(url);
     console.log(jsondata);
-
+    $.loading(true);
     $.ajax({
         cache: false,
         url: url,
@@ -30,6 +30,7 @@ function execAjaxData(url, jsondata, async, error, success, complete) {
             success(data);
         },
         complete: function () {
+            $.loading(false);
             complete();
         }
     });

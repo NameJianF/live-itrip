@@ -151,4 +151,13 @@
         <include refid="Base_Column_List"/>
         from client_api_key
     </select>
+
+    <select id="countAll" resultType="int">
+        select count(id) from client_api_key
+    </select>
+    <select id="selectApikeys" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from client_api_key limit ${start},${length}
+    </select>
 </mapper>

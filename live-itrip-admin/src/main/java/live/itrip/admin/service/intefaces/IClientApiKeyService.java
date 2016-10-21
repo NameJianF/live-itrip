@@ -20,4 +20,12 @@ public interface IClientApiKeyService {
 
     ClientApiKey selectClientKey(String clientapikey);
 
+
+    void selectApikeys(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void selectApikeyById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void deleteApikeyById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void editApikeyById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 }

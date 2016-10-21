@@ -1,6 +1,9 @@
 package live.itrip.admin.model;
 
 public class ClientApiKey extends BaseModel {
+
+    private Integer id;
+
     private String clientName;
 
     private String apiKey;
@@ -10,6 +13,14 @@ public class ClientApiKey extends BaseModel {
     private String source;
 
     private String description;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getClientName() {
         return clientName;

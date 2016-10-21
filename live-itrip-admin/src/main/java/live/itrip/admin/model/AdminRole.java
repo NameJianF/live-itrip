@@ -1,6 +1,8 @@
 package live.itrip.admin.model;
 
-public class AdminRole {
+import java.io.Serializable;
+
+public class AdminRole implements Serializable {
     private Integer id;
 
     private String roleName;

@@ -1,6 +1,8 @@
 package live.itrip.admin.model;
 
-public class AdminModule {
+import java.io.Serializable;
+
+public class AdminModule implements Serializable {
     private Integer id;
 
     private String moduleName;

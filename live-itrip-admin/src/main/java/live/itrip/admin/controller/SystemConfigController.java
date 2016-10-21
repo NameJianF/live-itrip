@@ -34,6 +34,8 @@ public class SystemConfigController extends AbstractController {
     private IAdminOperationService iAdminOperationService;
     @Autowired
     private IAdminRoleService iAdminRoleService;
+    @Autowired
+    private IClientApiKeyService iClientApiKeyService;
 
     /**
      * 系统配置模块
@@ -71,6 +73,8 @@ public class SystemConfigController extends AbstractController {
                 iAdminOperationService.selectOperations(decodeJson, response, request);
             } else if ("role".equalsIgnoreCase(flag)) {
                 iAdminRoleService.selectRoles(decodeJson, response, request);
+            } else if ("apikey".equalsIgnoreCase(flag)) {
+                iClientApiKeyService.selectApikeys(decodeJson, response, request);
             }
         } else {
             try {
@@ -125,6 +129,14 @@ public class SystemConfigController extends AbstractController {
                         iAdminRoleService.deleteRoleById(decodeJson, response, request);
                     } else if ("role.edit".equalsIgnoreCase(op)) {
                         iAdminRoleService.editRoleById(decodeJson, response, request);
+                    }
+                    // apikey
+                    else if ("apikey.detail".equalsIgnoreCase(op)) {
+                        iClientApiKeyService.selectApikeyById(decodeJson, response, request);
+                    } else if ("apikey.delete".equalsIgnoreCase(op)) {
+                        iClientApiKeyService.deleteApikeyById(decodeJson, response, request);
+                    } else if ("apikey.edit".equalsIgnoreCase(op)) {
+                        iClientApiKeyService.editApikeyById(decodeJson, response, request);
                     }
                 }
             } catch (Exception ex) {

@@ -79,6 +79,11 @@ public class PagesRouterController extends AbstractController {
         return "pages/system/role";
     }
 
+    @RequestMapping(value = "/system/apikey", method = RequestMethod.GET)
+    public String systemApikey() {
+        return "pages/system/apikey";
+    }
+
     @RequestMapping(value = "/system/params", method = RequestMethod.GET)
     public String systemParams() {
         return "pages/system/params";

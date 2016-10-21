@@ -20,14 +20,14 @@
                 添加
             </button>
         </div>
-        <table class="table table-hover table-bordered dataTables-example" id="tableModules" style="font-size: 14px;">
+        <table class="table table-hover table-bordered dataTables-example" id="tableApikey" style="font-size: 14px;">
             <thead>
             <tr>
                 <th>ID</th>
-                <th>模块名称</th>
-                <th>父模块</th>
-                <th>模块地址</th>
-                <th>排序</th>
+                <th>ApiKey</th>
+                <th>ClientName</th>
+                <th>SecretKey</th>
+                <th>Source</th>
                 <th>描述</th>
                 <th>是否删除</th>
                 <th>创建时间</th>
@@ -42,7 +42,7 @@
     </div>
 </div>
 
-<div class="modal fade modal-default" id="formEditModule">
+<div class="modal fade modal-default" id="formEditApikey">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -53,40 +53,40 @@
             <div class="modal-body">
                 <form class="form-horizontal">
                     <div class="form-group">
-                        <input id="editModuleId" type="hidden">
-                        <label for="editModuleName" class="col-sm-3 control-label">模块名称</label>
+                        <input id="editApikeyId" type="hidden">
+                        <label for="editApikey" class="col-sm-3 control-label">ApiKey</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" id="editModuleName">
+                            <input type="text" class="form-control" id="editApikey">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="editModuleParent" class="col-sm-3 control-label">父模块</label>
+                        <label for="editClientName" class="col-sm-3 control-label">ClientName</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" id="editModuleParent">
+                            <input type="text" class="form-control" id="editClientName">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="editModuleUrl" class="col-sm-3 control-label">模块地址</label>
+                        <label for="editSecretKey" class="col-sm-3 control-label">SecretKey</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" id="editModuleUrl">
+                            <input type="text" class="form-control" id="editSecretKey">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="editModuleOrder" class="col-sm-3 control-label">排序</label>
+                        <label for="editSource" class="col-sm-3 control-label">Source</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" id="editModuleOrder">
+                            <input type="text" class="form-control" id="editSource">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="editModuleDiscription" class="col-sm-3 control-label">描述</label>
+                        <label for="editDiscription" class="col-sm-3 control-label">描述</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control" id="editModuleDiscription">
+                            <input type="text" class="form-control" id="editDiscription">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="editModuleDelete" class="col-sm-3 control-label">是否删除</label>
+                        <label for="editDelete" class="col-sm-3 control-label">是否删除</label>
                         <div class="col-sm-5">
-                            <select class="form-control" id="editModuleDelete">
+                            <select class="form-control" id="editDelete">
                                 <option value="1">删除</option>
                                 <option value="0">未删除</option>
                             </select>
@@ -96,7 +96,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn   btn-primary" data-dismiss="modal">取消</button>
-                <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSaveModuleInfo()">确定
+                <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSaveApikeyInfo()">确定
                 </button>
             </div>
         </div><!-- /.modal-content -->
@@ -104,4 +104,4 @@
 </div>
 
 
-<script src="/javascript/system/module.js"></script>
+<script src="/javascript/system/apikey.js"></script>

@@ -73,7 +73,6 @@ public class ApiKeyController extends AbstractController {
             if (StringUtils.isNotEmpty(header.getOp())) {
                 String op = header.getOp();
                 if ("ApiKey.list".equalsIgnoreCase(op)) {
-                    // login
                     iClientApiKeyService.selectKeyList(decodeJson, response, request);
                 }
             }

@@ -52,7 +52,7 @@
                         <input id="editRoleId" type="hidden">
                         <label for="editRoleName" class="col-sm-3 control-label">角色名称</label>
                         <div class="col-sm-5">
-                            <input type="email" class="form-control" id="editRoleName">
+                            <input type="text" class="form-control" id="editRoleName">
                         </div>
                     </div>
                     <div class="form-group">

@@ -52,7 +52,7 @@
                         <input id="editDictId" type="hidden">
                         <label for="editDictName" class="col-sm-3 control-label">字典名称</label>
                         <div class="col-sm-5">
-                            <input type="email" class="form-control" id="editDictName">
+                            <input type="text" class="form-control" id="editDictName">
                         </div>
                     </div>
                     <div class="form-group">

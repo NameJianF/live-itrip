@@ -11,7 +11,7 @@
 <script src="/js/bootstrap.min.js"></script>
 
 <!-- Custom and plugin javascript -->
-<script src="/js/plugins/pace/pace.min.js"></script>
+<%--<script src="/js/plugins/pace/pace.min.js"></script>--%>
 
 
 <!-- jQuery UI -->
@@ -25,8 +25,7 @@
 <script src="/js/plugins/dataTables/datatables.min.js"></script>
 
 
-<script src="/js/itrip/loading/pace.min.js"></script>
-<script src="/js/itrip/itrip-ui.js"></script>
+
 
 <script>
 

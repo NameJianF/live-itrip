@@ -718,9 +718,13 @@
 <!-- ChartJS-->
 <%--<script src="/js/plugins/chartJs/Chart.min.js"></script>--%>
 
+<script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="/js/inspinia.js"></script>
 
 <!-- itrip -->
-<script src="/js/itrip/closedtabs.js"></script>
+<script src="/js/itrip/itrip-ui.js"></script>
+
 <script src="/javascript/common.js"></script>
 <script src="/javascript/index.js"></script>
 
@@ -741,11 +745,6 @@
     ga('send', 'pageview');
 </script>
 
-<div id="loadingPage" style="display: none;">
-    <div class="loading-shade"></div>
-    <div class="loading-content" onclick="$.loading(false)">数据加载中，请稍后…</div>
-</div>
-
 <script>
     // 页面加载完成后的操作
     $(document).ready(function () {
@@ -756,7 +755,7 @@
                 showMethod: 'slideDown',
                 timeOut: 4000
             };
-            toastr.success('和旅游-iTrip', '欢迎回到和旅行后台管理系统');
+            toastr.success('和旅行-iTrip', '欢迎回到和旅行后台管理系统');
 
         }, 1300);
     });
@@ -770,11 +769,13 @@
     loadModules();
 </script>
 
+<div id="loadingPage" style="display: none;">
+    <div class="loading-shade"></div>
+    <div class="loading-content" onclick="$.loading(false)">数据加载中，请稍后…</div>
+</div>
 
-<script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-<script src="/js/inspinia.js"></script>
-
+<script src="/js/itrip/closedtabs.js"></script>
+<script src="/js/itrip/loading/pace.min.js"></script>
 </body>
 
 </html>

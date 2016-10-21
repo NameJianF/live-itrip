@@ -3,6 +3,7 @@ package live.itrip.admin.dao;
 import java.util.List;
 
 import live.itrip.admin.model.ClientApiKey;
+import org.apache.ibatis.annotations.Param;
 
 public interface ClientApiKeyMapper {
     int deleteByPrimaryKey(Integer id);
@@ -17,10 +18,16 @@ public interface ClientApiKeyMapper {
 
     int updateByPrimaryKey(ClientApiKey record);
 
+    // ================== add ==============
+
     /**
      * 查询全部apikey
      *
      * @return
      */
     List<ClientApiKey> selectAllKeys();
+
+    Integer countAll();
+
+    List<ClientApiKey> selectApikeys(@Param("start") Integer start, @Param("length") Integer length);
 }

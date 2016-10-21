@@ -1,8 +1,9 @@
 package live.itrip.admin.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class AdminUser {
+public class AdminUser implements Serializable {
     private Long id;
 
     private String userName;

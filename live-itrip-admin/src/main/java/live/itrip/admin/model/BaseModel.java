@@ -16,10 +16,6 @@ public class BaseModel implements Serializable {
      */
     public static final String RECORD_IS_NORMAL = "0";
 
-    /**
-     * 自增ID
-     */
-    private Long id;
 
     /**
      * 该记录是否标记为 删除
@@ -35,12 +31,12 @@ public class BaseModel implements Serializable {
      */
     private Long updateTime;
 
-    public Long getId() {
-        return id;
+    public String getIsDelete() {
+        return isDelete;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete;
     }
 
     public Long getCreateTime() {

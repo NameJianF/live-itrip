@@ -50,7 +50,7 @@
                         <input id="editDepartId" type="hidden">
                         <label for="editDepartName" class="col-sm-3 control-label">部门名称</label>
                         <div class="col-sm-5">
-                            <input type="email" class="form-control" id="editDepartName">
+                            <input type="text" class="form-control" id="editDepartName">
                         </div>
                     </div>
 
