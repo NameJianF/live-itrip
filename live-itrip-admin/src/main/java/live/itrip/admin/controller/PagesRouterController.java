@@ -1,8 +1,8 @@
 package live.itrip.admin.controller;
 
-import live.itrip.admin.api.sso.bean.User;
 import live.itrip.admin.controller.base.AbstractController;
 import live.itrip.admin.model.AdminDict;
+import live.itrip.admin.model.AdminUser;
 import live.itrip.admin.service.intefaces.IAdminDictService;
 import live.itrip.admin.service.intefaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.List;
 
 /**
@@ -31,7 +30,7 @@ public class PagesRouterController extends AbstractController {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String pagesIndex(HttpServletRequest request, Model model) {
-        User user = iUserService.getCurrentLoginUser();
+        AdminUser user = iUserService.getCurrentLoginUser();
         model.addAttribute("user", user);
         return "pages/index";
     }
@@ -84,9 +83,9 @@ public class PagesRouterController extends AbstractController {
         return "pages/system/apikey";
     }
 
-    @RequestMapping(value = "/system/params", method = RequestMethod.GET)
-    public String systemParams() {
-        return "pages/system/params";
+    @RequestMapping(value = "/system/member", method = RequestMethod.GET)
+    public String systemMember() {
+        return "pages/system/member";
     }
 
     @RequestMapping(value = "/system/log", method = RequestMethod.GET)

@@ -17,12 +17,31 @@
         <div class="col-lg-12">
             <div class="ibox-content table-responsive">
                 <div style="border-bottom:solid 1px lightgray; margin-bottom: 4px;">
-                    <button type="button" onclick="funRefresh();" class="btn btn-primary ">刷新</button>
-                    <button type="button" onclick="funClickAddRow();" class="btn btn-primary ">
-                        添加
-                    </button>
+                    <div class="row">
+                        <div class="col-sm-12 form-inline">
+                            <label class="control-label">部门:</label>
+                            <select class="form-control" id="selectDepart" onchange="departChangeEvent(event);">
+                                <option value="0">全部</option>
+                                <c:forEach items="${departList}" var="depart">
+                                    <option value="${depart.id}">${depart.departName}</option>
+                                </c:forEach>
+                            </select>
+                            <label class="control-label">分组:</label>
+                            <select class="form-control" id="selectGroup">
+                                <option value="0">全部</option>
+                                <%--<c:forEach items="${groupList}" var="group">--%>
+                                <%--<option value="${group.id}">${group.groupName}</option>--%>
+                                <%--</c:forEach>--%>
+                            </select>
+                            <button type="button" onclick="funRefresh();" class="btn btn-primary ">查询</button>
+                            <button type="button" onclick="funClickAddRow();" class="btn btn-primary ">
+                                添加
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
-                <table class="table table-hover table-bordered dataTables-example" id="tableModules"
+                <table class="table table-hover table-bordered dataTables-example" id="tableMember"
                        style="font-size: 14px;">
                     <thead>
                     <tr>
@@ -44,6 +63,7 @@
                 </table>
             </div>
         </div>
+
     </div>
 
     <div class="modal fade modal-default" id="formEditModule">
@@ -108,4 +128,5 @@
     </div>
 </div>
 
-<script src="/javascript/system/module.js"></script>
+
+<script src="/javascript/system/member.js"></script>

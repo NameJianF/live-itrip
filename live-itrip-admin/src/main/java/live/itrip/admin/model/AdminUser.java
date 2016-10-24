@@ -30,6 +30,8 @@ public class AdminUser implements Serializable {
 
     private Date updateTime;
 
+    private String token;
+
     public Long getId() {
         return id;
     }
@@ -132,5 +134,13 @@ public class AdminUser implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

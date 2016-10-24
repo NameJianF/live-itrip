@@ -1,6 +1,6 @@
 package live.itrip.admin.service.intefaces;
 
-import live.itrip.admin.api.sso.bean.User;
+import live.itrip.admin.model.AdminUser;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +14,7 @@ public interface IUserService {
      *
      * @return
      */
-    User getCurrentLoginUser();
+    AdminUser getCurrentLoginUser();
 
     void userLogin(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 

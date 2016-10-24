@@ -5,6 +5,7 @@ import live.itrip.admin.api.sso.bean.User;
 import live.itrip.admin.bean.WebLoginData;
 import live.itrip.admin.common.Constants;
 import live.itrip.admin.model.AdminModule;
+import live.itrip.admin.model.AdminUser;
 import live.itrip.admin.service.BaseService;
 import live.itrip.admin.service.intefaces.IAdminModuleService;
 import live.itrip.admin.service.intefaces.IAdminUserPermissionService;
@@ -35,11 +36,11 @@ public class UserService extends BaseService implements IUserService {
     private IAdminModuleService iAdminModuleService;
 
     @Override
-    public User getCurrentLoginUser() {
+    public AdminUser getCurrentLoginUser() {
         try {
             Subject currentSubject = SecurityUtils.getSubject();
             currentSubject.isPermitted();
-            User user = (User) currentSubject.getPrincipal();
+            AdminUser user = (AdminUser) currentSubject.getPrincipal();
             return user;
         } catch (Exception ex) {
             Logger.error(ex.getMessage(), ex);
@@ -91,7 +92,7 @@ public class UserService extends BaseService implements IUserService {
             currentSubject.login(usernamePasswordToken);
 
             // 用户信息正确,通过验证
-            User user = (User) currentSubject.getPrincipal();
+            AdminUser user = (AdminUser) currentSubject.getPrincipal();
             // 写入session
             currentSubject.getSession().setAttribute(Constants.SESSION_USER, user);
             // 写入 cookie
@@ -117,7 +118,7 @@ public class UserService extends BaseService implements IUserService {
         try {
             Subject currentSubject = SecurityUtils.getSubject();
             currentSubject.isPermitted();
-            User user = (User) currentSubject.getPrincipal();
+            AdminUser user = (AdminUser) currentSubject.getPrincipal();
 
             List<AdminModule> list = iAdminModuleService.selectAllModules();// iAdminModuleService.selectModulesByUser(user);
             if (list != null) {

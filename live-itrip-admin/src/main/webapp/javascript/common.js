@@ -24,9 +24,13 @@ function execAjaxData(url, jsondata, async, error, success, complete) {
         error: function (data) {
             console.log(data);
             error(data)
+            // 隐藏loading
+            $.loading(false);
         },
         success: function (data) {
             console.log(data);
+            // 隐藏loading
+            $.loading(false);
             success(data);
         },
         complete: function () {

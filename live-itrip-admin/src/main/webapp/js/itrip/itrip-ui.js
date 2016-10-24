@@ -1,5 +1,5 @@
 ﻿$(function () {
-    document.body.className = localStorage.getItem('config-skin');
+    //document.body.className = localStorage.getItem('config-skin');
     $("[data-toggle='tooltip']").tooltip();
 })
 $.reload = function () {

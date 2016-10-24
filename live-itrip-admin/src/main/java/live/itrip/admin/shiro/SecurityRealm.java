@@ -4,9 +4,11 @@ import live.itrip.admin.api.sso.SsoApi;
 import live.itrip.admin.api.sso.bean.LoginResponse;
 import live.itrip.admin.api.sso.bean.User;
 import live.itrip.admin.model.AdminRole;
+import live.itrip.admin.model.AdminUser;
 import live.itrip.admin.model.AdminUserPermission;
 import live.itrip.admin.service.intefaces.IAdminUserPermissionService;
 import live.itrip.admin.service.intefaces.IAdminUserRoleService;
+import live.itrip.admin.service.intefaces.IAdminUserService;
 import live.itrip.common.ErrorCode;
 import live.itrip.common.response.BaseResult;
 import org.apache.shiro.authc.AuthenticationException;
@@ -34,6 +36,8 @@ public class SecurityRealm extends AuthorizingRealm {
     @Autowired
     private IAdminUserPermissionService iAdminUserPermissionService;
 
+    @Autowired
+    private IAdminUserService iAdminUserService;
 
     /**
      * 权限检查
@@ -85,7 +89,21 @@ public class SecurityRealm extends AuthorizingRealm {
                 result.setMsg(ErrorCode.USERNAME_PWD_INVALID.getMessage());
                 throw new BaseResultAuthenticationException(result);
             } else {
-                return new SimpleAuthenticationInfo(user, password, getName());
+                // 登录成功，异步保存用户信息到本地用户表
+                AdminUser localUser = iAdminUserService.selectAdminUserById(user.getId());
+                if (localUser == null) {
+                    // 本地无该用户信息，保存信息到本地
+                    localUser = iAdminUserService.saveUserInfo(user);
+                }
+                if (localUser != null) {
+                    localUser.setToken(user.getToken());
+                    return new SimpleAuthenticationInfo(localUser, password, getName());
+                }
+
+                // 本地操作异常
+                result.setCode(ErrorCode.UNKNOWN.getCode());
+                result.setMsg(ErrorCode.UNKNOWN.getMessage());
+                throw new BaseResultAuthenticationException(result);
             }
         } else {
             // 用户名错误

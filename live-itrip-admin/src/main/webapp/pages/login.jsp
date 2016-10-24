@@ -27,7 +27,8 @@
         }
     </script>
 
-
+    <!-- itrip -->
+    <script src="/js/itrip/itrip-ui.js"></script>
     <script src="/javascript/login.js"></script>
     <script src="/javascript/common.js"></script>
 </head>

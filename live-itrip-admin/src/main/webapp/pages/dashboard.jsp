@@ -13,6 +13,8 @@
     <title>Title</title>
 </head>
 <body>
-dashboard
+<div class="wrapper wrapper-content animated fadeInRight">
+    工作台
+</div>
 </body>
 </html>

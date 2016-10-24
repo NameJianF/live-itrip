@@ -1,7 +1,7 @@
-var tableApikey;
+var tabMember;
 
 $(function () {
-    tableApikey = $('#tableApikey').DataTable({
+    tabMember = $('#tableMember').DataTable({
         "bProcessing": true, // 是否显示取数据时的那个等待提示
         "bServerSide": true, //这个用来指明是通过服务端来取数据
         "bPaginate": true, // 分页按钮
@@ -9,16 +9,16 @@ $(function () {
         "iDisplayLength": 10,// 每页显示行数
         "bInfo": true,//页脚信息
         "bAutoWidth": true,//自动宽度
-        "fnServerData": funSelectApikeys, // 获取数据的处理函数
+        "fnServerData": funSelectModules, // 获取数据的处理函数
         "bFilter": false, // 隐藏筛选框
         "ordering": false,
         'bStateSave': true,
         "aoColumns": [
             {"mData": "id"},
-            {"mData": "apiKey"},
-            {"mData": "clientName"},
-            {"mData": "secretKey"},
-            {"mData": "source"},
+            {"mData": "moduleName"},
+            {"mData": "parentId"},
+            {"mData": "moduleUrl"},
+            {"mData": "moduleOrder"},
             {
                 "mData": "description",
                 render: function (data, type, row) {
@@ -59,8 +59,8 @@ $(function () {
             {
                 render: function (data, type, row) {
                     if (type === 'display') {
-                        return '<button type="button" class="btn btn-link btn-xs" onclick="funEditGetApikeyInfo(' + row.id + ')">编辑</button>' +
-                            '<button type="button" class="btn btn-link btn-xs" onclick="funDeleteApikeyInfo(' + row.id + ')">删除</button>';
+                        return '<button type="button" class="btn btn-link btn-xs" onclick="funEditGetModuleInfo(' + row.id + ')">编辑</button>' +
+                            '<button type="button" class="btn btn-link btn-xs" onclick="funDeleteModuleInfo(' + row.id + ')">删除</button>';
                     }
                     return data;
                 }
@@ -85,9 +85,17 @@ $(function () {
 });
 
 
-function funSelectApikeys(sSource, aoData, fnCallback) {
-    console.log("========== select apikeys ==========");
-    sSource = "/sysCfg.action?flag=apikey";
+function funSelectModules(sSource, aoData, fnCallback) {
+    console.log("========== selectModules ==========");
+    sSource = "/sysCfg.action?flag=module";
+
+    // 添加查询条件
+    //var queryContent = $("#queryContent").val();
+    //var querySort = $("#querySort").val();
+    //var queryStatus = $("#queryStatus").val();
+    //aoData.push({name: "queryContent", value: queryContent});
+    //aoData.push({name: "querySort", value: querySort});
+    //aoData.push({name: "queryStatus", value: queryStatus});
 
     var token = $.cookie('userToken');
     aoData.push({name: "token", value: token});
@@ -106,14 +114,14 @@ function funSelectApikeys(sSource, aoData, fnCallback) {
 
 /**
  * 修改
- * @param apikeyId
+ * @param moduleid
  */
-function funEditGetApikeyInfo(apikeyId) {
+function funEditGetModuleInfo(moduleid) {
     var token = $.cookie('userToken');
     var jsondata = {
-        'op': 'apikey.detail',
+        'op': 'module.detail',
         'token': token,
-        'apikeyId': apikeyId
+        'moduleid': moduleid
     };
 
     parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
@@ -122,35 +130,39 @@ function funEditGetApikeyInfo(apikeyId) {
         }, function (response) {
             // success
             if (response.code == 0) {
-                $('#editApikeyId').val(response.data.id);
-                $('#editApikey').val(response.data.apiKey);
-                $('#editClientName').val(response.data.clientName);
-                $('#editSecretKey').val(response.data.secretKey);
-                $('#editSource').val(response.data.source);
-                $('#editDiscription').val(response.data.description);
-                $('#editDelete').val(response.data.isDelete);
+                $('#editModuleId').val(response.data.id);
+                $('#editModuleName').val(response.data.moduleName);
+                $('#editModuleParent').val(response.data.parentId);
+                $('#editModuleUrl').val(response.data.moduleUrl);
+                $('#editModuleOrder').val(response.data.moduleOrder);
+                $('#editModuleDiscription').val(response.data.description);
+                $('#editModuleDelete').val(response.data.isDelete);
 
-                $('#formEditTitle').text("编辑ApiKey");
-                $('#formEditApikey').modal('show');
+                $('#formEditTitle').text("编辑模块");
+                $('#formEditModule').modal('show');
             }
         }, function () {
             // complete
         });
 }
 
+// 部门选择
+function departChangeEvent(event) {
+    alert('You like ' + event.target.value + ' ice cream.');
+}
 
-function editSaveApikeyInfo() {
+function editSaveModuleInfo() {
     var token = $.cookie('userToken');
     var jsondata = {
-        'op': 'apikey.edit',
+        'op': 'module.edit',
         'token': token,
-        'id': $('#editApikeyId').val(),
-        'apiKey': $('#editApikey').val(),
-        'clientName': $('#editClientName').val(),
-        'secretKey': $('#editSecretKey').val(),
-        'source': $('#editSource').val(),
-        'description': $('#editDiscription').val(),
-        'isDelete': $('#editDelete').val()
+        'id': $('#editModuleId').val(),
+        'moduleName': $('#editModuleName').val(),
+        'parentId': $('#editModuleParent').val(),
+        'moduleUrl': $('#editModuleUrl').val(),
+        'moduleOrder': $('#editModuleOrder').val(),
+        'description': $('#editModuleDiscription').val(),
+        'isDelete': $('#editModuleDelete').val()
     };
 
     parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
@@ -167,23 +179,23 @@ function editSaveApikeyInfo() {
             }
         }, function () {
             // complete
-            $('#formEditApikey').modal('hide');
+            $('#formEditModule').modal('hide');
         });
 }
 
 /**
  * 删除
- * @param apikeyId
+ * @param moduleid
  */
-function funDeleteApikeyInfo(apikeyId) {
+function funDeleteModuleInfo(moduleid) {
     if (confirm("确定要删除数据吗?")) {
-        console.log("delete apikey id:" + apikeyId);
+        console.log("delete module id:" + moduleid);
 
         var token = $.cookie('userToken');
         var jsondata = {
-            'op': 'apikey.delete',
+            'op': 'module.delete',
             'token': token,
-            'apikeyId': apikeyId
+            'moduleid': moduleid
         };
 
         parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
@@ -192,7 +204,7 @@ function funDeleteApikeyInfo(apikeyId) {
             }, function (response) {
                 // success
                 if (response.code == 0) {
-                    alert("删除成功。");
+                    alert("删除成功。")
                     funRefresh();
                 } else {
                     alert("删除失败：" + response.msg);
@@ -207,7 +219,7 @@ function funDeleteApikeyInfo(apikeyId) {
  * 刷新
  */
 function funRefresh() {
-    tableApikey.ajax.reload();
+    tabMember.ajax.reload();//.fnDraw();
 }
 
 /**
@@ -216,15 +228,15 @@ function funRefresh() {
 function funClickAddRow() {
     console.log(" fnClickAddRow click ");
     // clear
-    $('#formEditTitle').text("新增ApiKey");
+    $('#formEditTitle').text("新增模块");
 
-    $('#editApikeyId').val(null)
-    $('#editApikey').val("");
-    $('#editClientName').val("");
-    $('#editSecretKey').val("");
-    $('#editSource').val("");
-    $('#editDiscription').val("");
-    $('#editDelete').val(0);
+    $('#editModuleId').val(null)
+    $('#editModuleName').val("");
+    $('#editModuleParent').val("");
+    $('#editModuleUrl').val("");
+    $('#editModuleOrder').val("");
+    $('#editModuleDiscription').val("");
+    $('#editModuleDelete').val(0);
 
-    $('#formEditApikey').modal('show');
+    $('#formEditModule').modal('show');
 }

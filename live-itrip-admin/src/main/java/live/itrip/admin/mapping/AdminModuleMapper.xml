@@ -156,7 +156,7 @@
     <select id="selectAllModules" parameterType="map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from admin_module where is_delete = '${flag}'
+        from admin_module where is_delete = '${flag}' ORDER BY module_order
     </select>
 
     <select id="countAll" resultType="int">
