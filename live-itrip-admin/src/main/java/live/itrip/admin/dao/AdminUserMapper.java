@@ -1,6 +1,9 @@
 package live.itrip.admin.dao;
 
 import live.itrip.admin.model.AdminUser;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface AdminUserMapper {
     int deleteByPrimaryKey(Long id);
@@ -14,4 +17,9 @@ public interface AdminUserMapper {
     int updateByPrimaryKeySelective(AdminUser record);
 
     int updateByPrimaryKey(AdminUser record);
+
+    // ================= add ===============
+    Integer countAll();
+
+    List<AdminUser> selectAdminUsers(@Param("start") Integer start, @Param("length") Integer length);
 }

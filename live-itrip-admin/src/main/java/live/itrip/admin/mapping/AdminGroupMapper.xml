@@ -4,11 +4,21 @@
     <resultMap id="BaseResultMap" type="live.itrip.admin.model.AdminGroup">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="group_name" property="groupName" jdbcType="VARCHAR"/>
+        <result column="depart_id" property="departId" jdbcType="INTEGER"/>
         <result column="create_time" property="createTime" jdbcType="BIGINT"/>
         <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
     </resultMap>
+    <resultMap id="ExtendResultMap" type="live.itrip.admin.model.extend.ExtendAdminGroup">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="group_name" property="groupName" jdbcType="VARCHAR"/>
+        <result column="depart_id" property="departId" jdbcType="INTEGER"/>
+        <result column="depart_name" property="departName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+    </resultMap>
+
     <sql id="Base_Column_List">
-    id, group_name, create_time, update_time
+    id, group_name, depart_id, create_time, update_time
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -21,10 +31,10 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
     <insert id="insert" parameterType="live.itrip.admin.model.AdminGroup">
-    insert into admin_group (id, group_name, create_time, 
-      update_time)
-    values (#{id,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
-      #{updateTime,jdbcType=BIGINT})
+    insert into admin_group (id, group_name, depart_id, 
+      create_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR}, #{departId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT})
   </insert>
     <insert id="insertSelective" parameterType="live.itrip.admin.model.AdminGroup">
         insert into admin_group
@@ -34,6 +44,9 @@
             </if>
             <if test="groupName != null">
                 group_name,
+            </if>
+            <if test="departId != null">
+                depart_id,
             </if>
             <if test="createTime != null">
                 create_time,
@@ -49,6 +62,9 @@
             <if test="groupName != null">
                 #{groupName,jdbcType=VARCHAR},
             </if>
+            <if test="departId != null">
+                #{departId,jdbcType=INTEGER},
+            </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=BIGINT},
             </if>
@@ -63,6 +79,9 @@
             <if test="groupName != null">
                 group_name = #{groupName,jdbcType=VARCHAR},
             </if>
+            <if test="departId != null">
+                depart_id = #{departId,jdbcType=INTEGER},
+            </if>
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=BIGINT},
             </if>
@@ -75,8 +94,26 @@
     <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.AdminGroup">
     update admin_group
     set group_name = #{groupName,jdbcType=VARCHAR},
+      depart_id = #{departId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
-  </update>
+    </update>
+
+    <!--自定义查询-->
+    <select id="selectAllGroups" resultMap="ExtendResultMap" parameterType="map">
+        SELECT admin_group.id,admin_group.group_name,admin_group.create_time,admin_group.update_time
+              ,admin_depart.id depart_id,admin_depart.depart_name
+        FROM admin_group INNER JOIN admin_depart ON admin_group.depart_id = admin_depart.id
+    </select>
+
+    <select id="countAll" resultType="int">
+        select count(id) from admin_group
+    </select>
+    <select id="selectGroups" resultMap="ExtendResultMap" parameterType="map">
+        SELECT admin_group.id,admin_group.group_name,admin_group.create_time,admin_group.update_time
+        ,admin_depart.id depart_id,admin_depart.depart_name
+        FROM admin_group INNER JOIN admin_depart ON admin_group.depart_id = admin_depart.id
+        limit ${start},${length}
+    </select>
 </mapper>

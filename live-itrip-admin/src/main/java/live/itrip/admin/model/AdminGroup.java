@@ -1,11 +1,11 @@
 package live.itrip.admin.model;
 
-import java.io.Serializable;
-
-public class AdminGroup implements Serializable {
+public class AdminGroup {
     private Integer id;
 
     private String groupName;
+
+    private Integer departId;
 
     private Long createTime;
 
@@ -25,6 +25,14 @@ public class AdminGroup implements Serializable {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName == null ? null : groupName.trim();
+    }
+
+    public Integer getDepartId() {
+        return departId;
+    }
+
+    public void setDepartId(Integer departId) {
+        this.departId = departId;
     }
 
     public Long getCreateTime() {

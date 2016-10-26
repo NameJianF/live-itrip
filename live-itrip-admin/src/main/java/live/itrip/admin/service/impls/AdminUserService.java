@@ -1,12 +1,25 @@
 package live.itrip.admin.service.impls;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import live.itrip.admin.api.sso.bean.User;
+import live.itrip.admin.bean.BootStrapDataTableList;
+import live.itrip.admin.bean.PagerInfo;
+import live.itrip.admin.common.Constants;
 import live.itrip.admin.dao.AdminUserMapper;
+import live.itrip.admin.model.AdminGroup;
 import live.itrip.admin.model.AdminUser;
 import live.itrip.admin.service.BaseService;
 import live.itrip.admin.service.intefaces.IAdminUserService;
+import live.itrip.common.ErrorCode;
+import live.itrip.common.Logger;
+import live.itrip.common.response.BaseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Created by Feng on 2016/10/24.
@@ -42,5 +55,90 @@ public class AdminUserService extends BaseService implements IAdminUserService {
             return record;
         }
         return null;
+    }
+
+    @Override
+    public void selectAdminUsers(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        BootStrapDataTableList<AdminUser> result = new BootStrapDataTableList<>();
+        try {
+            PagerInfo pagerInfo = this.getPagerInfo(decodeJson);
+            Integer count = adminUserMapper.countAll();
+            List<AdminUser> userList = adminUserMapper.selectAdminUsers(pagerInfo.getStart(), pagerInfo.getLength());
+
+            if (userList != null) {
+                result.setsEcho(String.valueOf(pagerInfo.getDraw() + 1));
+                result.setiTotalRecords(count);
+                result.setiTotalDisplayRecords(count);
+                result.setAaData(userList);
+
+                // response
+                this.writeResponse(response, result);
+                return;
+            }
+        } catch (Exception ex) {
+            Logger.error(ex.getMessage(), ex);
+        }
+
+        BaseResult error = new BaseResult();
+        error.setCode(ErrorCode.UNKNOWN.getCode());
+        this.writeResponse(response, error);
+    }
+
+    @Override
+    public void selectAdminUserById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        BaseResult result = new BaseResult();
+        JSONObject jsonObject = JSON.parseObject(decodeJson);
+        Long memberId = (Long) jsonObject.get("memberId");
+        if (memberId != null) {
+            AdminUser AdminUser = this.adminUserMapper.selectByPrimaryKey(memberId);
+            result.setCode(ErrorCode.SUCCESS.getCode());
+            result.setData(AdminUser);
+            this.writeResponse(response, result);
+            return;
+        }
+
+        result.setError(ErrorCode.UNKNOWN);
+        this.writeResponse(response, result);
+    }
+
+    @Override
+    public void deleteAdminUserById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        BaseResult result = new BaseResult();
+        JSONObject jsonObject = JSON.parseObject(decodeJson);
+        Long memberId = (Long) jsonObject.get("memberId");
+        if (memberId != null) {
+            Integer ret = this.adminUserMapper.deleteByPrimaryKey(memberId);
+            if (ret > 0) {
+                result.setCode(ErrorCode.SUCCESS.getCode());
+                this.writeResponse(response, result);
+                return;
+            }
+        }
+
+        result.setError(ErrorCode.UNKNOWN);
+        this.writeResponse(response, result);
+    }
+
+    @Override
+    public void editAdminUserById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        BaseResult result = new BaseResult();
+        AdminUser AdminUser = JSON.parseObject(decodeJson, AdminUser.class);
+        Integer ret;
+        if (AdminUser.getId() == null) {
+            // new
+            AdminUser.setCreateTime(System.currentTimeMillis());
+            ret = this.adminUserMapper.insertSelective(AdminUser);
+        } else {
+            // update
+            ret = this.adminUserMapper.updateByPrimaryKeySelective(AdminUser);
+        }
+        if (ret > 0) {
+            result.setCode(ErrorCode.SUCCESS.getCode());
+            this.writeResponse(response, result);
+            return;
+        }
+
+        result.setError(ErrorCode.UNKNOWN);
+        this.writeResponse(response, result);
     }
 }

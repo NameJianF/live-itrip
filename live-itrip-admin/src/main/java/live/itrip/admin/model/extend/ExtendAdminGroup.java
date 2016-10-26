@@ -1,16 +1,13 @@
-package live.itrip.admin.model;
+package live.itrip.admin.model.extend;
 
 import java.io.Serializable;
 
-public class AdminGroupDepart implements Serializable {
+public class ExtendAdminGroup implements Serializable {
     private Integer id;
-
-    private Integer groupId;
-
+    private String groupName;
     private Integer departId;
-
+    private String departName;
     private Long createTime;
-
     private Long updateTime;
 
     public Integer getId() {
@@ -21,12 +18,12 @@ public class AdminGroupDepart implements Serializable {
         this.id = id;
     }
 
-    public Integer getGroupId() {
-        return groupId;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public void setGroupId(Integer groupId) {
-        this.groupId = groupId;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName == null ? null : groupName.trim();
     }
 
     public Integer getDepartId() {
@@ -51,5 +48,13 @@ public class AdminGroupDepart implements Serializable {
 
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getDepartName() {
+        return departName;
+    }
+
+    public void setDepartName(String departName) {
+        this.departName = departName;
     }
 }

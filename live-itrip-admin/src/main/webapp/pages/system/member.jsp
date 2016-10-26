@@ -20,18 +20,16 @@
                     <div class="row">
                         <div class="col-sm-12 form-inline">
                             <label class="control-label">部门:</label>
-                            <select class="form-control" id="selectDepart" onchange="departChangeEvent(event);">
+                            <select class="form-control" id="selectDepart" onchange="departChangeEvent(event,1);"
+                                    style="width: 120px;">
                                 <option value="0">全部</option>
                                 <c:forEach items="${departList}" var="depart">
                                     <option value="${depart.id}">${depart.departName}</option>
                                 </c:forEach>
                             </select>
                             <label class="control-label">分组:</label>
-                            <select class="form-control" id="selectGroup">
+                            <select class="form-control" id="selectGroup" style="width: 120px;">
                                 <option value="0">全部</option>
-                                <%--<c:forEach items="${groupList}" var="group">--%>
-                                <%--<option value="${group.id}">${group.groupName}</option>--%>
-                                <%--</c:forEach>--%>
                             </select>
                             <button type="button" onclick="funRefresh();" class="btn btn-primary ">查询</button>
                             <button type="button" onclick="funClickAddRow();" class="btn btn-primary ">
@@ -41,17 +39,19 @@
                     </div>
 
                 </div>
-                <table class="table table-hover table-bordered dataTables-example" id="tableMember"
+                <table class="table table-hover table-bordered dataTables-example" id="tableUsers"
                        style="font-size: 14px;">
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>模块名称</th>
-                        <th>父模块</th>
-                        <th>模块地址</th>
-                        <th>排序</th>
-                        <th>描述</th>
-                        <th>是否删除</th>
+                        <th>Email</th>
+                        <th>名称</th>
+                        <th>手机</th>
+                        <th>部门</th>
+                        <th>分组</th>
+                        <th>级别</th>
+                        <th>状态</th>
+                        <th>认证</th>
                         <th>创建时间</th>
                         <th>更新时间</th>
                         <th>操作</th>
@@ -59,68 +59,99 @@
                     </thead>
                     <tbody>
                     </tbody>
-
                 </table>
             </div>
         </div>
 
     </div>
 
-    <div class="modal fade modal-default" id="formEditModule">
+    <div class="modal fade modal-default" id="formEditMember">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="formEditTitle">模块编辑</h4>
+                    <h4 class="modal-title" id="formEditTitle">用户编辑</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <input id="editModuleId" type="hidden">
-                            <label for="editModuleName" class="col-sm-3 control-label">模块名称</label>
+                            <input id="editMemberId" type="hidden">
+                            <label for="editMemberEmail" class="col-sm-3 control-label">Email</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleName">
+                                <input type="text" class="form-control" id="editMemberEmail">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editModuleParent" class="col-sm-3 control-label">父模块</label>
+                            <label for="editMemberName" class="col-sm-3 control-label">用户名称</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleParent">
+                                <input type="text" class="form-control" id="editMemberName">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editMemberMobile" class="col-sm-3 control-label">手机</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="editMemberMobile">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editModuleUrl" class="col-sm-3 control-label">模块地址</label>
+                            <label for="editMemberDepart" class="col-sm-3 control-label">部门</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleUrl">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="editModuleOrder" class="col-sm-3 control-label">排序</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleOrder">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="editModuleDiscription" class="col-sm-3 control-label">描述</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleDiscription">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="editModuleDelete" class="col-sm-3 control-label">是否删除</label>
-                            <div class="col-sm-5">
-                                <select class="form-control" id="editModuleDelete">
-                                    <option value="1">删除</option>
-                                    <option value="0">未删除</option>
+                                <select class="form-control" id="editMemberDepart"
+                                        onchange="departChangeEvent(event,2);">
+                                    <option value="0">全部</option>
+                                    <c:forEach items="${departList}" var="depart">
+                                        <option value="${depart.id}">${depart.departName}</option>
+                                    </c:forEach>
                                 </select>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="editMemberGroup" class="col-sm-3 control-label">分组</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" id="editMemberGroup" style="width: 120px;">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="editMemberLevel" class="col-sm-3 control-label">级别</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" id="editMemberLevel">
+                                    <option value="0">员工</option>
+                                    <option value="1">访客</option>
+                                    <option value="2">VIP</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="editMemberStatus" class="col-sm-3 control-label">状态</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" id="editMemberStatus">
+                                    <option value="0">刚创建</option>
+                                    <option value="1">正常使用</option>
+                                    <option value="2">不可用</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="editMemberIdentity" class="col-sm-3 control-label">认证</label>
+                            <div class="col-sm-5">
+                                <select class="form-control" id="editMemberIdentity">
+                                    <option value="0">未认证</option>
+                                    <option value="1">手机认证</option>
+                                    <option value="2">邮箱认证</option>
+                                    <option value="3">微信认证</option>
+                                    <option value="4">企业认证</option>
+                                </select>
+                            </div>
+                        </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn   btn-primary" data-dismiss="modal">取消</button>
-                    <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSaveModuleInfo()">确定
+                    <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSaveMemberInfo()">确定
                     </button>
                 </div>
             </div><!-- /.modal-content -->

@@ -27,6 +27,12 @@ public class AdminDepartService extends BaseService implements IAdminDepartServi
     @Autowired
     private AdminDepartMapper adminDepartMapper;
 
+
+    @Override
+    public List<AdminDepart> selectAllDeparts() {
+        return adminDepartMapper.selectDeparts(0, 1000);
+    }
+
     @Override
     public void selectDeparts(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BootStrapDataTableList<AdminDepart> result = new BootStrapDataTableList<>();

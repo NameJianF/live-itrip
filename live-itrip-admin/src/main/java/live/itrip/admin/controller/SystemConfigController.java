@@ -31,11 +31,15 @@ public class SystemConfigController extends AbstractController {
     @Autowired
     private IAdminDepartService iAdminDepartService;
     @Autowired
+    private IAdminGroupService iAdminGroupService;
+    @Autowired
     private IAdminOperationService iAdminOperationService;
     @Autowired
     private IAdminRoleService iAdminRoleService;
     @Autowired
     private IClientApiKeyService iClientApiKeyService;
+    @Autowired
+    private IAdminUserService iAdminUserService;
 
     /**
      * 系统配置模块
@@ -69,12 +73,16 @@ public class SystemConfigController extends AbstractController {
                 iAdminDictItemService.selectDictItems(decodeJson, response, request);
             } else if ("depart".equalsIgnoreCase(flag)) {
                 iAdminDepartService.selectDeparts(decodeJson, response, request);
+            } else if ("group".equalsIgnoreCase(flag)) {
+                iAdminGroupService.selectGroups(decodeJson, response, request);
             } else if ("operation".equalsIgnoreCase(flag)) {
                 iAdminOperationService.selectOperations(decodeJson, response, request);
             } else if ("role".equalsIgnoreCase(flag)) {
                 iAdminRoleService.selectRoles(decodeJson, response, request);
             } else if ("apikey".equalsIgnoreCase(flag)) {
                 iClientApiKeyService.selectApikeys(decodeJson, response, request);
+            } else if ("member".equalsIgnoreCase(flag)) {
+                iAdminUserService.selectAdminUsers(decodeJson, response, request);
             }
         } else {
             try {
@@ -113,6 +121,16 @@ public class SystemConfigController extends AbstractController {
                     } else if ("depart.edit".equalsIgnoreCase(op)) {
                         iAdminDepartService.editDepartById(decodeJson, response, request);
                     }
+                    // group
+                    else if ("group.detail".equalsIgnoreCase(op)) {
+                        iAdminGroupService.selectGroupById(decodeJson, response, request);
+                    } else if ("group.delete".equalsIgnoreCase(op)) {
+                        iAdminGroupService.deleteGroupById(decodeJson, response, request);
+                    } else if ("group.edit".equalsIgnoreCase(op)) {
+                        iAdminGroupService.editGroupById(decodeJson, response, request);
+                    } else if ("group.selectGroupsByDepartId".equalsIgnoreCase(op)) {
+                        iAdminGroupService.selectGroupsByDepartId(decodeJson, response, request);
+                    }
                     // operation
                     else if ("operation.detail".equalsIgnoreCase(op)) {
                         iAdminOperationService.selectOperationById(decodeJson, response, request);
@@ -121,7 +139,6 @@ public class SystemConfigController extends AbstractController {
                     } else if ("operation.edit".equalsIgnoreCase(op)) {
                         iAdminOperationService.editOperationById(decodeJson, response, request);
                     }
-
                     // role
                     else if ("role.detail".equalsIgnoreCase(op)) {
                         iAdminRoleService.selectRoleById(decodeJson, response, request);
@@ -137,6 +154,14 @@ public class SystemConfigController extends AbstractController {
                         iClientApiKeyService.deleteApikeyById(decodeJson, response, request);
                     } else if ("apikey.edit".equalsIgnoreCase(op)) {
                         iClientApiKeyService.editApikeyById(decodeJson, response, request);
+                    }
+                    // member
+                    else if ("member.detail".equalsIgnoreCase(op)) {
+                        iAdminUserService.selectAdminUserById(decodeJson, response, request);
+                    } else if ("member.delete".equalsIgnoreCase(op)) {
+                        iAdminUserService.deleteAdminUserById(decodeJson, response, request);
+                    } else if ("member.edit".equalsIgnoreCase(op)) {
+                        iAdminUserService.editAdminUserById(decodeJson, response, request);
                     }
                 }
             } catch (Exception ex) {

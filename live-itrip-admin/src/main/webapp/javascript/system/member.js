@@ -1,7 +1,7 @@
-var tabMember;
+var tabUsers;
 
 $(function () {
-    tabMember = $('#tableMember').DataTable({
+    tabUsers = $('#tableUsers').DataTable({
         "bProcessing": true, // 是否显示取数据时的那个等待提示
         "bServerSide": true, //这个用来指明是通过服务端来取数据
         "bPaginate": true, // 分页按钮
@@ -9,32 +9,80 @@ $(function () {
         "iDisplayLength": 10,// 每页显示行数
         "bInfo": true,//页脚信息
         "bAutoWidth": true,//自动宽度
-        "fnServerData": funSelectModules, // 获取数据的处理函数
+        "fnServerData": funSelectMembers, // 获取数据的处理函数
         "bFilter": false, // 隐藏筛选框
         "ordering": false,
         'bStateSave': true,
         "aoColumns": [
             {"mData": "id"},
-            {"mData": "moduleName"},
-            {"mData": "parentId"},
-            {"mData": "moduleUrl"},
-            {"mData": "moduleOrder"},
+            {"mData": "email"},
+            {"mData": "userName"},
+            {"mData": "mobile"},
+            //{"mData": "departId"},
             {
-                "mData": "description",
+                "mData": "departName",
                 render: function (data, type, row) {
                     if (data == null) {
-                        return "";
+                        return "未知";
+                    } else {
+                        return data;
                     }
-                    return data;
+                }
+            },
+            //{"mData": "groupId"},
+            {
+                "mData": "groupName",
+                render: function (data, type, row) {
+                    if (data == null) {
+                        return "未知";
+                    } else {
+                        return data;
+                    }
                 }
             },
             {
-                "mData": "isDelete",
+                "mData": "level",
                 render: function (data, type, row) {
-                    if (data == 1) {
-                        return "删除";
+                    if (data == 0) {
+                        return "员工";
+                    } else if (data == 1) {
+                        return "访客";
+                    } else if (data == 2) {
+                        return "VIP";
                     } else {
-                        return "正常";
+                        return "未知";
+                    }
+                }
+            },
+            {
+                "mData": "status",
+                render: function (data, type, row) {
+                    if (data == 0) {
+                        return "刚创建";
+                    } else if (data == 1) {
+                        return "正常使用";
+                    } else if (data == 2) {
+                        return "不可用";
+                    } else {
+                        return "未知";
+                    }
+                }
+            },
+            {
+                "mData": "identity",
+                render: function (data, type, row) {
+                    if (data == 0) {
+                        return "未认证";
+                    } else if (data == 1) {
+                        return "手机认证";
+                    } else if (data == 2) {
+                        return "邮箱认证";
+                    } else if (data == 2) {
+                        return "微信认证";
+                    } else if (data == 2) {
+                        return "企业认证";
+                    } else {
+                        return "未知";
                     }
                 }
             },
@@ -59,8 +107,8 @@ $(function () {
             {
                 render: function (data, type, row) {
                     if (type === 'display') {
-                        return '<button type="button" class="btn btn-link btn-xs" onclick="funEditGetModuleInfo(' + row.id + ')">编辑</button>' +
-                            '<button type="button" class="btn btn-link btn-xs" onclick="funDeleteModuleInfo(' + row.id + ')">删除</button>';
+                        return '<button type="button" class="btn btn-link btn-xs" onclick="funEditGetMemberInfo(' + row.id + ')">编辑</button>' +
+                            '<button type="button" class="btn btn-link btn-xs" onclick="funDeleteMemberInfo(' + row.id + ')">删除</button>';
                     }
                     return data;
                 }
@@ -85,17 +133,9 @@ $(function () {
 });
 
 
-function funSelectModules(sSource, aoData, fnCallback) {
-    console.log("========== selectModules ==========");
-    sSource = "/sysCfg.action?flag=module";
-
-    // 添加查询条件
-    //var queryContent = $("#queryContent").val();
-    //var querySort = $("#querySort").val();
-    //var queryStatus = $("#queryStatus").val();
-    //aoData.push({name: "queryContent", value: queryContent});
-    //aoData.push({name: "querySort", value: querySort});
-    //aoData.push({name: "queryStatus", value: queryStatus});
+function funSelectMembers(sSource, aoData, fnCallback) {
+    console.log("========== selectMembers ==========");
+    sSource = "/sysCfg.action?flag=member";
 
     var token = $.cookie('userToken');
     aoData.push({name: "token", value: token});
@@ -114,14 +154,14 @@ function funSelectModules(sSource, aoData, fnCallback) {
 
 /**
  * 修改
- * @param moduleid
+ * @param memberId
  */
-function funEditGetModuleInfo(moduleid) {
+function funEditGetMemberInfo(memberId) {
     var token = $.cookie('userToken');
     var jsondata = {
-        'op': 'module.detail',
+        'op': 'member.detail',
         'token': token,
-        'moduleid': moduleid
+        'memberId': memberId
     };
 
     parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
@@ -130,16 +170,18 @@ function funEditGetModuleInfo(moduleid) {
         }, function (response) {
             // success
             if (response.code == 0) {
-                $('#editModuleId').val(response.data.id);
-                $('#editModuleName').val(response.data.moduleName);
-                $('#editModuleParent').val(response.data.parentId);
-                $('#editModuleUrl').val(response.data.moduleUrl);
-                $('#editModuleOrder').val(response.data.moduleOrder);
-                $('#editModuleDiscription').val(response.data.description);
-                $('#editModuleDelete').val(response.data.isDelete);
+                $('#editMemberId').val(response.data.id);
+                $('#editMemberEmail').val(response.data.email);
+                $('#editMemberName').val(response.data.userName);
+                $('#editMemberMobile').val(response.data.mobile);
+                $('#editMemberDepart').val(response.data.departId);
+                $('#editMemberGroup').val(response.data.groupId);
+                $('#editMemberLevel').val(response.data.level);
+                $('#editMemberStatus').val(response.data.status);
+                $('#editMemberIdentity').val(response.data.identity);
 
-                $('#formEditTitle').text("编辑模块");
-                $('#formEditModule').modal('show');
+                $('#formEditTitle').text("编辑用户");
+                $('#formEditMember').modal('show');
             }
         }, function () {
             // complete
@@ -147,22 +189,63 @@ function funEditGetModuleInfo(moduleid) {
 }
 
 // 部门选择
-function departChangeEvent(event) {
-    alert('You like ' + event.target.value + ' ice cream.');
-}
+function departChangeEvent(event, flag) {
+    //alert('You like ' + event.target.value + ' ice cream.');
+    if (flag == 1) {
+        $('#selectGroup').empty();
+    } else {
+        $('#editMemberGroup').empty();
+    }
 
-function editSaveModuleInfo() {
     var token = $.cookie('userToken');
     var jsondata = {
-        'op': 'module.edit',
+        'op': 'group.selectGroupsByDepartId',
         'token': token,
-        'id': $('#editModuleId').val(),
-        'moduleName': $('#editModuleName').val(),
-        'parentId': $('#editModuleParent').val(),
-        'moduleUrl': $('#editModuleUrl').val(),
-        'moduleOrder': $('#editModuleOrder').val(),
-        'description': $('#editModuleDiscription').val(),
-        'isDelete': $('#editModuleDelete').val()
+        'departId': event.target.value
+    };
+    parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
+        , function (response) {
+            // error
+        }, function (response) {
+            // success
+            if (response.code == 0) {
+                if (flag == 1) {
+                    var ops = "<option value=\"0\">全部</option>";
+                    var jsonarray = eval(response.data);
+                    for (var i = 0; i < jsonarray.length; i++) {
+                        ops += '<option value="' + jsonarray[i].groupId + '">' + jsonarray[i].groupName + '</option>';
+                    }
+                    $('#selectGroup').append(ops);
+                } else {
+                    var ops = "";
+                    var jsonarray = eval(response.data);
+                    for (var i = 0; i < jsonarray.length; i++) {
+                        ops += '<option value="' + jsonarray[i].groupId + '">' + jsonarray[i].groupName + '</option>';
+                    }
+                    $('#editMemberGroup').append(ops);
+                }
+            }
+        }, function () {
+            // complete
+        });
+}
+
+function editSaveMemberInfo() {
+    var token = $.cookie('userToken');
+    var jsondata = {
+        'op': 'member.edit',
+        'token': token,
+        'id': $('#editMemberId').val(),
+        'userName': $('#editMemberName').val(),
+        'email': $('#editMemberEmail').val(),
+        'mobile': $('#editMemberMobile').val(),
+        'departId': $('#editMemberDepart').val(),
+        'departName': $("#editMemberDepart").find("option:selected").text(),
+        'groupId': $('#editMemberGroup').val(),
+        'groupName': $('#editMemberGroup').find("option:selected").text(),
+        'level': $('#editMemberLevel').val(),
+        'status': $('#editMemberStatus').val(),
+        'identity': $('#editMemberIdentity').val()
     };
 
     parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
@@ -179,23 +262,23 @@ function editSaveModuleInfo() {
             }
         }, function () {
             // complete
-            $('#formEditModule').modal('hide');
+            $('#formEditMember').modal('hide');
         });
 }
 
 /**
  * 删除
- * @param moduleid
+ * @param memberId
  */
-function funDeleteModuleInfo(moduleid) {
+function funDeleteMemberInfo(memberId) {
     if (confirm("确定要删除数据吗?")) {
-        console.log("delete module id:" + moduleid);
+        console.log("delete member id:" + memberId);
 
         var token = $.cookie('userToken');
         var jsondata = {
-            'op': 'module.delete',
+            'op': 'member.delete',
             'token': token,
-            'moduleid': moduleid
+            'memberId': memberId
         };
 
         parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
@@ -219,7 +302,7 @@ function funDeleteModuleInfo(moduleid) {
  * 刷新
  */
 function funRefresh() {
-    tabMember.ajax.reload();//.fnDraw();
+    tabUsers.ajax.reload();
 }
 
 /**
@@ -228,15 +311,16 @@ function funRefresh() {
 function funClickAddRow() {
     console.log(" fnClickAddRow click ");
     // clear
-    $('#formEditTitle').text("新增模块");
+    $('#formEditTitle').text("新增用户");
 
-    $('#editModuleId').val(null)
-    $('#editModuleName').val("");
-    $('#editModuleParent').val("");
-    $('#editModuleUrl').val("");
-    $('#editModuleOrder').val("");
-    $('#editModuleDiscription').val("");
-    $('#editModuleDelete').val(0);
+    $('#editMemberId').val(null)
+    $('#editMemberEmail').val("");
+    $('#editMemberName').val("");
+    $('#editMemberMobile').val("");
+    $('#editMemberDepart').val(0);
+    $('#editMemberLevel').val(0);
+    $('#editMemberStatus').val(0);
+    $('#editMemberIdentity').val(0);
 
-    $('#formEditModule').modal('show');
+    $('#formEditMember').modal('show');
 }

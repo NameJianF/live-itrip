@@ -23,7 +23,7 @@ function execAjaxData(url, jsondata, async, error, success, complete) {
         async: async,
         error: function (data) {
             console.log(data);
-            error(data)
+            error(data);
             // 隐藏loading
             $.loading(false);
         },

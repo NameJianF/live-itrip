@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="live.itrip.admin.dao.AdminUserMapper">
-  <resultMap id="BaseResultMap" type="live.itrip.admin.model.AdminUser">
-    <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="user_name" jdbcType="VARCHAR" property="userName" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
-    <result column="depart_id" jdbcType="INTEGER" property="departId" />
-    <result column="depart_name" jdbcType="VARCHAR" property="departName" />
-    <result column="group_id" jdbcType="INTEGER" property="groupId" />
-    <result column="group_name" jdbcType="VARCHAR" property="groupName" />
-    <result column="level" jdbcType="CHAR" property="level" />
-    <result column="status" jdbcType="CHAR" property="status" />
-    <result column="identity" jdbcType="CHAR" property="identity" />
-    <result column="create_time" jdbcType="BIGINT" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
+    <resultMap id="BaseResultMap" type="live.itrip.admin.model.AdminUser">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="mobile" jdbcType="VARCHAR" property="mobile"/>
+        <result column="depart_id" jdbcType="INTEGER" property="departId"/>
+        <result column="depart_name" jdbcType="VARCHAR" property="departName"/>
+        <result column="group_id" jdbcType="INTEGER" property="groupId"/>
+        <result column="group_name" jdbcType="VARCHAR" property="groupName"/>
+        <result column="level" jdbcType="CHAR" property="level"/>
+        <result column="status" jdbcType="CHAR" property="status"/>
+        <result column="identity" jdbcType="CHAR" property="identity"/>
+        <result column="create_time" jdbcType="BIGINT" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id, user_name, email, mobile, depart_id, depart_name, group_id, group_name, level, 
     status, identity, create_time, update_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from admin_user
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from admin_user
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from admin_user
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="live.itrip.admin.model.AdminUser">
+    <insert id="insert" parameterType="live.itrip.admin.model.AdminUser">
     insert into admin_user (id, user_name, email, 
       mobile, depart_id, depart_name, 
       group_id, group_name, level, 
@@ -42,134 +42,134 @@
       #{status,jdbcType=CHAR}, #{identity,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT}, 
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="live.itrip.admin.model.AdminUser">
-    insert into admin_user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="userName != null">
-        user_name,
-      </if>
-      <if test="email != null">
-        email,
-      </if>
-      <if test="mobile != null">
-        mobile,
-      </if>
-      <if test="departId != null">
-        depart_id,
-      </if>
-      <if test="departName != null">
-        depart_name,
-      </if>
-      <if test="groupId != null">
-        group_id,
-      </if>
-      <if test="groupName != null">
-        group_name,
-      </if>
-      <if test="level != null">
-        level,
-      </if>
-      <if test="status != null">
-        status,
-      </if>
-      <if test="identity != null">
-        identity,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="userName != null">
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null">
-        #{mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="departId != null">
-        #{departId,jdbcType=INTEGER},
-      </if>
-      <if test="departName != null">
-        #{departName,jdbcType=VARCHAR},
-      </if>
-      <if test="groupId != null">
-        #{groupId,jdbcType=INTEGER},
-      </if>
-      <if test="groupName != null">
-        #{groupName,jdbcType=VARCHAR},
-      </if>
-      <if test="level != null">
-        #{level,jdbcType=CHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=CHAR},
-      </if>
-      <if test="identity != null">
-        #{identity,jdbcType=CHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=BIGINT},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="live.itrip.admin.model.AdminUser">
-    update admin_user
-    <set>
-      <if test="userName != null">
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
-      </if>
-      <if test="mobile != null">
-        mobile = #{mobile,jdbcType=VARCHAR},
-      </if>
-      <if test="departId != null">
-        depart_id = #{departId,jdbcType=INTEGER},
-      </if>
-      <if test="departName != null">
-        depart_name = #{departName,jdbcType=VARCHAR},
-      </if>
-      <if test="groupId != null">
-        group_id = #{groupId,jdbcType=INTEGER},
-      </if>
-      <if test="groupName != null">
-        group_name = #{groupName,jdbcType=VARCHAR},
-      </if>
-      <if test="level != null">
-        level = #{level,jdbcType=CHAR},
-      </if>
-      <if test="status != null">
-        status = #{status,jdbcType=CHAR},
-      </if>
-      <if test="identity != null">
-        identity = #{identity,jdbcType=CHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=BIGINT},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.AdminUser">
+    <insert id="insertSelective" parameterType="live.itrip.admin.model.AdminUser">
+        insert into admin_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="departId != null">
+                depart_id,
+            </if>
+            <if test="departName != null">
+                depart_name,
+            </if>
+            <if test="groupId != null">
+                group_id,
+            </if>
+            <if test="groupName != null">
+                group_name,
+            </if>
+            <if test="level != null">
+                level,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="identity != null">
+                identity,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="departId != null">
+                #{departId,jdbcType=INTEGER},
+            </if>
+            <if test="departName != null">
+                #{departName,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null">
+                #{groupId,jdbcType=INTEGER},
+            </if>
+            <if test="groupName != null">
+                #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                #{level,jdbcType=CHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="identity != null">
+                #{identity,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.admin.model.AdminUser">
+        update admin_user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="departId != null">
+                depart_id = #{departId,jdbcType=INTEGER},
+            </if>
+            <if test="departName != null">
+                depart_name = #{departName,jdbcType=VARCHAR},
+            </if>
+            <if test="groupId != null">
+                group_id = #{groupId,jdbcType=INTEGER},
+            </if>
+            <if test="groupName != null">
+                group_name = #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="level != null">
+                level = #{level,jdbcType=CHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=CHAR},
+            </if>
+            <if test="identity != null">
+                identity = #{identity,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.AdminUser">
     update admin_user
     set user_name = #{userName,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
@@ -184,6 +184,16 @@
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
-  </update>
+    </update>
 
+
+    <!--自定义查询-->
+    <select id="countAll" resultType="int">
+        select count(id) from admin_user
+    </select>
+    <select id="selectAdminUsers" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from admin_user limit ${start},${length}
+    </select>
 </mapper>

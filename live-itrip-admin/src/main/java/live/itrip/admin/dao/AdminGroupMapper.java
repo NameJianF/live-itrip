@@ -1,6 +1,11 @@
 package live.itrip.admin.dao;
 
 import live.itrip.admin.model.AdminGroup;
+import live.itrip.admin.model.extend.ExtendAdminGroup;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.HashMap;
+import java.util.List;
 
 public interface AdminGroupMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +19,13 @@ public interface AdminGroupMapper {
     int updateByPrimaryKeySelective(AdminGroup record);
 
     int updateByPrimaryKey(AdminGroup record);
+
+    // ===================== add ============
+    List<ExtendAdminGroup> selectAllGroups();
+
+    Integer countAll();
+
+    List<ExtendAdminGroup> selectGroups(@Param("start") Integer start, @Param("length") Integer length);
+
+
 }

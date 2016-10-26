@@ -1,9 +1,12 @@
 package live.itrip.admin.controller;
 
 import live.itrip.admin.controller.base.AbstractController;
+import live.itrip.admin.model.AdminDepart;
 import live.itrip.admin.model.AdminDict;
 import live.itrip.admin.model.AdminUser;
+import live.itrip.admin.service.intefaces.IAdminDepartService;
 import live.itrip.admin.service.intefaces.IAdminDictService;
+import live.itrip.admin.service.intefaces.IAdminGroupService;
 import live.itrip.admin.service.intefaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +29,8 @@ public class PagesRouterController extends AbstractController {
 
     @Autowired
     private IAdminDictService iAdminDictService;
-
+    @Autowired
+    private IAdminDepartService iAdminDepartService;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String pagesIndex(HttpServletRequest request, Model model) {
@@ -84,10 +88,26 @@ public class PagesRouterController extends AbstractController {
     }
 
     @RequestMapping(value = "/system/member", method = RequestMethod.GET)
-    public String systemMember() {
+    public String systemMember(HttpServletRequest request, Model model) {
+        List<AdminDepart> departList = iAdminDepartService.selectAllDeparts();
+
+
+        model.addAttribute("departList", departList);
         return "pages/system/member";
     }
 
+    @RequestMapping(value = "/system/group", method = RequestMethod.GET)
+    public String systemGroup(HttpServletRequest request, Model model) {
+        List<AdminDepart> departList = iAdminDepartService.selectAllDeparts();
+        model.addAttribute("departList", departList);
+        return "pages/system/group";
+    }
+
+    /**
+     * 系统日志
+     *
+     * @return
+     */
     @RequestMapping(value = "/system/log", method = RequestMethod.GET)
     public String systemLog() {
         return "pages/system/log";
