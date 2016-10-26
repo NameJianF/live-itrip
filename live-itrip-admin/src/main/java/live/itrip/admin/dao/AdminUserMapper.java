@@ -21,5 +21,6 @@ public interface AdminUserMapper {
     // ================= add ===============
     Integer countAll();
 
-    List<AdminUser> selectAdminUsers(@Param("start") Integer start, @Param("length") Integer length);
+    List<AdminUser> selectAdminUsers(@Param("queryDepart") Integer queryDepart, @Param("queryGroup") Integer queryGroup
+            , @Param("queryUserName") String queryUserName, @Param("start") Integer start, @Param("length") Integer length);
 }

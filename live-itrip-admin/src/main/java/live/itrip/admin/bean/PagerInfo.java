@@ -18,6 +18,7 @@ public class PagerInfo {
     private JSONArray columns; // 表格列信息
     private JSONArray order; // 表格排序信息
     private String search = ""; // 表格过滤条件（search）
+    private String token = "";// 用户token
 
     public int getDraw() {
         return draw;
@@ -89,5 +90,13 @@ public class PagerInfo {
 
     public void setiDisplayLength(int iDisplayLength) {
         this.iDisplayLength = iDisplayLength;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

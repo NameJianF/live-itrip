@@ -31,6 +31,8 @@
                             <select class="form-control" id="selectGroup" style="width: 120px;">
                                 <option value="0">全部</option>
                             </select>
+                            <label class="control-label">姓名:</label>
+                            <input type="text" class="form-control" id="userName" placeholder="Email or Name">
                             <button type="button" onclick="funRefresh();" class="btn btn-primary ">查询</button>
                             <button type="button" onclick="funClickAddRow();" class="btn btn-primary ">
                                 添加
@@ -39,7 +41,7 @@
                     </div>
 
                 </div>
-                <table class="table table-hover table-bordered dataTables-example" id="tableUsers"
+                <table class="table table-hover table-bordered dataTables-example table-responsive" id="tableUsers"
                        style="font-size: 14px;">
                     <thead>
                     <tr>

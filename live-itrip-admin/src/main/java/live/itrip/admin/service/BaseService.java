@@ -50,8 +50,17 @@ public class BaseService implements IWriteResponse {
      * @return
      */
     protected PagerInfo getPagerInfo(String decodeJson) {
-
         JSONArray jsonarray = JSONArray.parseArray(decodeJson);
+        return getPagerInfo(jsonarray);
+    }
+
+    /**
+     * 解析分页查询参数数据,方法外转换JSONArray,获取自定义参数
+     *
+     * @param jsonarray
+     * @return
+     */
+    protected PagerInfo getPagerInfo(JSONArray jsonarray) {
         PagerInfo pagerInfo = new PagerInfo();
         try {
             for (int i = 0; i < jsonarray.size(); i++) {
@@ -75,6 +84,9 @@ public class BaseService implements IWriteResponse {
                 } else if (obj.get("name").equals("search")) {
                     JSONObject jsonObject = obj.getJSONObject("value");
                     pagerInfo.setSearch(jsonObject.getString("value"));
+                } else if (obj.get("name").equals("token")) {
+                    JSONObject jsonObject = obj.getJSONObject("value");
+                    pagerInfo.setToken(jsonObject.getString("value"));
                 }
             }
         } catch (Exception ex) {

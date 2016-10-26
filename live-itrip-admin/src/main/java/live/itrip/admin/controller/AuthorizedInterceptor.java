@@ -27,8 +27,10 @@ public class AuthorizedInterceptor implements HandlerInterceptor {
 
                 // 不检测登录用户的 action
                 if (action.equals("/apikeys.action")
-                        || action.equals("/login.action")
-                        || action.equals("/user.action")) {
+                        || action.equals("/system/login.action")
+                        || action.equals("/user.action")
+                        || action.startsWith("/index.action")
+                        || action.startsWith("/login.action")) {
                     return true;
                 }
 

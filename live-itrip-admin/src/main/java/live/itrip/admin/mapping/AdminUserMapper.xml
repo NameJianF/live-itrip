@@ -194,6 +194,16 @@
     <select id="selectAdminUsers" resultMap="BaseResultMap" parameterType="map">
         select
         <include refid="Base_Column_List"/>
-        from admin_user limit ${start},${length}
+        from admin_user WHERE TRUE
+        <if test="queryDepart > 0">
+            AND depart_id = ${queryDepart}
+        </if>
+        <if test="queryGroup > 0">
+            AND group_id = ${queryGroup}
+        </if>
+        <if test="queryUserName != null and queryUserName != '' ">
+            AND (email LIKE ${queryUserName} OR user_name LIKE ${queryUserName})
+        </if>
+        limit ${start},${length}
     </select>
 </mapper>

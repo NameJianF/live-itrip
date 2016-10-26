@@ -32,19 +32,19 @@ public class PagesRouterController extends AbstractController {
     @Autowired
     private IAdminDepartService iAdminDepartService;
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @RequestMapping(value = "/system/index", method = RequestMethod.GET)
     public String pagesIndex(HttpServletRequest request, Model model) {
         AdminUser user = iUserService.getCurrentLoginUser();
         model.addAttribute("user", user);
         return "pages/index";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/system/login", method = RequestMethod.GET)
     public String pagesLogin() {
         return "pages/login";
     }
 
-    @RequestMapping(value = "/pages/dashboard", method = RequestMethod.GET)
+    @RequestMapping(value = "/system/dashboard", method = RequestMethod.GET)
     public String pagesDashboard() {
         return "pages/dashboard";
     }

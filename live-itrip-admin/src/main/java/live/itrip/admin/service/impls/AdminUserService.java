@@ -1,6 +1,7 @@
 package live.itrip.admin.service.impls;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import live.itrip.admin.api.sso.bean.User;
 import live.itrip.admin.bean.BootStrapDataTableList;
@@ -14,6 +15,7 @@ import live.itrip.admin.service.intefaces.IAdminUserService;
 import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,9 +63,29 @@ public class AdminUserService extends BaseService implements IAdminUserService {
     public void selectAdminUsers(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BootStrapDataTableList<AdminUser> result = new BootStrapDataTableList<>();
         try {
-            PagerInfo pagerInfo = this.getPagerInfo(decodeJson);
+            // 解析查询条件
+            JSONArray jsonarray = JSONArray.parseArray(decodeJson);
+            String queryUserName = null;
+            Integer queryDepart = null;
+            Integer queryGroup = null;
+            for (int i = 0; i < jsonarray.size(); i++) {
+                JSONObject obj = (JSONObject) jsonarray.get(i);
+                if (obj.get("name").equals("queryUserName")) {
+                    queryUserName = obj.get("value").toString();
+                } else if (obj.get("name").equals("queryDepart")) {
+                    queryDepart = obj.getInteger("value");
+                } else if (obj.get("name").equals("queryGroup")) {
+                    queryGroup = obj.getInteger("value");
+                }
+            }
+
+
+            PagerInfo pagerInfo = this.getPagerInfo(jsonarray);
             Integer count = adminUserMapper.countAll();
-            List<AdminUser> userList = adminUserMapper.selectAdminUsers(pagerInfo.getStart(), pagerInfo.getLength());
+            if (StringUtils.isNotEmpty(queryUserName)) {
+                queryUserName = "'%" + queryUserName.trim() + "%'";
+            }
+            List<AdminUser> userList = adminUserMapper.selectAdminUsers(queryDepart, queryGroup, queryUserName, pagerInfo.getStart(), pagerInfo.getLength());
 
             if (userList != null) {
                 result.setsEcho(String.valueOf(pagerInfo.getDraw() + 1));
@@ -88,7 +110,7 @@ public class AdminUserService extends BaseService implements IAdminUserService {
     public void selectAdminUserById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BaseResult result = new BaseResult();
         JSONObject jsonObject = JSON.parseObject(decodeJson);
-        Long memberId = (Long) jsonObject.get("memberId");
+        Long memberId = Long.valueOf(jsonObject.get("memberId").toString());
         if (memberId != null) {
             AdminUser AdminUser = this.adminUserMapper.selectByPrimaryKey(memberId);
             result.setCode(ErrorCode.SUCCESS.getCode());
@@ -105,7 +127,7 @@ public class AdminUserService extends BaseService implements IAdminUserService {
     public void deleteAdminUserById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BaseResult result = new BaseResult();
         JSONObject jsonObject = JSON.parseObject(decodeJson);
-        Long memberId = (Long) jsonObject.get("memberId");
+        Long memberId = Long.valueOf(jsonObject.get("memberId").toString());
         if (memberId != null) {
             Integer ret = this.adminUserMapper.deleteByPrimaryKey(memberId);
             if (ret > 0) {

@@ -137,6 +137,14 @@ function funSelectMembers(sSource, aoData, fnCallback) {
     console.log("========== selectMembers ==========");
     sSource = "/sysCfg.action?flag=member";
 
+    // 添加查询条件
+    var queryUserName = $("#userName").val();
+    var queryDepart = $("#selectDepart").val();
+    var queryGroup = $("#selectGroup").val();
+    aoData.push({name: "queryUserName", value: queryUserName});
+    aoData.push({name: "queryDepart", value: queryDepart});
+    aoData.push({name: "queryGroup", value: queryGroup});
+
     var token = $.cookie('userToken');
     aoData.push({name: "token", value: token});
     aoData = JSON.stringify(aoData);
