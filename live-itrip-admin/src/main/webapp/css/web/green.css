@@ -1,0 +1,229 @@
+a {
+    color: #1abb9c;
+}
+.section-title {
+    color: #1abb9c;
+}
+.section-title span:before {
+    color: #1abb9c;
+}
+.post-title a:hover {
+    color: #1abb9c
+}
+.colored {
+    color: #1abb9c
+}
+blockquote small {
+    color: #1abb9c;
+}
+.black-wrapper a:hover {
+    color: #1abb9c
+}
+.color-wrapper {
+    background: #1abb9c
+}
+.meta a:hover,
+.more:hover {
+    color: #1abb9c
+}
+.nav > li > a:hover,
+.nav > li > a:focus {
+    color: #1abb9c;
+}
+.navbar .dropdown-menu:not(.yamm-dropdown-menu) li a:hover,
+.navbar .dropdown-menu:not(.yamm-dropdown-menu) li a.active {
+    color: #1abb9c;
+}
+.navbar .dropdown-menu:not(.yamm-dropdown-menu) > li > a:hover,
+.navbar .dropdown-menu:not(.yamm-dropdown-menu) > li > a:focus,
+.navbar .dropdown-submenu:hover > a,
+.navbar .dropdown-submenu:focus > a,
+.navbar .dropdown-menu:not(.yamm-dropdown-menu) > .active > a,
+.navbar .dropdown-menu:not(.yamm-dropdown-menu) > .active > a:hover,
+.navbar .dropdown-menu:not(.yamm-dropdown-menu) > .active > a:focus {
+    color: #1abb9c;
+}
+.navbar-header .info a:hover {
+    color: #1abb9c
+}
+.navbar.basic .nav > li > a:hover,
+.navbar.basic .nav > li > a:focus,
+.navbar.basic .nav .open > a,
+.navbar.basic .nav .open > a:hover,
+.navbar.basic .nav .open > a:focus {
+    color: #1abb9c;
+}
+.yamm .yamm-content a:hover {
+    color: #1abb9c
+}
+.btn {
+    background: #1abb9c;
+}
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn.active {
+    background: #17a78b;
+}
+.social a:hover .icon-search {
+    color: #1abb9c;
+    border-color: #1abb9c;
+}
+.tp-caption .dotted {
+    border-bottom: 1px dotted #1abb9c
+}
+.services .tab:hover .icon i.icn,
+.services .tab.active .icon i.icn {
+    color: #1abb9c;
+    border: 2px solid #1abb9c;
+}
+.services .tab:hover h4,
+.services .tab.active h4 {
+    color: #1abb9c
+}
+.icon i.icn {
+    border: 1px solid #1abb9c;
+    color: #1abb9c;
+}
+.step:hover i.icn {
+    background-color: #1abb9c;
+}
+.tabs-side .tab a:hover,
+.tabs-side .tab.active a {
+    color: #1abb9c
+}
+.tabs-top .tab a:hover,
+.tabs-top .tab.active a {
+    color: #1abb9c
+}
+#testimonials .author {
+    color: #1abb9c;
+}
+#testimonials .tab a.active,
+#testimonials .tab a:hover {
+    border: 1px solid #1abb9c;
+}
+.panel-title > a:hover {
+    color: #1abb9c
+}
+.filter li a:hover,
+.filter li a.active {
+    color: #1abb9c
+}
+.filter li a:hover:before,
+.filter li a.active:before {
+    color: #1abb9c
+}
+.item-details li a:hover {
+    color: #1abb9c
+}
+.share a:hover {
+    color: #1abb9c
+}
+.process li.process-item .number {
+    color: #1abb9c;
+}
+ul.circled li:before {
+    color: #1abb9c;
+}
+.owl-theme .owl-controls.clickable .owl-buttons div:hover {
+    border: 1px solid #1abb9c;
+    color: #1abb9c;
+}
+.owl-theme .owl-controls .owl-page.active span,
+.owl-theme .owl-controls.clickable .owl-page:hover span {
+    border: 1px solid #1abb9c
+}
+.pricing .plan h4 span {
+    color: #1abb9c
+}
+.progress-list li em {
+    color: #1abb9c;
+}
+.progress.plain .bar {
+    background: #1abb9c;
+}
+.recent-list .post .date {
+    border: 1px solid #1abb9c;
+    color: #1abb9c;
+}
+.recent-list .format-wrapper {
+    background-color: #1abb9c;
+}
+.format-filter li a:hover,
+.format-filter li a.active {
+    color: #1abb9c
+}
+.classic-blog .post .date {
+    color: #1abb9c;
+    border: 1px solid #1abb9c;
+}
+.classic-blog .post a.date:hover {
+    background-color: #1abb9c;
+}
+.classic-blog .posts .format-wrapper {
+    background-color: #1abb9c;
+}
+.sidebox a:hover {
+    color: #1abb9c
+}
+.border-list li a:hover {
+    color: #1abb9c
+}
+.border-list li:hover:after {
+    color: #1abb9c
+}
+.tooltip-inner {
+    background-color: #1abb9c;
+}
+.tooltip.top .tooltip-arrow,
+.tooltip.top-left .tooltip-arrow,
+.tooltip.top-right .tooltip-arrow {
+    border-top-color: #1abb9c
+}
+.tooltip.right .tooltip-arrow {
+    border-right-color: #1abb9c
+}
+.tooltip.left .tooltip-arrow {
+    border-left-color: #1abb9c
+}
+.tooltip.bottom .tooltip-arrow,
+.tooltip.bottom-left .tooltip-arrow,
+.tooltip.bottom-right .tooltip-arrow {
+    border-bottom-color: #1abb9c
+}
+.pagination ul > li > a,
+.pagination ul > li > span {
+    background: #1abb9c;
+}
+.pagination ul > li > a:hover,
+.pagination ul > li > a:focus,
+.pagination ul > .active > a,
+.pagination ul > .active > span {
+    background: #17a78b;
+}
+#comments .info h2 a:hover {
+    color: #1abb9c
+}
+#comments a.reply-link:hover {
+    color: #1abb9c
+}
+.icon-overlay a .icn-more,
+.items li a .text-overlay {
+    background-color: rgba(26,187,156, 0.92);
+}
+@media (max-width: 767px) { 
+	.services .tab:hover .icon i.icn,
+	.services .tab.active .icon i.icn {
+	    color: #1abb9c !important;
+	    border: none;
+	}
+	.services .tab:hover h4,
+	.services .tab.active h4 {
+	    color: #1abb9c
+	}
+	.tabs-side .tab a:hover,
+	.tabs-side .tab.active a {
+	    color: #1abb9c
+	}
+}
