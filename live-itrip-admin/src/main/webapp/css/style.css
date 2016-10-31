@@ -7843,7 +7843,7 @@ body.body-small .vote-icon {
 
 body.landing-page {
     color: #676a6c;
-    font-family: 'Open Sans', helvetica, arial, sans-serif;
+    font-family: '微软雅黑', helvetica, arial, sans-serif;
     background-color: #fff;
 }
 
@@ -7902,7 +7902,7 @@ body.landing-page {
     /*width: 600px;*/
     height: 1px;
     margin: 60px auto 0;
-    border-bottom: 2px solid #1ab394;
+    border-bottom: 1px solid #1ab394;
 }
 
 .landing-page .navbar-wrapper {
@@ -8294,7 +8294,7 @@ body.landing-page {
     padding-top: 80px;
     padding-bottom: 90px;
     background-color: #1ab394;
-    background-image: url('../img/landing/avatar_all.png');
+    background-image: url('/img/landing/avatar_all.png');
 }
 
 .landing-page .big-icon {
