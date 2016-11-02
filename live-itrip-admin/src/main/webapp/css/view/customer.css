@@ -1,0 +1,43 @@
+.customer {
+    margin-top: 65px;
+    margin-bottom: -60px;
+    height: 870px;
+    background-image: url('/images/web/customer/customer_bg.jpg');
+}
+
+.cleft {
+    background: rgba(10, 10, 10, 0.41);
+    padding: 50px;
+    margin-top: 60px;
+}
+
+.csmall {
+    font-size: 32px;
+    margin-left: 85px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.cright-div {
+    margin-left: 20px;
+    margin-top: 70px;
+}
+
+.cright-icon-1 {
+    background: url('/images/web/customer/customer_man.png') no-repeat;
+    width: 95px;
+    height: 106px;
+}
+
+.cright-icon-2 {
+    background: url('/images/web/customer/customer_woman.png') no-repeat;
+    width: 95px;
+    height: 106px;
+}
+
+.cright-bt {
+    background: rgba(128, 128, 128, 0.5);
+    padding: 10px;
+    margin: 1px;
+    width: 33%;
+}

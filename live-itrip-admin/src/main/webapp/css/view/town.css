@@ -1,0 +1,8 @@
+.townbg {
+    background-image: url('/images/web/town/townbg.jpg');
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    margin-top: 66px;
+    background-color: rgb(242, 216, 155);
+    height: 335px;
+}
