@@ -1,0 +1,20 @@
+.planbg {
+    /*background-image: url('/images/web/town/townbg.jpg');*/
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    margin-top: 80px;
+    margin-left: 20px;
+    margin-right: 20px;
+    /*background-color: rgb(242, 216, 155);*/
+    /*height: 325px;*/
+}
+
+.plancenter {
+    margin: 20px;
+}
+
+.product-box-padding {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 5px;
+}

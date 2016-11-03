@@ -1,0 +1,196 @@
+.baseBox {
+    position: fixed;
+    right: 50%;
+    bottom: 50px;
+    _margin-bottom: 50px;
+    margin-right: -675px;
+    z-index: 888;
+    _position: absolute;
+    _top: expression(eval(document.documentElement.scrollTop+document.documentElement.clientHeight-this.offsetHeight-(parseInt(this.currentStyle.marginTop,10)||0)-(parseInt(this.currentStyle.marginBottom,10)||0)));
+}
+
+
+.baseBox .J_ScrollTop {
+    width: 70px;
+    padding: 5px 0 10px;
+    background: #FBFBFB;
+    border: 1px solid #E5E5E5;
+    border-bottom: 1px solid #FFF;
+    cursor: pointer;
+}
+
+.baseBox .J_ScrollTop span.bimg_01 {
+    display: block;
+    width: 38px;
+    height: 38px;
+    background: url('/images/web/index/base.png') no-repeat -112px 0px;
+    margin: 0 auto;
+}
+
+.baseBox .J_ScrollTop .b_txt {
+    height: 16px;
+    font: 100 12px/16px Verdana, SimSun, Arial;
+    margin-top: 2px;
+    text-align: center;
+    color: #48AEEC;
+}
+
+.baseOn {
+    width: 70px;
+    background: #FBFBFB;
+    border: 1px solid #e5e5e5;
+    border-bottom: 0;
+    z-index: 999;
+}
+
+.overOn {
+    overflow: hidden;
+}
+
+.baseOn li {
+    width: 70px;
+    padding: 0 0 10px;
+    border-bottom: 1px solid #E7E7E7;
+    border-top: 1px solid #FFF;
+    cursor: pointer;
+    position: relative;
+}
+
+.baseOn li span {
+    display: block;
+    width: 38px;
+    height: 38px;
+    background: url('/images/web/index/base.png') no-repeat;
+    margin: 0 auto;
+}
+
+.baseOn li span.bimg_02 {
+    background-position: 0 0;
+}
+
+.baseOn li span.bimg_03 {
+    background-position: -36px 0;
+}
+
+.baseOn li span.bimg_04 {
+    background-position: -75px 0;
+}
+
+.baseOn li span.bimg_05 {
+    background-position: -150px 0;
+}
+
+.baseOn .b_txt {
+    height: 16px;
+    font: 100 12px/16px Verdana, SimSun, Arial;
+    margin-top: 2px;
+    text-align: center;
+    color: #48AEEC;
+}
+
+.baseBox .on {
+    background: #48AEEC;
+}
+
+.baseBox .on span.bimg_01 {
+    background: url('/images/web/index/base.png') no-repeat -112px -35px;
+}
+
+.baseBox .on span.bimg_02 {
+    background-position: 0 -35px;
+}
+
+.baseBox .on span.bimg_03 {
+    background-position: -36px -35px;
+}
+
+.baseBox .on span.bimg_04 {
+    background-position: -75px -34px;
+}
+
+.baseBox .on span.bimg_05 {
+    background-position: -150px -35px;
+}
+
+.baseBox .on .b_txt {
+    color: #FFF;
+}
+
+.baseBox .btnbox {
+    width: 70px;
+    height: 30px;
+    padding: 5px 0;
+    border: 1px solid #E7E7E7;
+    border-top: 1px solid #FFF;
+    cursor: pointer;
+    background: #FBFBFB;
+}
+
+.baseBox .btnbox span {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: url('/images/web/index/base.png') no-repeat;
+    margin: 0 auto;
+}
+
+.baseBox .btnbox span.bclose {
+    background-position: -194px -49px;
+}
+
+.baseBox .btnbox span.bopen {
+    background-position: -192px -13px;
+}
+
+/*弹窗部分*/
+.bchild {
+    width: 230px;
+    padding: 15px;
+    border: 1px solid #E5E5E5;
+    background: #FBFBFB;
+    position: absolute;
+    display: none;
+}
+
+.baseOn .b_qq, .baseOn .b_zx, .baseOn .b_qq {
+    right: 70px;
+    top: -75px;
+}
+
+.baseOn .b_dz {
+    right: 70px;
+    bottom: -2px;
+}
+
+.baseOn .b_wx {
+    right: 70px;
+    bottom: -2px;
+}
+
+.baseOn .b_qq p, .baseOn .b_zx p {
+    padding: 10px 0;
+    border-bottom: 1px dotted #CCC;
+}
+
+.baseOn .b_qq p em, .baseOn .b_zx p em {
+    margin-right: 10px;
+}
+
+.baseOn .b_qq p img {
+    vertical-align: middle;
+}
+
+.baseOn .b_zx {
+    font: 700 14px/25px "microsoft yahei", "黑体", Arial, sans-serif;
+    color: #F00;
+}
+
+.baseOn .b_dz {
+    font: 700 14px/30px "microsoft yahei", "黑体", Arial, sans-serif;
+    color: #F00;
+}
+
+.baseOn .b_zx p em {
+    font-size: 14px;
+    color: #333;
+}

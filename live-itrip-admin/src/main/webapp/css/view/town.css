@@ -2,15 +2,13 @@
     background-image: url('/images/web/town/townbg.jpg');
     background-position: 50% 50%;
     background-repeat: no-repeat;
-    margin-top: 66px;
+    margin-top: 62px;
     background-color: rgb(242, 216, 155);
-    height: 335px;
+    height: 325px;
 }
 
 .towncenter {
-    margin-top: 30px;
-    margin-left: 75px;
-    margin-right: 70px;
+    margin: 20px;
 }
 
 .product-box-padding{
