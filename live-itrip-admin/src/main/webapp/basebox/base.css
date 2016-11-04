@@ -54,6 +54,7 @@
     border-top: 1px solid #FFF;
     cursor: pointer;
     position: relative;
+    border: 1px solid #e5e5e5;
 }
 
 .baseOn li span {
