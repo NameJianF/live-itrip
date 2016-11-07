@@ -15,11 +15,17 @@ import javax.servlet.http.HttpServletRequest;
  * action 页面导航/加载
  */
 @Controller
-public class ViewRouterController extends AbstractController {
+public class ViewPagesController extends AbstractController {
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String viewIndex(HttpServletRequest request, Model model) {
-        return "/index.html";
+    /**
+     * 线路
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/pruduct", method = RequestMethod.GET)
+    public String viewProduct(HttpServletRequest request, Model model) {
+        return "/view/plan";
     }
-
 }

@@ -8437,7 +8437,7 @@ body.landing-page {
     }
 
     .landing-page .navbar-wrapper .navbar {
-        border-radius: 4px;
+        /*border-radius: 4px;*/
     }
 
     .landing-page .carousel-caption p {
