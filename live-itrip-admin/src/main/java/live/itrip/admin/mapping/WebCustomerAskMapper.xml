@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="live.itrip.admin.dao.WebCustomerAskMapper">
+    <resultMap id="BaseResultMap" type="live.itrip.admin.model.WebCustomerAsk">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="cus_name" property="cusName" jdbcType="VARCHAR"/>
+        <result column="links" property="links" jdbcType="VARCHAR"/>
+        <result column="days" property="days" jdbcType="INTEGER"/>
+        <result column="plan_date" property="planDate" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, cus_name, links, days, plan_date, create_time, update_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from web_customer_ask
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from web_customer_ask
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="live.itrip.admin.model.WebCustomerAsk">
+    insert into web_customer_ask (id, cus_name, links, 
+      days, plan_date, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{cusName,jdbcType=VARCHAR}, #{links,jdbcType=VARCHAR}, 
+      #{days,jdbcType=INTEGER}, #{planDate,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=BIGINT})
+  </insert>
+    <insert id="insertSelective" parameterType="live.itrip.admin.model.WebCustomerAsk">
+        insert into web_customer_ask
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="cusName != null">
+                cus_name,
+            </if>
+            <if test="links != null">
+                links,
+            </if>
+            <if test="days != null">
+                days,
+            </if>
+            <if test="planDate != null">
+                plan_date,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="cusName != null">
+                #{cusName,jdbcType=VARCHAR},
+            </if>
+            <if test="links != null">
+                #{links,jdbcType=VARCHAR},
+            </if>
+            <if test="days != null">
+                #{days,jdbcType=INTEGER},
+            </if>
+            <if test="planDate != null">
+                #{planDate,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.admin.model.WebCustomerAsk">
+        update web_customer_ask
+        <set>
+            <if test="cusName != null">
+                cus_name = #{cusName,jdbcType=VARCHAR},
+            </if>
+            <if test="links != null">
+                links = #{links,jdbcType=VARCHAR},
+            </if>
+            <if test="days != null">
+                days = #{days,jdbcType=INTEGER},
+            </if>
+            <if test="planDate != null">
+                plan_date = #{planDate,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.WebCustomerAsk">
+    update web_customer_ask
+    set cus_name = #{cusName,jdbcType=VARCHAR},
+      links = #{links,jdbcType=VARCHAR},
+      days = #{days,jdbcType=INTEGER},
+      plan_date = #{planDate,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

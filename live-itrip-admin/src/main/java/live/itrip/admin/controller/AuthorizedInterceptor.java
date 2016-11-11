@@ -32,6 +32,8 @@ public class AuthorizedInterceptor implements HandlerInterceptor {
                         || action.startsWith("/index.action")
                         || action.startsWith("/login.action")) {
                     return true;
+                } else if (action.startsWith("/view/")) {
+                    return true;
                 }
 
 //                PrintWriter out;

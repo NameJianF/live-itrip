@@ -17,16 +17,17 @@ public class JsonStringUtils {
      * @return
      */
     public static String URLDecoderForJsonString(String json) {
+        return json;
         // url 解码
-        String decodeJson = "";
-        try {
-            String tmp = URLDecoder.decode(json.replace("=", ""),
-                    Encoding.UTF8);
-            decodeJson = tmp.substring(0, tmp.length());
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return decodeJson;
+//        String decodeJson = "";
+//        try {
+//            String tmp = URLDecoder.decode(json.replace("=", ""),
+//                    Encoding.UTF8);
+//            decodeJson = tmp.substring(0, tmp.length());
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//        return decodeJson;
     }
 
     /**

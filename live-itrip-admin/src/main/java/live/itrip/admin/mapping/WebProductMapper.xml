@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="live.itrip.admin.dao.WebProductMapper">
+    <resultMap id="BaseResultMap" type="live.itrip.admin.model.WebProduct">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="price_favoured" property="priceFavoured" jdbcType="DECIMAL"/>
+        <result column="days" property="days" jdbcType="INTEGER"/>
+        <result column="img_small" property="imgSmall" jdbcType="VARCHAR"/>
+        <result column="img_big" property="imgBig" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="from_city" property="fromCity" jdbcType="VARCHAR"/>
+        <result column="traffic" property="traffic" jdbcType="VARCHAR"/>
+        <result column="start_day" property="startDay" jdbcType="VARCHAR"/>
+        <result column="detail" property="detail" jdbcType="INTEGER"/>
+        <result column="specialty" property="specialty" jdbcType="VARCHAR"/>
+        <result column="cost" property="cost" jdbcType="VARCHAR"/>
+        <result column="reserve" property="reserve" jdbcType="VARCHAR"/>
+        <result column="click_count" property="clickCount" jdbcType="INTEGER"/>
+        <result column="join_mans" property="joinMans" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="live.itrip.admin.model.WebProduct" extends="BaseResultMap">
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, title, price, price_favoured, days, img_small, img_big, description, type, from_city, 
+    traffic, start_day, detail, specialty, cost, reserve, click_count, join_mans, create_time, 
+    update_time
+  </sql>
+    <sql id="Blob_Column_List">
+    content
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from web_product
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from web_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="live.itrip.admin.model.WebProduct">
+    insert into web_product (id, title, price, 
+      price_favoured, days, img_small, 
+      img_big, description, type, 
+      from_city, traffic, start_day, 
+      detail, specialty, cost, 
+      reserve, click_count, join_mans, 
+      create_time, update_time, content
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{priceFavoured,jdbcType=DECIMAL}, #{days,jdbcType=INTEGER}, #{imgSmall,jdbcType=VARCHAR}, 
+      #{imgBig,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{fromCity,jdbcType=VARCHAR}, #{traffic,jdbcType=VARCHAR}, #{startDay,jdbcType=VARCHAR}, 
+      #{detail,jdbcType=INTEGER}, #{specialty,jdbcType=VARCHAR}, #{cost,jdbcType=VARCHAR}, 
+      #{reserve,jdbcType=VARCHAR}, #{clickCount,jdbcType=INTEGER}, #{joinMans,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="live.itrip.admin.model.WebProduct">
+        insert into web_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="priceFavoured != null">
+                price_favoured,
+            </if>
+            <if test="days != null">
+                days,
+            </if>
+            <if test="imgSmall != null">
+                img_small,
+            </if>
+            <if test="imgBig != null">
+                img_big,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="fromCity != null">
+                from_city,
+            </if>
+            <if test="traffic != null">
+                traffic,
+            </if>
+            <if test="startDay != null">
+                start_day,
+            </if>
+            <if test="detail != null">
+                detail,
+            </if>
+            <if test="specialty != null">
+                specialty,
+            </if>
+            <if test="cost != null">
+                cost,
+            </if>
+            <if test="reserve != null">
+                reserve,
+            </if>
+            <if test="clickCount != null">
+                click_count,
+            </if>
+            <if test="joinMans != null">
+                join_mans,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="priceFavoured != null">
+                #{priceFavoured,jdbcType=DECIMAL},
+            </if>
+            <if test="days != null">
+                #{days,jdbcType=INTEGER},
+            </if>
+            <if test="imgSmall != null">
+                #{imgSmall,jdbcType=VARCHAR},
+            </if>
+            <if test="imgBig != null">
+                #{imgBig,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="fromCity != null">
+                #{fromCity,jdbcType=VARCHAR},
+            </if>
+            <if test="traffic != null">
+                #{traffic,jdbcType=VARCHAR},
+            </if>
+            <if test="startDay != null">
+                #{startDay,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null">
+                #{detail,jdbcType=INTEGER},
+            </if>
+            <if test="specialty != null">
+                #{specialty,jdbcType=VARCHAR},
+            </if>
+            <if test="cost != null">
+                #{cost,jdbcType=VARCHAR},
+            </if>
+            <if test="reserve != null">
+                #{reserve,jdbcType=VARCHAR},
+            </if>
+            <if test="clickCount != null">
+                #{clickCount,jdbcType=INTEGER},
+            </if>
+            <if test="joinMans != null">
+                #{joinMans,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.admin.model.WebProduct">
+        update web_product
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="priceFavoured != null">
+                price_favoured = #{priceFavoured,jdbcType=DECIMAL},
+            </if>
+            <if test="days != null">
+                days = #{days,jdbcType=INTEGER},
+            </if>
+            <if test="imgSmall != null">
+                img_small = #{imgSmall,jdbcType=VARCHAR},
+            </if>
+            <if test="imgBig != null">
+                img_big = #{imgBig,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="fromCity != null">
+                from_city = #{fromCity,jdbcType=VARCHAR},
+            </if>
+            <if test="traffic != null">
+                traffic = #{traffic,jdbcType=VARCHAR},
+            </if>
+            <if test="startDay != null">
+                start_day = #{startDay,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null">
+                detail = #{detail,jdbcType=INTEGER},
+            </if>
+            <if test="specialty != null">
+                specialty = #{specialty,jdbcType=VARCHAR},
+            </if>
+            <if test="cost != null">
+                cost = #{cost,jdbcType=VARCHAR},
+            </if>
+            <if test="reserve != null">
+                reserve = #{reserve,jdbcType=VARCHAR},
+            </if>
+            <if test="clickCount != null">
+                click_count = #{clickCount,jdbcType=INTEGER},
+            </if>
+            <if test="joinMans != null">
+                join_mans = #{joinMans,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=BIGINT},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="live.itrip.admin.model.WebProduct">
+    update web_product
+    set title = #{title,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      price_favoured = #{priceFavoured,jdbcType=DECIMAL},
+      days = #{days,jdbcType=INTEGER},
+      img_small = #{imgSmall,jdbcType=VARCHAR},
+      img_big = #{imgBig,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      from_city = #{fromCity,jdbcType=VARCHAR},
+      traffic = #{traffic,jdbcType=VARCHAR},
+      start_day = #{startDay,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=INTEGER},
+      specialty = #{specialty,jdbcType=VARCHAR},
+      cost = #{cost,jdbcType=VARCHAR},
+      reserve = #{reserve,jdbcType=VARCHAR},
+      click_count = #{clickCount,jdbcType=INTEGER},
+      join_mans = #{joinMans,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.WebProduct">
+    update web_product
+    set title = #{title,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      price_favoured = #{priceFavoured,jdbcType=DECIMAL},
+      days = #{days,jdbcType=INTEGER},
+      img_small = #{imgSmall,jdbcType=VARCHAR},
+      img_big = #{imgBig,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      from_city = #{fromCity,jdbcType=VARCHAR},
+      traffic = #{traffic,jdbcType=VARCHAR},
+      start_day = #{startDay,jdbcType=VARCHAR},
+      detail = #{detail,jdbcType=INTEGER},
+      specialty = #{specialty,jdbcType=VARCHAR},
+      cost = #{cost,jdbcType=VARCHAR},
+      reserve = #{reserve,jdbcType=VARCHAR},
+      click_count = #{clickCount,jdbcType=INTEGER},
+      join_mans = #{joinMans,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

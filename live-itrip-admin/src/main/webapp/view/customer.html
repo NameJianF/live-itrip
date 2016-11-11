@@ -17,6 +17,8 @@
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
+    <link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+
     <!-- Custom styles for this template -->
     <link href="/css/style.css" rel="stylesheet">
 
@@ -63,7 +65,8 @@
                         <div class="col-sm-12">
                             <div class="input-group">
                                 <span class="input-group-addon">您的称呼</span>
-                                <input class="form-control" type="text" placeholder="" required>
+                                <input class="form-control" type="text" placeholder="" required
+                                       id="cusName">
                             </div>
                         </div>
                     </div>
@@ -71,7 +74,7 @@
                         <div class="col-sm-12">
                             <div class="input-group">
                                 <span class="input-group-addon">联系方式</span>
-                                <input class="form-control" type="text" required>
+                                <input class="form-control" type="text" required id="links">
                             </div>
                         </div>
                     </div>
@@ -79,21 +82,23 @@
                         <div class="col-sm-12">
                             <div class="input-group">
                                 <span class="input-group-addon">预计天数</span>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="number" id="days">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <div class="input-group">
+                            <div class="input-group date">
                                 <span class="input-group-addon">出发日期</span>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" id="planDate">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-12">
-                            <button class="btn btn-block btn-outline btn-primary" style="font-size: 18px;">开启我的定制之旅
+                            <button id="btnSubmit" class="btn btn-block btn-outline btn-primary"
+                                    style="font-size: 18px;"
+                                    data-loading-text="正在提交..." onclick="submitDatas()">开启我的定制之旅
                             </button>
                         </div>
                     </div>
@@ -254,6 +259,12 @@
 <!-- Mainly scripts -->
 <script src="/js/jquery-2.1.1.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<!-- Data picker -->
+<script src="/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+<!--itrip-->
+<script src="/javascript/common.js"></script>
+<script src="/javascript/view/customer/customer.js"></script>
 
 </body>
 </html>
