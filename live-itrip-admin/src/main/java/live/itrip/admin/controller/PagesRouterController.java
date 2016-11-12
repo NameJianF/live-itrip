@@ -114,4 +114,65 @@ public class PagesRouterController extends AbstractController {
     }
 
 
+    // ======================= web  view =============
+
+    /**
+     * 行程计划
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/system/view/product", method = RequestMethod.GET)
+    public String viewProduct(HttpServletRequest request, Model model) {
+        return "/pages/view/product";
+    }
+
+    /**
+     * 行程计划
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/system/view/newProduct", method = RequestMethod.GET)
+    public String viewNewProduct(HttpServletRequest request, Model model) {
+        return "/pages/view/productNew";
+    }
+
+    /**
+     * 客户定制
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/system/view/customer", method = RequestMethod.GET)
+    public String viewCustomer(HttpServletRequest request, Model model) {
+        return "/pages/view/customer";
+    }
+
+    /**
+     * 旅行服务
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/system/view/tripService", method = RequestMethod.GET)
+    public String viewTripService(HttpServletRequest request, Model model) {
+        return "/pages/view/tripService";
+    }
+
+    /**
+     * 旅行服务
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/system/view/onlineFaq", method = RequestMethod.GET)
+    public String viewOnlineFaq(HttpServletRequest request, Model model) {
+        return "/pages/view/faq";
+    }
 }

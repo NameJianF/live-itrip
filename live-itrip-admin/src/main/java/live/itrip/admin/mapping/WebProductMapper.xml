@@ -20,6 +20,9 @@
         <result column="reserve" property="reserve" jdbcType="VARCHAR"/>
         <result column="click_count" property="clickCount" jdbcType="INTEGER"/>
         <result column="join_mans" property="joinMans" jdbcType="INTEGER"/>
+        <result column="local_html" property="localHtml" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="SMALLINT"/>
+        <result column="is_detete" property="isDetete" jdbcType="CHAR"/>
         <result column="create_time" property="createTime" jdbcType="BIGINT"/>
         <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
     </resultMap>
@@ -28,8 +31,8 @@
     </resultMap>
     <sql id="Base_Column_List">
     id, title, price, price_favoured, days, img_small, img_big, description, type, from_city, 
-    traffic, start_day, detail, specialty, cost, reserve, click_count, join_mans, create_time, 
-    update_time
+    traffic, start_day, detail, specialty, cost, reserve, click_count, join_mans, local_html, 
+    status, is_detete, create_time, update_time
   </sql>
     <sql id="Blob_Column_List">
     content
@@ -53,6 +56,7 @@
       from_city, traffic, start_day, 
       detail, specialty, cost, 
       reserve, click_count, join_mans, 
+      local_html, status, is_detete, 
       create_time, update_time, content
       )
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
@@ -61,6 +65,7 @@
       #{fromCity,jdbcType=VARCHAR}, #{traffic,jdbcType=VARCHAR}, #{startDay,jdbcType=VARCHAR}, 
       #{detail,jdbcType=INTEGER}, #{specialty,jdbcType=VARCHAR}, #{cost,jdbcType=VARCHAR}, 
       #{reserve,jdbcType=VARCHAR}, #{clickCount,jdbcType=INTEGER}, #{joinMans,jdbcType=INTEGER}, 
+      #{localHtml,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, #{isDetete,jdbcType=CHAR}, 
       #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR}
       )
   </insert>
@@ -120,6 +125,15 @@
             </if>
             <if test="joinMans != null">
                 join_mans,
+            </if>
+            <if test="localHtml != null">
+                local_html,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="isDetete != null">
+                is_detete,
             </if>
             <if test="createTime != null">
                 create_time,
@@ -186,6 +200,15 @@
             <if test="joinMans != null">
                 #{joinMans,jdbcType=INTEGER},
             </if>
+            <if test="localHtml != null">
+                #{localHtml,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="isDetete != null">
+                #{isDetete,jdbcType=CHAR},
+            </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=BIGINT},
             </if>
@@ -251,6 +274,15 @@
             <if test="joinMans != null">
                 join_mans = #{joinMans,jdbcType=INTEGER},
             </if>
+            <if test="localHtml != null">
+                local_html = #{localHtml,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=SMALLINT},
+            </if>
+            <if test="isDetete != null">
+                is_detete = #{isDetete,jdbcType=CHAR},
+            </if>
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=BIGINT},
             </if>
@@ -282,6 +314,9 @@
       reserve = #{reserve,jdbcType=VARCHAR},
       click_count = #{clickCount,jdbcType=INTEGER},
       join_mans = #{joinMans,jdbcType=INTEGER},
+      local_html = #{localHtml,jdbcType=VARCHAR},
+      status = #{status,jdbcType=SMALLINT},
+      is_detete = #{isDetete,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT},
       content = #{content,jdbcType=LONGVARCHAR}
@@ -306,8 +341,24 @@
       reserve = #{reserve,jdbcType=VARCHAR},
       click_count = #{clickCount,jdbcType=INTEGER},
       join_mans = #{joinMans,jdbcType=INTEGER},
+      local_html = #{localHtml,jdbcType=VARCHAR},
+      status = #{status,jdbcType=SMALLINT},
+      is_detete = #{isDetete,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+    <!--自定义查询-->
+    <select id="countAll" resultType="int">
+        select count(id) from web_product
+    </select>
+
+    <select id="selectProducts" resultMap="BaseResultMap" parameterType="map">
+        select
+            id, title, price, price_favoured, days,type, from_city,
+            traffic, start_day, click_count, join_mans, local_html,
+            status, is_detete, create_time, update_time
+        from web_product where is_detete = '0' limit ${start},${length}
+    </select>
 </mapper>

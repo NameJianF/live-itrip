@@ -37,6 +37,12 @@ public class WebProduct {
 
     private Integer joinMans;
 
+    private String localHtml;
+
+    private Short status;
+
+    private String isDetete;
+
     private Long createTime;
 
     private Long updateTime;
@@ -185,6 +191,30 @@ public class WebProduct {
 
     public void setJoinMans(Integer joinMans) {
         this.joinMans = joinMans;
+    }
+
+    public String getLocalHtml() {
+        return localHtml;
+    }
+
+    public void setLocalHtml(String localHtml) {
+        this.localHtml = localHtml == null ? null : localHtml.trim();
+    }
+
+    public Short getStatus() {
+        return status;
+    }
+
+    public void setStatus(Short status) {
+        this.status = status;
+    }
+
+    public String getIsDetete() {
+        return isDetete;
+    }
+
+    public void setIsDetete(String isDetete) {
+        this.isDetete = isDetete == null ? null : isDetete.trim();
     }
 
     public Long getCreateTime() {

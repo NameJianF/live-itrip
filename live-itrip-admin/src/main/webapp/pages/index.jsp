@@ -38,7 +38,7 @@
                             <%--<li><a href="contacts.html">Contacts</a></li>--%>
                             <%--<li><a href="mailbox.html">Mailbox</a></li>--%>
                             <li class="divider"></li>
-                            <li><a href="logout.action">退出</a></li>
+                            <li><a href="system/logout.action">退出</a></li>
                         </ul>
                     </div>
                     <div class="logo-element">
@@ -172,7 +172,7 @@
                     </li>
 
                     <li>
-                        <a href="logout.action">
+                        <a href="system/logout.action">
                             <i class="fa fa-sign-out"></i> 退出
                         </a>
                     </li>
@@ -192,7 +192,7 @@
                 </button>
                 <nav class="page-tabs menuTabs">
                     <div class="page-tabs-content" style="margin-left: 0px;">
-                        <a href="javascript:;" class="menuTab active" data-id="pages/dashboard.action">Dashboard</a>
+                        <a href="javascript:;" class="menuTab active" data-id="/system/dashboard.action">Dashboard</a>
                     </div>
                 </nav>
                 <button class="roll-nav roll-right tabRight">
@@ -213,8 +213,8 @@
             </div>
             <div class="content-iframe" style="background-color: #f9f9f9; overflow: hidden;">
                 <div class="mainContent" id="content-main" style="margin: 1px; margin-bottom: 0px; padding: 0;">
-                    <iframe class="itrip_iframe" width="100%" height="100%" src="pages/dashboard.action"
-                            frameborder="0" data-id="pages/dashboard.action"></iframe>
+                    <iframe class="itrip_iframe" width="100%" height="100%" src="/system/dashboard.action"
+                            frameborder="0" data-id="/system/dashboard.action"></iframe>
                 </div>
             </div>
         </div>

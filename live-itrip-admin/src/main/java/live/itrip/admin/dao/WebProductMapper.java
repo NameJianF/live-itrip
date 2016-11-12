@@ -1,6 +1,9 @@
 package live.itrip.admin.dao;
 
 import live.itrip.admin.model.WebProduct;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface WebProductMapper {
     int deleteByPrimaryKey(Integer id);
@@ -16,4 +19,9 @@ public interface WebProductMapper {
     int updateByPrimaryKeyWithBLOBs(WebProduct record);
 
     int updateByPrimaryKey(WebProduct record);
+
+    // ================== add ==========
+    Integer countAll();
+
+    List<WebProduct> selectProducts(@Param("start") int start, @Param("length") int length);
 }
