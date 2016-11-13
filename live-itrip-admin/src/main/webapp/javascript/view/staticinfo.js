@@ -1,11 +1,7 @@
-/**
- * Created by Feng on 2016/11/12.
- */
-var tabProducts;
+var tabStaticInfo;
 
 $(function () {
-    console.log("product page loading ...")
-    tabProducts = $('#tableProducts').DataTable({
+    tabStaticInfo = $('#tableStaticInfos').DataTable({
         "bProcessing": true, // 是否显示取数据时的那个等待提示
         "bServerSide": true, //这个用来指明是通过服务端来取数据
         "bPaginate": true, // 分页按钮
@@ -13,32 +9,15 @@ $(function () {
         "iDisplayLength": 10,// 每页显示行数
         "bInfo": true,//页脚信息
         "bAutoWidth": true,//自动宽度
-        "fnServerData": funSelectProducts, // 获取数据的处理函数
+        "fnServerData": funSelectStaticInfos, // 获取数据的处理函数
         "bFilter": false, // 隐藏筛选框
         "ordering": false,
         'bStateSave': true,
         "aoColumns": [
             {"mData": "id"},
-            {"mData": "title"},
-            {"mData": "price"},
-            {"mData": "priceFavoured"},
-            {"mData": "days"},
             {"mData": "type"},
-            {"mData": "fromCity"},
-            {"mData": "traffic"},
-            {"mData": "startDay"},
-            {"mData": "clickCount"},
-            {"mData": "joinMans"},
-            {"mData": "localHtml"},
-            {
-                "mData": "status",
-                render: function (data, type, row) {
-                    if (data == null) {
-                        return "";
-                    }
-                    return data;
-                }
-            },
+            {"mData": "title"},
+            {"mData": "content"},
             {
                 "mData": "createTime",
                 render: function (data, type, row) {
@@ -60,9 +39,8 @@ $(function () {
             {
                 render: function (data, type, row) {
                     if (type === 'display') {
-                        return '<button type="button" class="btn btn-link btn-xs" onclick="funEditGetProductInfo(' + row.id + ')">编辑</button>' +
-                            '<button type="button" class="btn btn-link btn-xs" onclick="funDeleteProductInfo(' + row.id + ')">删除</button>' +
-                            '<button type="button" class="btn btn-link btn-xs" onclick="funCreateHtmlFile(' + row.id + ')">生成HTML</button>';
+                        return '<button type="button" class="btn btn-link btn-xs" onclick="funEditGetStaticInfo(' + row.id + ')">编辑</button>' +
+                            '<button type="button" class="btn btn-link btn-xs" onclick="funDeleteStaticInfo(' + row.id + ')">删除</button>';
                     }
                     return data;
                 }
@@ -81,15 +59,19 @@ $(function () {
             "sZeroRecords": "抱歉， 没有数据",
             "sInfoEmpty": "没有数据"
         }
-
     });
 
+    $('#editStaticInfoContent').summernote();
 });
 
 
-function funSelectProducts(sSource, aoData, fnCallback) {
-    console.log("========== select Products ==========");
-    sSource = "/view/product.action?flag=list";
+function funSelectStaticInfos(sSource, aoData, fnCallback) {
+    console.log("========== selectStaticInfos ==========");
+    sSource = "/view/staticInfo.action?flag=list";
+
+    // 添加查询条件
+    var queryContent = $("#queryContent").val();
+    aoData.push({name: "queryContent", value: queryContent});
 
     var token = $.cookie('userToken');
     aoData.push({name: "token", value: token});
@@ -108,32 +90,29 @@ function funSelectProducts(sSource, aoData, fnCallback) {
 
 /**
  * 修改
- * @param productId
+ * @param infoId
  */
-function funEditGetProductInfo(productId) {
+function funEditGetStaticInfo(infoId) {
     var token = $.cookie('userToken');
     var jsondata = {
-        'op': 'product.edit',
+        'op': 'staticInfo.detail',
         'token': token,
-        'productId': productId
+        'infoId': infoId
     };
 
-    parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
+    parent.execAjaxData("/view/staticInfo.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
         }, function (response) {
             // success
             if (response.code == 0) {
-                $('#editProductId').val(response.data.id);
-                $('#editProductName').val(response.data.ProductName);
-                $('#editProductParent').val(response.data.parentId);
-                $('#editProductUrl').val(response.data.ProductUrl);
-                $('#editProductOrder').val(response.data.ProductOrder);
-                $('#editProductDiscription').val(response.data.description);
-                $('#editProductDelete').val(response.data.isDelete);
+                $('#editStaticInfoId').val(response.data.id);
+                $('#editStaticInfoType').val(response.data.type);
+                $('#editStaticInfoTitle').val(response.data.title);
+                $('#editStaticInfoContent').code(response.data.content);
 
-                $('#formEditTitle').text("编辑模块");
-                $('#formEditProduct').modal('show');
+                $('#formEditTitle').text("信息编辑");
+                $('#formEditStaticInfo').modal('show');
             }
         }, function () {
             // complete
@@ -141,22 +120,52 @@ function funEditGetProductInfo(productId) {
 }
 
 
+function editSaveStaticInfo() {
+    var token = $.cookie('userToken');
+    var markupStr = $('#editStaticInfoContent').code();
+    var jsondata = {
+        'op': 'staticInfo.edit',
+        'token': token,
+        'id': $('#editStaticInfoId').val(),
+        'type': $('#editStaticInfoType').val(),
+        'title': $('#editStaticInfoTitle').val(),
+        'content': markupStr
+    };
+
+    parent.execAjaxData("/view/staticInfo.action", JSON.stringify(jsondata), true
+        , function (response) {
+            // error
+            alert("保存失败。");
+        }, function (response) {
+            // success
+            if (response.code == 0) {
+                alert("保存成功。");
+                funRefresh();
+            } else {
+                alert("保存失败。");
+            }
+        }, function () {
+            // complete
+            $('#formEditStaticInfo').modal('hide');
+        });
+}
+
 /**
  * 删除
- * @param productId
+ * @param infoId
  */
-function funDeleteProductInfo(productId) {
+function funDeleteStaticInfo(infoId) {
     if (confirm("确定要删除数据吗?")) {
-        console.log("delete Product id:" + productId);
+        console.log("delete staticInfo id:" + infoId);
 
         var token = $.cookie('userToken');
         var jsondata = {
-            'op': 'product.delete',
+            'op': 'staticInfo.delete',
             'token': token,
-            'productId': productId
+            'infoId': infoId
         };
 
-        parent.execAjaxData("/view/product.action", JSON.stringify(jsondata), true
+        parent.execAjaxData("/view/staticInfo.action", JSON.stringify(jsondata), true
             , function (response) {
                 // error
             }, function (response) {
@@ -177,13 +186,21 @@ function funDeleteProductInfo(productId) {
  * 刷新
  */
 function funRefresh() {
-    tabProducts.ajax.reload();
+    tabStaticInfo.ajax.reload();
 }
 
 /**
- * 生成静态文件
- * @param productId
+ * 新增
  */
-function funCreateHtmlFile(productId) {
+function funClickAddRow() {
+    console.log(" fnClickAddRow click ");
+    // clear
+    $('#formEditTitle').text("新增信息");
 
+    $('#editStaticInfoId').val(null);
+    $('#editStaticInfoType').val(null);
+    $('#editStaticInfoTitle').val("");
+    $('#editStaticInfoContent').code('');
+
+    $('#formEditStaticInfo').modal('show');
 }

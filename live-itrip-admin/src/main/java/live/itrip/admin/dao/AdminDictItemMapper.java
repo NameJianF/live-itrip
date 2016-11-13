@@ -23,4 +23,7 @@ public interface AdminDictItemMapper {
     Integer countAll();
 
     List<AdminDictItem> selectDictItems(@Param("start") Integer start, @Param("length") Integer length);
+
+    List<AdminDictItem> selectAllDictItems();
+
 }

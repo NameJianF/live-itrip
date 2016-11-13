@@ -3,11 +3,9 @@ package live.itrip.admin.controller;
 import live.itrip.admin.controller.base.AbstractController;
 import live.itrip.admin.model.AdminDepart;
 import live.itrip.admin.model.AdminDict;
+import live.itrip.admin.model.AdminDictItem;
 import live.itrip.admin.model.AdminUser;
-import live.itrip.admin.service.intefaces.IAdminDepartService;
-import live.itrip.admin.service.intefaces.IAdminDictService;
-import live.itrip.admin.service.intefaces.IAdminGroupService;
-import live.itrip.admin.service.intefaces.IUserService;
+import live.itrip.admin.service.intefaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +30,8 @@ public class PagesRouterController extends AbstractController {
     private IAdminDictService iAdminDictService;
     @Autowired
     private IAdminDepartService iAdminDepartService;
+    @Autowired
+    private IAdminDictItemService iAdminDictItemService;
 
     @RequestMapping(value = "/system/index", method = RequestMethod.GET)
     public String pagesIndex(HttpServletRequest request, Model model) {
@@ -129,7 +130,7 @@ public class PagesRouterController extends AbstractController {
     }
 
     /**
-     * 行程计划
+     * 行程计划:添加
      *
      * @param request
      * @param model
@@ -137,6 +138,33 @@ public class PagesRouterController extends AbstractController {
      */
     @RequestMapping(value = "/system/view/newProduct", method = RequestMethod.GET)
     public String viewNewProduct(HttpServletRequest request, Model model) {
+        // 加载数据
+        List<AdminDictItem> itemList = iAdminDictItemService.selectAllDictItems();
+        List<AdminDictItem> listType = new ArrayList<>();
+        List<AdminDictItem> listDays = new ArrayList<>();
+        List<AdminDictItem> listCity = new ArrayList<>();
+        List<AdminDictItem> listTraffic = new ArrayList<>();
+        for (AdminDictItem item : itemList) {
+            if (item.getDictId().equals(5)) {
+                // 线路类型
+                listType.add(item);
+            } else if (item.getDictId().equals(6)) {
+                // 天数
+                listDays.add(item);
+            } else if (item.getDictId().equals(7)) {
+                // 城市
+                listCity.add(item);
+            } else if (item.getDictId().equals(8)) {
+                // 交通
+                listTraffic.add(item);
+            }
+        }
+
+        model.addAttribute("listType", listType);
+        model.addAttribute("listDays", listDays);
+        model.addAttribute("listCity", listCity);
+        model.addAttribute("listTraffic", listTraffic);
+
         return "/pages/view/productNew";
     }
 
@@ -175,4 +203,17 @@ public class PagesRouterController extends AbstractController {
     public String viewOnlineFaq(HttpServletRequest request, Model model) {
         return "/pages/view/faq";
     }
+
+    /**
+     * 固定内容设置页面
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/system/view/staticInfo", method = RequestMethod.GET)
+    public String viewStaticInfo(HttpServletRequest request, Model model) {
+        return "/pages/view/staticInfo";
+    }
+
 }

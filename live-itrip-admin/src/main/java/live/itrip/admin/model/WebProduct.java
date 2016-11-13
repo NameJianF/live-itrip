@@ -41,7 +41,7 @@ public class WebProduct {
 
     private Short status;
 
-    private String isDetete;
+    private String isDelete;
 
     private Long createTime;
 
@@ -209,12 +209,12 @@ public class WebProduct {
         this.status = status;
     }
 
-    public String getIsDetete() {
-        return isDetete;
+    public String getIsDelete() {
+        return isDelete;
     }
 
-    public void setIsDetete(String isDetete) {
-        this.isDetete = isDetete == null ? null : isDetete.trim();
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete == null ? null : isDelete.trim();
     }
 
     public Long getCreateTime() {

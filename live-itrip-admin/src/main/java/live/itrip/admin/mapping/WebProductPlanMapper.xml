@@ -18,9 +18,9 @@
         <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, product_id, date_time, title, breakfast, lunch, dinner, traffic, content, icon, 
-    img_small, img_big, create_time, update_time
-  </sql>
+        id, product_id, date_time, title, breakfast, lunch, dinner, traffic, content, icon,
+        img_small, img_big, create_time, update_time
+    </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>

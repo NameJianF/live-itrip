@@ -85,8 +85,8 @@ public class BaseService implements IWriteResponse {
                     JSONObject jsonObject = obj.getJSONObject("value");
                     pagerInfo.setSearch(jsonObject.getString("value"));
                 } else if (obj.get("name").equals("token")) {
-                    JSONObject jsonObject = obj.getJSONObject("value");
-                    pagerInfo.setToken(jsonObject.getString("value"));
+//                    JSONObject jsonObject = obj.getJSONObject("value");
+                    pagerInfo.setToken(obj.getString("value"));
                 }
             }
         } catch (Exception ex) {

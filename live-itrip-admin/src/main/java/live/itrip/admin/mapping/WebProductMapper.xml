@@ -15,28 +15,29 @@
         <result column="traffic" property="traffic" jdbcType="VARCHAR"/>
         <result column="start_day" property="startDay" jdbcType="VARCHAR"/>
         <result column="detail" property="detail" jdbcType="INTEGER"/>
-        <result column="specialty" property="specialty" jdbcType="VARCHAR"/>
-        <result column="cost" property="cost" jdbcType="VARCHAR"/>
-        <result column="reserve" property="reserve" jdbcType="VARCHAR"/>
         <result column="click_count" property="clickCount" jdbcType="INTEGER"/>
         <result column="join_mans" property="joinMans" jdbcType="INTEGER"/>
         <result column="local_html" property="localHtml" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="SMALLINT"/>
-        <result column="is_detete" property="isDetete" jdbcType="CHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="CHAR"/>
         <result column="create_time" property="createTime" jdbcType="BIGINT"/>
         <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
     </resultMap>
-    <resultMap id="ResultMapWithBLOBs" type="live.itrip.admin.model.WebProduct" extends="BaseResultMap">
+    <resultMap id="ResultMapWithBLOBs" type="live.itrip.admin.model.WebProductWithBLOBs" extends="BaseResultMap">
         <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+        <result column="specialty" property="specialty" jdbcType="LONGVARCHAR"/>
+        <result column="cost" property="cost" jdbcType="LONGVARCHAR"/>
+        <result column="reserve" property="reserve" jdbcType="LONGVARCHAR"/>
+        <result column="notice" property="notice" jdbcType="LONGVARCHAR"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, title, price, price_favoured, days, img_small, img_big, description, type, from_city, 
-    traffic, start_day, detail, specialty, cost, reserve, click_count, join_mans, local_html, 
-    status, is_detete, create_time, update_time
-  </sql>
+        id, title, price, price_favoured, days, img_small, img_big, description, type, from_city,
+        traffic, start_day, detail, click_count, join_mans, local_html, status, is_delete,
+        create_time, update_time
+    </sql>
     <sql id="Blob_Column_List">
-    content
-  </sql>
+        content, specialty, cost, reserve, notice
+    </sql>
     <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
@@ -46,30 +47,30 @@
         where id = #{id,jdbcType=INTEGER}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from web_product
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-    <insert id="insert" parameterType="live.itrip.admin.model.WebProduct">
-    insert into web_product (id, title, price, 
-      price_favoured, days, img_small, 
-      img_big, description, type, 
-      from_city, traffic, start_day, 
-      detail, specialty, cost, 
-      reserve, click_count, join_mans, 
-      local_html, status, is_detete, 
-      create_time, update_time, content
-      )
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
-      #{priceFavoured,jdbcType=DECIMAL}, #{days,jdbcType=INTEGER}, #{imgSmall,jdbcType=VARCHAR}, 
-      #{imgBig,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
-      #{fromCity,jdbcType=VARCHAR}, #{traffic,jdbcType=VARCHAR}, #{startDay,jdbcType=VARCHAR}, 
-      #{detail,jdbcType=INTEGER}, #{specialty,jdbcType=VARCHAR}, #{cost,jdbcType=VARCHAR}, 
-      #{reserve,jdbcType=VARCHAR}, #{clickCount,jdbcType=INTEGER}, #{joinMans,jdbcType=INTEGER}, 
-      #{localHtml,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, #{isDetete,jdbcType=CHAR}, 
-      #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR}
-      )
-  </insert>
-    <insert id="insertSelective" parameterType="live.itrip.admin.model.WebProduct">
+        delete from web_product
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="live.itrip.admin.model.WebProductWithBLOBs">
+        insert into web_product (id, title, price,
+        price_favoured, days, img_small,
+        img_big, description, type,
+        from_city, traffic, start_day,
+        detail, click_count, join_mans,
+        local_html, status, is_delete,
+        create_time, update_time, content,
+        specialty, cost, reserve,
+        notice)
+        values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL},
+        #{priceFavoured,jdbcType=DECIMAL}, #{days,jdbcType=INTEGER}, #{imgSmall,jdbcType=VARCHAR},
+        #{imgBig,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+        #{fromCity,jdbcType=VARCHAR}, #{traffic,jdbcType=VARCHAR}, #{startDay,jdbcType=VARCHAR},
+        #{detail,jdbcType=INTEGER}, #{clickCount,jdbcType=INTEGER}, #{joinMans,jdbcType=INTEGER},
+        #{localHtml,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, #{isDelete,jdbcType=CHAR},
+        #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR},
+        #{specialty,jdbcType=LONGVARCHAR}, #{cost,jdbcType=LONGVARCHAR}, #{reserve,jdbcType=LONGVARCHAR},
+        #{notice,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="live.itrip.admin.model.WebProductWithBLOBs">
         insert into web_product
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -111,15 +112,6 @@
             <if test="detail != null">
                 detail,
             </if>
-            <if test="specialty != null">
-                specialty,
-            </if>
-            <if test="cost != null">
-                cost,
-            </if>
-            <if test="reserve != null">
-                reserve,
-            </if>
             <if test="clickCount != null">
                 click_count,
             </if>
@@ -132,8 +124,8 @@
             <if test="status != null">
                 status,
             </if>
-            <if test="isDetete != null">
-                is_detete,
+            <if test="isDelete != null">
+                is_delete,
             </if>
             <if test="createTime != null">
                 create_time,
@@ -143,6 +135,18 @@
             </if>
             <if test="content != null">
                 content,
+            </if>
+            <if test="specialty != null">
+                specialty,
+            </if>
+            <if test="cost != null">
+                cost,
+            </if>
+            <if test="reserve != null">
+                reserve,
+            </if>
+            <if test="notice != null">
+                notice,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -185,15 +189,6 @@
             <if test="detail != null">
                 #{detail,jdbcType=INTEGER},
             </if>
-            <if test="specialty != null">
-                #{specialty,jdbcType=VARCHAR},
-            </if>
-            <if test="cost != null">
-                #{cost,jdbcType=VARCHAR},
-            </if>
-            <if test="reserve != null">
-                #{reserve,jdbcType=VARCHAR},
-            </if>
             <if test="clickCount != null">
                 #{clickCount,jdbcType=INTEGER},
             </if>
@@ -206,8 +201,8 @@
             <if test="status != null">
                 #{status,jdbcType=SMALLINT},
             </if>
-            <if test="isDetete != null">
-                #{isDetete,jdbcType=CHAR},
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=CHAR},
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=BIGINT},
@@ -218,9 +213,21 @@
             <if test="content != null">
                 #{content,jdbcType=LONGVARCHAR},
             </if>
+            <if test="specialty != null">
+                #{specialty,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="cost != null">
+                #{cost,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="reserve != null">
+                #{reserve,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="notice != null">
+                #{notice,jdbcType=LONGVARCHAR},
+            </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.admin.model.WebProduct">
+    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.admin.model.WebProductWithBLOBs">
         update web_product
         <set>
             <if test="title != null">
@@ -259,15 +266,6 @@
             <if test="detail != null">
                 detail = #{detail,jdbcType=INTEGER},
             </if>
-            <if test="specialty != null">
-                specialty = #{specialty,jdbcType=VARCHAR},
-            </if>
-            <if test="cost != null">
-                cost = #{cost,jdbcType=VARCHAR},
-            </if>
-            <if test="reserve != null">
-                reserve = #{reserve,jdbcType=VARCHAR},
-            </if>
             <if test="clickCount != null">
                 click_count = #{clickCount,jdbcType=INTEGER},
             </if>
@@ -280,8 +278,8 @@
             <if test="status != null">
                 status = #{status,jdbcType=SMALLINT},
             </if>
-            <if test="isDetete != null">
-                is_detete = #{isDetete,jdbcType=CHAR},
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=CHAR},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=BIGINT},
@@ -292,73 +290,83 @@
             <if test="content != null">
                 content = #{content,jdbcType=LONGVARCHAR},
             </if>
+            <if test="specialty != null">
+                specialty = #{specialty,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="cost != null">
+                cost = #{cost,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="reserve != null">
+                reserve = #{reserve,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="notice != null">
+                notice = #{notice,jdbcType=LONGVARCHAR},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
-    <update id="updateByPrimaryKeyWithBLOBs" parameterType="live.itrip.admin.model.WebProduct">
-    update web_product
-    set title = #{title,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DECIMAL},
-      price_favoured = #{priceFavoured,jdbcType=DECIMAL},
-      days = #{days,jdbcType=INTEGER},
-      img_small = #{imgSmall,jdbcType=VARCHAR},
-      img_big = #{imgBig,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
-      from_city = #{fromCity,jdbcType=VARCHAR},
-      traffic = #{traffic,jdbcType=VARCHAR},
-      start_day = #{startDay,jdbcType=VARCHAR},
-      detail = #{detail,jdbcType=INTEGER},
-      specialty = #{specialty,jdbcType=VARCHAR},
-      cost = #{cost,jdbcType=VARCHAR},
-      reserve = #{reserve,jdbcType=VARCHAR},
-      click_count = #{clickCount,jdbcType=INTEGER},
-      join_mans = #{joinMans,jdbcType=INTEGER},
-      local_html = #{localHtml,jdbcType=VARCHAR},
-      status = #{status,jdbcType=SMALLINT},
-      is_detete = #{isDetete,jdbcType=CHAR},
-      create_time = #{createTime,jdbcType=BIGINT},
-      update_time = #{updateTime,jdbcType=BIGINT},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="live.itrip.admin.model.WebProductWithBLOBs">
+        update web_product
+        set title = #{title,jdbcType=VARCHAR},
+        price = #{price,jdbcType=DECIMAL},
+        price_favoured = #{priceFavoured,jdbcType=DECIMAL},
+        days = #{days,jdbcType=INTEGER},
+        img_small = #{imgSmall,jdbcType=VARCHAR},
+        img_big = #{imgBig,jdbcType=VARCHAR},
+        description = #{description,jdbcType=VARCHAR},
+        type = #{type,jdbcType=VARCHAR},
+        from_city = #{fromCity,jdbcType=VARCHAR},
+        traffic = #{traffic,jdbcType=VARCHAR},
+        start_day = #{startDay,jdbcType=VARCHAR},
+        detail = #{detail,jdbcType=INTEGER},
+        click_count = #{clickCount,jdbcType=INTEGER},
+        join_mans = #{joinMans,jdbcType=INTEGER},
+        local_html = #{localHtml,jdbcType=VARCHAR},
+        status = #{status,jdbcType=SMALLINT},
+        is_delete = #{isDelete,jdbcType=CHAR},
+        create_time = #{createTime,jdbcType=BIGINT},
+        update_time = #{updateTime,jdbcType=BIGINT},
+        content = #{content,jdbcType=LONGVARCHAR},
+        specialty = #{specialty,jdbcType=LONGVARCHAR},
+        cost = #{cost,jdbcType=LONGVARCHAR},
+        reserve = #{reserve,jdbcType=LONGVARCHAR},
+        notice = #{notice,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
     <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.WebProduct">
-    update web_product
-    set title = #{title,jdbcType=VARCHAR},
-      price = #{price,jdbcType=DECIMAL},
-      price_favoured = #{priceFavoured,jdbcType=DECIMAL},
-      days = #{days,jdbcType=INTEGER},
-      img_small = #{imgSmall,jdbcType=VARCHAR},
-      img_big = #{imgBig,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      type = #{type,jdbcType=VARCHAR},
-      from_city = #{fromCity,jdbcType=VARCHAR},
-      traffic = #{traffic,jdbcType=VARCHAR},
-      start_day = #{startDay,jdbcType=VARCHAR},
-      detail = #{detail,jdbcType=INTEGER},
-      specialty = #{specialty,jdbcType=VARCHAR},
-      cost = #{cost,jdbcType=VARCHAR},
-      reserve = #{reserve,jdbcType=VARCHAR},
-      click_count = #{clickCount,jdbcType=INTEGER},
-      join_mans = #{joinMans,jdbcType=INTEGER},
-      local_html = #{localHtml,jdbcType=VARCHAR},
-      status = #{status,jdbcType=SMALLINT},
-      is_detete = #{isDetete,jdbcType=CHAR},
-      create_time = #{createTime,jdbcType=BIGINT},
-      update_time = #{updateTime,jdbcType=BIGINT}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+        update web_product
+        set title = #{title,jdbcType=VARCHAR},
+        price = #{price,jdbcType=DECIMAL},
+        price_favoured = #{priceFavoured,jdbcType=DECIMAL},
+        days = #{days,jdbcType=INTEGER},
+        img_small = #{imgSmall,jdbcType=VARCHAR},
+        img_big = #{imgBig,jdbcType=VARCHAR},
+        description = #{description,jdbcType=VARCHAR},
+        type = #{type,jdbcType=VARCHAR},
+        from_city = #{fromCity,jdbcType=VARCHAR},
+        traffic = #{traffic,jdbcType=VARCHAR},
+        start_day = #{startDay,jdbcType=VARCHAR},
+        detail = #{detail,jdbcType=INTEGER},
+        click_count = #{clickCount,jdbcType=INTEGER},
+        join_mans = #{joinMans,jdbcType=INTEGER},
+        local_html = #{localHtml,jdbcType=VARCHAR},
+        status = #{status,jdbcType=SMALLINT},
+        is_delete = #{isDelete,jdbcType=CHAR},
+        create_time = #{createTime,jdbcType=BIGINT},
+        update_time = #{updateTime,jdbcType=BIGINT}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 
     <!--自定义查询-->
     <select id="countAll" resultType="int">
-        select count(id) from web_product
-    </select>
+    select count(id) from web_product where is_delete = '0'
+  </select>
 
     <select id="selectProducts" resultMap="BaseResultMap" parameterType="map">
-        select
-            id, title, price, price_favoured, days,type, from_city,
-            traffic, start_day, click_count, join_mans, local_html,
-            status, is_detete, create_time, update_time
-        from web_product where is_detete = '0' limit ${start},${length}
-    </select>
+    select
+    id, title, price, price_favoured, days,type, from_city,
+    traffic, start_day, click_count, join_mans, local_html,
+    status, is_delete, create_time, update_time
+    from web_product where is_delete = '0' ORDER BY id DESC limit ${start},${length}
+  </select>
 </mapper>

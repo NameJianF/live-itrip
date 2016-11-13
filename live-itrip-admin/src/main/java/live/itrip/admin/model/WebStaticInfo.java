@@ -7,6 +7,8 @@ public class WebStaticInfo {
 
     private String title;
 
+    private String isDelete;
+
     private Long createTime;
 
     private Long updateTime;
@@ -35,6 +37,14 @@ public class WebStaticInfo {
 
     public void setTitle(String title) {
         this.title = title == null ? null : title.trim();
+    }
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete == null ? null : isDelete.trim();
     }
 
     public Long getCreateTime() {

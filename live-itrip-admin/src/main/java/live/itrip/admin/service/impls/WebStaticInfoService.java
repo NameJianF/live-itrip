@@ -1,17 +1,19 @@
 package live.itrip.admin.service.impls;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import live.itrip.admin.bean.BootStrapDataTableList;
 import live.itrip.admin.bean.PagerInfo;
 import live.itrip.admin.common.Constants;
-import live.itrip.admin.dao.WebProductMapper;
-import live.itrip.admin.model.WebProduct;
+import live.itrip.admin.dao.WebStaticInfoMapper;
+import live.itrip.admin.model.WebStaticInfo;
 import live.itrip.admin.service.BaseService;
-import live.itrip.admin.service.intefaces.IWebProductService;
+import live.itrip.admin.service.intefaces.IWebStaticInfoService;
 import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,30 +24,42 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Created by Feng on 2016/11/12.
+ * Created by Feng on 2016/11/13.
  */
 @Service
-public class WebProductService extends BaseService implements IWebProductService {
-
+public class WebStaticInfoService extends BaseService implements IWebStaticInfoService {
     @Autowired
-    private WebProductMapper webProductMapper;
+    private WebStaticInfoMapper webStaticInfoMapper;
 
     @Override
-    public void selectProductList(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
-        BootStrapDataTableList<WebProduct> result = new BootStrapDataTableList<WebProduct>();
+    public void selectStaticInfoList(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        BootStrapDataTableList<WebStaticInfo> result = new BootStrapDataTableList<>();
         try {
-            PagerInfo pagerInfo = this.getPagerInfo(decodeJson);
+            // 解析查询条件
+            JSONArray jsonarray = JSONArray.parseArray(decodeJson);
+            String queryContent = null;
+            for (int i = 0; i < jsonarray.size(); i++) {
+                JSONObject obj = (JSONObject) jsonarray.get(i);
+                if (obj.get("name").equals("queryContent")) {
+                    queryContent = obj.get("value").toString();
+                }
+            }
+            if (StringUtils.isNotEmpty(queryContent)) {
+                queryContent = "'%" + queryContent.trim() + "%'";
+            }
+
+            PagerInfo pagerInfo = this.getPagerInfo(jsonarray);
 
             Subject subject = SecurityUtils.getSubject();
             subject.isPermitted();
 
-            Integer count = webProductMapper.countAll();
-            List<WebProduct> moduleList = webProductMapper.selectProducts(pagerInfo.getStart(), pagerInfo.getLength());
-            if (moduleList != null) {
+            Integer count = webStaticInfoMapper.countAll();
+            List<WebStaticInfo> list = webStaticInfoMapper.selectStaticInfos(pagerInfo.getStart(), pagerInfo.getLength(), queryContent);
+            if (list != null) {
                 result.setsEcho(String.valueOf(pagerInfo.getDraw() + 1));
                 result.setiTotalRecords(count);
                 result.setiTotalDisplayRecords(count);
-                result.setAaData(moduleList);
+                result.setAaData(list);
 
                 // response
                 this.writeResponse(response, result);
@@ -61,12 +75,12 @@ public class WebProductService extends BaseService implements IWebProductService
     }
 
     @Override
-    public void selectProductById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+    public void selectStaticInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BaseResult result = new BaseResult();
         JSONObject jsonObject = JSON.parseObject(decodeJson);
-        Integer productId = (Integer) jsonObject.get("productId");
-        if (productId != null) {
-            WebProduct info = this.webProductMapper.selectByPrimaryKey(productId);
+        Integer infoId = (Integer) jsonObject.get("infoId");
+        if (infoId != null) {
+            WebStaticInfo info = this.webStaticInfoMapper.selectByPrimaryKey(infoId);
             result.setCode(ErrorCode.SUCCESS.getCode());
             result.setData(info);
             this.writeResponse(response, result);
@@ -78,19 +92,19 @@ public class WebProductService extends BaseService implements IWebProductService
     }
 
     @Override
-    public void editProductById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+    public void editStaticInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BaseResult result = new BaseResult();
-        WebProduct info = JSON.parseObject(decodeJson, WebProduct.class);
+        WebStaticInfo info = JSON.parseObject(decodeJson, WebStaticInfo.class);
         Integer ret;
         if (info.getId() == null) {
             // new
             info.setCreateTime(System.currentTimeMillis());
             info.setUpdateTime(info.getCreateTime());
-            ret = this.webProductMapper.insertSelective(info);
+            ret = this.webStaticInfoMapper.insertSelective(info);
         } else {
             // update
             info.setUpdateTime(System.currentTimeMillis());
-            ret = this.webProductMapper.updateByPrimaryKeySelective(info);
+            ret = this.webStaticInfoMapper.updateByPrimaryKeySelective(info);
         }
         if (ret > 0) {
             result.setCode(ErrorCode.SUCCESS.getCode());
@@ -103,15 +117,15 @@ public class WebProductService extends BaseService implements IWebProductService
     }
 
     @Override
-    public void deleteProductById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+    public void deleteStaticInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BaseResult result = new BaseResult();
         JSONObject jsonObject = JSON.parseObject(decodeJson);
-        Integer productId = (Integer) jsonObject.get("productId");
-        if (productId != null) {
-            WebProduct info = new WebProduct();
-            info.setId(productId);
+        Integer infoId = (Integer) jsonObject.get("infoId");
+        if (infoId != null) {
+            WebStaticInfo info = new WebStaticInfo();
+            info.setId(infoId);
             info.setIsDelete(Constants.FLAG_IS_DELETE);
-            Integer ret = this.webProductMapper.updateByPrimaryKeySelective(info);
+            Integer ret = this.webStaticInfoMapper.updateByPrimaryKeySelective(info);
             if (ret > 0) {
                 result.setCode(ErrorCode.SUCCESS.getCode());
                 result.setData(info);
@@ -123,4 +137,5 @@ public class WebProductService extends BaseService implements IWebProductService
         result.setError(ErrorCode.UNKNOWN);
         this.writeResponse(response, result);
     }
+
 }

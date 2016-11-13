@@ -8,4 +8,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface IWebProductService {
     void selectProductList(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void selectProductById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void editProductById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void deleteProductById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 }

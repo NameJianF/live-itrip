@@ -33,6 +33,12 @@ public class AdminDictItemService extends BaseService implements IAdminDictItemS
     @Autowired
     private AdminDictMapper adminDictMapper;
 
+
+    @Override
+    public List<AdminDictItem> selectAllDictItems() {
+        return adminDictItemMapper.selectAllDictItems();
+    }
+
     @Override
     public void selectDictItems(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BootStrapDataTableList<AdminDictItem> result = new BootStrapDataTableList<>();

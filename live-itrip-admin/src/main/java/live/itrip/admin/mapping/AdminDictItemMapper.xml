@@ -126,4 +126,9 @@
         <include refid="Base_Column_List"/>
         from admin_dict_item limit ${start},${length}
     </select>
+    <select id="selectAllDictItems" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from admin_dict_item
+    </select>
 </mapper>
