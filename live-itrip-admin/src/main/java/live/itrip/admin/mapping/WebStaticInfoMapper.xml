@@ -148,4 +148,19 @@
         </if>
         limit ${start},${length}
     </select>
+
+    <select id="selectAllStaticInfos" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from web_static_info
+        where is_delete = '0'
+    </select>
+
+    <select id="selectAllIdAndTitle" resultMap="BaseResultMap" parameterType="map">
+        select id,title,type
+        from web_static_info
+        where is_delete = '0'
+    </select>
 </mapper>

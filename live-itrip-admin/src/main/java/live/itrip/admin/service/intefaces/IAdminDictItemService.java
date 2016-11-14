@@ -1,6 +1,7 @@
 package live.itrip.admin.service.intefaces;
 
 import live.itrip.admin.model.AdminDictItem;
+import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,4 +20,5 @@ public interface IAdminDictItemService {
     void deleteDictItemById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 
     void editDictItemById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
 }

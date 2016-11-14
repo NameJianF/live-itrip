@@ -33,7 +33,7 @@ public class ApiKeyController extends AbstractController {
     public
     @ResponseBody
     void apikeys(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
-        String decodeJson = JsonStringUtils.URLDecoderForJsonString(json);
+        String decodeJson = JsonStringUtils.decoderForJsonString(json);
         Logger.debug(
                 String.format("timestamp:%s action:%s json:%s",
                         System.currentTimeMillis(), "user", decodeJson));

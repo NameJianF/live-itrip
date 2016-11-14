@@ -87,15 +87,25 @@ public class WebProductService extends BaseService implements IWebProductService
             info.setCreateTime(System.currentTimeMillis());
             info.setUpdateTime(info.getCreateTime());
             ret = this.webProductMapper.insertSelective(info);
+            if (ret > 0) {
+                result.setCode(ErrorCode.SUCCESS.getCode());
+
+                JSONObject object = new JSONObject();
+                object.put("id", info.getId());
+                result.setData(object);
+
+                this.writeResponse(response, result);
+                return;
+            }
         } else {
             // update
             info.setUpdateTime(System.currentTimeMillis());
             ret = this.webProductMapper.updateByPrimaryKeySelective(info);
-        }
-        if (ret > 0) {
-            result.setCode(ErrorCode.SUCCESS.getCode());
-            this.writeResponse(response, result);
-            return;
+            if (ret > 0) {
+                result.setCode(ErrorCode.SUCCESS.getCode());
+                this.writeResponse(response, result);
+                return;
+            }
         }
 
         result.setError(ErrorCode.UNKNOWN);

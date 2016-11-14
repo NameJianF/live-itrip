@@ -16,18 +16,20 @@ public class JsonStringUtils {
      * @param json
      * @return
      */
-    public static String URLDecoderForJsonString(String json) {
-        return json;
+    public static String decoderForJsonString(String json) {
         // url 解码
-//        String decodeJson = "";
-//        try {
-//            String tmp = URLDecoder.decode(json.replace("=", ""),
-//                    Encoding.UTF8);
+        String decodeJson = "";
+        try {
+            json = json.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
+            json = json.replaceAll("\\+", "%2B");
+            decodeJson = URLDecoder.decode(json, "UTF-8");
+
+//            String tmp = URLDecoder.decode(json.replace("=", ""),Encoding.UTF8);
 //            decodeJson = tmp.substring(0, tmp.length());
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//        return decodeJson;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return decodeJson;
     }
 
     /**
@@ -36,7 +38,7 @@ public class JsonStringUtils {
      * @param decodeJson
      * @return
      */
-    public static String URLEncoderString(String decodeJson) {
+    public static String encoderString(String decodeJson) {
         // url 编码
         try {
             return URLEncoder.encode(decodeJson, Encoding.UTF8);

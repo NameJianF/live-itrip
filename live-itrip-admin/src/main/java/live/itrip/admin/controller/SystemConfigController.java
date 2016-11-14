@@ -52,7 +52,7 @@ public class SystemConfigController extends AbstractController {
     public
     @ResponseBody
     void systemConfig(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
-        String decodeJson = JsonStringUtils.URLDecoderForJsonString(json);
+        String decodeJson = JsonStringUtils.decoderForJsonString(json);
         Logger.debug(
                 String.format("timestamp:%s action:%s json:%s",
                         System.currentTimeMillis(), "user", decodeJson));

@@ -5,9 +5,9 @@ public class WebProduct {
 
     private String title;
 
-    private Long price;
+    private Integer price;
 
-    private Long priceFavoured;
+    private Integer priceFavoured;
 
     private Integer days;
 
@@ -27,11 +27,15 @@ public class WebProduct {
 
     private Integer detail;
 
+    private String content;
+
     private String specialty;
 
     private String cost;
 
     private String reserve;
+
+    private String notice;
 
     private Integer clickCount;
 
@@ -46,8 +50,6 @@ public class WebProduct {
     private Long createTime;
 
     private Long updateTime;
-
-    private String content;
 
     public Integer getId() {
         return id;
@@ -65,19 +67,19 @@ public class WebProduct {
         this.title = title == null ? null : title.trim();
     }
 
-    public Long getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
-    public Long getPriceFavoured() {
+    public Integer getPriceFavoured() {
         return priceFavoured;
     }
 
-    public void setPriceFavoured(Long priceFavoured) {
+    public void setPriceFavoured(Integer priceFavoured) {
         this.priceFavoured = priceFavoured;
     }
 
@@ -153,6 +155,14 @@ public class WebProduct {
         this.detail = detail;
     }
 
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
+    }
+
     public String getSpecialty() {
         return specialty;
     }
@@ -175,6 +185,14 @@ public class WebProduct {
 
     public void setReserve(String reserve) {
         this.reserve = reserve == null ? null : reserve.trim();
+    }
+
+    public String getNotice() {
+        return notice;
+    }
+
+    public void setNotice(String notice) {
+        this.notice = notice == null ? null : notice.trim();
     }
 
     public Integer getClickCount() {
@@ -231,13 +249,5 @@ public class WebProduct {
 
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
     }
 }

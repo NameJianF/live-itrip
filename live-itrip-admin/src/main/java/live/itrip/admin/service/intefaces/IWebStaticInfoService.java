@@ -1,7 +1,10 @@
 package live.itrip.admin.service.intefaces;
 
+import live.itrip.admin.model.WebStaticInfo;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Created by Feng on 2016/11/13.
@@ -14,4 +17,8 @@ public interface IWebStaticInfoService {
     void editStaticInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 
     void deleteStaticInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    List<WebStaticInfo> selectAllStaticInfos();
+
+    List<WebStaticInfo> selectAllIdAndTitle();
 }

@@ -7,10 +7,8 @@ import live.itrip.common.util.JsonStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +34,7 @@ public class ViewPagesController extends AbstractController {
     public
     @ResponseBody
     void customerAsk(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
-        String decodeJson = JsonStringUtils.URLDecoderForJsonString(json);
+        String decodeJson = JsonStringUtils.decoderForJsonString(json);
         Logger.debug(
                 String.format("timestamp:%s action:%s json:%s",
                         System.currentTimeMillis(), "user", decodeJson));

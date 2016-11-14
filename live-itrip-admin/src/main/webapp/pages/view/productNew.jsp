@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="wrapper wrapper-content animated fadeInRight ecommerce">
-
+    <input id="productId" type="hidden">
     <div class="row">
         <div class="col-lg-12">
             <div class="tabs-container">
@@ -57,6 +57,20 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="productPrice" class="col-sm-2 control-label">价格</label>
+                                    <div class="col-sm-6">
+                                        <input id="productPrice" type="text" class="form-control" placeholder="价格"
+                                               maxlength="8">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="priceFavoured" class="col-sm-2 control-label">折扣</label>
+                                    <div class="col-sm-6">
+                                        <input id="priceFavoured" type="text" class="form-control" value="100"
+                                               maxlength="3">
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label for="productType" class="col-sm-2 control-label">线路类型</label>
                                     <div class="col-sm-6">
                                         <select class="form-control m-b" id="productType">
@@ -66,6 +80,7 @@
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     <label for="productDays" class="col-sm-2 control-label">行程天数</label>
                                     <div class="col-sm-6">
@@ -108,13 +123,13 @@
                                 </div>
 
                                 <div class="col-sm-8">
-                                    <button type="button" onclick="funClickAddRow();"
+                                    <button type="button" onclick="saveProductBaseInfo();"
                                             class="btn btn-primary pull-right m-t-n-xs" style="margin-left: 10px;">
                                         保存
                                     </button>
-                                    <button type="button" onclick="funRefresh();"
-                                            class="btn btn-warning pull-right m-t-n-xs">清空
-                                    </button>
+                                    <%--<button type="button" onclick="funRefresh();"--%>
+                                    <%--class="btn btn-warning pull-right m-t-n-xs">清空--%>
+                                    <%--</button>--%>
                                 </div>
                             </fieldset>
                         </div>
@@ -123,7 +138,7 @@
                         <div class="panel-body">
                             <fieldset class="form-horizontal">
                                 <div class="form-group">
-                                    <label for="productDesr" class="col-sm-2 control-label">简介</label>
+                                    <label for="productDesr" class="col-sm-2 control-label">行程简介</label>
                                     <div class="col-sm-10">
                                         <input id="productDesr" type="text" maxlength="200" class="form-control"
                                                placeholder="100字内">
@@ -137,12 +152,9 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <button type="button" onclick="funClickAddRow();"
+                                    <button type="button" onclick="saveProductDescInfo();"
                                             class="btn btn-primary pull-right m-t-n-xs" style="margin-left: 10px;">
                                         保存
-                                    </button>
-                                    <button type="button" onclick="funRefresh();"
-                                            class="btn btn-warning pull-right m-t-n-xs">清空
                                     </button>
                                 </div>
                             </fieldset>
@@ -198,11 +210,11 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">费用说明</label>
                                     <div class="col-sm-6">
-                                        <select class="form-control m-b">
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
+                                        <select id="selectCost" class="form-control m-b" onchange="costSelectChange();">
+                                            <option></option>
+                                            <c:forEach items="${listCosts}" var="item">
+                                                <option value="${item.id}">${item.title}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>
@@ -214,12 +226,9 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <button type="button" onclick="funClickAddRow();"
+                                    <button type="button" onclick="saveProductCoseInfo();"
                                             class="btn btn-primary pull-right m-t-n-xs" style="margin-left: 10px;">
                                         保存
-                                    </button>
-                                    <button type="button" onclick="funRefresh();"
-                                            class="btn btn-warning pull-right m-t-n-xs">清空
                                     </button>
                                 </div>
                             </fieldset>
@@ -231,11 +240,12 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">预定须知</label>
                                     <div class="col-sm-6">
-                                        <select class="form-control m-b">
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
+                                        <select class="form-control m-b" id="selectReserves"
+                                                onchange="reservesSelectChange();">
+                                            <option></option>
+                                            <c:forEach items="${listReserves}" var="item">
+                                                <option value="${item.id}">${item.title}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>
@@ -247,12 +257,9 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <button type="button" onclick="funClickAddRow();"
+                                    <button type="button" onclick="saveProductReservesInfo();"
                                             class="btn btn-primary pull-right m-t-n-xs" style="margin-left: 10px;">
                                         保存
-                                    </button>
-                                    <button type="button" onclick="funRefresh();"
-                                            class="btn btn-warning pull-right m-t-n-xs">清空
                                     </button>
                                 </div>
                             </fieldset>
@@ -264,11 +271,12 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">出游提醒</label>
                                     <div class="col-sm-6">
-                                        <select class="form-control m-b">
-                                            <option>option 1</option>
-                                            <option>option 2</option>
-                                            <option>option 3</option>
-                                            <option>option 4</option>
+                                        <select class="form-control m-b" id="selectNotice"
+                                                onchange="noticeSelectChange();">
+                                            <option></option>
+                                            <c:forEach items="${listNotices}" var="item">
+                                                <option value="${item.id}">${item.title}</option>
+                                            </c:forEach>
                                         </select>
                                     </div>
                                 </div>
@@ -280,12 +288,9 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <button type="button" onclick="funClickAddRow();"
+                                    <button type="button" onclick="saveProductNoticeInfo();"
                                             class="btn btn-primary pull-right m-t-n-xs" style="margin-left: 10px;">
                                         保存
-                                    </button>
-                                    <button type="button" onclick="funRefresh();"
-                                            class="btn btn-warning pull-right m-t-n-xs">清空
                                     </button>
                                 </div>
                             </fieldset>
@@ -304,6 +309,7 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="/js/itrip/jquery.cookie.js"></script>
 
 <!-- Custom and plugin javascript -->
 <script src="/js/inspinia.js"></script>

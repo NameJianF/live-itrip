@@ -24,4 +24,9 @@ public interface WebStaticInfoMapper {
     Integer countAll();
 
     List<WebStaticInfo> selectStaticInfos(@Param("start") int start, @Param("length") int length, @Param("queryContent") String queryContent);
+
+    List<WebStaticInfo> selectAllStaticInfos();
+
+    List<WebStaticInfo> selectAllIdAndTitle();
+
 }

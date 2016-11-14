@@ -31,6 +31,17 @@ public class WebStaticInfoService extends BaseService implements IWebStaticInfoS
     @Autowired
     private WebStaticInfoMapper webStaticInfoMapper;
 
+
+    @Override
+    public List<WebStaticInfo> selectAllStaticInfos() {
+        return webStaticInfoMapper.selectAllStaticInfos();
+    }
+
+    @Override
+    public List<WebStaticInfo> selectAllIdAndTitle() {
+        return webStaticInfoMapper.selectAllIdAndTitle();
+    }
+
     @Override
     public void selectStaticInfoList(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BootStrapDataTableList<WebStaticInfo> result = new BootStrapDataTableList<>();
@@ -78,7 +89,7 @@ public class WebStaticInfoService extends BaseService implements IWebStaticInfoS
     public void selectStaticInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BaseResult result = new BaseResult();
         JSONObject jsonObject = JSON.parseObject(decodeJson);
-        Integer infoId = (Integer) jsonObject.get("infoId");
+        Integer infoId = jsonObject.getInteger("infoId");
         if (infoId != null) {
             WebStaticInfo info = this.webStaticInfoMapper.selectByPrimaryKey(infoId);
             result.setCode(ErrorCode.SUCCESS.getCode());
@@ -137,5 +148,6 @@ public class WebStaticInfoService extends BaseService implements IWebStaticInfoS
         result.setError(ErrorCode.UNKNOWN);
         this.writeResponse(response, result);
     }
+
 
 }

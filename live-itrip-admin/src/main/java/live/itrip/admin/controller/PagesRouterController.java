@@ -1,10 +1,8 @@
 package live.itrip.admin.controller;
 
+import live.itrip.admin.common.ViewConstants;
 import live.itrip.admin.controller.base.AbstractController;
-import live.itrip.admin.model.AdminDepart;
-import live.itrip.admin.model.AdminDict;
-import live.itrip.admin.model.AdminDictItem;
-import live.itrip.admin.model.AdminUser;
+import live.itrip.admin.model.*;
 import live.itrip.admin.service.intefaces.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,13 +23,15 @@ import java.util.List;
 public class PagesRouterController extends AbstractController {
     @Autowired
     private IUserService iUserService;
-
     @Autowired
     private IAdminDictService iAdminDictService;
     @Autowired
     private IAdminDepartService iAdminDepartService;
     @Autowired
     private IAdminDictItemService iAdminDictItemService;
+    @Autowired
+    private IWebStaticInfoService iWebStaticInfoService;
+
 
     @RequestMapping(value = "/system/index", method = RequestMethod.GET)
     public String pagesIndex(HttpServletRequest request, Model model) {
@@ -164,6 +164,29 @@ public class PagesRouterController extends AbstractController {
         model.addAttribute("listDays", listDays);
         model.addAttribute("listCity", listCity);
         model.addAttribute("listTraffic", listTraffic);
+
+        // 费用
+        List<WebStaticInfo> infoList = iWebStaticInfoService.selectAllIdAndTitle();
+        List<WebStaticInfo> listCosts = new ArrayList<>();
+        List<WebStaticInfo> listReserves = new ArrayList<>();
+        List<WebStaticInfo> listNotices = new ArrayList<>();
+        if (infoList != null) {
+            for (WebStaticInfo info : infoList) {
+                if (ViewConstants.STATIC_TYPE_COST.equals(info.getType())) {
+                    // 费用
+                    listCosts.add(info);
+                } else if (ViewConstants.STATIC_TYPE_RESERVE.equals(info.getType())) {
+                    // 预定
+                    listReserves.add(info);
+                } else if (ViewConstants.STATIC_TYPE_NOTICE.equals(info.getType())) {
+                    // 提醒
+                    listNotices.add(info);
+                }
+            }
+        }
+        model.addAttribute("listCosts", listCosts);
+        model.addAttribute("listReserves", listReserves);
+        model.addAttribute("listNotices", listNotices);
 
         return "/pages/view/productNew";
     }
