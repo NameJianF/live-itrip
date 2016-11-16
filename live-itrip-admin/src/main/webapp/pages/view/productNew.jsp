@@ -18,6 +18,9 @@
     <link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/plugins/dropzone/basic.css" rel="stylesheet">
+    <link href="/css/plugins/dropzone/dropzone.css" rel="stylesheet">
+
 </head>
 <body>
 <div class="wrapper wrapper-content animated fadeInRight ecommerce">
@@ -137,6 +140,25 @@
                     <div id="tab-2" class="tab-pane">
                         <div class="panel-body">
                             <fieldset class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="productImgSamll" class="col-sm-2 control-label">图片</label>
+                                    <div class="col-sm-8">
+                                        <input id="productImgSamll" type="text" readonly class="form-control">
+                                    </div>
+                                    <button type="button" class="col-sm-2 btn btn-primary" style="max-width: 60px;"
+                                            onclick="formUploadImageShow();">
+                                        上传
+                                    </button>
+                                </div>
+                                <%--<div class="form-group">--%>
+                                <%--<label for="productImgBig" class="col-sm-2 control-label">大图</label>--%>
+                                <%--<div class="col-sm-8">--%>
+                                <%--<input id="productImgBig" type="text" readonly class="form-control">--%>
+                                <%--</div>--%>
+                                <%--<button type="button" class="col-sm-2 btn btn-primary" style="max-width: 60px;">--%>
+                                <%--上传--%>
+                                <%--</button>--%>
+                                <%--</div>--%>
                                 <div class="form-group">
                                     <label for="productDesr" class="col-sm-2 control-label">行程简介</label>
                                     <div class="col-sm-10">
@@ -304,6 +326,30 @@
 </div>
 
 
+<%--图片上传--%>
+
+<div class="modal fade modal-default" id="formUploadImage">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="formEditTitle">图片上传</h4>
+            </div>
+            <div class="modal-body">
+                <form id="my-awesome-dropzone" class="dropzone" action="form_file_upload.html#">
+                    <div class="dropzone-previews"></div>
+                    <button type="submit" class="btn btn-primary pull-right">上传文件</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn   btn-primary" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+
 <!-- Mainly scripts -->
 <script src="/js/jquery-2.1.1.js"></script>
 <script src="/js/bootstrap.min.js"></script>
@@ -320,6 +366,10 @@
 
 <!-- Data picker -->
 <script src="/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+<!-- DROPZONE -->
+<script src="/js/plugins/dropzone/dropzone.js"></script>
+
 
 <script src="/javascript/view/product/sysProductNew.js"></script>
 

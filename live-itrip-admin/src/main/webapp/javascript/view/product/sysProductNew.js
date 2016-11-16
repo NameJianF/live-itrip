@@ -15,6 +15,53 @@ $(function () {
         todayBtn: true,
         format: "yyyy-mm-dd"
     });
+
+    Dropzone.options.myAwesomeDropzone = {
+        autoProcessQueue: false,
+        uploadMultiple: true,
+        parallelUploads: 100,
+        maxFiles: 100,
+
+        // Dropzone settings
+        init: function () {
+            var myDropzone = this;
+
+            this.element.querySelector("button[type=submit]").addEventListener("click", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                myDropzone.processQueue();
+            });
+            this.on("sendingmultiple", function () {
+            });
+            this.on("successmultiple", function (files, response) {
+            });
+            this.on("errormultiple", function (files, response) {
+            });
+
+            this.on("addedfile", function (file) {
+
+                // Create the remove button
+                var removeButton = Dropzone.createElement("<button>删除</button>");
+
+                // Capture the Dropzone instance as closure.
+                var _this = this;
+
+                // Listen to the click event
+                removeButton.addEventListener("click", function (e) {
+                    // Make sure the button click doesn't submit the form:
+                    e.preventDefault();
+                    e.stopPropagation();
+                    // Remove the file preview.
+                    _this.removeFile(file);
+                    // If you want to the delete the file on the server as well,
+                    // you can do the AJAX request here.
+                });
+
+                // Add the button to the file preview element.
+                file.previewElement.appendChild(removeButton);
+            });
+        }
+    };
 });
 
 
@@ -237,4 +284,9 @@ function saveProductNoticeInfo() {
         }, function () {
             // complete
         });
+}
+
+
+function formUploadImageShow() {
+    $('#formUploadImage').modal('show');
 }

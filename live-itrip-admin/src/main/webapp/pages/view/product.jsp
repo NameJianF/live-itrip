@@ -19,7 +19,7 @@
                 <div style="border-bottom:solid 1px lightgray; margin-bottom: 4px;">
                     <button type="button" onclick="funRefresh();" class="btn btn-primary ">刷新</button>
                 </div>
-                <table class="table table-hover table-bordered dataTables-example" id="tableProducts"
+                <table class="table table-hover table-bordered dataTables-example table-striped" id="tableProducts"
                        style="font-size: 14px;">
                     <thead>
                     <tr>
