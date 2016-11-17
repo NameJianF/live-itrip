@@ -16,4 +16,13 @@ public class ViewConstants {
      * 提醒
      */
     public static final String STATIC_TYPE_NOTICE = "NOTICE";
+
+
+    // 文件上传参数配置
+    public class FileParams {
+        /**
+         * 新建产品--产品特色--图片上传
+         */
+        public static final String PRODUCT_0 = "0";
+    }
 }

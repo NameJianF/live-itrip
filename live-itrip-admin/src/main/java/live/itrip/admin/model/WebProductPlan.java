@@ -9,25 +9,25 @@ public class WebProductPlan {
 
     private String title;
 
+    private String stationFrom;
+
+    private String traffic;
+
+    private String stationTo;
+
     private String breakfast;
 
     private String lunch;
 
     private String dinner;
 
-    private String traffic;
-
-    private String content;
-
-    private String icon;
-
-    private String imgSmall;
-
-    private String imgBig;
+    private String hotel;
 
     private Long createTime;
 
     private Long updateTime;
+
+    private String content;
 
     public Integer getId() {
         return id;
@@ -61,6 +61,30 @@ public class WebProductPlan {
         this.title = title == null ? null : title.trim();
     }
 
+    public String getStationFrom() {
+        return stationFrom;
+    }
+
+    public void setStationFrom(String stationFrom) {
+        this.stationFrom = stationFrom == null ? null : stationFrom.trim();
+    }
+
+    public String getTraffic() {
+        return traffic;
+    }
+
+    public void setTraffic(String traffic) {
+        this.traffic = traffic == null ? null : traffic.trim();
+    }
+
+    public String getStationTo() {
+        return stationTo;
+    }
+
+    public void setStationTo(String stationTo) {
+        this.stationTo = stationTo == null ? null : stationTo.trim();
+    }
+
     public String getBreakfast() {
         return breakfast;
     }
@@ -85,44 +109,12 @@ public class WebProductPlan {
         this.dinner = dinner == null ? null : dinner.trim();
     }
 
-    public String getTraffic() {
-        return traffic;
+    public String getHotel() {
+        return hotel;
     }
 
-    public void setTraffic(String traffic) {
-        this.traffic = traffic == null ? null : traffic.trim();
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
-    }
-
-    public String getIcon() {
-        return icon;
-    }
-
-    public void setIcon(String icon) {
-        this.icon = icon == null ? null : icon.trim();
-    }
-
-    public String getImgSmall() {
-        return imgSmall;
-    }
-
-    public void setImgSmall(String imgSmall) {
-        this.imgSmall = imgSmall == null ? null : imgSmall.trim();
-    }
-
-    public String getImgBig() {
-        return imgBig;
-    }
-
-    public void setImgBig(String imgBig) {
-        this.imgBig = imgBig == null ? null : imgBig.trim();
+    public void setHotel(String hotel) {
+        this.hotel = hotel == null ? null : hotel.trim();
     }
 
     public Long getCreateTime() {
@@ -139,5 +131,13 @@ public class WebProductPlan {
 
     public void setUpdateTime(Long updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 }

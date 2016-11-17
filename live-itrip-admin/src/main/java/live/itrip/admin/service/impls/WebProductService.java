@@ -8,6 +8,7 @@ import live.itrip.admin.common.Constants;
 import live.itrip.admin.dao.WebProductMapper;
 import live.itrip.admin.model.WebProduct;
 import live.itrip.admin.service.BaseService;
+import live.itrip.admin.service.intefaces.IWebFileInfoService;
 import live.itrip.admin.service.intefaces.IWebProductService;
 import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
@@ -29,6 +30,8 @@ public class WebProductService extends BaseService implements IWebProductService
 
     @Autowired
     private WebProductMapper webProductMapper;
+    @Autowired
+    private IWebFileInfoService iWebFileInfoService;
 
     @Override
     public void selectProductList(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
@@ -88,8 +91,10 @@ public class WebProductService extends BaseService implements IWebProductService
             info.setUpdateTime(info.getCreateTime());
             ret = this.webProductMapper.insertSelective(info);
             if (ret > 0) {
-                result.setCode(ErrorCode.SUCCESS.getCode());
+                // 更新文件表数据
+                iWebFileInfoService.modifyFileInfoById(decodeJson, info.getId());
 
+                result.setCode(ErrorCode.SUCCESS.getCode());
                 JSONObject object = new JSONObject();
                 object.put("id", info.getId());
                 result.setData(object);

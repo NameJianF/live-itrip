@@ -16,7 +16,7 @@ public class UuidUtils {
 		if (contain) {
 			return uuid.toString().toLowerCase();
 		}
-		return uuid.toString().replace("-", "").toLowerCase();
+		return uuid.toString().replaceAll("-", "").toLowerCase();
 	}
 
 	/**
@@ -31,6 +31,6 @@ public class UuidUtils {
 		if (contain) {
 			return uuid.toString().toUpperCase();
 		}
-		return uuid.toString().replace("-", "").toUpperCase();
+		return uuid.toString().replaceAll("-", "").toUpperCase();
 	}
 }

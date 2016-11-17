@@ -21,6 +21,13 @@
     <link href="/css/plugins/dropzone/basic.css" rel="stylesheet">
     <link href="/css/plugins/dropzone/dropzone.css" rel="stylesheet">
 
+    <style>
+        .dropzone {
+            width: 500px;
+            height: 230px;
+            min-height: 0px !important;
+        }
+    </style>
 </head>
 <body>
 <div class="wrapper wrapper-content animated fadeInRight ecommerce">
@@ -141,24 +148,27 @@
                         <div class="panel-body">
                             <fieldset class="form-horizontal">
                                 <div class="form-group">
-                                    <label for="productImgSamll" class="col-sm-2 control-label">图片</label>
+                                    <label for="productImgSamll" class="col-sm-2 control-label">小图</label>
+                                    <input id="productImgSamllId" type="hidden">
                                     <div class="col-sm-8">
                                         <input id="productImgSamll" type="text" readonly class="form-control">
                                     </div>
                                     <button type="button" class="col-sm-2 btn btn-primary" style="max-width: 60px;"
-                                            onclick="formUploadImageShow();">
+                                            onclick="formUploadImageShow('small');">
                                         上传
                                     </button>
                                 </div>
-                                <%--<div class="form-group">--%>
-                                <%--<label for="productImgBig" class="col-sm-2 control-label">大图</label>--%>
-                                <%--<div class="col-sm-8">--%>
-                                <%--<input id="productImgBig" type="text" readonly class="form-control">--%>
-                                <%--</div>--%>
-                                <%--<button type="button" class="col-sm-2 btn btn-primary" style="max-width: 60px;">--%>
-                                <%--上传--%>
-                                <%--</button>--%>
-                                <%--</div>--%>
+                                <div class="form-group">
+                                    <label for="productImgBig" class="col-sm-2 control-label">大图</label>
+                                    <input id="productImgBigId" type="hidden">
+                                    <div class="col-sm-8">
+                                        <input id="productImgBig" type="text" readonly class="form-control">
+                                    </div>
+                                    <button type="button" class="col-sm-2 btn btn-primary" style="max-width: 60px;"
+                                            onclick="formUploadImageShow('big');">
+                                        上传
+                                    </button>
+                                </div>
                                 <div class="form-group">
                                     <label for="productDesr" class="col-sm-2 control-label">行程简介</label>
                                     <div class="col-sm-10">
@@ -186,7 +196,8 @@
                         <div class="panel-body">
                             <fieldset class="form-horizontal">
                                 <div>
-                                    <button type="button" onclick="funClickAddRow();"
+                                    <button type="button" onclick="funRefresh();" class="btn btn-primary ">刷新</button>
+                                    <button type="button" onclick="addNewPlanDetail();"
                                             class="btn btn-primary pull-left m-t-n-xs" style="margin-bottom: 2px;">
                                         新增
                                     </button>
@@ -194,27 +205,20 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <div class="table-responsive">
-                                            <table class="table table-bordered table-stripped">
+                                            <table class="table table-bordered table-stripped" id="tablePlanDetails">
                                                 <thead>
                                                 <tr>
-                                                    <th>
-                                                        第*天
-                                                    </th>
-                                                    <th>
-                                                        日期
-                                                    </th>
-                                                    <th>
-                                                        标题
-                                                    </th>
-                                                    <th>
-                                                        描述
-                                                    </th>
-                                                    <th>
-                                                        图片
-                                                    </th>
-                                                    <th>
-                                                        操作
-                                                    </th>
+                                                    <th>ID</th>
+                                                    <th>第*天</th>
+                                                    <th>起点</th>
+                                                    <th>交通</th>
+                                                    <th>终点</th>
+
+                                                    <th>早餐</th>
+                                                    <th>午餐</th>
+                                                    <th>晚餐</th>
+                                                    <th>酒店</th>
+                                                    <th>操作</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -327,7 +331,6 @@
 
 
 <%--图片上传--%>
-
 <div class="modal fade modal-default" id="formUploadImage">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -337,16 +340,106 @@
                 <h4 class="modal-title" id="formEditTitle">图片上传</h4>
             </div>
             <div class="modal-body">
-                <form id="my-awesome-dropzone" class="dropzone" action="form_file_upload.html#">
+                <form id="my-awesome-dropzone" class="dropzone">
                     <div class="dropzone-previews"></div>
-                    <button type="submit" class="btn btn-primary pull-right">上传文件</button>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn   btn-primary" data-dismiss="modal">关闭</button>
+                <button class="btn btn-primary" id="btnUploadFile" style="margin-right: 10px;">上传文件</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
+</div>
+
+<%--行程详情--%>
+<div class="modal fade modal-default ecommerce" id="formPlanDetail">
+    <div class="modal-dialog" style="width: 900px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="formPlanDetailTitle">行程详情</h4>
+            </div>
+            <div class="modal-body panel-body">
+                <form class="form-horizontal">
+                    <%--id--%>
+                    <input id="planId" type="hidden">
+                    <%--<div class="form-group">--%>
+                    <%--<label for="planDate" class="col-sm-3 control-label">日期</label>--%>
+                    <%--<div class="col-sm-9">--%>
+                    <%--<div class="input-group date">--%>
+                    <%--<span class="input-group-addon"><i class="fa fa-calendar"></i></span>--%>
+                    <%--<input id="planDate" type="text" class="form-control" value="">--%>
+                    <%--</div>--%>
+                    <%--</div>--%>
+                    <%--</div>--%>
+                    <div class="form-group">
+                        <label for="planTitle" class="col-sm-2 control-label">标题</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="planTitle">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="planStationFrom" class="col-sm-2 control-label">起点</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="planStationFrom">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="planTraffic" class="col-sm-2 control-label">交通</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="planTraffic">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="planStationTo" class="col-sm-2 control-label">终点</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="planStationTo">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="planBreakfast" class="col-sm-2 control-label">早餐</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="planBreakfast">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="planLunch" class="col-sm-2 control-label">午餐</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="planLunch">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="planDinner" class="col-sm-2 control-label">晚餐</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="planDinner">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="planHotel" class="col-sm-2 control-label">酒店</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="planHotel">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="planContent" class="col-sm-2 control-label">景点介绍</label>
+                        <div class="col-sm-10">
+                            <div class="summernote" id="planContent">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn   btn-primary" data-dismiss="modal">取消</button>
+                <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSavePlanInfo()">确定
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 

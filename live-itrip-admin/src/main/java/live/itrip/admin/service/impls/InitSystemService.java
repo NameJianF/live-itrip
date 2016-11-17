@@ -52,6 +52,7 @@ public class InitSystemService {
             Config.MODULE_APP_APIKEY = prop.getProperty("module.app.apikey");
             Config.MODULE_APP_SECRET = prop.getProperty("module.app.secret");
             Config.SSO_URL = prop.getProperty("sso.url");
+            Config.FILE_SAVE_PATH = prop.getProperty("file.save.path");
 
         } catch (Exception e) {
             Logger.error(e.getMessage());

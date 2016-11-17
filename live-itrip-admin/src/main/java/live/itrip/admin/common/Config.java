@@ -11,4 +11,6 @@ public class Config {
 
     public static String SSO_URL;
 
+    public static String FILE_SAVE_PATH;
+
 }
