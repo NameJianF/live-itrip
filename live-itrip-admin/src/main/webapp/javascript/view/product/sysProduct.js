@@ -21,15 +21,23 @@ $(function () {
             {"mData": "id"},
             {"mData": "title"},
             {"mData": "price"},
-            {"mData": "priceFavoured"},
+            //{"mData": "priceFavoured"},
             {"mData": "days"},
             {"mData": "type"},
             {"mData": "fromCity"},
             {"mData": "traffic"},
-            {"mData": "startDay"},
+            //{"mData": "startDay"},
             {"mData": "clickCount"},
             {"mData": "joinMans"},
-            {"mData": "localHtml"},
+            {
+                "mData": "localHtml",
+                render: function (data, type, row) {
+                    if (data == null) {
+                        return "无";
+                    }
+                    return data;
+                }
+            },
             {
                 "mData": "status",
                 render: function (data, type, row) {
@@ -48,15 +56,15 @@ $(function () {
                     return (new Date(data)).Format("yyyy-MM-dd hh:mm:ss");
                 }
             },
-            {
-                "mData": "updateTime",
-                render: function (data, type, row) {
-                    if (data == null) {
-                        return "";
-                    }
-                    return (new Date(data)).Format("yyyy-MM-dd hh:mm:ss");
-                }
-            },
+            //{
+            //    "mData": "updateTime",
+            //    render: function (data, type, row) {
+            //        if (data == null) {
+            //            return "";
+            //        }
+            //        return (new Date(data)).Format("yyyy-MM-dd hh:mm:ss");
+            //    }
+            //},
             {
                 render: function (data, type, row) {
                     if (type === 'display') {
@@ -110,34 +118,10 @@ function funSelectProducts(sSource, aoData, fnCallback) {
  * 修改
  * @param productId
  */
-function funEditGetProductInfo(productId) {
-    var token = $.cookie('userToken');
-    var jsondata = {
-        'op': 'product.edit',
-        'token': token,
-        'productId': productId
-    };
-
-    parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
-        , function (response) {
-            // error
-        }, function (response) {
-            // success
-            if (response.code == 0) {
-                $('#editProductId').val(response.data.id);
-                $('#editProductName').val(response.data.ProductName);
-                $('#editProductParent').val(response.data.parentId);
-                $('#editProductUrl').val(response.data.ProductUrl);
-                $('#editProductOrder').val(response.data.ProductOrder);
-                $('#editProductDiscription').val(response.data.description);
-                $('#editProductDelete').val(response.data.isDelete);
-
-                $('#formEditTitle').text("编辑模块");
-                $('#formEditProduct').modal('show');
-            }
-        }, function () {
-            // complete
-        });
+function funEditGetProductInfo(dataId) {
+    var dataUrl = "/system/view/editProduct.action?id=" + dataId;
+    var menuName = "Product:" + dataId;
+    parent.$.itriptab.addTabFromOut(dataId, dataUrl, menuName);
 }
 
 

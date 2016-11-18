@@ -149,6 +149,51 @@
             }
             return false;
         },
+        //add function
+        addTabFromOut: function (dataId,dataUrl,menuName) {
+            $("#header-nav>ul>li.open").removeClass("open");
+            //var dataId = $(this).attr('data-id');
+            if (dataId != "") {
+                top.$.cookie('itrip_currentmoduleid', dataId, {path: "/"});
+            }
+            //var dataUrl = $(this).attr('href');
+            //var menuName = $.trim($(this).text());
+            var flag = true;
+            if (dataUrl == undefined || $.trim(dataUrl).length == 0) {
+                return false;
+            }
+            $('.menuTab').each(function () {
+                if ($(this).data('id') == dataUrl) {
+                    if (!$(this).hasClass('active')) {
+                        $(this).addClass('active').siblings('.menuTab').removeClass('active');
+                        $.itriptab.scrollToTab(this);
+                        $('.mainContent .itrip_iframe').each(function () {
+                            if ($(this).data('id') == dataUrl) {
+                                $(this).show().siblings('.itrip_iframe').hide();
+                                return false;
+                            }
+                        });
+                    }
+                    flag = false;
+                    return false;
+                }
+            });
+            if (flag) {
+                var str = '<a href="javascript:;" class="active menuTab" data-id="' + dataUrl + '">' + menuName + ' <i class="fa fa-remove"></i></a>';
+                $('.menuTab').removeClass('active');
+                var str1 = '<iframe class="itrip_iframe" id="iframe' + dataId + '" name="iframe' + dataId + '"  width="100%" height="100%" src="' + dataUrl + '" frameborder="0" data-id="' + dataUrl + '" seamless></iframe>';
+                $('.mainContent').find('iframe.itrip_iframe').hide();
+                $('.mainContent').append(str1);
+                $.loading(true);
+                $('.mainContent iframe:visible').load(function () {
+                    $.loading(false);
+                });
+                $('.menuTabs .page-tabs-content').append(str);
+                $.itriptab.scrollToTab($('.menuTab.active'));
+            }
+            return false;
+        },
+
         scrollTabRight: function () {
             var marginLeftVal = Math.abs(parseInt($('.page-tabs-content').css('margin-left')));
             var tabOuterWidth = $.itriptab.calSumWidth($(".content-tabs").children().not(".menuTabs"));
@@ -258,10 +303,10 @@
             $('.fullscreen').on('click', function () {
                 if (!$(this).attr('fullscreen')) {
                     $(this).attr('fullscreen', 'true');
-                    requestFullScreen();
+                    $.itriptab.requestFullScreen();
                 } else {
                     $(this).removeAttr('fullscreen')
-                    exitFullscreen();
+                    $.itriptab.exitFullscreen();
                 }
             });
         }

@@ -20,6 +20,7 @@
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/plugins/dropzone/basic.css" rel="stylesheet">
     <link href="/css/plugins/dropzone/dropzone.css" rel="stylesheet">
+    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
 
     <style>
         .dropzone {
@@ -31,7 +32,11 @@
 </head>
 <body>
 <div class="wrapper wrapper-content animated fadeInRight ecommerce">
-    <input id="productId" type="hidden">
+    <input id="productId" type="hidden"
+    <c:if test="${!empty productId}">
+           value="${productId}"
+    </c:if>
+    >
     <div class="row">
         <div class="col-lg-12">
             <div class="tabs-container">
@@ -196,16 +201,21 @@
                         <div class="panel-body">
                             <fieldset class="form-horizontal">
                                 <div>
-                                    <button type="button" onclick="funRefresh();" class="btn btn-primary ">刷新</button>
                                     <button type="button" onclick="addNewPlanDetail();"
                                             class="btn btn-primary pull-left m-t-n-xs" style="margin-bottom: 2px;">
                                         新增
+                                    </button>
+                                    <button type="button" onclick="funRefresh();"
+                                            style="margin-bottom: 2px;margin-left: 5px;"
+                                            class="btn btn-primary pull-left m-t-n-xs">刷新
                                     </button>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <div class="table-responsive">
-                                            <table class="table table-bordered table-stripped" id="tablePlanDetails">
+                                            <table class="table table-hover table-bordered dataTables-example table-striped"
+                                                   id="tablePlanDetails"
+                                                   style="width: 100%;">
                                                 <thead>
                                                 <tr>
                                                     <th>ID</th>
@@ -365,15 +375,6 @@
                 <form class="form-horizontal">
                     <%--id--%>
                     <input id="planId" type="hidden">
-                    <%--<div class="form-group">--%>
-                    <%--<label for="planDate" class="col-sm-3 control-label">日期</label>--%>
-                    <%--<div class="col-sm-9">--%>
-                    <%--<div class="input-group date">--%>
-                    <%--<span class="input-group-addon"><i class="fa fa-calendar"></i></span>--%>
-                    <%--<input id="planDate" type="text" class="form-control" value="">--%>
-                    <%--</div>--%>
-                    <%--</div>--%>
-                    <%--</div>--%>
                     <div class="form-group">
                         <label for="planTitle" class="col-sm-2 control-label">标题</label>
                         <div class="col-sm-6">
@@ -382,38 +383,30 @@
                     </div>
                     <div class="form-group">
                         <label for="planStationFrom" class="col-sm-2 control-label">起点</label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-2">
                             <input type="text" class="form-control" id="planStationFrom">
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label for="planTraffic" class="col-sm-2 control-label">交通</label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-2">
                             <input type="text" class="form-control" id="planTraffic">
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label for="planStationTo" class="col-sm-2 control-label">终点</label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-2">
                             <input type="text" class="form-control" id="planStationTo">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="planBreakfast" class="col-sm-2 control-label">早餐</label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-2">
                             <input type="text" class="form-control" id="planBreakfast">
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label for="planLunch" class="col-sm-2 control-label">午餐</label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-2">
                             <input type="text" class="form-control" id="planLunch">
                         </div>
-                    </div>
-                    <div class="form-group">
                         <label for="planDinner" class="col-sm-2 control-label">晚餐</label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-2">
                             <input type="text" class="form-control" id="planDinner">
                         </div>
                     </div>
@@ -463,6 +456,7 @@
 <!-- DROPZONE -->
 <script src="/js/plugins/dropzone/dropzone.js"></script>
 
+<script src="/js/plugins/dataTables/datatables.min.js"></script>
 
 <script src="/javascript/view/product/sysProductNew.js"></script>
 

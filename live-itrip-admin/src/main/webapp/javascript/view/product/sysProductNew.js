@@ -7,8 +7,6 @@ var imgFlag = 'small';
 var tabPlanDetails;
 
 $(function () {
-    initDataTable();
-
     $('#productSpecialty').summernote();
     $('#productCost').summernote();
     $('#productReserve').summernote();
@@ -84,7 +82,66 @@ $(function () {
             });
         }
     };
+
+    initDataTable();
+
+    // load data
+    loadDatas();
 });
+
+function loadDatas() {
+    var productId = $('#productId').val();
+    if (productId != undefined && productId > 0) {
+        var jsondata = {
+            'op': 'product.detail',
+            'token': parent.token,
+            'productId': productId
+        };
+
+        parent.execAjaxData("/view/product.action", JSON.stringify(jsondata), true
+            , function (response) {
+                // error
+            }, function (response) {
+                // success
+                if (response.code == 0) {
+                    // base info
+                    $('#productTitle').val(response.data.title);
+                    $('#productPrice').val(response.data.price);
+                    $('#priceFavoured').val(response.data.priceFavoured);
+                    $('#productType option').filter(function () {
+                        return $(this).text() == response.data.type;
+                    }).attr("selected", true);
+                    $('#productDays option').filter(function () {
+                        return $(this).text() == response.data.days + '天';
+                    }).attr("selected", true);
+                    $('#productFromCity option').filter(function () {
+                        return $(this).text() == response.data.fromCity;
+                    }).attr("selected", true);
+                    $('#productTraffic option').filter(function () {
+                        return $(this).text() == response.data.traffic;
+                    }).attr("selected", true);
+                    $('#productStartDate').val(response.data.startDay);
+
+                    // 产品特色
+                    $('#productImgSamll').val(response.data.imgSmall);
+                    $('#productImgBig').val(response.data.imgBig);
+                    $('#productDesr').val(response.data.description);
+                    $('#productSpecialty').code(response.data.specialty);
+
+                    // 费用
+                    $('#productCost').code(response.data.cost);
+
+                    // 预定须知
+                    $('#productReserve').code(response.data.reserve);
+
+                    // 出游提醒
+                    $('#productNotice').code(response.data.notice);
+                }
+            }, function () {
+                // complete
+            });
+    }
+}
 
 function initDataTable() {
     tabPlanDetails = $('#tablePlanDetails').DataTable({
@@ -136,7 +193,6 @@ function initDataTable() {
 
     });
 }
-
 
 function costSelectChange() {
     //console.log('costSelectChange:' + $('#selectCost').val());
@@ -263,10 +319,9 @@ function saveProductDescInfo() {
     var productDesr = $('#productDesr').val();
     var productSpecialty = $('#productSpecialty').code();
 
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'product.edit',
-        'token': token,
+        'token': parent.token,
         'id': productId,
         'imgSmall': productImgSamll,
         'productImgSamllId': productImgSamllId,
@@ -386,7 +441,7 @@ function funRefresh() {
 /**
  * 查询行程详情列表
  */
-function funSelectPlanDetails() {
+function funSelectPlanDetails(sSource, aoData, fnCallback) {
     sSource = "/view/planDetail.action?flag=list";
 
     // 添加查询条件
@@ -432,10 +487,9 @@ function addNewPlanDetail() {
  * 编辑行程详情
  */
 function editPlanDetail(planId) {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'planDetail.detail',
-        'token': token,
+        'token': parent.token,
         'planId': planId
     };
 
@@ -476,6 +530,7 @@ function editSavePlanInfo() {
         'token': token,
         'id': $('#planId').val(),
         'title': $('#planTitle').val(),
+        'productId': $('#productId').val(),
         'stationFrom': $('#planStationFrom').val(),
         'traffic': $('#planTraffic').val(),
         'stationTo': $('#planStationTo').val(),

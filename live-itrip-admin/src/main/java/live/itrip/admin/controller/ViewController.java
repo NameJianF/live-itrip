@@ -34,15 +34,15 @@ public class ViewController extends AbstractController {
     private IWebProductPlanService iWebProductPlanService;
 
     /**
-     * 网站后台，行程列表查询
+     * 网站后台，行程详情查询
      *
      * @param response
      * @param request
      */
-    @RequestMapping("/view/product")
+    @RequestMapping("/view/planDetail")
     public
     @ResponseBody
-    void viewProduct(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+    void viewPlanDetail(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
         String decodeJson = JsonStringUtils.decoderForJsonString(json);
         Logger.debug(
                 String.format("timestamp:%s action:%s json:%s",
@@ -56,7 +56,7 @@ public class ViewController extends AbstractController {
 
         if (StringUtils.isNotEmpty(flag)) {
             // from table select
-            iWebProductPlanService.selectPlanList(decodeJson, response, request);
+            iWebProductPlanService.selectPlanDetailsByProductId(decodeJson, response, request);
         } else {
             try {
                 RequestHeader header = JSON.parseObject(decodeJson, RequestHeader.class);
@@ -84,10 +84,10 @@ public class ViewController extends AbstractController {
      * @param response
      * @param request
      */
-    @RequestMapping("/view/planDetail")
+    @RequestMapping("/view/product")
     public
     @ResponseBody
-    void viewPlanDetail(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+    void viewProduct(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
         String decodeJson = JsonStringUtils.decoderForJsonString(json);
         Logger.debug(
                 String.format("timestamp:%s action:%s json:%s",

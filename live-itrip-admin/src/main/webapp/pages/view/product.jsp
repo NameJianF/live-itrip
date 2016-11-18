@@ -26,18 +26,18 @@
                         <th>ID</th>
                         <th>标题</th>
                         <th>价格</th>
-                        <th>折扣</th>
+                        <%--<th>折扣</th>--%>
                         <th>天数</th>
                         <th>类型</th>
                         <th>出发城市</th>
                         <th>交通</th>
-                        <th>出发日期</th>
+                        <%--<th>出发日期</th>--%>
                         <th>浏览次数</th>
                         <th>累计人数</th>
                         <th>HTML地址</th>
                         <th>状态</th>
                         <th>创建时间</th>
-                        <th>修改时间</th>
+                        <%--<th>修改时间</th>--%>
                         <th>操作</th>
                     </tr>
                     </thead>

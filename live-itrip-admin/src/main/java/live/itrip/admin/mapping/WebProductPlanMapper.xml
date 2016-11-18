@@ -219,4 +219,30 @@
       update_time = #{updateTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+    <!--自定义查询-->
+    <select id="countAll" resultType="int">
+        select count(id) from web_product_plan
+    </select>
+
+    <select id="selectPlanDetails" resultMap="ResultMapWithBLOBs" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from web_product_plan ORDER BY id DESC limit ${start},${length}
+    </select>
+
+    <select id="countByProductId" resultType="int" parameterType="map">
+        select count(id) from web_product_plan WHERE product_id = ${productId}
+    </select>
+    <select id="selectPlanDetailsByProductId" resultMap="ResultMapWithBLOBs" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from web_product_plan WHERE product_id = ${productId}
+    </select>
+
 </mapper>

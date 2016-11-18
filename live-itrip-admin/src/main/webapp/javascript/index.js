@@ -55,7 +55,8 @@ function loadModules() {
                 }
                 $('#side-menu').append(strmenu);
             } else {
-                alert(response.message)
+                alert(response.message);
+                $.itriptab.addTab();
             }
         },
         function () {

@@ -14,4 +14,6 @@ public interface IWebProductPlanService {
     void editPlanById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 
     void deletePlanById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void selectPlanDetailsByProductId(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 }

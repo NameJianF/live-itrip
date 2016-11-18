@@ -67,7 +67,7 @@ public class WebProductService extends BaseService implements IWebProductService
     public void selectProductById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BaseResult result = new BaseResult();
         JSONObject jsonObject = JSON.parseObject(decodeJson);
-        Integer productId = (Integer) jsonObject.get("productId");
+        Integer productId = jsonObject.getInteger("productId");
         if (productId != null) {
             WebProduct info = this.webProductMapper.selectByPrimaryKey(productId);
             result.setCode(ErrorCode.SUCCESS.getCode());
