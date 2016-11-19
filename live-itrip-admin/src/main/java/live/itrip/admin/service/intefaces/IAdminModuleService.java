@@ -1,7 +1,7 @@
 package live.itrip.admin.service.intefaces;
 
-import live.itrip.admin.api.sso.bean.User;
 import live.itrip.admin.model.AdminModule;
+import live.itrip.admin.model.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

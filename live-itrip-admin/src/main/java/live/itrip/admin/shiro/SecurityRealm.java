@@ -1,11 +1,10 @@
 package live.itrip.admin.shiro;
 
-import live.itrip.admin.api.sso.SsoApi;
-import live.itrip.admin.api.sso.bean.LoginResponse;
-import live.itrip.admin.api.sso.bean.User;
+import com.alibaba.fastjson.JSON;
 import live.itrip.admin.model.AdminRole;
 import live.itrip.admin.model.AdminUser;
 import live.itrip.admin.model.AdminUserPermission;
+import live.itrip.admin.model.User;
 import live.itrip.admin.service.intefaces.IAdminUserPermissionService;
 import live.itrip.admin.service.intefaces.IAdminUserRoleService;
 import live.itrip.admin.service.intefaces.IAdminUserService;
@@ -25,7 +24,7 @@ import java.util.List;
 
 /**
  * Created by Feng on 2016/7/29.
- * <p>
+ * <p/>
  * 用户身份验证,授权 Realm 组件
  */
 @Component(value = "securityRealm")
@@ -38,6 +37,7 @@ public class SecurityRealm extends AuthorizingRealm {
 
     @Autowired
     private IAdminUserService iAdminUserService;
+
 
     /**
      * 权限检查
@@ -77,8 +77,9 @@ public class SecurityRealm extends AuthorizingRealm {
         String username = String.valueOf(token.getPrincipal());
         String password = new String((char[]) token.getCredentials());
 
-        SsoApi ssoApi = new SsoApi();
-        LoginResponse loginResponse = ssoApi.userLogin(username, password);
+        String json = iAdminUserService.login(username, password);
+        LoginResponse loginResponse = JSON.parseObject(json, LoginResponse.class);
+
 
         if (loginResponse.getCode() != null && loginResponse.getCode() == 0) {
             // 校验账号密码
@@ -113,4 +114,47 @@ public class SecurityRealm extends AuthorizingRealm {
         }
     }
 
+}
+
+
+/**
+ * Created by Feng on 2016/7/15.
+ */
+class LoginResponse {
+    private String op;
+    private Integer code;
+    private String msg;
+    private User data;
+
+    public String getOp() {
+        return op;
+    }
+
+    public void setOp(String op) {
+        this.op = op;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public User getData() {
+        return data;
+    }
+
+    public void setData(User data) {
+        this.data = data;
+    }
 }

@@ -1,14 +1,12 @@
 package live.itrip.admin.service.impls;
 
 import com.alibaba.fastjson.JSON;
-import live.itrip.admin.api.sso.bean.User;
 import live.itrip.admin.bean.WebLoginData;
 import live.itrip.admin.common.Constants;
 import live.itrip.admin.model.AdminModule;
 import live.itrip.admin.model.AdminUser;
 import live.itrip.admin.service.BaseService;
 import live.itrip.admin.service.intefaces.IAdminModuleService;
-import live.itrip.admin.service.intefaces.IAdminUserPermissionService;
 import live.itrip.admin.service.intefaces.IUserService;
 import live.itrip.admin.shiro.BaseResultAuthenticationException;
 import live.itrip.common.ErrorCode;

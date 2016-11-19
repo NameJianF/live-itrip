@@ -1,6 +1,6 @@
 package live.itrip.admin.service.impls;
 
-import live.itrip.admin.api.sso.bean.User;
+
 import live.itrip.admin.dao.AdminUserPermissionMapper;
 import live.itrip.admin.model.AdminUserPermission;
 import live.itrip.admin.service.BaseService;

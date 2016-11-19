@@ -54,8 +54,8 @@
         </div>
         <div class="col-sm-5">
             <h4 class="no-margins">Login</h4>
-            <input id="userName" type="text" class="form-control uname" placeholder="邮箱" value="fjf789@126.com"/>
-            <input id="pwd" type="password" class="form-control pword m-b" placeholder="密码" value="123456"/>
+            <input id="userName" type="text" class="form-control uname" placeholder="邮箱" value=""/>
+            <input id="pwd" type="password" class="form-control pword m-b" placeholder="密码" value=""/>
             <a href="#">忘记密码了？</a>
             <button id="btnLogin" data-loading-text="Loading..." class="btn btn-success btn-block" onclick="doLogin()">
                 登录

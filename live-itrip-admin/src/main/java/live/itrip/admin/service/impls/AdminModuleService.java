@@ -2,13 +2,13 @@ package live.itrip.admin.service.impls;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import live.itrip.admin.api.sso.bean.User;
 import live.itrip.admin.bean.BootStrapDataTableList;
 import live.itrip.admin.bean.PagerInfo;
 import live.itrip.admin.common.Constants;
 import live.itrip.admin.dao.AdminModuleMapper;
 import live.itrip.admin.model.AdminModule;
 import live.itrip.admin.model.AdminUserPermission;
+import live.itrip.admin.model.User;
 import live.itrip.admin.service.BaseService;
 import live.itrip.admin.service.intefaces.IAdminModuleService;
 import live.itrip.admin.service.intefaces.IAdminUserPermissionService;

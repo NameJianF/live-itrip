@@ -1,11 +1,21 @@
-package live.itrip.admin.api.sso.bean;
+package live.itrip.admin.model;
 
-import java.io.Serializable;
+import java.util.Date;
 
-/**
- * Created by Feng on 2016/7/15.
- */
-class User implements Serializable {
+public class User {
+    /**
+     * 刚创建
+     */
+    public static final String STATUS_INIT = "0";
+    /**
+     * 正常使用
+     */
+    public static final String STATUS_NORMAL = "1";
+    /**
+     * 不可用
+     */
+    public static final String STATUS_INVALID = "2";
+
     private Long id;
 
     private String userName;
@@ -35,6 +45,10 @@ class User implements Serializable {
     private String status;
 
     private String identity;
+
+    private Long createTime;
+
+    private Date updateTime;
 
     private String token;
 
@@ -156,6 +170,22 @@ class User implements Serializable {
 
     public void setIdentity(String identity) {
         this.identity = identity == null ? null : identity.trim();
+    }
+
+    public Long getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Long createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public String getToken() {

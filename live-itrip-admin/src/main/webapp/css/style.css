@@ -7905,6 +7905,13 @@ body.landing-page {
     border-bottom: 1px solid #1ab394;
 }
 
+.spacing-line {
+    /*width: 600px;*/
+    height: 1px;
+    margin: 2px auto 0;
+    border-bottom: 1px solid #1ab394;
+}
+
 .landing-page .navbar-wrapper {
     position: fixed;
     top: 0;
