@@ -1,5 +1,4 @@
 $(function () {
-    //基本例子
     initControls();
 });
 

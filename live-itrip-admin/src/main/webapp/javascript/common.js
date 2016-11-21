@@ -2,8 +2,7 @@
  * Created by Feng on 2016/7/19.
  */
 
-
-var token = $.cookie('userToken');
+var token;// = $.cookie('userToken');
 
 /**
  * 执行 ajax 调用

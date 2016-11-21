@@ -2,6 +2,7 @@ package live.itrip.admin.controller;
 
 import live.itrip.admin.controller.base.AbstractController;
 import live.itrip.admin.service.intefaces.IWebCustomerAskService;
+import live.itrip.admin.service.intefaces.IWebServiceOrderService;
 import live.itrip.common.Logger;
 import live.itrip.common.util.JsonStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 public class ViewPagesController extends AbstractController {
     @Autowired
     private IWebCustomerAskService iWebCustomerAskService;
+    @Autowired
+    private IWebServiceOrderService iWebServiceOrderService;
 
 
     /**
@@ -51,5 +54,29 @@ public class ViewPagesController extends AbstractController {
         }
     }
 
+    /**
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/view/serviceOrder")
+    public
+    @ResponseBody
+    void serviceOrder(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+        String decodeJson = JsonStringUtils.decoderForJsonString(json);
+        Logger.debug(
+                String.format("timestamp:%s action:%s json:%s",
+                        System.currentTimeMillis(), "user", decodeJson));
+
+        if (StringUtils.isEmpty(decodeJson)) {
+            this.paramInvalid(response, "JSON");
+            return;
+        }
+        try {
+            // 记录客户定制服务信息
+            iWebServiceOrderService.insertServiceOrder(decodeJson, response, request);
+        } catch (Exception ex) {
+            Logger.error("", ex);
+        }
+    }
 
 }

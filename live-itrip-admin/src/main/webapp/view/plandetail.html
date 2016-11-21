@@ -25,32 +25,8 @@
 
 </head>
 <body id="page-top" class="landing-page">
-<div class="navbar-wrapper">
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background: rgba(138, 109, 59, 0.91);">
-        <div class="container">
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                        aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/index.html">和旅行-iTrip</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a class="page-scroll" href="/index.html">首页</a></li>
-                    <li><a class="page-scroll" href="/view/customer.html">私人定制</a></li>
-                    <li><a class="page-scroll" href="/view/theme.html">主题旅游</a></li>
-                    <li><a class="page-scroll" href="/view/town.html">乡村民宿体验游</a></li>
-                    <li><a class="page-scroll" href="/view/plan.html">参考行程</a></li>
-                    <li><a class="page-scroll" href="/view/service.html">旅行服务</a></li>
-                    <li><a class="page-scroll" href="#contact">联系我们</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+
+<div id="navbar" class="navbar-wrapper">
 </div>
 
 <div class="row" style="margin: 20px;">
@@ -367,74 +343,9 @@
     </div>
 </div>
 
-
 <!--footer-->
-<section id="contact" class="gray-section contact">
-    <div class="container">
-        <div class="row m-b-lg">
-            <div class="col-lg-12 text-center">
-            </div>
-        </div>
-        <div class="row m-b-lg">
-            <div class="col-lg-4" style="text-align:center">
-                <p>
-                    <i class="fa fa-comments-o big-icon pull-center"></i>
-                </p><br/>
-                <strong><span class="footerP1">在线反馈</span></strong><br/><br/>
-                <p style="color: #8a8e93">
-                    使用过程中遇到的问题，包括产品描述、使用方法、功能介绍、报告解读，都可以在这找到答案
-                </p>
-                <p>
-                    <a href="/view/feedback.html">点击前往>></a>
-                </p>
-            </div>
-            <div class="col-lg-4" style="text-align:center">
-                <p>
-                    <i class="fa fa-phone big-icon pull-center"></i>
-                </p><br/>
-                <strong><span class="footerP1">销售咨询</span></strong><br/><br/>
-                <p style="color: #8a8e93">
-                    由销售经理为你解答购买过程中各类问题，帮您选择最优的测试解决方案
-                </p>
-                <p>
-                    010-58437280
-                </p>
-            </div>
-            <div class="col-lg-4" style="text-align:center">
-                <p>
-                    <i class="fa fa-chain big-icon pull-center"></i>
-                </p><br/>
-                <strong><span class="footerP1">合作洽谈</span></strong><br/><br/>
-                <p style="color: #8a8e93;text-align: left; margin-left: 120px;">
-                    <i class="icon-phone"></i>
-                    +86 (010) 58437280<br/>
-                    <i class="icon-mail"></i>
-                    <a href="mail@andtour.cn">mail@andtour.cn</a><br/>
-                    <i class="icon-qq"></i>
-                    <a target="_blank"
-                       href="http://wpa.qq.com/msgrd?v=3&amp;uin=909061479&amp;site=qq&amp;menu=yes">
-                        QQ: 909061479</a>
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 text-center m-t-lg m-b-lg">
-                <p style="text-align: center">
-                    <a href="http://www.tourin.cn">关于我们</a> |
-                    <a href="http://www.tourin.cn">企业资质</a> |
-                    <a href="http://www.tourin.cn">企业荣誉</a> |
-                    <a href="http://www.tourin.cn">联系我们</a> |
-                    <a href="http://www.tourin.cn">免责声明</a> |
-                    <a href="http://www.tourin.cn">支付中心</a>
-                </p>
-                <p>
-                    <strong>和旅行版权所有 &copy; 2015. www.itrip.live </strong>
-                    京ICP备16004197号</p>
-            </div>
-        </div>
-    </div>
+<section id="footer" class="gray-section contact">
 </section>
-
 
 <!-- Mainly scripts -->
 <script src="/js/jquery-2.1.1.js"></script>
@@ -447,6 +358,11 @@
 <script src="/js/plugins/pace/pace.min.js"></script>
 <script src="/js/plugins/wow/wow.min.js"></script>
 
-
+<script>
+    $(function () {
+        $("#navbar").load("/view/navbar.html");
+        $("#footer").load("/view/footer.html");
+    });
+</script>
 </body>
 </html>
