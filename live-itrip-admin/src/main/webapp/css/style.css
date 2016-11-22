@@ -8005,11 +8005,13 @@ body.landing-page {
 }
 
 .landing-page .navbar-scroll.navbar-default .nav li a {
-    color: #676a6c;
+    /*color: #676a6c;*/
+    color: #ffffff;
 }
 
 .landing-page .navbar-scroll.navbar-default .nav li a:hover {
-    color: #1ab394;
+    /*color: #1ab394;*/
+    color: #ffffff;
 }
 
 .landing-page .navbar-wrapper .navbar.navbar-scroll {

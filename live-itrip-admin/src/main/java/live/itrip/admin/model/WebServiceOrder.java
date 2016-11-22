@@ -19,6 +19,8 @@ public class WebServiceOrder {
 
     private Long createTime;
 
+    private Long updateTime;
+
     public Integer getId() {
         return id;
     }
@@ -89,5 +91,13 @@ public class WebServiceOrder {
 
     public void setCreateTime(Long createTime) {
         this.createTime = createTime;
+    }
+
+    public Long getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Long updateTime) {
+        this.updateTime = updateTime;
     }
 }

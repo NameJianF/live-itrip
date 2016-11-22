@@ -8,4 +8,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface IWebServiceOrderService {
     void insertServiceOrder(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void selectOrderList(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void selectOrderInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void editOrderInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void deleteOrderInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 }

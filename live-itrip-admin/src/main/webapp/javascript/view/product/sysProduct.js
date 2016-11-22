@@ -97,7 +97,7 @@ $(function () {
 
 function funSelectProducts(sSource, aoData, fnCallback) {
     console.log("========== select Products ==========");
-    sSource = "/view/product.action?flag=list";
+    sSource = "/system/view/product.action?flag=list";
 
     var token = $.cookie('userToken');
     aoData.push({name: "token", value: token});
@@ -140,7 +140,7 @@ function funDeleteProductInfo(productId) {
             'productId': productId
         };
 
-        parent.execAjaxData("/view/product.action", JSON.stringify(jsondata), true
+        parent.execAjaxData("/system/view/product.action", JSON.stringify(jsondata), true
             , function (response) {
                 // error
             }, function (response) {

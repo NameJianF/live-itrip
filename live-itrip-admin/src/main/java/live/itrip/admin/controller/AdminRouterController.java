@@ -20,10 +20,10 @@ import java.util.List;
 /**
  * Created by Feng on 2016/8/4.
  * <p>
- * action 页面导航/加载
+ * 后台管理 页面路由
  */
 @Controller
-public class PagesRouterController extends AbstractController {
+public class AdminRouterController extends AbstractController {
     @Autowired
     private IUserService iUserService;
     @Autowired
@@ -34,7 +34,6 @@ public class PagesRouterController extends AbstractController {
     private IAdminDictItemService iAdminDictItemService;
     @Autowired
     private IWebStaticInfoService iWebStaticInfoService;
-
 
     @RequestMapping(value = "/system/index", method = RequestMethod.GET)
     public String pagesIndex(HttpServletRequest request, Model model) {
@@ -119,23 +118,6 @@ public class PagesRouterController extends AbstractController {
 
 
     // ======================= web  view =============
-
-    /**
-     * product detail by id
-     *
-     * @param request
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/view/product", method = RequestMethod.GET)
-    public void viewGetProduct(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
-        Integer pid = Integer.valueOf(request.getParameter("pid"));
-        if (pid.equals(1000)) {
-            response.sendRedirect("/view/products/1000.html");
-//            return "";
-        }
-//        return "/pages/view/product";
-    }
 
     /**
      * 行程计划列表
@@ -303,7 +285,7 @@ public class PagesRouterController extends AbstractController {
     }
 
     /**
-     * 旅行服务
+     * 在线反馈
      *
      * @param request
      * @param model

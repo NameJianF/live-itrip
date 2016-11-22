@@ -1,7 +1,11 @@
-var tabStaticInfo;
+/**
+ * Created by Feng on 2016/11/12.
+ */
+var tabServiceOrders;
 
 $(function () {
-    tabStaticInfo = $('#tableStaticInfos').DataTable({
+    console.log("trip service page loading ...")
+    tabServiceOrders = $('#tableServiceOrders').DataTable({
         "bProcessing": true, // 是否显示取数据时的那个等待提示
         "bServerSide": true, //这个用来指明是通过服务端来取数据
         "bPaginate": true, // 分页按钮
@@ -9,15 +13,30 @@ $(function () {
         "iDisplayLength": 10,// 每页显示行数
         "bInfo": true,//页脚信息
         "bAutoWidth": true,//自动宽度
-        "fnServerData": funSelectStaticInfos, // 获取数据的处理函数
+        "fnServerData": funSelectServiceOrders, // 获取数据的处理函数
         "bFilter": false, // 隐藏筛选框
         "ordering": false,
         'bStateSave': true,
         "aoColumns": [
             {"mData": "id"},
-            {"mData": "type"},
-            {"mData": "title"},
-            {"mData": "content"},
+            {"mData": "serviceType"},
+            {"mData": "linkMan"},
+            {"mData": "mobile"},
+            {"mData": "wechat"},
+            {"mData": "remarks"},
+            {
+                "mData": "isSuccess",
+                render: function (data, type, row) {
+                    if (data == 0) {
+                        return "未处理";
+                    } else if (data == 1) {
+                        return "未成单";
+                    } else if (data == 2) {
+                        return "已成单";
+                    }
+                    return "";
+                }
+            },
             {
                 "mData": "createTime",
                 render: function (data, type, row) {
@@ -39,8 +58,8 @@ $(function () {
             {
                 render: function (data, type, row) {
                     if (type === 'display') {
-                        return '<button type="button" class="btn btn-link btn-xs" onclick="funEditGetStaticInfo(' + row.id + ')">编辑</button>' +
-                            '<button type="button" class="btn btn-link btn-xs" onclick="funDeleteStaticInfo(' + row.id + ')">删除</button>';
+                        return '<button type="button" class="btn btn-link btn-xs" onclick="funEditGetServiceOrderInfo(' + row.id + ')">编辑</button>' +
+                            '<button type="button" class="btn btn-link btn-xs" onclick="funDeleteServiceOrderInfo(' + row.id + ')">删除</button>'
                     }
                     return data;
                 }
@@ -59,22 +78,17 @@ $(function () {
             "sZeroRecords": "抱歉， 没有数据",
             "sInfoEmpty": "没有数据"
         }
+
     });
 
-    $('#editStaticInfoContent').summernote();
 });
 
 
-function funSelectStaticInfos(sSource, aoData, fnCallback) {
-    console.log("========== selectStaticInfos ==========");
-    sSource = "/system/view/staticInfo.action?flag=list";
+function funSelectServiceOrders(sSource, aoData, fnCallback) {
+    console.log("========== select Products ==========");
+    sSource = "/system/view/tripService.action?flag=list";
 
-    // 添加查询条件
-    var queryContent = $("#queryContent").val();
-    aoData.push({name: "queryContent", value: queryContent});
-
-    var token = $.cookie('userToken');
-    aoData.push({name: "token", value: token});
+    aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 
     parent.execAjaxData(sSource, aoData, false
@@ -90,29 +104,31 @@ function funSelectStaticInfos(sSource, aoData, fnCallback) {
 
 /**
  * 修改
- * @param infoId
+ * @param orderId
  */
-function funEditGetStaticInfo(infoId) {
-    var token = $.cookie('userToken');
+function funEditGetServiceOrderInfo(orderId) {
     var jsondata = {
-        'op': 'staticInfo.detail',
-        'token': token,
-        'infoId': infoId
+        'op': 'tripService.detail',
+        'token': parent.token,
+        'orderId': orderId
     };
 
-    parent.execAjaxData("/system/view/staticInfo.action", JSON.stringify(jsondata), true
+    parent.execAjaxData("/system/view/tripService.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
         }, function (response) {
             // success
             if (response.code == 0) {
-                $('#editStaticInfoId').val(response.data.id);
-                $('#editStaticInfoType').val(response.data.type);
-                $('#editStaticInfoTitle').val(response.data.title);
-                $('#editStaticInfoContent').code(response.data.content);
+                $('#editOrderId').val(response.data.id);
+                $('#editServiceType').val(response.data.serviceType);
+                $('#editLinkMan').val(response.data.linkMan);
+                $('#editMobile').val(response.data.mobile);
+                $('#editWechat').val(response.data.wechat);
+                $('#editRemarks').val(response.data.remarks);
+                $('#editSuccess').val(response.data.isSuccess);
 
                 $('#formEditTitle').text("信息编辑");
-                $('#formEditStaticInfo').modal('show');
+                $('#formEditOrder').modal('show');
             }
         }, function () {
             // complete
@@ -120,19 +136,15 @@ function funEditGetStaticInfo(infoId) {
 }
 
 
-function editSaveStaticInfo() {
-    var token = $.cookie('userToken');
-    var markupStr = $('#editStaticInfoContent').code();
+function editSaveOrderInfo() {
     var jsondata = {
-        'op': 'staticInfo.edit',
-        'token': token,
-        'id': $('#editStaticInfoId').val(),
-        'type': $('#editStaticInfoType').val(),
-        'title': $('#editStaticInfoTitle').val(),
-        'content': markupStr
+        'op': 'tripService.edit',
+        'token': parent.token,
+        'id': $('#editOrderId').val(),
+        'isSuccess': $('#editSuccess').val()
     };
 
-    parent.execAjaxData("/system/view/staticInfo.action", JSON.stringify(jsondata), true
+    parent.execAjaxData("/system/view/tripService.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
             alert("保存失败。");
@@ -146,26 +158,26 @@ function editSaveStaticInfo() {
             }
         }, function () {
             // complete
-            $('#formEditStaticInfo').modal('hide');
+            $('#formEditOrder').modal('hide');
         });
 }
 
+
 /**
  * 删除
- * @param infoId
+ * @param orderId
  */
-function funDeleteStaticInfo(infoId) {
+function funDeleteServiceOrderInfo(orderId) {
     if (confirm("确定要删除数据吗?")) {
-        console.log("delete staticInfo id:" + infoId);
+        console.log("delete Product id:" + orderId);
 
-        var token = $.cookie('userToken');
         var jsondata = {
-            'op': 'staticInfo.delete',
-            'token': token,
-            'infoId': infoId
+            'op': 'tripService.delete',
+            'token': parent.token,
+            'orderId': orderId
         };
 
-        parent.execAjaxData("/system/view/staticInfo.action", JSON.stringify(jsondata), true
+        parent.execAjaxData("/system/view/tripService.action", JSON.stringify(jsondata), true
             , function (response) {
                 // error
             }, function (response) {
@@ -186,21 +198,7 @@ function funDeleteStaticInfo(infoId) {
  * 刷新
  */
 function funRefresh() {
-    tabStaticInfo.ajax.reload();
+    tabServiceOrders.ajax.reload();
 }
 
-/**
- * 新增
- */
-function funClickAddRow() {
-    console.log(" fnClickAddRow click ");
-    // clear
-    $('#formEditTitle').text("新增信息");
 
-    $('#editStaticInfoId').val(null);
-    $('#editStaticInfoType').val(null);
-    $('#editStaticInfoTitle').val("");
-    $('#editStaticInfoContent').code('');
-
-    $('#formEditStaticInfo').modal('show');
-}

@@ -1,17 +1,25 @@
 package live.itrip.admin.service.impls;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import live.itrip.admin.bean.BootStrapDataTableList;
+import live.itrip.admin.bean.PagerInfo;
+import live.itrip.admin.common.Constants;
 import live.itrip.admin.dao.WebServiceOrderMapper;
 import live.itrip.admin.model.WebServiceOrder;
 import live.itrip.admin.service.BaseService;
 import live.itrip.admin.service.intefaces.IWebServiceOrderService;
 import live.itrip.common.ErrorCode;
+import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Created by Feng on 2016/11/21.
@@ -44,6 +52,94 @@ public class WebServiceOrderService extends BaseService implements IWebServiceOr
         } catch (Exception e) {
             e.printStackTrace();
         }
+        result.setError(ErrorCode.UNKNOWN);
+        this.writeResponse(response, result);
+    }
+
+    @Override
+    public void selectOrderList(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        BootStrapDataTableList<WebServiceOrder> result = new BootStrapDataTableList<>();
+        try {
+            PagerInfo pagerInfo = this.getPagerInfo(decodeJson);
+
+            Subject subject = SecurityUtils.getSubject();
+            subject.isPermitted();
+
+            Integer count = webServiceOrderMapper.countAll();
+            List<WebServiceOrder> list = webServiceOrderMapper.selectOrderList(pagerInfo.getStart(), pagerInfo.getLength());
+            if (list != null) {
+                result.setsEcho(String.valueOf(pagerInfo.getDraw() + 1));
+                result.setiTotalRecords(count);
+                result.setiTotalDisplayRecords(count);
+                result.setAaData(list);
+
+                // response
+                this.writeResponse(response, result);
+                return;
+            }
+        } catch (Exception ex) {
+            Logger.error(ex.getMessage(), ex);
+        }
+
+        BaseResult error = new BaseResult();
+        error.setCode(ErrorCode.UNKNOWN.getCode());
+        this.writeResponse(response, error);
+    }
+
+    @Override
+    public void selectOrderInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        BaseResult result = new BaseResult();
+        JSONObject jsonObject = JSON.parseObject(decodeJson);
+        Integer orderId = jsonObject.getInteger("orderId");
+        if (orderId != null) {
+            WebServiceOrder info = this.webServiceOrderMapper.selectByPrimaryKey(orderId);
+            result.setCode(ErrorCode.SUCCESS.getCode());
+            result.setData(info);
+            this.writeResponse(response, result);
+            return;
+        }
+
+        result.setError(ErrorCode.UNKNOWN);
+        this.writeResponse(response, result);
+    }
+
+    @Override
+    public void editOrderInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        BaseResult result = new BaseResult();
+        WebServiceOrder info = JSON.parseObject(decodeJson, WebServiceOrder.class);
+        Integer ret;
+
+        // update
+        info.setUpdateTime(System.currentTimeMillis());
+        ret = this.webServiceOrderMapper.updateByPrimaryKeySelective(info);
+        if (ret > 0) {
+            result.setCode(ErrorCode.SUCCESS.getCode());
+            this.writeResponse(response, result);
+            return;
+        }
+
+        result.setError(ErrorCode.UNKNOWN);
+        this.writeResponse(response, result);
+    }
+
+    @Override
+    public void deleteOrderInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        BaseResult result = new BaseResult();
+        JSONObject jsonObject = JSON.parseObject(decodeJson);
+        Integer orderId = (Integer) jsonObject.get("orderId");
+        if (orderId != null) {
+            WebServiceOrder info = new WebServiceOrder();
+            info.setId(orderId);
+            info.setIsDelete(Constants.FLAG_IS_DELETE);
+            Integer ret = this.webServiceOrderMapper.updateByPrimaryKeySelective(info);
+            if (ret > 0) {
+                result.setCode(ErrorCode.SUCCESS.getCode());
+                result.setData(info);
+                this.writeResponse(response, result);
+                return;
+            }
+        }
+
         result.setError(ErrorCode.UNKNOWN);
         this.writeResponse(response, result);
     }

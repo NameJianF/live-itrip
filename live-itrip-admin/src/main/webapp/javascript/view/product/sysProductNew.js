@@ -98,7 +98,7 @@ function loadDatas() {
             'productId': productId
         };
 
-        parent.execAjaxData("/view/product.action", JSON.stringify(jsondata), true
+        parent.execAjaxData("/system/view/product.action", JSON.stringify(jsondata), true
             , function (response) {
                 // error
             }, function (response) {
@@ -205,7 +205,7 @@ function costSelectChange() {
             'infoId': infoId
         };
 
-        parent.execAjaxData("/view/staticInfo.action", JSON.stringify(jsondata), true
+        parent.execAjaxData("/system/view/staticInfo.action", JSON.stringify(jsondata), true
             , function (response) {
                 // error
             }, function (response) {
@@ -229,7 +229,7 @@ function reservesSelectChange() {
             'infoId': infoId
         };
 
-        parent.execAjaxData("/view/staticInfo.action", JSON.stringify(jsondata), true
+        parent.execAjaxData("/system/view/staticInfo.action", JSON.stringify(jsondata), true
             , function (response) {
                 // error
             }, function (response) {
@@ -253,7 +253,7 @@ function noticeSelectChange() {
             'infoId': infoId
         };
 
-        parent.execAjaxData("/view/staticInfo.action", JSON.stringify(jsondata), true
+        parent.execAjaxData("/system/view/staticInfo.action", JSON.stringify(jsondata), true
             , function (response) {
                 // error
             }, function (response) {
@@ -294,7 +294,7 @@ function saveProductBaseInfo() {
         'startDay': productStartDate
     };
 
-    parent.execAjaxData("/view/product.action", JSON.stringify(jsondata), true
+    parent.execAjaxData("/system/view/product.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
         }, function (response) {
@@ -331,7 +331,7 @@ function saveProductDescInfo() {
         'specialty': productSpecialty
     };
 
-    parent.execAjaxData("/view/product.action", JSON.stringify(jsondata), false
+    parent.execAjaxData("/system/view/product.action", JSON.stringify(jsondata), false
         , function (response) {
             // error
         }, function (response) {
@@ -358,7 +358,7 @@ function saveProductCoseInfo() {
         'cost': productCost
     };
 
-    parent.execAjaxData("/view/product.action", JSON.stringify(jsondata), false
+    parent.execAjaxData("/system/view/product.action", JSON.stringify(jsondata), false
         , function (response) {
             // error
         }, function (response) {
@@ -384,7 +384,7 @@ function saveProductReservesInfo() {
         'reserve': productReserve
     };
 
-    parent.execAjaxData("/view/product.action", JSON.stringify(jsondata), false
+    parent.execAjaxData("/system/view/product.action", JSON.stringify(jsondata), false
         , function (response) {
             // error
         }, function (response) {
@@ -410,7 +410,7 @@ function saveProductNoticeInfo() {
         'notice': productNotice
     };
 
-    parent.execAjaxData("/view/product.action", JSON.stringify(jsondata), false
+    parent.execAjaxData("/system/view/product.action", JSON.stringify(jsondata), false
         , function (response) {
             // error
         }, function (response) {
@@ -442,7 +442,7 @@ function funRefresh() {
  * 查询行程详情列表
  */
 function funSelectPlanDetails(sSource, aoData, fnCallback) {
-    sSource = "/view/planDetail.action?flag=list";
+    sSource = "/system/view/planDetail.action?flag=list";
 
     // 添加查询条件
     var productId = $("#productId").val();
@@ -493,7 +493,7 @@ function editPlanDetail(planId) {
         'planId': planId
     };
 
-    parent.execAjaxData("/view/planDetail.action", JSON.stringify(jsondata), true
+    parent.execAjaxData("/system/view/planDetail.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
         }, function (response) {
@@ -541,7 +541,7 @@ function editSavePlanInfo() {
         'content': $('#planContent').code()
     };
 
-    parent.execAjaxData("/view/planDetail.action", JSON.stringify(jsondata), true
+    parent.execAjaxData("/system/view/planDetail.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
             alert("保存失败。");
@@ -574,7 +574,7 @@ function deletePlanInfo(planId) {
             'planId': planId
         };
 
-        parent.execAjaxData("/view/planDetail.action", JSON.stringify(jsondata), true
+        parent.execAjaxData("/system/view/planDetail.action", JSON.stringify(jsondata), true
             , function (response) {
                 // error
             }, function (response) {

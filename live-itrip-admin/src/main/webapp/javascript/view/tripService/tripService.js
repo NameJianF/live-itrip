@@ -12,7 +12,7 @@ function submitDatas() {
         'remarks': $("#remarks").val()
     };
 
-    execAjaxDataForView("/view/serviceOrder.action", JSON.stringify(jsondata), false, function (response) {
+    execAjaxDataForView("/view/tripService.action", JSON.stringify(jsondata), false, function (response) {
     }, function (response) {
         if (response.code == 0) {
             alert('信息提交成功，客服将会联系您.');

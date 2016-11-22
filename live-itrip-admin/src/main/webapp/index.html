@@ -53,7 +53,7 @@
 <body id="page-top" class="landing-page">
 
 <div class="navbar-wrapper">
-    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background: rgba(138, 109, 59, 0.70);">
         <div class="container">
             <div class="navbar-header page-scroll">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
@@ -700,65 +700,8 @@
 <script src="/js/plugins/wow/wow.min.js"></script>
 <script src="/basebox/base.js"></script>
 
-<script>
-
-    $(document).ready(function () {
-        $("#footer").load("/view/footer.html");
-
-        $('body').scrollspy({
-            target: '.navbar-fixed-top',
-            offset: 80
-        });
-
-        // Page scrolling feature
-        $('a.page-scroll').bind('click', function (event) {
-            var link = $(this);
-            $('html, body').stop().animate({
-                scrollTop: $(link.attr('href')).offset().top - 50
-            }, 500);
-            event.preventDefault();
-            $("#navbar").collapse('hide');
-        });
-    });
-
-    var cbpAnimatedHeader = (function () {
-        var docElem = document.documentElement,
-                header = document.querySelector('.navbar-default'),
-                didScroll = false,
-                changeHeaderOn = 200;
-
-        function init() {
-            window.addEventListener('scroll', function (event) {
-                if (!didScroll) {
-                    didScroll = true;
-                    setTimeout(scrollPage, 250);
-                }
-            }, false);
-        }
-
-        function scrollPage() {
-            var sy = scrollY();
-            if (sy >= changeHeaderOn) {
-                $(header).addClass('navbar-scroll')
-            }
-            else {
-                $(header).removeClass('navbar-scroll')
-            }
-            didScroll = false;
-        }
-
-        function scrollY() {
-            return window.pageYOffset || docElem.scrollTop;
-        }
-
-        init();
-
-    })();
-
-    // Activate WOW.js plugin for animation on scrol
-    new WOW().init();
-
-</script>
+<!--itirp-->
+<script src="/javascript/view/index.js"></script>
 
 </body>
 </html>

@@ -11,9 +11,10 @@
         <result column="is_success" property="isSuccess" jdbcType="CHAR"/>
         <result column="is_delete" property="isDelete" jdbcType="CHAR"/>
         <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, service_type, link_man, mobile, wechat, remarks, is_success, is_delete, create_time
+    id, service_type, link_man, mobile, wechat, remarks, is_success, is_delete, create_time, update_time
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
@@ -28,11 +29,11 @@
     <insert id="insert" parameterType="live.itrip.admin.model.WebServiceOrder">
     insert into web_service_order (id, service_type, link_man, 
       mobile, wechat, remarks, 
-      is_success, is_delete, create_time
+      is_success, is_delete, create_time, update_time
       )
     values (#{id,jdbcType=INTEGER}, #{serviceType,jdbcType=VARCHAR}, #{linkMan,jdbcType=VARCHAR}, 
       #{mobile,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
-      #{isSuccess,jdbcType=CHAR}, #{isDelete,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT}
+      #{isSuccess,jdbcType=CHAR}, #{isDelete,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}
       )
   </insert>
     <insert id="insertSelective" parameterType="live.itrip.admin.model.WebServiceOrder">
@@ -65,6 +66,9 @@
             <if test="createTime != null">
                 create_time,
             </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -93,6 +97,9 @@
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=BIGINT},
             </if>
         </trim>
     </insert>
@@ -123,6 +130,9 @@
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=BIGINT},
             </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=BIGINT},
+            </if>
         </set>
         where id = #{id,jdbcType=INTEGER}
     </update>
@@ -135,7 +145,23 @@
       remarks = #{remarks,jdbcType=VARCHAR},
       is_success = #{isSuccess,jdbcType=CHAR},
       is_delete = #{isDelete,jdbcType=CHAR},
-      create_time = #{createTime,jdbcType=BIGINT}
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+    <!--itrip add-->
+    <select id="countAll" resultType="int">
+        select count(id) from web_service_order where is_delete = '0'
+    </select>
+
+    <select id="selectOrderList" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from web_service_order
+        where is_delete = '0'
+        order by id DESC
+        limit ${start},${length}
+    </select>
 </mapper>

@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by Feng on 2016/8/5.
  */
 @Controller
-public class SystemConfigController extends AbstractController {
+public class AdminController extends AbstractController {
 
     @Autowired
     private IAdminModuleService iAdminModuleService;
@@ -40,6 +40,17 @@ public class SystemConfigController extends AbstractController {
     private IClientApiKeyService iClientApiKeyService;
     @Autowired
     private IAdminUserService iAdminUserService;
+    @Autowired
+    private IWebProductService iWebProductService;
+    @Autowired
+    private IWebStaticInfoService iWebStaticInfoService;
+    @Autowired
+    private IWebProductPlanService iWebProductPlanService;
+    @Autowired
+    private IWebServiceOrderService iWebServiceOrderService;
+
+
+    // =================== system config ==============
 
     /**
      * 系统配置模块
@@ -170,5 +181,187 @@ public class SystemConfigController extends AbstractController {
         }
     }
 
+
+    // =================== websit ==============
+
+    /**
+     * 网站后台，行程详情查询
+     *
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/system/view/planDetail")
+    public
+    @ResponseBody
+    void viewPlanDetail(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+        String decodeJson = JsonStringUtils.decoderForJsonString(json);
+        Logger.debug(
+                String.format("timestamp:%s action:%s json:%s",
+                        System.currentTimeMillis(), "user", decodeJson));
+
+        if (StringUtils.isEmpty(decodeJson)) {
+            this.paramInvalid(response, "JSON");
+            return;
+        }
+        String flag = request.getParameter("flag");
+
+        if (StringUtils.isNotEmpty(flag)) {
+            // from table select
+            iWebProductPlanService.selectPlanDetailsByProductId(decodeJson, response, request);
+        } else {
+            try {
+                RequestHeader header = JSON.parseObject(decodeJson, RequestHeader.class);
+                if (header != null && StringUtils.isNotEmpty(header.getOp())) {
+                    String op = header.getOp();
+                    // product
+                    if ("planDetail.detail".equalsIgnoreCase(op)) {
+                        iWebProductPlanService.selectPlanById(decodeJson, response, request);
+                    } else if ("planDetail.edit".equalsIgnoreCase(op)) {
+                        iWebProductPlanService.editPlanById(decodeJson, response, request);
+                    } else if ("planDetail.delete".equalsIgnoreCase(op)) {
+                        iWebProductPlanService.deletePlanById(decodeJson, response, request);
+                    }
+                }
+
+            } catch (Exception ex) {
+                Logger.error("", ex);
+            }
+        }
+    }
+
+    /**
+     * 网站后台，行程列表查询
+     *
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/system/view/product")
+    public
+    @ResponseBody
+    void viewProduct(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+        String decodeJson = JsonStringUtils.decoderForJsonString(json);
+        Logger.debug(
+                String.format("timestamp:%s action:%s json:%s",
+                        System.currentTimeMillis(), "user", decodeJson));
+
+        if (StringUtils.isEmpty(decodeJson)) {
+            this.paramInvalid(response, "JSON");
+            return;
+        }
+        String flag = request.getParameter("flag");
+
+        if (StringUtils.isNotEmpty(flag)) {
+            // from table select
+            iWebProductService.selectProductList(decodeJson, response, request);
+        } else {
+            try {
+                RequestHeader header = JSON.parseObject(decodeJson, RequestHeader.class);
+                if (header != null && StringUtils.isNotEmpty(header.getOp())) {
+                    String op = header.getOp();
+                    // product
+                    if ("product.detail".equalsIgnoreCase(op)) {
+                        iWebProductService.selectProductById(decodeJson, response, request);
+                    } else if ("product.edit".equalsIgnoreCase(op)) {
+                        iWebProductService.editProductById(decodeJson, response, request);
+                    } else if ("product.delete".equalsIgnoreCase(op)) {
+                        iWebProductService.deleteProductById(decodeJson, response, request);
+                    }
+                }
+
+            } catch (Exception ex) {
+                Logger.error("", ex);
+            }
+        }
+    }
+
+    /**
+     * 网站后台，静态信息
+     *
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/system/view/staticInfo")
+    public
+    @ResponseBody
+    void viewStaticInfo(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+        String decodeJson = JsonStringUtils.decoderForJsonString(json);
+        Logger.debug(
+                String.format("timestamp:%s action:%s json:%s",
+                        System.currentTimeMillis(), "user", decodeJson));
+
+        if (StringUtils.isEmpty(decodeJson)) {
+            this.paramInvalid(response, "JSON");
+            return;
+        }
+        String flag = request.getParameter("flag");
+
+        if (StringUtils.isNotEmpty(flag)) {
+            // from table select
+            iWebStaticInfoService.selectStaticInfoList(decodeJson, response, request);
+        } else {
+            try {
+                RequestHeader header = JSON.parseObject(decodeJson, RequestHeader.class);
+                if (header != null && StringUtils.isNotEmpty(header.getOp())) {
+                    String op = header.getOp();
+                    // staticInfo
+                    if ("staticInfo.detail".equalsIgnoreCase(op)) {
+                        iWebStaticInfoService.selectStaticInfoById(decodeJson, response, request);
+                    } else if ("staticInfo.edit".equalsIgnoreCase(op)) {
+                        iWebStaticInfoService.editStaticInfoById(decodeJson, response, request);
+                    } else if ("staticInfo.delete".equalsIgnoreCase(op)) {
+                        iWebStaticInfoService.deleteStaticInfoById(decodeJson, response, request);
+                    }
+                }
+
+            } catch (Exception ex) {
+                Logger.error("", ex);
+            }
+        }
+    }
+
+    /**
+     * 网站后台，旅行服务
+     *
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/system/view/tripService")
+    public
+    @ResponseBody
+    void tripService(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+        String decodeJson = JsonStringUtils.decoderForJsonString(json);
+        Logger.debug(
+                String.format("timestamp:%s action:%s json:%s",
+                        System.currentTimeMillis(), "user", decodeJson));
+
+        if (StringUtils.isEmpty(decodeJson)) {
+            this.paramInvalid(response, "JSON");
+            return;
+        }
+        String flag = request.getParameter("flag");
+
+        if (StringUtils.isNotEmpty(flag)) {
+            // from table select
+            iWebServiceOrderService.selectOrderList(decodeJson, response, request);
+        } else {
+            try {
+                RequestHeader header = JSON.parseObject(decodeJson, RequestHeader.class);
+                if (header != null && StringUtils.isNotEmpty(header.getOp())) {
+                    String op = header.getOp();
+                    // tripService
+                    if ("tripService.detail".equalsIgnoreCase(op)) {
+                        iWebServiceOrderService.selectOrderInfoById(decodeJson, response, request);
+                    } else if ("tripService.edit".equalsIgnoreCase(op)) {
+                        iWebServiceOrderService.editOrderInfoById(decodeJson, response, request);
+                    } else if ("tripService.delete".equalsIgnoreCase(op)) {
+                        iWebServiceOrderService.deleteOrderInfoById(decodeJson, response, request);
+                    }
+                }
+
+            } catch (Exception ex) {
+                Logger.error("", ex);
+            }
+        }
+    }
 
 }

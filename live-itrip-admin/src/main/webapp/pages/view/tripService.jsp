@@ -18,23 +18,20 @@
             <div class="ibox-content table-responsive">
                 <div style="border-bottom:solid 1px lightgray; margin-bottom: 4px;">
                     <button type="button" onclick="funRefresh();" class="btn btn-primary ">刷新</button>
-                    <button type="button" onclick="funClickAddRow();" class="btn btn-primary ">
-                        添加
-                    </button>
                 </div>
-                <table class="table table-hover table-bordered dataTables-example" id="tableModules"
+                <table class="table table-hover table-bordered dataTables-example" id="tableServiceOrders"
                        style="font-size: 14px;">
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>模块名称</th>
-                        <th>父模块</th>
-                        <th>模块地址</th>
-                        <th>排序</th>
-                        <th>描述</th>
-                        <th>是否删除</th>
-                        <th>创建时间</th>
-                        <th>更新时间</th>
+                        <th>服务类型</th>
+                        <th>联系人</th>
+                        <th>手机号</th>
+                        <th>微信</th>
+                        <th>备注</th>
+                        <th>处理</th>
+                        <th>提交时间</th>
+                        <th>处理时间</th>
                         <th>操作</th>
                     </tr>
                     </thead>
@@ -46,53 +43,54 @@
         </div>
     </div>
 
-    <div class="modal fade modal-default" id="formEditModule">
+    <div class="modal fade modal-default" id="formEditOrder">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="formEditTitle">模块编辑</h4>
+                    <h4 class="modal-title" id="formEditTitle">编辑</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <input id="editModuleId" type="hidden">
-                            <label for="editModuleName" class="col-sm-3 control-label">模块名称</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleName">
+                            <input id="editOrderId" type="hidden">
+                            <label for="editServiceType" class="col-sm-3 control-label">服务类型</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="editServiceType">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editModuleParent" class="col-sm-3 control-label">父模块</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleParent">
+                            <label for="editLinkMan" class="col-sm-3 control-label">联系人</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="editLinkMan">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editModuleUrl" class="col-sm-3 control-label">模块地址</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleUrl">
+                            <label for="editMobile" class="col-sm-3 control-label">手机号</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="editMobile">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editModuleOrder" class="col-sm-3 control-label">排序</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleOrder">
+                            <label for="editWechat" class="col-sm-3 control-label">微信号</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="editWechat">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editModuleDiscription" class="col-sm-3 control-label">描述</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleDiscription">
+                            <label for="editRemarks" class="col-sm-3 control-label">备注</label>
+                            <div class="col-sm-9">
+                                <textarea type="text" rows="3" class="form-control" id="editRemarks"></textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editModuleDelete" class="col-sm-3 control-label">是否删除</label>
-                            <div class="col-sm-5">
-                                <select class="form-control" id="editModuleDelete">
-                                    <option value="1">删除</option>
-                                    <option value="0">未删除</option>
+                            <label for="editSuccess" class="col-sm-3 control-label">状态</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="editSuccess">
+                                    <option value="0">未处理</option>
+                                    <option value="1">未成单</option>
+                                    <option value="2">已成单</option>
                                 </select>
                             </div>
                         </div>
@@ -100,12 +98,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn   btn-primary" data-dismiss="modal">取消</button>
-                    <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSaveModuleInfo()">确定
+                    <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSaveOrderInfo()">确定
                     </button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+            </div>
+        </div>
     </div>
 </div>
 
-<script src="/javascript/system/module.js"></script>
+<script src="/javascript/view/tripService/sysTripService.js"></script>

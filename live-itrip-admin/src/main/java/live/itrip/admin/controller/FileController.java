@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by Feng on 2016/10/12.
  * <p>
- * 用户相关，不需要登录验证的action
+ * 文件操作
  */
 @Controller
 public class FileController extends AbstractController {

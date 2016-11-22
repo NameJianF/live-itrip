@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Feng on 2016/7/14.
+ * <p>
+ * api key  配置
  */
 @Controller
 public class ApiKeyController extends AbstractController {
