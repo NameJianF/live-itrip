@@ -226,11 +226,9 @@
 <script src="/js/plugins/pace/pace.min.js"></script>
 <script src="/js/plugins/wow/wow.min.js"></script>
 
-<script>
-    $(function () {
-        $("#footer").load("/view/footer.html");
-    });
-</script>
+<%--itrip--%>
+<script src="/javascript/view/city/city.js"></script>
+
 
 </body>
 </html>
