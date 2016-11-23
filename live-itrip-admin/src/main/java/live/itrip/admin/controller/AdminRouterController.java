@@ -308,4 +308,15 @@ public class AdminRouterController extends AbstractController {
         return "/pages/view/staticInfo";
     }
 
+    /**
+     * 城市风光 设置页面
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/system/view/citys", method = RequestMethod.GET)
+    public String viewCitys(HttpServletRequest request, Model model) {
+        return "/pages/view/citys";
+    }
 }

@@ -9,4 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 public interface IWebCustomerAskService {
     void insertCustomerAsk(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 
+    void selectCustomerAskList(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void selectAskInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void editAskInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void deleteAskInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 }

@@ -5,10 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import live.itrip.admin.bean.BootStrapDataTableList;
 import live.itrip.admin.bean.PagerInfo;
 import live.itrip.admin.common.Constants;
-import live.itrip.admin.dao.WebCustomerAskMapper;
-import live.itrip.admin.model.WebCustomerAsk;
+import live.itrip.admin.dao.WebFaqMapper;
+import live.itrip.admin.model.WebFaq;
 import live.itrip.admin.service.BaseService;
-import live.itrip.admin.service.intefaces.IWebCustomerAskService;
+import live.itrip.admin.service.intefaces.IWebFaqService;
 import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
@@ -22,44 +22,24 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Created by Feng on 2016/11/11.
+ * Created by Feng on 2016/11/23.
  */
 @Service
-public class WebCustomerAskService extends BaseService implements IWebCustomerAskService {
+public class WebFaqService extends BaseService implements IWebFaqService {
     @Autowired
-    private WebCustomerAskMapper webCustomerAskMapper;
-
+    private WebFaqMapper webFaqMapper;
+    
     @Override
-    public void insertCustomerAsk(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
-        BaseResult result = new BaseResult();
-        try {
-            WebCustomerAsk entiry = JSON.parseObject(decodeJson, WebCustomerAsk.class);
-            entiry.setCreateTime(System.currentTimeMillis());
-            entiry.setUpdateTime(entiry.getCreateTime());
-            int ret = webCustomerAskMapper.insertSelective(entiry);
-            if (ret > 0) {
-                result.setCode(ErrorCode.SUCCESS.getCode());
-                this.writeResponse(response, result);
-                return;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        result.setError(ErrorCode.UNKNOWN);
-        this.writeResponse(response, result);
-    }
-
-    @Override
-    public void selectCustomerAskList(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
-        BootStrapDataTableList<WebCustomerAsk> result = new BootStrapDataTableList<>();
+    public void selectFaqList(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        BootStrapDataTableList<WebFaq> result = new BootStrapDataTableList<>();
         try {
             PagerInfo pagerInfo = this.getPagerInfo(decodeJson);
 
             Subject subject = SecurityUtils.getSubject();
             subject.isPermitted();
 
-            Integer count = webCustomerAskMapper.countAll();
-            List<WebCustomerAsk> list = webCustomerAskMapper.selectCustomerAskList(pagerInfo.getStart(), pagerInfo.getLength());
+            Integer count = webFaqMapper.countAll();
+            List<WebFaq> list = webFaqMapper.selectFaqList(pagerInfo.getStart(), pagerInfo.getLength());
             if (list != null) {
                 result.setsEcho(String.valueOf(pagerInfo.getDraw() + 1));
                 result.setiTotalRecords(count);
@@ -80,12 +60,12 @@ public class WebCustomerAskService extends BaseService implements IWebCustomerAs
     }
 
     @Override
-    public void selectAskInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+    public void selectFaqInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BaseResult result = new BaseResult();
         JSONObject jsonObject = JSON.parseObject(decodeJson);
-        Integer orderId = jsonObject.getInteger("orderId");
-        if (orderId != null) {
-            WebCustomerAsk info = this.webCustomerAskMapper.selectByPrimaryKey(orderId);
+        Integer faqId = jsonObject.getInteger("faqId");
+        if (faqId != null) {
+            WebFaq info = this.webFaqMapper.selectByPrimaryKey(faqId);
             result.setCode(ErrorCode.SUCCESS.getCode());
             result.setData(info);
             this.writeResponse(response, result);
@@ -97,14 +77,14 @@ public class WebCustomerAskService extends BaseService implements IWebCustomerAs
     }
 
     @Override
-    public void editAskInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+    public void editFaqInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BaseResult result = new BaseResult();
-        WebCustomerAsk info = JSON.parseObject(decodeJson, WebCustomerAsk.class);
+        WebFaq info = JSON.parseObject(decodeJson, WebFaq.class);
         Integer ret;
 
         // update
         info.setUpdateTime(System.currentTimeMillis());
-        ret = this.webCustomerAskMapper.updateByPrimaryKeySelective(info);
+        ret = this.webFaqMapper.updateByPrimaryKeySelective(info);
         if (ret > 0) {
             result.setCode(ErrorCode.SUCCESS.getCode());
             this.writeResponse(response, result);
@@ -116,15 +96,15 @@ public class WebCustomerAskService extends BaseService implements IWebCustomerAs
     }
 
     @Override
-    public void deleteAskInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+    public void deleteFaqInfoById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BaseResult result = new BaseResult();
         JSONObject jsonObject = JSON.parseObject(decodeJson);
-        Integer orderId = (Integer) jsonObject.get("orderId");
-        if (orderId != null) {
-            WebCustomerAsk info = new WebCustomerAsk();
-            info.setId(orderId);
+        Integer faqId = (Integer) jsonObject.get("faqId");
+        if (faqId != null) {
+            WebFaq info = new WebFaq();
+            info.setId(faqId);
             info.setIsDelete(Constants.FLAG_IS_DELETE);
-            Integer ret = this.webCustomerAskMapper.updateByPrimaryKeySelective(info);
+            Integer ret = this.webFaqMapper.updateByPrimaryKeySelective(info);
             if (ret > 0) {
                 result.setCode(ErrorCode.SUCCESS.getCode());
                 result.setData(info);
@@ -136,6 +116,4 @@ public class WebCustomerAskService extends BaseService implements IWebCustomerAs
         result.setError(ErrorCode.UNKNOWN);
         this.writeResponse(response, result);
     }
-
-
 }

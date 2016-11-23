@@ -18,21 +18,18 @@
             <div class="ibox-content table-responsive">
                 <div style="border-bottom:solid 1px lightgray; margin-bottom: 4px;">
                     <button type="button" onclick="funRefresh();" class="btn btn-primary ">刷新</button>
-                    <button type="button" onclick="funClickAddRow();" class="btn btn-primary ">
-                        添加
-                    </button>
                 </div>
-                <table class="table table-hover table-bordered dataTables-example" id="tableModules"
+                <table class="table table-hover table-bordered dataTables-example" id="tableCustomers"
                        style="font-size: 14px;">
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>模块名称</th>
-                        <th>父模块</th>
-                        <th>模块地址</th>
-                        <th>排序</th>
-                        <th>描述</th>
-                        <th>是否删除</th>
+                        <th>称呼</th>
+                        <th>联系方式</th>
+                        <th>预计天数</th>
+                        <th>出发日期</th>
+                        <th>备注</th>
+                        <th>状态</th>
                         <th>创建时间</th>
                         <th>更新时间</th>
                         <th>操作</th>
@@ -46,53 +43,54 @@
         </div>
     </div>
 
-    <div class="modal fade modal-default" id="formEditModule">
+    <div class="modal fade modal-default" id="formEditCustomer">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="formEditTitle">模块编辑</h4>
+                    <h4 class="modal-title" id="formEditTitle">编辑</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <input id="editModuleId" type="hidden">
-                            <label for="editModuleName" class="col-sm-3 control-label">模块名称</label>
+                            <input id="editCustomerId" type="hidden">
+                            <label for="editCustomerName" class="col-sm-3 control-label">称呼</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleName">
+                                <input type="text" class="form-control" readonly id="editCustomerName">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editModuleParent" class="col-sm-3 control-label">父模块</label>
+                            <label for="editCustomerLink" class="col-sm-3 control-label">联系方式</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleParent">
+                                <input type="text" class="form-control" readonly id="editCustomerLink">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editModuleUrl" class="col-sm-3 control-label">模块地址</label>
+                            <label for="editCustomerDays" class="col-sm-3 control-label">天数</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleUrl">
+                                <input type="text" class="form-control" readonly id="editCustomerDays">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editModuleOrder" class="col-sm-3 control-label">排序</label>
+                            <label for="editCustomerDate" class="col-sm-3 control-label">日期</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleOrder">
+                                <input type="text" class="form-control" readonly id="editCustomerDate">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editModuleDiscription" class="col-sm-3 control-label">描述</label>
+                            <label for="editCustomerRemarks" class="col-sm-3 control-label">备注</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleDiscription">
+                                <input type="text" class="form-control" readonly id="editCustomerRemarks">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="editModuleDelete" class="col-sm-3 control-label">是否删除</label>
+                            <label for="editCustomerStatus" class="col-sm-3 control-label">状态</label>
                             <div class="col-sm-5">
-                                <select class="form-control" id="editModuleDelete">
-                                    <option value="1">删除</option>
-                                    <option value="0">未删除</option>
+                                <select class="form-control" id="editCustomerStatus">
+                                    <option value="0">初始</option>
+                                    <option value="1">未成单</option>
+                                    <option value="2">成单</option>
                                 </select>
                             </div>
                         </div>
@@ -100,12 +98,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn   btn-primary" data-dismiss="modal">取消</button>
-                    <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSaveModuleInfo()">确定
+                    <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSaveCustomerInfo()">确定
                     </button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+            </div>
+        </div>
     </div>
 </div>
 
-<script src="/javascript/system/module.js"></script>
+<script src="/javascript/view/customer/sysCustomer.js"></script>

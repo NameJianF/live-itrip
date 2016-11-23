@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="live.itrip.admin.dao.WebCityInfoMapper">
+    <resultMap id="BaseResultMap" type="live.itrip.admin.model.WebCityInfo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+        <result column="city_area" property="cityArea" jdbcType="VARCHAR"/>
+        <result column="city_title" property="cityTitle" jdbcType="VARCHAR"/>
+        <result column="is_delete" property="isDelete" jdbcType="CHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="live.itrip.admin.model.WebCityInfo" extends="BaseResultMap">
+        <result column="city_content" property="cityContent" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, city_name, city_area, city_title, is_delete, create_time, update_time
+  </sql>
+    <sql id="Blob_Column_List">
+    city_content
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from web_city_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from web_city_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="live.itrip.admin.model.WebCityInfo">
+    insert into web_city_info (id, city_name, city_area, 
+      city_title, is_delete, create_time, 
+      update_time, city_content)
+    values (#{id,jdbcType=INTEGER}, #{cityName,jdbcType=VARCHAR}, #{cityArea,jdbcType=VARCHAR}, 
+      #{cityTitle,jdbcType=VARCHAR}, #{isDelete,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=BIGINT}, #{cityContent,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="live.itrip.admin.model.WebCityInfo">
+        insert into web_city_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="cityName != null">
+                city_name,
+            </if>
+            <if test="cityArea != null">
+                city_area,
+            </if>
+            <if test="cityTitle != null">
+                city_title,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="cityContent != null">
+                city_content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="cityName != null">
+                #{cityName,jdbcType=VARCHAR},
+            </if>
+            <if test="cityArea != null">
+                #{cityArea,jdbcType=VARCHAR},
+            </if>
+            <if test="cityTitle != null">
+                #{cityTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=BIGINT},
+            </if>
+            <if test="cityContent != null">
+                #{cityContent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.admin.model.WebCityInfo">
+        update web_city_info
+        <set>
+            <if test="cityName != null">
+                city_name = #{cityName,jdbcType=VARCHAR},
+            </if>
+            <if test="cityArea != null">
+                city_area = #{cityArea,jdbcType=VARCHAR},
+            </if>
+            <if test="cityTitle != null">
+                city_title = #{cityTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=CHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=BIGINT},
+            </if>
+            <if test="cityContent != null">
+                city_content = #{cityContent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="live.itrip.admin.model.WebCityInfo">
+    update web_city_info
+    set city_name = #{cityName,jdbcType=VARCHAR},
+      city_area = #{cityArea,jdbcType=VARCHAR},
+      city_title = #{cityTitle,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      city_content = #{cityContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.WebCityInfo">
+    update web_city_info
+    set city_name = #{cityName,jdbcType=VARCHAR},
+      city_area = #{cityArea,jdbcType=VARCHAR},
+      city_title = #{cityTitle,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+    <!--自定义查询-->
+    <select id="countAll" resultType="int">
+        select count(id) from web_city_info where is_delete = '0'
+    </select>
+
+    <select id="selectCityInfoList" resultMap="ResultMapWithBLOBs" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from web_city_info
+        where is_delete = '0'
+        <if test="queryContent != null and queryContent != '' ">
+            AND title LIKE ${queryContent}
+        </if>
+        order by id DESC
+        limit ${start},${length}
+    </select>
+</mapper>

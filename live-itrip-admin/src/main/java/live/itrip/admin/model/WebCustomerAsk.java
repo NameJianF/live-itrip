@@ -11,6 +11,12 @@ public class WebCustomerAsk {
 
     private String planDate;
 
+    private String remarks;
+
+    private String status;
+
+    private String isDelete;
+
     private Long createTime;
 
     private Long updateTime;
@@ -53,6 +59,30 @@ public class WebCustomerAsk {
 
     public void setPlanDate(String planDate) {
         this.planDate = planDate == null ? null : planDate.trim();
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks == null ? null : remarks.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    public String getIsDelete() {
+        return isDelete;
+    }
+
+    public void setIsDelete(String isDelete) {
+        this.isDelete = isDelete == null ? null : isDelete.trim();
     }
 
     public Long getCreateTime() {

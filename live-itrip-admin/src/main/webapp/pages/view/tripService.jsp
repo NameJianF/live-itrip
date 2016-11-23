@@ -63,25 +63,26 @@
                         <div class="form-group">
                             <label for="editLinkMan" class="col-sm-3 control-label">联系人</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="editLinkMan">
+                                <input type="text" class="form-control" readonly id="editLinkMan">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="editMobile" class="col-sm-3 control-label">手机号</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="editMobile">
+                                <input type="text" class="form-control" readonly id="editMobile">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="editWechat" class="col-sm-3 control-label">微信号</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" id="editWechat">
+                                <input type="text" class="form-control" readonly id="editWechat">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="editRemarks" class="col-sm-3 control-label">备注</label>
                             <div class="col-sm-9">
-                                <textarea type="text" rows="3" class="form-control" id="editRemarks"></textarea>
+                                <textarea type="text" rows="3" class="form-control" readonly
+                                          id="editRemarks"></textarea>
                             </div>
                         </div>
                         <div class="form-group">

@@ -48,7 +48,12 @@ public class AdminController extends AbstractController {
     private IWebProductPlanService iWebProductPlanService;
     @Autowired
     private IWebServiceOrderService iWebServiceOrderService;
-
+    @Autowired
+    private IWebCustomerAskService iWebCustomerAskService;
+    @Autowired
+    private IWebFaqService iWebFaqService;
+    @Autowired
+    private IWebCityInfoService webCityInfoService;
 
     // =================== system config ==============
 
@@ -66,7 +71,7 @@ public class AdminController extends AbstractController {
         String decodeJson = JsonStringUtils.decoderForJsonString(json);
         Logger.debug(
                 String.format("timestamp:%s action:%s json:%s",
-                        System.currentTimeMillis(), "user", decodeJson));
+                        System.currentTimeMillis(), "systemConfig", decodeJson));
         if (StringUtils.isEmpty(decodeJson)) {
             this.paramInvalid(response, "JSON");
             return;
@@ -197,7 +202,7 @@ public class AdminController extends AbstractController {
         String decodeJson = JsonStringUtils.decoderForJsonString(json);
         Logger.debug(
                 String.format("timestamp:%s action:%s json:%s",
-                        System.currentTimeMillis(), "user", decodeJson));
+                        System.currentTimeMillis(), "viewPlanDetail", decodeJson));
 
         if (StringUtils.isEmpty(decodeJson)) {
             this.paramInvalid(response, "JSON");
@@ -242,7 +247,7 @@ public class AdminController extends AbstractController {
         String decodeJson = JsonStringUtils.decoderForJsonString(json);
         Logger.debug(
                 String.format("timestamp:%s action:%s json:%s",
-                        System.currentTimeMillis(), "user", decodeJson));
+                        System.currentTimeMillis(), "viewProduct", decodeJson));
 
         if (StringUtils.isEmpty(decodeJson)) {
             this.paramInvalid(response, "JSON");
@@ -287,7 +292,7 @@ public class AdminController extends AbstractController {
         String decodeJson = JsonStringUtils.decoderForJsonString(json);
         Logger.debug(
                 String.format("timestamp:%s action:%s json:%s",
-                        System.currentTimeMillis(), "user", decodeJson));
+                        System.currentTimeMillis(), "viewStaticInfo", decodeJson));
 
         if (StringUtils.isEmpty(decodeJson)) {
             this.paramInvalid(response, "JSON");
@@ -332,7 +337,7 @@ public class AdminController extends AbstractController {
         String decodeJson = JsonStringUtils.decoderForJsonString(json);
         Logger.debug(
                 String.format("timestamp:%s action:%s json:%s",
-                        System.currentTimeMillis(), "user", decodeJson));
+                        System.currentTimeMillis(), "tripService", decodeJson));
 
         if (StringUtils.isEmpty(decodeJson)) {
             this.paramInvalid(response, "JSON");
@@ -364,4 +369,138 @@ public class AdminController extends AbstractController {
         }
     }
 
+    /**
+     * 网站后台，客户定制
+     *
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/system/view/customer")
+    public
+    @ResponseBody
+    void customer(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+        String decodeJson = JsonStringUtils.decoderForJsonString(json);
+        Logger.debug(
+                String.format("timestamp:%s action:%s json:%s",
+                        System.currentTimeMillis(), "customer", decodeJson));
+
+        if (StringUtils.isEmpty(decodeJson)) {
+            this.paramInvalid(response, "JSON");
+            return;
+        }
+        String flag = request.getParameter("flag");
+
+        if (StringUtils.isNotEmpty(flag)) {
+            // from table select
+            iWebCustomerAskService.selectCustomerAskList(decodeJson, response, request);
+        } else {
+            try {
+                RequestHeader header = JSON.parseObject(decodeJson, RequestHeader.class);
+                if (header != null && StringUtils.isNotEmpty(header.getOp())) {
+                    String op = header.getOp();
+                    // customer
+                    if ("customer.detail".equalsIgnoreCase(op)) {
+                        iWebCustomerAskService.selectAskInfoById(decodeJson, response, request);
+                    } else if ("customer.edit".equalsIgnoreCase(op)) {
+                        iWebCustomerAskService.editAskInfoById(decodeJson, response, request);
+                    } else if ("customer.delete".equalsIgnoreCase(op)) {
+                        iWebCustomerAskService.deleteAskInfoById(decodeJson, response, request);
+                    }
+                }
+
+            } catch (Exception ex) {
+                Logger.error("", ex);
+            }
+        }
+    }
+
+    /**
+     * 网站后台，客户反馈
+     *
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/system/view/faq")
+    public
+    @ResponseBody
+    void faq(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+        String decodeJson = JsonStringUtils.decoderForJsonString(json);
+        Logger.debug(
+                String.format("timestamp:%s action:%s json:%s",
+                        System.currentTimeMillis(), "faq", decodeJson));
+
+        if (StringUtils.isEmpty(decodeJson)) {
+            this.paramInvalid(response, "JSON");
+            return;
+        }
+        String flag = request.getParameter("flag");
+
+        if (StringUtils.isNotEmpty(flag)) {
+            // from table select
+            iWebFaqService.selectFaqList(decodeJson, response, request);
+        } else {
+            try {
+                RequestHeader header = JSON.parseObject(decodeJson, RequestHeader.class);
+                if (header != null && StringUtils.isNotEmpty(header.getOp())) {
+                    String op = header.getOp();
+                    // customer
+                    if ("faq.detail".equalsIgnoreCase(op)) {
+                        iWebFaqService.selectFaqInfoById(decodeJson, response, request);
+                    } else if ("faq.edit".equalsIgnoreCase(op)) {
+                        iWebFaqService.editFaqInfoById(decodeJson, response, request);
+                    } else if ("faq.delete".equalsIgnoreCase(op)) {
+                        iWebFaqService.deleteFaqInfoById(decodeJson, response, request);
+                    }
+                }
+
+            } catch (Exception ex) {
+                Logger.error("", ex);
+            }
+        }
+    }
+
+    /**
+     * 网站后台，客户反馈
+     *
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/system/view/citys")
+    public
+    @ResponseBody
+    void citys(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+        String decodeJson = JsonStringUtils.decoderForJsonString(json);
+        Logger.debug(
+                String.format("timestamp:%s action:%s json:%s",
+                        System.currentTimeMillis(), "citys", decodeJson));
+
+        if (StringUtils.isEmpty(decodeJson)) {
+            this.paramInvalid(response, "JSON");
+            return;
+        }
+        String flag = request.getParameter("flag");
+
+        if (StringUtils.isNotEmpty(flag)) {
+            // from table select
+            webCityInfoService.selectCityList(decodeJson, response, request);
+        } else {
+            try {
+                RequestHeader header = JSON.parseObject(decodeJson, RequestHeader.class);
+                if (header != null && StringUtils.isNotEmpty(header.getOp())) {
+                    String op = header.getOp();
+                    // city
+                    if ("citys.detail".equalsIgnoreCase(op)) {
+                        webCityInfoService.selectCityInfoById(decodeJson, response, request);
+                    } else if ("citys.edit".equalsIgnoreCase(op)) {
+                        webCityInfoService.editCityInfoById(decodeJson, response, request);
+                    } else if ("citys.delete".equalsIgnoreCase(op)) {
+                        webCityInfoService.deleteCityInfoById(decodeJson, response, request);
+                    }
+                }
+
+            } catch (Exception ex) {
+                Logger.error("", ex);
+            }
+        }
+    }
 }

@@ -1,4 +1,3 @@
-
 $(function () {
     $('body').scrollspy({
         target: '.navbar-fixed-top',
@@ -72,7 +71,8 @@ function submitDatas() {
         'cusName': $("#cusName").val().trim(),
         'links': $("#links").val().trim(),
         'days': $("#days").val().trim(),
-        'planDate': $("#planDate").val()
+        'planDate': $("#planDate").val(),
+        'remarks': $("#remarks").val()
     };
 
     execAjaxDataForView("/view/customerAsk.action", JSON.stringify(jsondata), false, function (response) {

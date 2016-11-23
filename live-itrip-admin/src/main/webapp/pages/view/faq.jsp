@@ -18,21 +18,18 @@
             <div class="ibox-content table-responsive">
                 <div style="border-bottom:solid 1px lightgray; margin-bottom: 4px;">
                     <button type="button" onclick="funRefresh();" class="btn btn-primary ">刷新</button>
-                    <button type="button" onclick="funClickAddRow();" class="btn btn-primary ">
-                        添加
-                    </button>
                 </div>
-                <table class="table table-hover table-bordered dataTables-example" id="tableModules"
+                <table class="table table-hover table-bordered dataTables-example" id="tableFaq"
                        style="font-size: 14px;">
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>模块名称</th>
-                        <th>父模块</th>
-                        <th>模块地址</th>
-                        <th>排序</th>
-                        <th>描述</th>
-                        <th>是否删除</th>
+                        <th>产品</th>
+                        <th>用户名称</th>
+                        <th>手机号</th>
+                        <th>微信号</th>
+                        <th>问题</th>
+                        <th>回答</th>
                         <th>创建时间</th>
                         <th>更新时间</th>
                         <th>操作</th>
@@ -40,72 +37,46 @@
                     </thead>
                     <tbody>
                     </tbody>
-
                 </table>
             </div>
         </div>
     </div>
 
-    <div class="modal fade modal-default" id="formEditModule">
+    <div class="modal fade modal-default" id="formEditFaq">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="formEditTitle">模块编辑</h4>
+                    <h4 class="modal-title" id="formEditTitle">编辑</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <input id="editModuleId" type="hidden">
-                            <label for="editModuleName" class="col-sm-3 control-label">模块名称</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleName">
+                            <input id="editFaqId" type="hidden">
+                            <label for="editFaqContent" class="col-sm-3 control-label">咨询内容</label>
+                            <div class="col-sm-9">
+                                <textarea type="text" readonly rows="3" class="form-control"
+                                          id="editFaqContent"></textarea>
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <label for="editModuleParent" class="col-sm-3 control-label">父模块</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleParent">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="editModuleUrl" class="col-sm-3 control-label">模块地址</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleUrl">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="editModuleOrder" class="col-sm-3 control-label">排序</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleOrder">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="editModuleDiscription" class="col-sm-3 control-label">描述</label>
-                            <div class="col-sm-5">
-                                <input type="text" class="form-control" id="editModuleDiscription">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="editModuleDelete" class="col-sm-3 control-label">是否删除</label>
-                            <div class="col-sm-5">
-                                <select class="form-control" id="editModuleDelete">
-                                    <option value="1">删除</option>
-                                    <option value="0">未删除</option>
-                                </select>
+                            <label for="editFaqAnswer" class="col-sm-3 control-label">回复</label>
+                            <div class="col-sm-9">
+                                <textarea type="text" class="form-control" id="editFaqAnswer" rows="3"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn   btn-primary" data-dismiss="modal">取消</button>
-                    <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSaveModuleInfo()">确定
+                    <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSaveFaqInfo()">确定
                     </button>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
+            </div>
+        </div>
     </div>
 </div>
 
-<script src="/javascript/system/module.js"></script>
+<script src="/javascript/view/faq/sysFaq.js"></script>
