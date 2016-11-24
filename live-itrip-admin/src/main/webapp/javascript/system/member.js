@@ -145,8 +145,7 @@ function funSelectMembers(sSource, aoData, fnCallback) {
     aoData.push({name: "queryDepart", value: queryDepart});
     aoData.push({name: "queryGroup", value: queryGroup});
 
-    var token = $.cookie('userToken');
-    aoData.push({name: "token", value: token});
+    aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 
     parent.execAjaxData(sSource, aoData, false
@@ -165,10 +164,9 @@ function funSelectMembers(sSource, aoData, fnCallback) {
  * @param memberId
  */
 function funEditGetMemberInfo(memberId) {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'member.detail',
-        'token': token,
+        'token': parent.token,
         'memberId': memberId
     };
 
@@ -205,10 +203,9 @@ function departChangeEvent(event, flag) {
         $('#editMemberGroup').empty();
     }
 
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'group.selectGroupsByDepartId',
-        'token': token,
+        'token': parent.token,
         'departId': event.target.value
     };
     parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
@@ -239,10 +236,9 @@ function departChangeEvent(event, flag) {
 }
 
 function editSaveMemberInfo() {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'member.edit',
-        'token': token,
+        'token': parent.token,
         'id': $('#editMemberId').val(),
         'userName': $('#editMemberName').val(),
         'email': $('#editMemberEmail').val(),
@@ -259,18 +255,18 @@ function editSaveMemberInfo() {
     parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
-            alert("保存失败。");
+            parent.notifyDanger('保存失败', response);
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert("保存成功。");
+                parent.notifySuccess('保存成功', '');
                 funRefresh();
             } else {
-                alert("保存失败。");
+                parent.notifyDanger('保存失败', response.msg);
             }
         }, function () {
             // complete
-            $('#formEditMember').modal('hide');
+            $('#formEditApikey').modal('hide');
         });
 }
 
@@ -282,10 +278,9 @@ function funDeleteMemberInfo(memberId) {
     if (confirm("确定要删除数据吗?")) {
         console.log("delete member id:" + memberId);
 
-        var token = $.cookie('userToken');
         var jsondata = {
             'op': 'member.delete',
-            'token': token,
+            'token': parent.token,
             'memberId': memberId
         };
 
@@ -295,10 +290,10 @@ function funDeleteMemberInfo(memberId) {
             }, function (response) {
                 // success
                 if (response.code == 0) {
-                    alert("删除成功。")
+                    parent.notifySuccess('删除成功', '');
                     funRefresh();
                 } else {
-                    alert("删除失败：" + response.msg);
+                    parent.notifyDanger('删除失败', response.msg);
                 }
             }, function () {
                 // complete

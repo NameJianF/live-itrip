@@ -67,8 +67,7 @@ function funSelectDeparts(sSource, aoData, fnCallback) {
     console.log("========== selectDeparts ==========");
     sSource = "/sysCfg.action?flag=depart";
 
-    var token = $.cookie('userToken');
-    aoData.push({name: "token", value: token});
+    aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 
     parent.execAjaxData(sSource, aoData, false
@@ -87,10 +86,9 @@ function funSelectDeparts(sSource, aoData, fnCallback) {
  * @param departId
  */
 function funEditGetDepartInfo(departId) {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'depart.detail',
-        'token': token,
+        'token': parent.token,
         'departId': departId
     };
 
@@ -112,10 +110,9 @@ function funEditGetDepartInfo(departId) {
 }
 
 function editSaveDepartInfo() {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'depart.edit',
-        'token': token,
+        'token': parent.token,
         'id': $('#editDepartId').val(),
         'departName': $('#editDepartName').val()
     };
@@ -123,14 +120,14 @@ function editSaveDepartInfo() {
     parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
-            alert("保存失败。");
+            parent.notifyDanger('保存失败', response);
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert("保存成功。");
+                parent.notifySuccess('保存成功', '');
                 funRefresh();
             } else {
-                alert("保存失败。");
+                parent.notifyDanger('保存失败', '');
             }
         }, function () {
             // complete
@@ -146,10 +143,9 @@ function funDeleteDepartInfo(departId) {
     if (confirm("确定要删除数据吗?")) {
         console.log("delete depart id:" + departId);
 
-        var token = $.cookie('userToken');
         var jsondata = {
             'op': 'depart.delete',
-            'token': token,
+            'token': parent.token,
             'departId': departId
         };
 
@@ -159,10 +155,10 @@ function funDeleteDepartInfo(departId) {
             }, function (response) {
                 // success
                 if (response.code == 0) {
-                    alert("删除成功。")
+                    parent.notifySuccess('删除成功', '');
                     funRefresh();
                 } else {
-                    alert("删除失败：" + response.msg);
+                    parent.notifyDanger('删除失败', response.msg);
                 }
             }, function () {
                 // complete

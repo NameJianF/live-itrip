@@ -155,18 +155,18 @@ function editSaveFaqInfo() {
     parent.execAjaxData("/system/view/faq.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
-            alert("保存失败。");
+            parent.notifyDanger('保存失败', response);
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert("保存成功。");
+                parent.notifySuccess('保存成功', '');
                 funRefresh();
             } else {
-                alert("保存失败。");
+                parent.notifyDanger('保存失败', response.msg);
             }
         }, function () {
             // complete
-            $('#formEditFaq').modal('hide');
+            $('#formEditApikey').modal('hide');
         });
 }
 
@@ -191,10 +191,10 @@ function funDeleteFaqInfo(faqId) {
             }, function (response) {
                 // success
                 if (response.code == 0) {
-                    alert("删除成功。")
+                    parent.notifySuccess('删除成功', '');
                     funRefresh();
                 } else {
-                    alert("删除失败：" + response.msg);
+                    parent.notifyDanger('删除失败', response.msg);
                 }
             }, function () {
                 // complete

@@ -6,8 +6,6 @@
 function loadModules() {
     console.log("load menu ........");
     // from cookie
-    var token = $.cookie('userToken');
-
     var jsondata = {
         'op': 'module.select',
         'token': token

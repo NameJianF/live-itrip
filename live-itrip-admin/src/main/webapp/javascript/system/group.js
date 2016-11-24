@@ -68,8 +68,7 @@ function funSelectGroups(sSource, aoData, fnCallback) {
     console.log("========== selectGroups ==========");
     sSource = "/sysCfg.action?flag=group";
 
-    var token = $.cookie('userToken');
-    aoData.push({name: "token", value: token});
+    aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 
     parent.execAjaxData(sSource, aoData, false
@@ -88,10 +87,9 @@ function funSelectGroups(sSource, aoData, fnCallback) {
  * @param groupid
  */
 function funEditGetGroupInfo(groupId) {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'group.detail',
-        'token': token,
+        'token': parent.token,
         'groupId': groupId
     };
 
@@ -114,10 +112,9 @@ function funEditGetGroupInfo(groupId) {
 }
 
 function editSaveGroupInfo() {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'group.edit',
-        'token': token,
+        'token': parent.token,
         'id': $('#editGroupId').val(),
         'groupName': $('#editGroupName').val(),
         'departId': $('#editDepartName').val()
@@ -126,18 +123,18 @@ function editSaveGroupInfo() {
     parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
-            alert("保存失败。");
+            parent.notifyDanger('保存失败', response);
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert("保存成功。");
+                parent.notifySuccess('保存成功', '');
                 funRefresh();
             } else {
-                alert("保存失败。");
+                parent.notifyDanger('保存失败', response.msg);
             }
         }, function () {
             // complete
-            $('#formEditGroup').modal('hide');
+            $('#formEditApikey').modal('hide');
         });
 }
 
@@ -149,10 +146,9 @@ function funDeleteGroupInfo(groupId) {
     if (confirm("确定要删除数据吗?")) {
         console.log("delete Group id:" + groupId);
 
-        var token = $.cookie('userToken');
         var jsondata = {
             'op': 'group.delete',
-            'token': token,
+            'token': parent.token,
             'groupId': groupId
         };
 
@@ -162,10 +158,10 @@ function funDeleteGroupInfo(groupId) {
             }, function (response) {
                 // success
                 if (response.code == 0) {
-                    alert("删除成功。")
+                    parent.notifySuccess('删除成功', '');
                     funRefresh();
                 } else {
-                    alert("删除失败：" + response.msg);
+                    parent.notifyDanger('删除失败', response.msg);
                 }
             }, function () {
                 // complete

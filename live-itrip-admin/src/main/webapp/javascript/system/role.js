@@ -68,8 +68,7 @@ function funSelectRoles(sSource, aoData, fnCallback) {
     console.log("========== selectRoles ==========");
     sSource = "/sysCfg.action?flag=role";
 
-    var token = $.cookie('userToken');
-    aoData.push({name: "token", value: token});
+    aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 
     parent.execAjaxData(sSource, aoData, false
@@ -88,10 +87,9 @@ function funSelectRoles(sSource, aoData, fnCallback) {
  * @param roleId
  */
 function funEditGetRoleInfo(roleId) {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'role.detail',
-        'token': token,
+        'token': parent.token,
         'roleId': roleId
     };
 
@@ -114,10 +112,9 @@ function funEditGetRoleInfo(roleId) {
 }
 
 function editSaveRoleInfo() {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'role.edit',
-        'token': token,
+        'token': parent.token,
         'id': $('#editRoleId').val(),
         'roleName': $('#editRoleName').val(),
         'roleText': $('#editRoleText').val()
@@ -126,18 +123,18 @@ function editSaveRoleInfo() {
     parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
-            alert("保存失败。");
+            parent.notifyDanger('保存失败', response);
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert("保存成功。");
+                parent.notifySuccess('保存成功', '');
                 funRefresh();
             } else {
-                alert("保存失败。");
+                parent.notifyDanger('保存失败', response.msg);
             }
         }, function () {
             // complete
-            $('#formEditRole').modal('hide');
+            $('#formEditApikey').modal('hide');
         });
 }
 
@@ -148,11 +145,9 @@ function editSaveRoleInfo() {
 function funDeleteRoleInfo(roleId) {
     if (confirm("确定要删除数据吗?")) {
         console.log("delete role id:" + roleId);
-
-        var token = $.cookie('userToken');
         var jsondata = {
             'op': 'role.delete',
-            'token': token,
+            'token': parent.token,
             'roleId': roleId
         };
 
@@ -162,10 +157,10 @@ function funDeleteRoleInfo(roleId) {
             }, function (response) {
                 // success
                 if (response.code == 0) {
-                    alert("删除成功。")
+                    parent.notifySuccess('删除成功', '');
                     funRefresh();
                 } else {
-                    alert("删除失败：" + response.msg);
+                    parent.notifyDanger('删除失败', response.msg);
                 }
             }, function () {
                 // complete

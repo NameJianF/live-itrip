@@ -68,8 +68,7 @@ function funSelectOperations(sSource, aoData, fnCallback) {
     console.log("========== selectOperations ==========");
     sSource = "/sysCfg.action?flag=operation";
 
-    var token = $.cookie('userToken');
-    aoData.push({name: "token", value: token});
+    aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 
     parent.execAjaxData(sSource, aoData, false
@@ -88,10 +87,9 @@ function funSelectOperations(sSource, aoData, fnCallback) {
  * @param operationId
  */
 function funEditGetOperationInfo(operationId) {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'operation.detail',
-        'token': token,
+        'token': parent.token,
         'operationId': operationId
     };
 
@@ -114,10 +112,9 @@ function funEditGetOperationInfo(operationId) {
 }
 
 function editSaveOperationInfo() {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'operation.edit',
-        'token': token,
+        'token': parent.token,
         'id': $('#editOperationId').val(),
         'opName': $('#editOperationName').val(),
         'opText': $('#editOperationText').val()
@@ -126,18 +123,18 @@ function editSaveOperationInfo() {
     parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
-            alert("保存失败。");
+            parent.notifyDanger('保存失败', response);
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert("保存成功。");
+                parent.notifySuccess('保存成功', '');
                 funRefresh();
             } else {
-                alert("保存失败。");
+                parent.notifyDanger('保存失败', response.msg);
             }
         }, function () {
             // complete
-            $('#formEditOperation').modal('hide');
+            $('#formEditApikey').modal('hide');
         });
 }
 
@@ -149,10 +146,9 @@ function funDeleteOperationInfo(operationId) {
     if (confirm("确定要删除数据吗?")) {
         console.log("delete operation id:" + operationId);
 
-        var token = $.cookie('userToken');
         var jsondata = {
             'op': 'operation.delete',
-            'token': token,
+            'token': parent.token,
             'operationId': operationId
         };
 
@@ -162,10 +158,10 @@ function funDeleteOperationInfo(operationId) {
             }, function (response) {
                 // success
                 if (response.code == 0) {
-                    alert("删除成功。")
+                    parent.notifySuccess('删除成功', '');
                     funRefresh();
                 } else {
-                    alert("删除失败：" + response.msg);
+                    parent.notifyDanger('删除失败', response.msg);
                 }
             }, function () {
                 // complete

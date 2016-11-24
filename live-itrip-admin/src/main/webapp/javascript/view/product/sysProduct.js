@@ -99,8 +99,7 @@ function funSelectProducts(sSource, aoData, fnCallback) {
     console.log("========== select Products ==========");
     sSource = "/system/view/product.action?flag=list";
 
-    var token = $.cookie('userToken');
-    aoData.push({name: "token", value: token});
+    aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 
     parent.execAjaxData(sSource, aoData, false
@@ -133,10 +132,9 @@ function funDeleteProductInfo(productId) {
     if (confirm("确定要删除数据吗?")) {
         console.log("delete Product id:" + productId);
 
-        var token = $.cookie('userToken');
         var jsondata = {
             'op': 'product.delete',
-            'token': token,
+            'token': parent.token,
             'productId': productId
         };
 
@@ -146,10 +144,10 @@ function funDeleteProductInfo(productId) {
             }, function (response) {
                 // success
                 if (response.code == 0) {
-                    alert("删除成功。")
+                    parent.notifySuccess('删除成功', '');
                     funRefresh();
                 } else {
-                    alert("删除失败：" + response.msg);
+                    parent.notifyDanger('删除失败', response.msg);
                 }
             }, function () {
                 // complete

@@ -55,7 +55,7 @@ $(function () {
                 }
             });
             this.on("errormultiple", function (files, message) {
-                alert(message);
+                parent.notifyDanger('', message);
             });
 
             this.on("addedfile", function (file) {
@@ -198,10 +198,9 @@ function costSelectChange() {
     //console.log('costSelectChange:' + $('#selectCost').val());
     var infoId = $('#selectCost').val();
     if (infoId != '') {
-        var token = $.cookie('userToken');
         var jsondata = {
             'op': 'staticInfo.detail',
-            'token': token,
+            'token': parent.token,
             'infoId': infoId
         };
 
@@ -222,10 +221,9 @@ function costSelectChange() {
 function reservesSelectChange() {
     var infoId = $('#selectReserves').val();
     if (infoId != '') {
-        var token = $.cookie('userToken');
         var jsondata = {
             'op': 'staticInfo.detail',
-            'token': token,
+            'token': parent.token,
             'infoId': infoId
         };
 
@@ -246,10 +244,9 @@ function reservesSelectChange() {
 function noticeSelectChange() {
     var infoId = $('#selectNotice').val();
     if (infoId != '') {
-        var token = $.cookie('userToken');
         var jsondata = {
             'op': 'staticInfo.detail',
-            'token': token,
+            'token': parent.token,
             'infoId': infoId
         };
 
@@ -279,10 +276,9 @@ function saveProductBaseInfo() {
     var productTraffic = $('#productTraffic').find("option:selected").text();
     var productStartDate = $('#productStartDate').val();
 
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'product.edit',
-        'token': token,
+        'token': parent.token,
         'id': productId,
         'title': productTitle,
         'price': productPrice,
@@ -301,7 +297,7 @@ function saveProductBaseInfo() {
             // success
             if (response.code == 0) {
                 $('#productId').val(response.data.id);
-                alert('保存成功');
+                parent.notifySuccess('保存成功', '');
             }
         }, function () {
             // complete
@@ -337,7 +333,7 @@ function saveProductDescInfo() {
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert('保存成功');
+                parent.notifySuccess('保存成功', '');
             }
         }, function () {
             // complete
@@ -350,10 +346,9 @@ function saveProductCoseInfo() {
     var productId = $('#productId').val();
     var productCost = $('#productCost').code();
 
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'product.edit',
-        'token': token,
+        'token': parent.token,
         'id': productId,
         'cost': productCost
     };
@@ -364,7 +359,7 @@ function saveProductCoseInfo() {
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert('保存成功');
+                parent.notifySuccess('保存成功', '');
             }
         }, function () {
             // complete
@@ -376,10 +371,9 @@ function saveProductReservesInfo() {
     var productId = $('#productId').val();
     var productReserve = $('#productReserve').code();
 
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'product.edit',
-        'token': token,
+        'token': parent.token,
         'id': productId,
         'reserve': productReserve
     };
@@ -390,7 +384,7 @@ function saveProductReservesInfo() {
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert('保存成功');
+                parent.notifySuccess('保存成功', '');
             }
         }, function () {
             // complete
@@ -402,10 +396,9 @@ function saveProductNoticeInfo() {
     var productId = $('#productId').val();
     var productNotice = $('#productNotice').code();
 
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'product.edit',
-        'token': token,
+        'token': parent.token,
         'id': productId,
         'notice': productNotice
     };
@@ -416,7 +409,7 @@ function saveProductNoticeInfo() {
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert('保存成功');
+                parent.notifySuccess('保存成功', '');
             }
         }, function () {
             // complete
@@ -448,8 +441,7 @@ function funSelectPlanDetails(sSource, aoData, fnCallback) {
     var productId = $("#productId").val();
     aoData.push({name: "productId", value: productId});
 
-    var token = $.cookie('userToken');
-    aoData.push({name: "token", value: token});
+    aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 
     parent.execAjaxData(sSource, aoData, false
@@ -524,10 +516,9 @@ function editPlanDetail(planId) {
  */
 function editSavePlanInfo() {
 
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'planDetail.edit',
-        'token': token,
+        'token': parent.token,
         'id': $('#planId').val(),
         'title': $('#planTitle').val(),
         'productId': $('#productId').val(),
@@ -544,18 +535,18 @@ function editSavePlanInfo() {
     parent.execAjaxData("/system/view/planDetail.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
-            alert("保存失败。");
+            parent.notifyDanger('保存失败', response);
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert("保存成功。");
+                parent.notifySuccess('保存成功', '');
                 funRefresh();
             } else {
-                alert("保存失败。");
+                parent.notifyDanger('保存失败', response.msg);
             }
         }, function () {
             // complete
-            $('#formPlanDetail').modal('hide');
+            $('#formEditApikey').modal('hide');
         });
 }
 
@@ -567,10 +558,9 @@ function deletePlanInfo(planId) {
     if (confirm("确定要删除数据吗?")) {
         console.log("delete module id:" + planId);
 
-        var token = $.cookie('userToken');
         var jsondata = {
             'op': 'planDetail.delete',
-            'token': token,
+            'token': parent.token,
             'planId': planId
         };
 
@@ -580,10 +570,10 @@ function deletePlanInfo(planId) {
             }, function (response) {
                 // success
                 if (response.code == 0) {
-                    alert("删除成功。")
+                    parent.notifySuccess('删除成功', '');
                     funRefresh();
                 } else {
-                    alert("删除失败：" + response.msg);
+                    parent.notifyDanger('删除失败', response.msg);
                 }
             }, function () {
                 // complete

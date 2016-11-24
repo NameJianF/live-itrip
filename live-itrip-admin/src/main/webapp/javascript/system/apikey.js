@@ -89,8 +89,7 @@ function funSelectApikeys(sSource, aoData, fnCallback) {
     console.log("========== select apikeys ==========");
     sSource = "/sysCfg.action?flag=apikey";
 
-    var token = $.cookie('userToken');
-    aoData.push({name: "token", value: token});
+    aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 
     parent.execAjaxData(sSource, aoData, false
@@ -109,10 +108,9 @@ function funSelectApikeys(sSource, aoData, fnCallback) {
  * @param apikeyId
  */
 function funEditGetApikeyInfo(apikeyId) {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'apikey.detail',
-        'token': token,
+        'token': parent.token,
         'apikeyId': apikeyId
     };
 
@@ -140,10 +138,9 @@ function funEditGetApikeyInfo(apikeyId) {
 
 
 function editSaveApikeyInfo() {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'apikey.edit',
-        'token': token,
+        'token': parent.token,
         'id': $('#editApikeyId').val(),
         'apiKey': $('#editApikey').val(),
         'clientName': $('#editClientName').val(),
@@ -156,14 +153,14 @@ function editSaveApikeyInfo() {
     parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
-            alert("保存失败。");
+            parent.notifyDanger('保存失败', response);
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert("保存成功。");
+                parent.notifySuccess('保存成功', '');
                 funRefresh();
             } else {
-                alert("保存失败。");
+                parent.notifyDanger('保存失败', response.msg);
             }
         }, function () {
             // complete
@@ -179,10 +176,9 @@ function funDeleteApikeyInfo(apikeyId) {
     if (confirm("确定要删除数据吗?")) {
         console.log("delete apikey id:" + apikeyId);
 
-        var token = $.cookie('userToken');
         var jsondata = {
             'op': 'apikey.delete',
-            'token': token,
+            'token': parent.token,
             'apikeyId': apikeyId
         };
 
@@ -192,10 +188,10 @@ function funDeleteApikeyInfo(apikeyId) {
             }, function (response) {
                 // success
                 if (response.code == 0) {
-                    alert("删除成功。");
+                    parent.notifySuccess('删除成功', '');
                     funRefresh();
                 } else {
-                    alert("删除失败：" + response.msg);
+                    parent.notifyDanger('删除失败', response.msg);
                 }
             }, function () {
                 // complete

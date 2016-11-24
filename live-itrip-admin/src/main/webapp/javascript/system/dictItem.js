@@ -79,8 +79,7 @@ function funSelectDictItems(sSource, aoData, fnCallback) {
     console.log("========== selectDictItems ==========");
     sSource = "/sysCfg.action?flag=dictItem";
 
-    var token = $.cookie('userToken');
-    aoData.push({name: "token", value: token});
+    aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 
     parent.execAjaxData(sSource, aoData, false
@@ -99,10 +98,9 @@ function funSelectDictItems(sSource, aoData, fnCallback) {
  * @param dictid
  */
 function funEditGetDcitItemInfo(dictItemId) {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'dictItem.detail',
-        'token': token,
+        'token': parent.token,
         'dictItemId': dictItemId
     };
 
@@ -127,10 +125,9 @@ function funEditGetDcitItemInfo(dictItemId) {
 }
 
 function editSaveDictItemInfo() {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'dictItem.edit',
-        'token': token,
+        'token': parent.token,
         'id': $('#editDictItemId').val(),
         'dictItemName': $('#editDictItemName').val(),
         'dictItemText': $('#editDictItemText').val(),
@@ -141,18 +138,18 @@ function editSaveDictItemInfo() {
     parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
-            alert("保存失败。");
+            parent.notifyDanger('保存失败', response);
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert("保存成功。");
+                parent.notifySuccess('保存成功', '');
                 funRefresh();
             } else {
-                alert("保存失败。");
+                parent.notifyDanger('保存失败', response.msg);
             }
         }, function () {
             // complete
-            $('#formEditDictItem').modal('hide');
+            $('#formEditApikey').modal('hide');
         });
 }
 
@@ -164,10 +161,9 @@ function funDeleteDictItemInfo(dictItemId) {
     if (confirm("确定要删除数据吗?")) {
         console.log("delete dict item id:" + dictItemId);
 
-        var token = $.cookie('userToken');
         var jsondata = {
             'op': 'dict.delete',
-            'token': token,
+            'token': parent.token,
             'dictItemId': dictItemId
         };
 
@@ -177,10 +173,10 @@ function funDeleteDictItemInfo(dictItemId) {
             }, function (response) {
                 // success
                 if (response.code == 0) {
-                    alert("删除成功。")
+                    parent.notifySuccess('删除成功', '');
                     funRefresh();
                 } else {
-                    alert("删除失败：" + response.msg);
+                    parent.notifyDanger('删除失败', response.msg);
                 }
             }, function () {
                 // complete

@@ -73,8 +73,7 @@ function funSelectStaticInfos(sSource, aoData, fnCallback) {
     var queryContent = $("#queryContent").val();
     aoData.push({name: "queryContent", value: queryContent});
 
-    var token = $.cookie('userToken');
-    aoData.push({name: "token", value: token});
+    aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 
     parent.execAjaxData(sSource, aoData, false
@@ -93,10 +92,9 @@ function funSelectStaticInfos(sSource, aoData, fnCallback) {
  * @param infoId
  */
 function funEditGetStaticInfo(infoId) {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'staticInfo.detail',
-        'token': token,
+        'token': parent.token,
         'infoId': infoId
     };
 
@@ -121,11 +119,10 @@ function funEditGetStaticInfo(infoId) {
 
 
 function editSaveStaticInfo() {
-    var token = $.cookie('userToken');
     var markupStr = $('#editStaticInfoContent').code();
     var jsondata = {
         'op': 'staticInfo.edit',
-        'token': token,
+        'token': parent.token,
         'id': $('#editStaticInfoId').val(),
         'type': $('#editStaticInfoType').val(),
         'title': $('#editStaticInfoTitle').val(),
@@ -135,18 +132,18 @@ function editSaveStaticInfo() {
     parent.execAjaxData("/system/view/staticInfo.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
-            alert("保存失败。");
+            parent.notifyDanger('保存失败', response);
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert("保存成功。");
+                parent.notifySuccess('保存成功', '');
                 funRefresh();
             } else {
-                alert("保存失败。");
+                parent.notifyDanger('保存失败', response.msg);
             }
         }, function () {
             // complete
-            $('#formEditStaticInfo').modal('hide');
+            $('#formEditApikey').modal('hide');
         });
 }
 
@@ -157,11 +154,9 @@ function editSaveStaticInfo() {
 function funDeleteStaticInfo(infoId) {
     if (confirm("确定要删除数据吗?")) {
         console.log("delete staticInfo id:" + infoId);
-
-        var token = $.cookie('userToken');
         var jsondata = {
             'op': 'staticInfo.delete',
-            'token': token,
+            'token': parent.token,
             'infoId': infoId
         };
 
@@ -171,10 +166,10 @@ function funDeleteStaticInfo(infoId) {
             }, function (response) {
                 // success
                 if (response.code == 0) {
-                    alert("删除成功。")
+                    parent.notifySuccess('删除成功', '');
                     funRefresh();
                 } else {
-                    alert("删除失败：" + response.msg);
+                    parent.notifyDanger('删除失败', response.msg);
                 }
             }, function () {
                 // complete

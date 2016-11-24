@@ -78,8 +78,7 @@ function funSelectDicts(sSource, aoData, fnCallback) {
     console.log("========== selectDicts ==========");
     sSource = "/sysCfg.action?flag=dict";
 
-    var token = $.cookie('userToken');
-    aoData.push({name: "token", value: token});
+    aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 
     parent.execAjaxData(sSource, aoData, false
@@ -98,10 +97,9 @@ function funSelectDicts(sSource, aoData, fnCallback) {
  * @param dictid
  */
 function funEditGetDictInfo(dictid) {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'dict.detail',
-        'token': token,
+        'token': parent.token,
         'dictid': dictid
     };
 
@@ -125,10 +123,9 @@ function funEditGetDictInfo(dictid) {
 }
 
 function editSaveDictInfo() {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'dict.edit',
-        'token': token,
+        'token': parent.token,
         'id': $('#editDictId').val(),
         'dictName': $('#editDictName').val(),
         'dictText': $('#editDictText').val(),
@@ -138,14 +135,14 @@ function editSaveDictInfo() {
     parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
-            alert("保存失败。");
+            parent.notifyDanger('保存失败', response);
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert("保存成功。");
+                parent.notifySuccess('保存成功', '');
                 funRefresh();
             } else {
-                alert("保存失败。");
+                parent.notifyDanger('保存失败', response.msg);
             }
         }, function () {
             // complete
@@ -161,10 +158,9 @@ function funDeleteDictInfo(dictid) {
     if (confirm("确定要删除数据吗?")) {
         console.log("delete dict id:" + dictid);
 
-        var token = $.cookie('userToken');
         var jsondata = {
             'op': 'dict.delete',
-            'token': token,
+            'token': parent.token,
             'dictid': dictid
         };
 
@@ -174,10 +170,10 @@ function funDeleteDictInfo(dictid) {
             }, function (response) {
                 // success
                 if (response.code == 0) {
-                    alert("删除成功。")
+                    parent.notifySuccess('删除成功', '');
                     funRefresh();
                 } else {
-                    alert("删除失败：" + response.msg);
+                    parent.notifyDanger('删除失败', response.msg);
                 }
             }, function () {
                 // complete

@@ -88,7 +88,6 @@ function sendFile(file, editor, welEditable) {
         processData: false,
         success: function (response) {
             var obj = jQuery.parseJSON(response)
-            console.log(obj.data.fileUrl);
             editor.insertImage(welEditable, obj.data.fileUrl);
         }
     });
@@ -164,14 +163,14 @@ function editSaveCityInfo() {
     parent.execAjaxData("/system/view/citys.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
-            alert("保存失败。");
+            parent.notifyDanger('保存失败', response.msg);
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert("保存成功。");
+                parent.notifySuccess('保存成功', '');
                 funRefresh();
             } else {
-                alert("保存失败。");
+                parent.notifyDanger('保存失败', response.msg);
             }
         }, function () {
             // complete
@@ -187,10 +186,9 @@ function funDeleteCityInfo(cityId) {
     if (confirm("确定要删除数据吗?")) {
         console.log("delete CityInfo id:" + cityId);
 
-        var token = $.cookie('userToken');
         var jsondata = {
             'op': 'citys.delete',
-            'token': token,
+            'token': parent.token,
             'cityId': cityId
         };
 
@@ -200,10 +198,10 @@ function funDeleteCityInfo(cityId) {
             }, function (response) {
                 // success
                 if (response.code == 0) {
-                    alert("删除成功。")
+                    parent.notifySuccess('删除成功', '');
                     funRefresh();
                 } else {
-                    alert("删除失败：" + response.msg);
+                    parent.notifyDanger('删除失败', response.msg);
                 }
             }, function () {
                 // complete

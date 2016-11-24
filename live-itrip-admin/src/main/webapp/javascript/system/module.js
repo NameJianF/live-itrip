@@ -114,8 +114,7 @@ function funSelectModules(sSource, aoData, fnCallback) {
     //aoData.push({name: "querySort", value: querySort});
     //aoData.push({name: "queryStatus", value: queryStatus});
 
-    var token = $.cookie('userToken');
-    aoData.push({name: "token", value: token});
+    aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 
     parent.execAjaxData(sSource, aoData, false
@@ -134,10 +133,9 @@ function funSelectModules(sSource, aoData, fnCallback) {
  * @param moduleid
  */
 function funEditGetModuleInfo(moduleid) {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'module.detail',
-        'token': token,
+        'token': parent.token,
         'moduleid': moduleid
     };
 
@@ -165,10 +163,9 @@ function funEditGetModuleInfo(moduleid) {
 
 
 function editSaveModuleInfo() {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'module.edit',
-        'token': token,
+        'token': parent.token,
         'id': $('#editModuleId').val(),
         'moduleName': $('#editModuleName').val(),
         'parentId': $('#editModuleParent').val(),
@@ -181,18 +178,18 @@ function editSaveModuleInfo() {
     parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
         , function (response) {
             // error
-            alert("保存失败。");
+            parent.notifyDanger('保存失败', response);
         }, function (response) {
             // success
             if (response.code == 0) {
-                alert("保存成功。");
+                parent.notifySuccess('保存成功', '');
                 funRefresh();
             } else {
-                alert("保存失败。");
+                parent.notifyDanger('保存失败', response.msg);
             }
         }, function () {
             // complete
-            $('#formEditModule').modal('hide');
+            $('#formEditApikey').modal('hide');
         });
 }
 
@@ -204,10 +201,9 @@ function funDeleteModuleInfo(moduleid) {
     if (confirm("确定要删除数据吗?")) {
         console.log("delete module id:" + moduleid);
 
-        var token = $.cookie('userToken');
         var jsondata = {
             'op': 'module.delete',
-            'token': token,
+            'token': parent.token,
             'moduleid': moduleid
         };
 
@@ -217,10 +213,10 @@ function funDeleteModuleInfo(moduleid) {
             }, function (response) {
                 // success
                 if (response.code == 0) {
-                    alert("删除成功。")
+                    parent.notifySuccess('删除成功', '');
                     funRefresh();
                 } else {
-                    alert("删除失败：" + response.msg);
+                    parent.notifyDanger('删除失败', response.msg);
                 }
             }, function () {
                 // complete
