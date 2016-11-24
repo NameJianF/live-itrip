@@ -3,13 +3,17 @@ package live.itrip.admin.model;
 public class WebFileInfo {
     private Long id;
 
-    private Integer productId;
+    private String own;
+
+    private Integer ownId;
 
     private String fileName;
 
     private String fileLocation;
 
     private Long fileSize;
+
+    private String md5;
 
     private String fileType;
 
@@ -29,12 +33,20 @@ public class WebFileInfo {
         this.id = id;
     }
 
-    public Integer getProductId() {
-        return productId;
+    public String getOwn() {
+        return own;
     }
 
-    public void setProductId(Integer productId) {
-        this.productId = productId;
+    public void setOwn(String own) {
+        this.own = own == null ? null : own.trim();
+    }
+
+    public Integer getOwnId() {
+        return ownId;
+    }
+
+    public void setOwnId(Integer ownId) {
+        this.ownId = ownId;
     }
 
     public String getFileName() {
@@ -59,6 +71,14 @@ public class WebFileInfo {
 
     public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
+    }
+
+    public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5 == null ? null : md5.trim();
     }
 
     public String getFileType() {

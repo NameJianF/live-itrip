@@ -23,7 +23,6 @@ public class FileController extends AbstractController {
     @Autowired
     private IWebFileInfoService iWebFileInfoService;
 
-
     /**
      * @param response
      * @param request

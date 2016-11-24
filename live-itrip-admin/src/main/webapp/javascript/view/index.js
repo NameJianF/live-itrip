@@ -58,4 +58,12 @@ $(function () {
     // Activate WOW.js plugin for animation on scrol
     new WOW().init();
 
+    loadDatas();
 });
+
+/**
+ * 加载数据
+ */
+function loadDatas() {
+
+}

@@ -12,6 +12,7 @@ import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.file.FileUtils;
 import live.itrip.common.response.BaseResult;
+import live.itrip.common.security.Md5Utils;
 import live.itrip.common.util.UuidUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,61 +39,71 @@ public class WebFileInfoService extends BaseService implements IWebFileInfoServi
     @Override
     public void uploadFile(String flag, MultipartHttpServletRequest multipartRequest, HttpServletResponse response) throws IOException {
         BaseResult result = new BaseResult();
+        // 参数
+        String ownId = null;
+        String own = null;
+        String md5 = null;
 
         if (ViewConstants.FileParams.PRODUCT_0.equals(flag)) {
             // 产品上传
-
-            // 获取参数
-            String productId = multipartRequest.getParameter("productId");
-            Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
-
-
-            for (MultipartFile multipartFile : fileMap.values()) {
-                try {
-                    // 原始文件名
-                    String originalFilename = multipartFile.getOriginalFilename();
-                    // 文件后缀
-                    String fileExt = originalFilename.substring(originalFilename.lastIndexOf(".") + 1).toLowerCase();
-                    // 本地相对路径：新文件名
-                    String fileUrl = getLocalFilePath(fileExt);
-
-                    // 文件本地文件绝对路径：新文件名
-                    String filepath = multipartRequest.getSession().getServletContext().getRealPath(fileUrl);
-
-                    // 保存文件到本地
-                    FileUtils.saveFile(filepath, multipartFile.getBytes());
-
-                    WebFileInfo fileInfo = new WebFileInfo();
-                    if (StringUtils.isNotEmpty(productId)) {
-                        fileInfo.setProductId(Integer.valueOf(productId));
-                    }
-                    fileInfo.setFileName(originalFilename);
-                    fileInfo.setFileLocation(filepath);
-                    fileInfo.setFileSize(multipartFile.getSize());
-                    fileInfo.setFileType(fileExt);
-                    fileInfo.setFileUrl(fileUrl);
-                    fileInfo.setCreateTime(System.currentTimeMillis());
-                    fileInfo.setUpdateTime(fileInfo.getCreateTime());
-
-                    // 保存文件到数据库
-                    int ret = webFileInfoMapper.insertSelective(fileInfo);
-                    if (ret > 0) {
-                        // 文件保存成功
-                        result.setCode(ErrorCode.SUCCESS.getCode());
-                        JSONObject data = new JSONObject();
-                        data.put("fileUrl", fileInfo.getFileUrl());
-                        data.put("fileId", fileInfo.getId());
-                        result.setData(data);
-                        this.writeResponse(response, result);
-                        return;
-                    }
-
-                } catch (Exception ex) {
-                    Logger.error(ex.getMessage(), ex);
-                }
-            }
-
+            ownId = multipartRequest.getParameter("productId");
+            own = ViewConstants.FileParams.PRODUCT_0;
+        } else if (ViewConstants.FileParams.PRODUCT_1.equals(flag)) {
+            ownId = multipartRequest.getParameter("cityId");
+            own = ViewConstants.FileParams.PRODUCT_1;
         }
+
+
+        Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+        for (MultipartFile multipartFile : fileMap.values()) {
+            try {
+                // 原始文件名
+                String originalFilename = multipartFile.getOriginalFilename();
+                // 文件后缀
+                String fileExt = originalFilename.substring(originalFilename.lastIndexOf(".") + 1).toLowerCase();
+                // 本地相对路径：新文件名
+                String fileUrl = getLocalFilePath(fileExt);
+
+                // 文件本地文件绝对路径：新文件名
+                String filepath = multipartRequest.getSession().getServletContext().getRealPath(fileUrl);
+
+                // 保存文件到本地
+                File file = FileUtils.saveFile(filepath, multipartFile.getBytes());
+
+                md5 = Md5Utils.getFileMD5(file);
+
+                WebFileInfo fileInfo = new WebFileInfo();
+                fileInfo.setMd5(md5);
+                fileInfo.setOwn(own);
+                if (StringUtils.isNotEmpty(ownId)) {
+                    fileInfo.setOwnId(Integer.valueOf(ownId));
+                }
+                fileInfo.setFileName(originalFilename);
+                fileInfo.setFileLocation(filepath);
+                fileInfo.setFileSize(multipartFile.getSize());
+                fileInfo.setFileType(fileExt);
+                fileInfo.setFileUrl(fileUrl);
+                fileInfo.setCreateTime(System.currentTimeMillis());
+                fileInfo.setUpdateTime(fileInfo.getCreateTime());
+
+                // 保存文件到数据库
+                int ret = webFileInfoMapper.insertSelective(fileInfo);
+                if (ret > 0) {
+                    // 文件保存成功
+                    result.setCode(ErrorCode.SUCCESS.getCode());
+                    JSONObject data = new JSONObject();
+                    data.put("fileUrl", fileInfo.getFileUrl());
+                    data.put("fileId", fileInfo.getId());
+                    result.setData(data);
+                    this.writeResponse(response, result);
+                    return;
+                }
+
+            } catch (Exception ex) {
+                Logger.error(ex.getMessage(), ex);
+            }
+        }
+
 
         result.setError(ErrorCode.UNKNOWN);
         this.writeResponse(response, result);
@@ -114,13 +125,13 @@ public class WebFileInfoService extends BaseService implements IWebFileInfoServi
             if (StringUtils.isNotEmpty(productImgSamllId)) {
                 WebFileInfo fileInfo = new WebFileInfo();
                 fileInfo.setId(Long.valueOf(productImgSamllId));
-                fileInfo.setProductId(productId);
+                fileInfo.setOwnId(productId);
                 this.webFileInfoMapper.updateByPrimaryKeySelective(fileInfo);
             }
             if (StringUtils.isNotEmpty(productImgBigId)) {
                 WebFileInfo fileInfo = new WebFileInfo();
                 fileInfo.setId(Long.valueOf(productImgBigId));
-                fileInfo.setProductId(productId);
+                fileInfo.setOwnId(productId);
                 this.webFileInfoMapper.updateByPrimaryKeySelective(fileInfo);
             }
         } catch (Exception ex) {

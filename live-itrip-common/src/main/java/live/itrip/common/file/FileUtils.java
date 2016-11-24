@@ -39,11 +39,12 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
      * @param data
      * @throws IOException
      */
-    public static void saveFile(String fileName, byte[] data) throws IOException {
+    public static File saveFile(String fileName, byte[] data) throws IOException {
         File file = new File(fileName);
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
         org.apache.commons.io.FileUtils.writeByteArrayToFile(file, data);
+        return file;
     }
 }

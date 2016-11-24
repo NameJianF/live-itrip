@@ -5,6 +5,7 @@
 function submitDatas() {
     $("#btnSubmit").button('loading');
     var jsondata = {
+        'op': 'tripService.add',
         'serviceType': $('#serviceType').find("option:selected").text(),
         'linkMan': $("#linkMan").val().trim(),
         'mobile': $("#mobile").val().trim(),

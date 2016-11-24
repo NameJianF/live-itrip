@@ -3,10 +3,12 @@
 <mapper namespace="live.itrip.admin.dao.WebFileInfoMapper">
     <resultMap id="BaseResultMap" type="live.itrip.admin.model.WebFileInfo">
         <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="product_id" property="productId" jdbcType="INTEGER"/>
+        <result column="own" property="own" jdbcType="VARCHAR"/>
+        <result column="own_id" property="ownId" jdbcType="INTEGER"/>
         <result column="file_name" property="fileName" jdbcType="VARCHAR"/>
         <result column="file_location" property="fileLocation" jdbcType="VARCHAR"/>
         <result column="file_size" property="fileSize" jdbcType="BIGINT"/>
+        <result column="md5" property="md5" jdbcType="VARCHAR"/>
         <result column="file_type" property="fileType" jdbcType="VARCHAR"/>
         <result column="file_url" property="fileUrl" jdbcType="VARCHAR"/>
         <result column="is_delete" property="isDelete" jdbcType="CHAR"/>
@@ -14,7 +16,7 @@
         <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, product_id, file_name, file_location, file_size, file_type, file_url, is_delete, 
+    id, own, own_id, file_name, file_location, file_size, md5, file_type, file_url, is_delete, 
     create_time, update_time
   </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -27,15 +29,17 @@
     delete from web_file_info
     where id = #{id,jdbcType=BIGINT}
   </delete>
-    <insert id="insert" parameterType="live.itrip.admin.model.WebFileInfo" keyProperty="id" useGeneratedKeys="true">
-    insert into web_file_info (id, product_id, file_name, 
-      file_location, file_size, file_type, 
-      file_url, is_delete, create_time, 
-      update_time)
-    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, 
-      #{fileLocation,jdbcType=VARCHAR}, #{fileSize,jdbcType=BIGINT}, #{fileType,jdbcType=VARCHAR}, 
-      #{fileUrl,jdbcType=VARCHAR}, #{isDelete,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT}, 
-      #{updateTime,jdbcType=BIGINT})
+    <insert id="insert" parameterType="live.itrip.admin.model.WebFileInfo">
+    insert into web_file_info (id, own, own_id, 
+      file_name, file_location, file_size, 
+      md5, file_type, file_url, 
+      is_delete, create_time, update_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{own,jdbcType=VARCHAR}, #{ownId,jdbcType=INTEGER}, 
+      #{fileName,jdbcType=VARCHAR}, #{fileLocation,jdbcType=VARCHAR}, #{fileSize,jdbcType=BIGINT}, 
+      #{md5,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, 
+      #{isDelete,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}
+      )
   </insert>
     <insert id="insertSelective" parameterType="live.itrip.admin.model.WebFileInfo">
         insert into web_file_info
@@ -43,8 +47,11 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="productId != null">
-                product_id,
+            <if test="own != null">
+                own,
+            </if>
+            <if test="ownId != null">
+                own_id,
             </if>
             <if test="fileName != null">
                 file_name,
@@ -54,6 +61,9 @@
             </if>
             <if test="fileSize != null">
                 file_size,
+            </if>
+            <if test="md5 != null">
+                md5,
             </if>
             <if test="fileType != null">
                 file_type,
@@ -75,8 +85,11 @@
             <if test="id != null">
                 #{id,jdbcType=BIGINT},
             </if>
-            <if test="productId != null">
-                #{productId,jdbcType=INTEGER},
+            <if test="own != null">
+                #{own,jdbcType=VARCHAR},
+            </if>
+            <if test="ownId != null">
+                #{ownId,jdbcType=INTEGER},
             </if>
             <if test="fileName != null">
                 #{fileName,jdbcType=VARCHAR},
@@ -86,6 +99,9 @@
             </if>
             <if test="fileSize != null">
                 #{fileSize,jdbcType=BIGINT},
+            </if>
+            <if test="md5 != null">
+                #{md5,jdbcType=VARCHAR},
             </if>
             <if test="fileType != null">
                 #{fileType,jdbcType=VARCHAR},
@@ -107,8 +123,11 @@
     <update id="updateByPrimaryKeySelective" parameterType="live.itrip.admin.model.WebFileInfo">
         update web_file_info
         <set>
-            <if test="productId != null">
-                product_id = #{productId,jdbcType=INTEGER},
+            <if test="own != null">
+                own = #{own,jdbcType=VARCHAR},
+            </if>
+            <if test="ownId != null">
+                own_id = #{ownId,jdbcType=INTEGER},
             </if>
             <if test="fileName != null">
                 file_name = #{fileName,jdbcType=VARCHAR},
@@ -118,6 +137,9 @@
             </if>
             <if test="fileSize != null">
                 file_size = #{fileSize,jdbcType=BIGINT},
+            </if>
+            <if test="md5 != null">
+                md5 = #{md5,jdbcType=VARCHAR},
             </if>
             <if test="fileType != null">
                 file_type = #{fileType,jdbcType=VARCHAR},
@@ -139,10 +161,12 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="live.itrip.admin.model.WebFileInfo">
     update web_file_info
-    set product_id = #{productId,jdbcType=INTEGER},
+    set own = #{own,jdbcType=VARCHAR},
+      own_id = #{ownId,jdbcType=INTEGER},
       file_name = #{fileName,jdbcType=VARCHAR},
       file_location = #{fileLocation,jdbcType=VARCHAR},
       file_size = #{fileSize,jdbcType=BIGINT},
+      md5 = #{md5,jdbcType=VARCHAR},
       file_type = #{fileType,jdbcType=VARCHAR},
       file_url = #{fileUrl,jdbcType=VARCHAR},
       is_delete = #{isDelete,jdbcType=CHAR},

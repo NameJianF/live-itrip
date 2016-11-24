@@ -18,7 +18,7 @@ $(function () {
             {"mData": "cityName"},
             {"mData": "cityArea"},
             {"mData": "cityTitle"},
-            {"mData": "cityContent"},
+            //{"mData": "cityContent"},
             {
                 "mData": "createTime",
                 render: function (data, type, row) {
@@ -62,8 +62,37 @@ $(function () {
         }
     });
 
-    $('#editCityInfoContent').summernote();
+    $('#editCityInfoContent').summernote({
+        //height: 200,
+        onImageUpload: function (files, editor, welEditable) {
+            for (var i = files.length - 1; i >= 0; i--) {
+                sendFile(files[i], editor, welEditable);
+            }
+        }
+    });
 });
+
+//图片上传
+function sendFile(file, editor, welEditable) {
+    var formData = new FormData();
+    formData.append("file", file);
+    formData.append('cityId', '100');
+    //formData.append('imgFlag', imgFlag);
+
+    $.ajax({
+        data: formData,
+        type: "POST",
+        url: "/file/upload.action?flag=1",
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+            var obj = jQuery.parseJSON(response)
+            console.log(obj.data.fileUrl);
+            editor.insertImage(welEditable, obj.data.fileUrl);
+        }
+    });
+}
 
 
 function funSelectCityInfos(sSource, aoData, fnCallback) {
@@ -93,10 +122,9 @@ function funSelectCityInfos(sSource, aoData, fnCallback) {
  * @param cityId
  */
 function funEditGetCityInfo(cityId) {
-    var token = $.cookie('userToken');
     var jsondata = {
         'op': 'citys.detail',
-        'token': token,
+        'token': parent.token,
         'cityId': cityId
     };
 

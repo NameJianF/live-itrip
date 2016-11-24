@@ -152,8 +152,6 @@
     <select id="selectCityInfoList" resultMap="ResultMapWithBLOBs" parameterType="map">
         select
         <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
         from web_city_info
         where is_delete = '0'
         <if test="queryContent != null and queryContent != '' ">

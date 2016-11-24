@@ -93,30 +93,28 @@
                 <div class="panel-heading">
                     推荐线路
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" style="padding: 5px">
                     <div class="wrapper wrapper-content animated fadeInRight">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="ibox">
                                     <div class="ibox-content product-box">
-
-                                        <div class="product-imitation">
-                                            [ INFO ]
+                                        <div class="product-imitation" style="padding: 0px">
+                                            <a href="#">
+                                                <img src="/images/web/theme/wq01.jpg" style="width: 280px;">
+                                            </a>
                                         </div>
                                         <div class="product-desc">
-                                <span class="product-price">
-                                    &yen; 10688
-                                </span>
-                                            <small class="text-muted">Category</small>
-                                            <a href="ecommerce_products_grid.html#" class="product-name"> Product</a>
-
-
-                                            <div class="small m-t-xs">
-                                                Many desktop publishing packages and web page editors now.
+                                            <span class="product-price">&yen; 10688</span>
+                                            <a href="#" class="product-name"> 北海道-北海道-北海道-北海道</a>
+                                            <div class="vote-info" style="margin-left: 0px;">
+                                                <i class="fa fa-comments-o"></i> <a
+                                                    href="#">Comments(32)</a>
+                                                <i class="fa fa-user"></i>
+                                                <a href="#">Andrew Williams</a>
                                             </div>
                                             <div class="m-t text-right">
-
-                                                <a href="ecommerce_products_grid.html#"
+                                                <a href="#"
                                                    class="btn btn-xs btn-outline btn-primary">详细 <i
                                                         class="fa fa-long-arrow-right"></i> </a>
                                             </div>
@@ -127,80 +125,22 @@
                             <div class="col-md-12">
                                 <div class="ibox">
                                     <div class="ibox-content product-box">
-
-                                        <div class="product-imitation">
-                                            [ INFO ]
+                                        <div class="product-imitation" style="padding: 0px">
+                                            <a href="#">
+                                                <img src="/images/web/theme/wq01.jpg" style="width: 280px;">
+                                            </a>
                                         </div>
                                         <div class="product-desc">
-                                <span class="product-price">
-                                    &yen; 10688
-                                </span>
-                                            <small class="text-muted">Category</small>
-                                            <a href="ecommerce_products_grid.html#" class="product-name"> Product</a>
-
-
-                                            <div class="small m-t-xs">
-                                                Many desktop publishing packages and web page editors now.
+                                            <span class="product-price">&yen; 10688</span>
+                                            <a href="#" class="product-name"> 北海道-北海道-北海道-北海道</a>
+                                            <div class="vote-info" style="margin-left: 0px;">
+                                                <i class="fa fa-comments-o"></i> <a
+                                                    href="#">Comments(32)</a>
+                                                <i class="fa fa-user"></i>
+                                                <a href="#">Andrew Williams</a>
                                             </div>
                                             <div class="m-t text-right">
-
-                                                <a href="ecommerce_products_grid.html#"
-                                                   class="btn btn-xs btn-outline btn-primary">详细 <i
-                                                        class="fa fa-long-arrow-right"></i> </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="ibox">
-                                    <div class="ibox-content product-box active">
-
-                                        <div class="product-imitation">
-                                            [ INFO ]
-                                        </div>
-                                        <div class="product-desc">
-                                <span class="product-price">
-                                    &yen; 10688
-                                </span>
-                                            <small class="text-muted">Category</small>
-                                            <a href="ecommerce_products_grid.html#" class="product-name"> Product</a>
-
-
-                                            <div class="small m-t-xs">
-                                                Many desktop publishing packages and web page editors now.
-                                            </div>
-                                            <div class="m-t text-right">
-
-                                                <a href="ecommerce_products_grid.html#"
-                                                   class="btn btn-xs btn-outline btn-primary">详细 <i
-                                                        class="fa fa-long-arrow-right"></i> </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="ibox">
-                                    <div class="ibox-content product-box">
-
-                                        <div class="product-imitation">
-                                            [ INFO ]
-                                        </div>
-                                        <div class="product-desc">
-                                <span class="product-price">
-                                    &yen; 10688
-                                </span>
-                                            <small class="text-muted">Category</small>
-                                            <a href="ecommerce_products_grid.html#" class="product-name"> Product</a>
-
-
-                                            <div class="small m-t-xs">
-                                                Many desktop publishing packages and web page editors now.
-                                            </div>
-                                            <div class="m-t text-right">
-
-                                                <a href="ecommerce_products_grid.html#"
+                                                <a href="#"
                                                    class="btn btn-xs btn-outline btn-primary">详细 <i
                                                         class="fa fa-long-arrow-right"></i> </a>
                                             </div>
@@ -227,6 +167,7 @@
 <script src="/js/plugins/wow/wow.min.js"></script>
 
 <%--itrip--%>
+<script src="/javascript/common.js"></script>
 <script src="/javascript/view/city/city.js"></script>
 
 

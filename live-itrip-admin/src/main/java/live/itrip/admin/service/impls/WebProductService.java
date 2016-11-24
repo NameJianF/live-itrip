@@ -138,4 +138,16 @@ public class WebProductService extends BaseService implements IWebProductService
         result.setError(ErrorCode.UNKNOWN);
         this.writeResponse(response, result);
     }
+
+    /**
+     * 根据 城市 查询相关推荐产品
+     *
+     * @param decodeJson
+     * @param response
+     * @param request
+     */
+    @Override
+    public void selectHotProductsByCityId(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+
+    }
 }

@@ -68,6 +68,7 @@ function initControls() {
 function submitDatas() {
     $("#btnSubmit").button('loading');
     var jsondata = {
+        'op': 'customerAsk.add',
         'cusName': $("#cusName").val().trim(),
         'links': $("#links").val().trim(),
         'days': $("#days").val().trim(),

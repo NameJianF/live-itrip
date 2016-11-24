@@ -40,8 +40,8 @@
                         <th>ID</th>
                         <th>城市名称</th>
                         <th>区域</th>
-                        <th>标题</th>
-                        <th>内容介绍</th>
+                        <th>简介</th>
+                        <%--<th>内容介绍</th>--%>
                         <th>创建时间</th>
                         <th>更新时间</th>
                         <th>操作</th>
@@ -55,56 +55,57 @@
 
     </div>
 
-    <div class="modal fade modal-default" id="formEditCityInfo">
-        <div class="modal-dialog" style="width: 800px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="formEditTitle">信息编辑</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <input id="editCityInfoId" type="hidden">
-                            <label for="editCityInfoName" class="col-sm-2 control-label">城市名称</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="editCityInfoName">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="editCityInfoArea" class="col-sm-2 control-label">区域</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="editCityInfoArea">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="editCityInfoTitle" class="col-sm-2 control-label">标题</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="editCityInfoTitle">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="editCityInfoContent" class="col-sm-2 control-label">内容</label>
-                            <div class="col-sm-10">
-                                <div class="summernote" id="editCityInfoContent">
 
-                                </div>
+</div>
+
+<div class="modal fade modal-default" id="formEditCityInfo">
+    <div class="modal-dialog" style="width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="formEditTitle">信息编辑</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <input id="editCityInfoId" type="hidden">
+                        <label for="editCityInfoName" class="col-sm-2 control-label">景点名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="editCityInfoName">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCityInfoArea" class="col-sm-2 control-label">区域</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="editCityInfoArea">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCityInfoTitle" class="col-sm-2 control-label">标题</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="editCityInfoTitle">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCityInfoContent" class="col-sm-2 control-label">内容</label>
+                        <div class="col-sm-10">
+                            <div class="summernote" id="editCityInfoContent">
+
                             </div>
                         </div>
+                    </div>
 
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn   btn-primary" data-dismiss="modal">取消</button>
-                    <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSaveCityInfo()">确定
-                    </button>
-                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn   btn-primary" data-dismiss="modal">取消</button>
+                <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSaveCityInfo()">确定
+                </button>
             </div>
         </div>
     </div>
 </div>
-
 
 <!-- SUMMERNOTE -->
 <script src="/js/plugins/summernote/summernote.min.js"></script>

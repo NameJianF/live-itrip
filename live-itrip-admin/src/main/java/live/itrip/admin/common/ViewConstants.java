@@ -24,5 +24,11 @@ public class ViewConstants {
          * 新建产品--产品特色--图片上传
          */
         public static final String PRODUCT_0 = "0";
+
+        /**
+         * 新建city--内容图片上传
+         */
+        public static final String PRODUCT_1 = "1";
+
     }
 }
