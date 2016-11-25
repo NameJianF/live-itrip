@@ -18,23 +18,28 @@
 <div class="wrapper wrapper-content animated fadeInRight ecommerce">
     <div class="row">
         <div class="col-lg-12">
-            <div class="ibox-content table-responsive">
-                <div style="border-bottom:solid 1px lightgray; margin-bottom: 4px;">
-                    <div class="row">
-                        <div class="col-sm-12 form-inline">
-                            <label class="control-label" style="margin-right: 10px;">标题</label>
-                            <input type="text" class="form-control" id="queryContent" placeholder="关键字">
-                            <button type="button" onclick="funRefresh();" class="btn btn-primary ">查询</button>
-                            <button type="button" onclick="funClickAddRow();" class="btn btn-primary ">
-                                添加
-                            </button>
-                        </div>
+            <div class="ibox-title">
+                <div class="ibox-tools">
+                    <div class="btn-group">
+                        <input id="queryContent" type="text" class="form-control" placeholder="关键字"
+                               style="width: 200px;">
                     </div>
-
+                    <div class="btn-group" style="margin-left: -4px;">
+                        <a id="btnSearch" onclick="funRefresh();" class="btn btn-primary"><span
+                                class="fa fa-search"></span> 查询
+                        </a>
+                    </div>
+                    <div class="btn-group">
+                        <a class="btn btn-primary dropdown-text" onclick="funClickAddRow()">
+                            <i class="fa fa-plus"></i> 新增
+                        </a>
+                    </div>
                 </div>
+            </div>
+            <div class="ibox-content table-responsive">
                 <table class="table table-hover table-bordered dataTables-example table-responsive"
                        id="tableStaticInfos"
-                       style="font-size: 14px;">
+                       style="font-size: 12px;">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -53,52 +58,51 @@
         </div>
 
     </div>
-
-    <div class="modal fade modal-default" id="formEditStaticInfo">
-        <div class="modal-dialog" style="width: 800px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">×</span></button>
-                    <h4 class="modal-title" id="formEditTitle">信息编辑</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <input id="editStaticInfoId" type="hidden">
-                            <label for="editStaticInfoType" class="col-sm-2 control-label">类型</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="editStaticInfoType">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="editStaticInfoTitle" class="col-sm-2 control-label">标题</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="editStaticInfoTitle">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="editStaticInfoContent" class="col-sm-2 control-label">内容</label>
-                            <div class="col-sm-10">
-                                <div class="summernote" id="editStaticInfoContent">
-
-                                </div>
-                            </div>
-                        </div>
-
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn   btn-primary" data-dismiss="modal">取消</button>
-                    <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSaveStaticInfo()">确定
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div>
 </div>
 
+<div class="modal fade modal-default" id="formEditStaticInfo">
+    <div class="modal-dialog" style="width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="formEditTitle">信息编辑</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <input id="editStaticInfoId" type="hidden">
+                        <label for="editStaticInfoType" class="col-sm-2 control-label">类型</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="editStaticInfoType">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="editStaticInfoTitle" class="col-sm-2 control-label">标题</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="editStaticInfoTitle">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editStaticInfoContent" class="col-sm-2 control-label">内容</label>
+                        <div class="col-sm-10">
+                            <div class="summernote" id="editStaticInfoContent">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn   btn-primary" data-dismiss="modal">取消</button>
+                <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSaveStaticInfo()">确定
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
 <!-- SUMMERNOTE -->
 <script src="/js/plugins/summernote/summernote.min.js"></script>

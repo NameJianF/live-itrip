@@ -56,19 +56,11 @@ $(function () {
                     return (new Date(data)).Format("yyyy-MM-dd hh:mm:ss");
                 }
             },
-            //{
-            //    "mData": "updateTime",
-            //    render: function (data, type, row) {
-            //        if (data == null) {
-            //            return "";
-            //        }
-            //        return (new Date(data)).Format("yyyy-MM-dd hh:mm:ss");
-            //    }
-            //},
             {
                 render: function (data, type, row) {
                     if (type === 'display') {
-                        return '<button type="button" class="btn btn-link btn-xs" onclick="funEditGetProductInfo(' + row.id + ')">编辑</button>' +
+                        return '<a onclick="funEditGetProductInfo(' + row.id + ')">' +
+                            '<i class="fa fa-edit"></i></a>' +
                             '<button type="button" class="btn btn-link btn-xs" onclick="funDeleteProductInfo(' + row.id + ')">删除</button>' +
                             '<button type="button" class="btn btn-link btn-xs" onclick="funCreateHtmlFile(' + row.id + ')">生成HTML</button>';
                     }
