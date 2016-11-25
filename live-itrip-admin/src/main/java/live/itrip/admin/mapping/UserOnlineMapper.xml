@@ -31,7 +31,8 @@
       #{userName,jdbcType=VARCHAR}, #{userSource,jdbcType=VARCHAR}, #{userSubsource,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
-    <insert id="insertSelective" parameterType="live.itrip.admin.model.UserOnline" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertSelective" parameterType="live.itrip.admin.model.UserOnline" useGeneratedKeys="true"
+            keyProperty="id">
         insert into user_online
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -119,7 +120,7 @@
     <!-- add  -->
     <delete id="deleteByUserIdOrUserEmail" parameterType="map">
         delete from user_online
-        where user_email = ${uid}
-        or user_id = ${email}
+        where user_email = '${email}'
+        or user_id = ${uid}
     </delete>
 </mapper>

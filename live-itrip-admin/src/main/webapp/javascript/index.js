@@ -61,3 +61,23 @@ function loadModules() {
             // complete
         });
 }
+
+function profile() {
+    var dataUrl = "/system/profile.action";
+    var menuName = "个人中心";
+    parent.$.itriptab.addTabFromOut('currentUser', dataUrl, menuName);
+}
+
+function logout() {
+    var jsondata = {
+        'op': 'user.logout',
+        'token': token
+    };
+    execAjaxData("/user.action", JSON.stringify(jsondata), false, function (response) {
+    }, function (response) {
+        if (response.code == 0) {
+            window.location.href = '/system/login.action';
+        }
+    }, function () {
+    });
+}

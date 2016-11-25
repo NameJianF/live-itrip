@@ -22,10 +22,11 @@
         <div class="sidebar-collapse">
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
-                    <div class="dropdown profile-element"> <span>
+                    <div class="dropdown profile-element">
+                        <span>
                             <img alt="image" class="img-circle" src="/img/profile_small.jpg"/>
-                             </span>
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="index.jsp#">
+                        </span>
+                        <a data-toggle="dropdown" class="dropdown-toggle">
                                 <span class="clear"> <span class="block m-t-xs">
                                     <strong class="font-bold">
                                         ${user.userName}
@@ -34,24 +35,16 @@
                                     <b class="caret"></b></span> </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a href="profile.html">个人中心</a></li>
-                            <%--<li><a href="contacts.html">Contacts</a></li>--%>
-                            <%--<li><a href="mailbox.html">Mailbox</a></li>--%>
+                            <li><a onclick="profile();">个人中心</a></li>
                             <li class="divider"></li>
-                            <li><a href="system/logout.action">退出</a></li>
+                            <li><a onclick="logout();">退出</a></li>
                         </ul>
                     </div>
                     <div class="logo-element">
                         iTrip
                     </div>
                 </li>
-                <%--<li>--%>
-                <%--<a href="pages/dashboard.action" onclick="$.itriptab.addTab"><i class="fa fa-th-large"></i> <span--%>
-                <%--class="nav-label">Dashboard</span></a>--%>
-                <%--</li>--%>
-
             </ul>
-
         </div>
     </nav>
 
@@ -172,7 +165,7 @@
                     </li>
 
                     <li>
-                        <a href="system/logout.action">
+                        <a onclick="logout();">
                             <i class="fa fa-sign-out"></i> 退出
                         </a>
                     </li>
@@ -749,14 +742,7 @@
     // 页面加载完成后的操作
     $(document).ready(function () {
         setTimeout(function () {
-            toastr.options = {
-                closeButton: true,
-                progressBar: true,
-                showMethod: 'slideDown',
-                timeOut: 4000
-            };
-            toastr.success('和旅行-iTrip', '欢迎回到和旅行后台管理系统');
-
+            toastr.success('欢迎回到和旅行后台管理系统', '和旅行-iTrip');
         }, 1300);
     });
 

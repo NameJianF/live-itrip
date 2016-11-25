@@ -155,7 +155,7 @@
         from web_city_info
         where is_delete = '0'
         <if test="queryContent != null and queryContent != '' ">
-            AND title LIKE ${queryContent}
+            AND city_name LIKE ${queryContent}
         </if>
         order by id DESC
         limit ${start},${length}

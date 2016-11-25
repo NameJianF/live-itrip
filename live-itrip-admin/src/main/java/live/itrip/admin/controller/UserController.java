@@ -52,6 +52,9 @@ public class UserController extends AbstractController {
                 if ("user.login".equalsIgnoreCase(op)) {
                     // login
                     iUserService.userLogin(decodeJson, response, request);
+                } else if ("user.logout".equalsIgnoreCase(op)) {
+                    // logout
+                    iUserService.userLogout(decodeJson, response, request);
                 }
             }
         } catch (Exception ex) {

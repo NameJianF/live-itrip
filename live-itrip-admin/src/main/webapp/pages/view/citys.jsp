@@ -22,7 +22,7 @@
                 <div style="border-bottom:solid 1px lightgray; margin-bottom: 4px;">
                     <div class="row">
                         <div class="col-sm-12 form-inline">
-                            <label class="control-label" style="margin-right: 10px;">标题</label>
+                            <label class="control-label" style="margin-right: 10px;">景点</label>
                             <input type="text" class="form-control" id="queryContent" placeholder="关键字">
                             <button type="button" onclick="funRefresh();" class="btn btn-primary ">查询</button>
                             <button type="button" onclick="funClickAddRow();" class="btn btn-primary ">
@@ -30,15 +30,14 @@
                             </button>
                         </div>
                     </div>
-
                 </div>
                 <table class="table table-hover table-bordered dataTables-example table-responsive"
                        id="tableCitys"
-                       style="font-size: 14px;">
+                       style="font-size: 12px;">
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>城市名称</th>
+                        <th>景点</th>
                         <th>区域</th>
                         <th>简介</th>
                         <%--<th>内容介绍</th>--%>
@@ -52,10 +51,7 @@
                 </table>
             </div>
         </div>
-
     </div>
-
-
 </div>
 
 <div class="modal fade modal-default" id="formEditCityInfo">

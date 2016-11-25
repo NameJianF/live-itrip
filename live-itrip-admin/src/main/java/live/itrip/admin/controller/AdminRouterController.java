@@ -47,6 +47,13 @@ public class AdminRouterController extends AbstractController {
         return "pages/login";
     }
 
+    @RequestMapping(value = "/system/profile", method = RequestMethod.GET)
+    public String pagesProfile(HttpServletRequest request, Model model) {
+        AdminUser user = iUserService.getCurrentLoginUser();
+        model.addAttribute("user", user);
+        return "pages/system/profile";
+    }
+
     @RequestMapping(value = "/system/dashboard", method = RequestMethod.GET)
     public String pagesDashboard() {
         return "pages/dashboard";
@@ -93,8 +100,6 @@ public class AdminRouterController extends AbstractController {
     @RequestMapping(value = "/system/member", method = RequestMethod.GET)
     public String systemMember(HttpServletRequest request, Model model) {
         List<AdminDepart> departList = iAdminDepartService.selectAllDeparts();
-
-
         model.addAttribute("departList", departList);
         return "pages/system/member";
     }
