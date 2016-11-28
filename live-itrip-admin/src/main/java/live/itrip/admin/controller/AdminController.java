@@ -225,6 +225,8 @@ public class AdminController extends AbstractController {
                         iWebProductPlanService.editPlanById(decodeJson, response, request);
                     } else if ("planDetail.delete".equalsIgnoreCase(op)) {
                         iWebProductPlanService.deletePlanById(decodeJson, response, request);
+                    } else if ("planDetail.preList".equalsIgnoreCase(op)) {
+                        iWebProductPlanService.selectPlanList(decodeJson, response, request);
                     }
                 }
 

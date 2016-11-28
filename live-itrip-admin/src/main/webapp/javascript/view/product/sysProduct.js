@@ -59,8 +59,7 @@ $(function () {
             {
                 render: function (data, type, row) {
                     if (type === 'display') {
-                        return '<a onclick="funEditGetProductInfo(' + row.id + ')">' +
-                            '<i class="fa fa-edit"></i></a>' +
+                        return '<button class="btn btn-link btn-xs" onclick="funEditGetProductInfo(' + row.id + ')">编辑</button>' +
                             '<button type="button" class="btn btn-link btn-xs" onclick="funDeleteProductInfo(' + row.id + ')">删除</button>' +
                             '<button type="button" class="btn btn-link btn-xs" onclick="funCreateHtmlFile(' + row.id + ')">生成HTML</button>';
                     }

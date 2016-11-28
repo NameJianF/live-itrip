@@ -507,8 +507,6 @@ function editPlanDetail(planId) {
         }, function () {
             // complete
         });
-
-
 }
 
 /**
@@ -579,4 +577,100 @@ function deletePlanInfo(planId) {
                 // complete
             });
     }
+}
+
+//预览
+function showPreview() {
+    // set value
+    var productType = $('#productType').find("option:selected").text();
+    var preFromCity = $('#productFromCity').find("option:selected").text();
+    var days = $('#productDays').find("option:selected").text();
+    var trafic = $('#productTraffic').find("option:selected").text();
+    $('#preTitle').html($('#productTitle').val());
+    $("#preImgSmall").attr("src", $('#productImgSamll').val());
+    $('#preDesr').html($('#productDesr').val());
+    $('#prePrice').html('&yen;' + $('#productPrice').val());
+    $('#preType').html(productType);
+    $('#preFromCity').html(preFromCity);
+    $('#preDays').html(days);
+    $('#preTrafic').html(trafic);
+    $('#preSpecialty').html($('#productSpecialty').code());
+    //$('#').html('');
+    $('#preCost').html($('#productCost').code());
+    $('#preReserve').html($('#productReserve').code());
+    $('#preNotice').html($('#productNotice').code());
+
+    // plan
+    var jsondata = {
+        'op': 'planDetail.preList',
+        'token': parent.token,
+        'productId': $('#productId').val()
+    };
+
+    parent.execAjaxData("/system/view/planDetail.action", JSON.stringify(jsondata), true
+        , function (response) {
+            // error
+        }, function (response) {
+            // success
+            if (response.code == 0) {
+                var content = "";
+                var jsonarray = eval(response.data);
+                for (var i = 0; i < jsonarray.length; i++) {
+                    var item = jsonarray[i];
+                    content += '<div class="vertical-timeline-block">';
+                    content += '<div class="vertical-timeline-icon navy-bg">';
+                    content += ' <i class="fa fa-flag"></i>';
+                    content += '</div>';
+                    content += '<div class="vertical-timeline-content">';
+                    content += '<h2>' + item.title + '</h2>';
+                    content += '<table class="table small m-b-xs">';
+                    content += '<tbody>';
+                    content += '<tr style="height: 50px;">';
+                    content += '<td style="line-height: 40px;">';
+                    content += '<i class="fa fa-delicious" style="margin-right: 10px;"></i>';
+                    content += '早餐: <span class="label label-primary"';
+                    content += 'style="margin-right: 30px;">酒店</span>';
+                    content += '中餐: <span class="label label-primary"';
+                    content += 'style="margin-right: 30px;">团餐</span>';
+                    content += '晚餐: <span class="label label-primary"';
+                    content += 'style="margin-right: 30px;">团餐</span>';
+                    content += '</td>';
+                    content += '</tr>';
+                    content += '<tr style="height: 50px;">';
+                    content += '<td style="line-height: 40px;">';
+                    content += ' <i class="fa fa-building" style="margin-right: 10px;"></i>';
+                    content += '住宿: <span class="label label-primary">札幌</span>';
+                    content += '</td>';
+                    content += '</tr>';
+                    content += '<tr style="height: 50px;">';
+                    content += '<td style="line-height: 40px;">';
+                    content += ' <i class="fa fa-building" style="margin-right: 10px;"></i>';
+                    content += '交通: <span class="label label-car">大巴</span>';
+                    content += '</td>';
+                    content += '</tr>';
+                    content += '<tr>';
+                    content += '<td>';
+                    content += '<p>赏花</strong><br>大阪城公园内广栽各种树木，每逢花季是赏樱、赏梅的胜地，吸引了各国游客，很多大阪市民还爱来此观赏水边的野鸟。公园里种植了1250株梅树、4500株樱树，2月中旬-3月上旬可以赏梅，3月底-4月中旬可以赏樱。10月中旬-11月中旬还有规模盛大的“大阪城菊花节”。<br>西之丸庭园曾是丰臣秀吉的正妻北政所的住处，四周树木环绕，在此能望到天守阁和护城河的石墙等美景，需单独购票进入。这里也是著名的赏樱胜地，3月底-4月中旬，以染井吉野为主的约600株樱花竞相开放，花期约一周，其间还会举办赏夜樱的活动。<br>大阪城公园里的梅林经过修剪显得低矮、宽阔，无需特意抬头看花。观赏期为2月中旬-3月上旬，可以免费欣赏。';
+                    content += '</p>';
+
+                    content += '</td>';
+                    content += '</tr>';
+                    content += '</tbody>';
+                    content += '</table>';
+
+                    content += '<a href="#" class="btn btn-xs btn-primary"> More';
+                    content += 'info</a>';
+                    content += '<span class="vertical-date"><small>第一天';
+                    content += '</small> </span>';
+                    content += '</div>';
+                    content += '</div>';
+                }
+                $('#vertical-timeline').append(content);
+            }
+        }, function () {
+            // complete
+        });
+
+
+    $('#formPreview').modal('show');
 }

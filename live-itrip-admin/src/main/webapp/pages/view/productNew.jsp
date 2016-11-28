@@ -39,6 +39,11 @@
     >
     <div class="row">
         <div class="col-lg-12">
+            <div class="ibox-tools gray-bg" style="padding: 5px;margin-bottom: 5px">
+                <button class="btn btn-primary" onclick="showPreview();">预览</button>
+            </div>
+        </div>
+        <div class="col-lg-12">
             <div class="tabs-container">
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#tab-1"><i
@@ -255,7 +260,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="productcost" class="col-sm-2 control-label">编辑</label>
+                                    <label for="productCost" class="col-sm-2 control-label">编辑</label>
                                     <div class="col-sm-10">
                                         <div class="summernote" id="productCost">
                                         </div>
@@ -336,7 +341,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 
@@ -358,8 +362,8 @@
                 <button class="btn btn-primary" id="btnUploadFile" style="margin-right: 10px;">上传文件</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+        </div>
+    </div>
 </div>
 
 <%--行程详情--%>
@@ -430,6 +434,208 @@
                 <button type="button" class="btn   btn-primary" data-dismiss="modal">取消</button>
                 <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSavePlanInfo()">确定
                 </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<%--产品信息预览--%>
+<div class="modal fade modal-default" id="formPreview">
+    <div class="modal-dialog" style="width: 1100px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">预览</h4>
+            </div>
+            <div class="modal-body">
+                <!--摘要-->
+                <div class="row">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" style="font-size: 20px;" id="preTitle">
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-md-6">
+                                <div>
+                                    <img id="preImgSmall">
+                                </div>
+                                <div style="margin-top: 10px;" id="preDesr">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div style="margin:0 auto; height: 60px; background-color: rgb(242, 77, 95);color: #ffffff;">
+                                    <div style="padding-top: 14px;padding-left: 20px;">参考价 <span
+                                            style="font-size: 24px;margin-left: 30px;" id="prePrice"> </span>
+                                    </div>
+                                </div>
+                                <table class="table small m-b-xs">
+                                    <tbody>
+                                    <tr>
+                                        <td>
+                                            线路类型： <strong id="preType"></strong>
+                                        </td>
+                                        <td>
+                                            出发城市： <strong id="preFromCity"></strong>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            行程天数： <strong id="preDays"></strong>
+                                        </td>
+                                        <td>
+                                            往返交通： <strong id="preTrafic"></strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label class="btn btn-outline btn-success">建议提前30天报名</label>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-outline btn-warning">起价说明
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="m-t text-left">
+                                    <form class="form-horizontal">
+                                        <div class="form-group"><label
+                                                class="col-sm-3 control-label">出发日期</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control m-b">
+                                                    <option value="1" selected>固定日期发团</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group"><label
+                                                class="col-sm-3 control-label">出游人数</label>
+                                            <div class="col-sm-9">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label class="control-label">成人</label>
+                                                    </div>
+                                                    <div class="col-md-3" style="margin-left: -50px">
+                                                        <input type="text" placeholder="10" class="form-control"
+                                                               readonly value="10">
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label class="control-label">儿童</label>
+                                                    </div>
+                                                    <div class="col-md-3" style="margin-left: -50px">
+                                                        <input type="text" placeholder="0" class="form-control"
+                                                               readonly value="5">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="m-t text-right">
+                                    <label class="btn btn-outline btn-success" style="padding: 10px 20px;"><i
+                                            class="fa fa-long-arrow-left"></i>加入收藏</label>
+                                    <label class="btn btn-outline btn-info" style="padding: 10px 20px;">立刻预定<i
+                                            class="fa fa-long-arrow-right"></i></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--明细-->
+                <div class="row">
+                    <div class="tabs-container">
+                        <ul class="nav nav-tabs" style="font-size: 16px;">
+                            <!--产品特色-->
+                            <li class="active"><a data-toggle="tab" href="#pretab-1" aria-expanded="true"> <i
+                                    class="fa fa-laptop"></i>产品特色</a></li>
+
+                            <!--行程详情-->
+                            <li class=""><a data-toggle="tab" href="#pretab-2" aria-expanded="false"><i
+                                    class="fa fa-desktop"></i>行程详情</a></li>
+
+                            <!--费用说明-->
+                            <li class=""><a data-toggle="tab" href="#pretab-3" aria-expanded="false"><i
+                                    class="fa fa-database"></i>费用说明</a></li>
+                            <!--预定须知-->
+                            <li class=""><a data-toggle="tab" href="#pretab-4" aria-expanded="false"><i
+                                    class="fa fa-database"></i>预定须知</a></li>
+                            <!--出游提醒-->
+                            <li class=""><a data-toggle="tab" href="#pretab-5" aria-expanded="false"><i
+                                    class="fa fa-database"></i>出游提醒</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div id="pretab-1" class="tab-pane active">
+                                <div class="panel-body" id="preSpecialty">
+                                </div>
+                            </div>
+                            <div id="pretab-2" class="tab-pane" >
+                                <div class="panel-body" style=" background-color: #f3f3f4;">
+                                    <div id="vertical-timeline"
+                                         class="vertical-container light-timeline center-orientation">
+                                        <div class="vertical-timeline-block">
+                                            <div class="vertical-timeline-icon navy-bg">
+                                                <i class="fa fa-flag"></i>
+                                            </div>
+                                            <div class="vertical-timeline-content">
+                                                <h2>第一天</h2>
+                                                <table class="table small m-b-xs">
+                                                    <tbody>
+                                                    <tr style="height: 50px;">
+                                                        <td style="line-height: 40px;">
+                                                            <i class="fa fa-delicious" style="margin-right: 10px;"></i>
+                                                            早餐: <span class="label label-primary"
+                                                                      style="margin-right: 30px;">酒店</span>
+                                                            中餐: <span class="label label-primary"
+                                                                      style="margin-right: 30px;">团餐</span>
+                                                            晚餐: <span class="label label-primary"
+                                                                      style="margin-right: 30px;">团餐</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="height: 50px;">
+                                                        <td style="line-height: 40px;">
+                                                            <i class="fa fa-building" style="margin-right: 10px;"></i>
+                                                            住宿: <span class="label label-primary">札幌</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <p>赏花</strong><br>大阪城公园内广栽各种树木，每逢花季是赏樱、赏梅的胜地，吸引了各国游客，很多大阪市民还爱来此观赏水边的野鸟。公园里种植了1250株梅树、4500株樱树，2月中旬-3月上旬可以赏梅，3月底-4月中旬可以赏樱。10月中旬-11月中旬还有规模盛大的“大阪城菊花节”。<br>西之丸庭园曾是丰臣秀吉的正妻北政所的住处，四周树木环绕，在此能望到天守阁和护城河的石墙等美景，需单独购票进入。这里也是著名的赏樱胜地，3月底-4月中旬，以染井吉野为主的约600株樱花竞相开放，花期约一周，其间还会举办赏夜樱的活动。<br>大阪城公园里的梅林经过修剪显得低矮、宽阔，无需特意抬头看花。观赏期为2月中旬-3月上旬，可以免费欣赏。
+                                                            </p>
+
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <a href="#" class="btn btn-xs btn-primary"> More
+                                                    info</a>
+                                    <span class="vertical-date"><small>第一天
+                                    </small> </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="pretab-3" class="tab-pane">
+                                <div class="panel-body" id="preCost">
+                                </div>
+                            </div>
+                            <div id="pretab-4" class="tab-pane">
+                                <div class="panel-body" id="preReserve">
+                                </div>
+                            </div>
+                            <div id="pretab-5" class="tab-pane">
+                                <div class="panel-body" id="preNotice">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
             </div>
         </div>
     </div>

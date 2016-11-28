@@ -30,36 +30,36 @@ public class WebProductPlanService extends BaseService implements IWebProductPla
     @Autowired
     private WebProductPlanMapper webProductPlanMapper;
 
+    /**
+     * for preview
+     *
+     * @param decodeJson
+     * @param response
+     * @param request
+     */
     @Override
     public void selectPlanList(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
-        BootStrapDataTableList<WebProductPlan> result = new BootStrapDataTableList<WebProductPlan>();
-        try {
-            PagerInfo pagerInfo = this.getPagerInfo(decodeJson);
-
-            Subject subject = SecurityUtils.getSubject();
-            subject.isPermitted();
-
-            Integer count = webProductPlanMapper.countAll();
-            List<WebProductPlan> list = webProductPlanMapper.selectPlanDetails(pagerInfo.getStart(), pagerInfo.getLength());
-            if (list != null) {
-                result.setsEcho(String.valueOf(pagerInfo.getDraw() + 1));
-                result.setiTotalRecords(count);
-                result.setiTotalDisplayRecords(count);
-                result.setAaData(list);
-
-                // response
-                this.writeResponse(response, result);
-                return;
-            }
-        } catch (Exception ex) {
-            Logger.error(ex.getMessage(), ex);
+        BaseResult result = new BaseResult();
+        JSONObject jsonObject = JSON.parseObject(decodeJson);
+        Integer productId = (Integer) jsonObject.get("productId");
+        if (productId != null) {
+            List<WebProductPlan> list = webProductPlanMapper.selectPlanDetailsByProductId(productId);
+            result.setData(list);
+            this.writeResponse(response, result);
+            return;
         }
 
-        BaseResult error = new BaseResult();
-        error.setCode(ErrorCode.UNKNOWN.getCode());
-        this.writeResponse(response, error);
+        result.setError(ErrorCode.UNKNOWN);
+        this.writeResponse(response, result);
     }
 
+    /**
+     * for table
+     *
+     * @param decodeJson
+     * @param response
+     * @param request
+     */
     @Override
     public void selectPlanDetailsByProductId(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BootStrapDataTableList<WebProductPlan> result = new BootStrapDataTableList<>();
