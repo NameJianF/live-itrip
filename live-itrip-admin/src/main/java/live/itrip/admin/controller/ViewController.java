@@ -126,6 +126,9 @@ public class ViewController extends AbstractController {
                 if ("product.selectByCity".equalsIgnoreCase(op)) {
                     // 根据 cicy id 查询相关 product
                     iWebProductService.selectHotProductsByCityId(decodeJson, response, request);
+                } else if ("product.selectProductList".equalsIgnoreCase(op)) {
+                    // 查询分类产品
+                    iWebProductService.selectProductListByType(decodeJson, response, request);
                 }
             }
         } catch (Exception ex) {

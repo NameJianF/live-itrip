@@ -72,38 +72,33 @@
                             <fieldset class="form-horizontal">
                                 <div class="form-group">
                                     <label for="productTitle" class="col-sm-2 control-label">行程名称</label>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-10">
                                         <input id="productTitle" type="text" class="form-control" placeholder="行程名称">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="productPrice" class="col-sm-2 control-label">价格</label>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-3">
                                         <input id="productPrice" type="text" class="form-control" placeholder="价格"
                                                maxlength="8">
                                     </div>
-                                </div>
-                                <div class="form-group">
                                     <label for="priceFavoured" class="col-sm-2 control-label">折扣</label>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-3">
                                         <input id="priceFavoured" type="text" class="form-control" value="100"
                                                maxlength="3">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="productType" class="col-sm-2 control-label">线路类型</label>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-3">
                                         <select class="form-control m-b" id="productType">
                                             <c:forEach items="${listType}" var="item">
                                                 <option value="${item.id}">${item.dictItemText}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
-                                </div>
-
-                                <div class="form-group">
                                     <label for="productDays" class="col-sm-2 control-label">行程天数</label>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-3">
                                         <select class="form-control m-b" id="productDays">
                                             <c:forEach items="${listDays}" var="item">
                                                 <option value="${item.id}">${item.dictItemText}</option>
@@ -113,17 +108,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="productFromCity" class="col-sm-2 control-label">出发城市</label>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-3">
                                         <select class="form-control m-b" id="productFromCity">
                                             <c:forEach items="${listCity}" var="item">
                                                 <option value="${item.id}">${item.dictItemText}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="form-group">
                                     <label for="productTraffic" class="col-sm-2 control-label">往返交通</label>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-3">
                                         <select class="form-control m-b" id="productTraffic">
                                             <c:forEach items="${listTraffic}" var="item">
                                                 <option value="${item.id}">${item.dictItemText}</option>
@@ -131,18 +124,26 @@
                                         </select>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label for="productStartDate" class="col-sm-2 control-label">出发日期</label>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-3">
                                         <div class="input-group date">
                                             <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                             <input id="productStartDate" type="text" class="form-control" value="">
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-sm-8">
+                                <div class="form-group">
+                                    <label for="productPrice" class="col-sm-2 control-label">点击量</label>
+                                    <div class="col-sm-3">
+                                        <input id="productClickCount" type="text" class="form-control" value="2000">
+                                    </div>
+                                    <label for="priceFavoured" class="col-sm-2 control-label">参团人数</label>
+                                    <div class="col-sm-3">
+                                        <input id="priceJoinMans" type="text" class="form-control" value="100">
+                                    </div>
+                                </div>
+                                <div class="col-sm-10">
                                     <button type="button" onclick="saveProductBaseInfo();"
                                             class="btn btn-primary pull-right m-t-n-xs" style="margin-left: 10px;">
                                         保存
@@ -570,51 +571,11 @@
                                 <div class="panel-body" id="preSpecialty">
                                 </div>
                             </div>
-                            <div id="pretab-2" class="tab-pane" >
+                            <div id="pretab-2" class="tab-pane">
                                 <div class="panel-body" style=" background-color: #f3f3f4;">
                                     <div id="vertical-timeline"
                                          class="vertical-container light-timeline center-orientation">
-                                        <div class="vertical-timeline-block">
-                                            <div class="vertical-timeline-icon navy-bg">
-                                                <i class="fa fa-flag"></i>
-                                            </div>
-                                            <div class="vertical-timeline-content">
-                                                <h2>第一天</h2>
-                                                <table class="table small m-b-xs">
-                                                    <tbody>
-                                                    <tr style="height: 50px;">
-                                                        <td style="line-height: 40px;">
-                                                            <i class="fa fa-delicious" style="margin-right: 10px;"></i>
-                                                            早餐: <span class="label label-primary"
-                                                                      style="margin-right: 30px;">酒店</span>
-                                                            中餐: <span class="label label-primary"
-                                                                      style="margin-right: 30px;">团餐</span>
-                                                            晚餐: <span class="label label-primary"
-                                                                      style="margin-right: 30px;">团餐</span>
-                                                        </td>
-                                                    </tr>
-                                                    <tr style="height: 50px;">
-                                                        <td style="line-height: 40px;">
-                                                            <i class="fa fa-building" style="margin-right: 10px;"></i>
-                                                            住宿: <span class="label label-primary">札幌</span>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>
-                                                            <p>赏花</strong><br>大阪城公园内广栽各种树木，每逢花季是赏樱、赏梅的胜地，吸引了各国游客，很多大阪市民还爱来此观赏水边的野鸟。公园里种植了1250株梅树、4500株樱树，2月中旬-3月上旬可以赏梅，3月底-4月中旬可以赏樱。10月中旬-11月中旬还有规模盛大的“大阪城菊花节”。<br>西之丸庭园曾是丰臣秀吉的正妻北政所的住处，四周树木环绕，在此能望到天守阁和护城河的石墙等美景，需单独购票进入。这里也是著名的赏樱胜地，3月底-4月中旬，以染井吉野为主的约600株樱花竞相开放，花期约一周，其间还会举办赏夜樱的活动。<br>大阪城公园里的梅林经过修剪显得低矮、宽阔，无需特意抬头看花。观赏期为2月中旬-3月上旬，可以免费欣赏。
-                                                            </p>
 
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-
-                                                <a href="#" class="btn btn-xs btn-primary"> More
-                                                    info</a>
-                                    <span class="vertical-date"><small>第一天
-                                    </small> </span>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

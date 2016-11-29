@@ -24,4 +24,6 @@ public interface WebProductMapper {
     Integer countAll();
 
     List<WebProduct> selectProducts(@Param("start") int start, @Param("length") int length);
+
+    List<WebProduct> selectListByType(@Param("topCount") int topCount, @Param("type") String type);
 }

@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import live.itrip.admin.bean.BootStrapDataTableList;
 import live.itrip.admin.bean.PagerInfo;
 import live.itrip.admin.common.Constants;
+import live.itrip.admin.common.ViewConstants;
 import live.itrip.admin.dao.WebProductMapper;
 import live.itrip.admin.model.WebProduct;
 import live.itrip.admin.service.BaseService;
@@ -13,6 +14,7 @@ import live.itrip.admin.service.intefaces.IWebProductService;
 import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -149,5 +152,47 @@ public class WebProductService extends BaseService implements IWebProductService
     @Override
     public void selectHotProductsByCityId(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
 
+    }
+
+    @Override
+    public void selectProductListByType(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        BaseResult result = new BaseResult();
+        JSONObject jsonObject = JSON.parseObject(decodeJson);
+        String flag = jsonObject.getString("flag");
+        if (StringUtils.isNotEmpty(flag)) {
+            int topCount = 4;
+            List<WebProduct> list = null;
+            if ("0".equals(flag)) {
+                // 乡村民宿
+                list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Town);
+            } else if ("1".equals(flag)) {
+                // 温泉旅游
+                list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.HotSpring);
+            } else if ("2".equals(flag)) {
+                // 滑雪之行
+                list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Skiing);
+            } else if ("3".equals(flag)) {
+                // 海岛旅游
+                list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Island);
+            } else if ("4".equals(flag)) {
+                // 快乐家族
+                list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Family);
+            } else if ("5".equals(flag)) {
+                // 见学体验
+                list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Learning);
+            } else if ("6".equals(flag)) {
+                // 健康检查
+                list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Health);
+            }
+
+
+            result.setCode(ErrorCode.SUCCESS.getCode());
+            result.setData(list);
+            this.writeResponse(response, result);
+            return;
+        }
+
+        result.setError(ErrorCode.UNKNOWN);
+        this.writeResponse(response, result);
     }
 }

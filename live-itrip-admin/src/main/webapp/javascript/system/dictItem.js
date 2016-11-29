@@ -111,8 +111,8 @@ function funEditGetDcitItemInfo(dictItemId) {
             // success
             if (response.code == 0) {
                 $('#editDictItemId').val(response.data.id);
-                $('#editDictItemName').val(response.data.dictName);
-                $('#editDictItemText').val(response.data.dictText);
+                $('#editDictItemName').val(response.data.dictItemName);
+                $('#editDictItemText').val(response.data.dictItemText);
                 $('#editDictName').val(response.data.dictId);
                 $('#editDictItemDelete').val(response.data.isDelete);
 

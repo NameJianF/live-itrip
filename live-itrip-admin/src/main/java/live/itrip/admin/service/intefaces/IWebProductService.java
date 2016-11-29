@@ -16,4 +16,6 @@ public interface IWebProductService {
     void deleteProductById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 
     void selectHotProductsByCityId(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void selectProductListByType(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 }

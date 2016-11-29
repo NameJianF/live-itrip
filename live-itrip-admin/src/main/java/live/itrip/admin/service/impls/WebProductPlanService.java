@@ -41,9 +41,10 @@ public class WebProductPlanService extends BaseService implements IWebProductPla
     public void selectPlanList(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BaseResult result = new BaseResult();
         JSONObject jsonObject = JSON.parseObject(decodeJson);
-        Integer productId = (Integer) jsonObject.get("productId");
+        Integer productId = jsonObject.getInteger("productId");
         if (productId != null) {
             List<WebProductPlan> list = webProductPlanMapper.selectPlanDetailsByProductId(productId);
+            result.setCode(ErrorCode.SUCCESS.getCode());
             result.setData(list);
             this.writeResponse(response, result);
             return;

@@ -167,7 +167,7 @@
 <script src="/js/plugins/wow/wow.min.js"></script>
 
 <%--itrip--%>
-<script src="/javascript/common.js"></script>
+<script src="/javascript/viewcommon.js"></script>
 <script src="/javascript/view/city/city.js"></script>
 
 

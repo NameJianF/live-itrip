@@ -63,7 +63,8 @@
       #{status,jdbcType=SMALLINT}, #{isDelete,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT}, 
       #{updateTime,jdbcType=BIGINT})
   </insert>
-    <insert id="insertSelective" parameterType="live.itrip.admin.model.WebProduct" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insertSelective" parameterType="live.itrip.admin.model.WebProduct" keyProperty="id"
+            useGeneratedKeys="true">
         insert into web_product
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -338,5 +339,14 @@
         traffic, start_day, click_count, join_mans, local_html,
         status, is_delete, create_time, update_time
         from web_product where is_delete = '0' ORDER BY id DESC limit ${start},${length}
+    </select>
+
+    <select id="selectListByType" resultMap="BaseResultMap" parameterType="map">
+        select
+        id, title, price,img_small
+        from web_product
+        where is_delete = '0' AND type = '${type}'
+        ORDER BY id
+        DESC limit 0,${topCount}
     </select>
 </mapper>
