@@ -229,7 +229,6 @@
                                                     <th>起点</th>
                                                     <th>交通</th>
                                                     <th>终点</th>
-
                                                     <th>早餐</th>
                                                     <th>午餐</th>
                                                     <th>晚餐</th>
@@ -393,7 +392,12 @@
                         </div>
                         <label for="planTraffic" class="col-sm-2 control-label">交通</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" id="planTraffic">
+                            <%--<input type="text" class="form-control" id="planTraffic">--%>
+                            <select class="form-control m-b" id="planTraffic">
+                                <c:forEach items="${listTraffic}" var="item">
+                                    <option value="${item.id}">${item.dictItemText}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                         <label for="planStationTo" class="col-sm-2 control-label">终点</label>
                         <div class="col-sm-2">
@@ -404,21 +408,41 @@
                     <div class="form-group">
                         <label for="planBreakfast" class="col-sm-2 control-label">早餐</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" id="planBreakfast">
+                            <%--<input type="text" class="form-control" id="planBreakfast">--%>
+                            <select class="form-control m-b" id="planBreakfast">
+                                <c:forEach items="${listDinner}" var="item">
+                                    <option value="${item.id}">${item.dictItemText}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                         <label for="planLunch" class="col-sm-2 control-label">午餐</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" id="planLunch">
+                            <%--<input type="text" class="form-control" id="planLunch">--%>
+                            <select class="form-control m-b" id="planLunch">
+                                <c:forEach items="${listDinner}" var="item">
+                                    <option value="${item.id}">${item.dictItemText}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                         <label for="planDinner" class="col-sm-2 control-label">晚餐</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control" id="planDinner">
+                            <%--<input type="text" class="form-control" id="planDinner">--%>
+                            <select class="form-control m-b" id="planDinner">
+                                <c:forEach items="${listDinner}" var="item">
+                                    <option value="${item.id}">${item.dictItemText}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="planHotel" class="col-sm-2 control-label">酒店</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="planHotel">
+                            <%--<input type="text" class="form-control" id="planHotel">--%>
+                            <select class="form-control m-b" id="planHotel">
+                                <c:forEach items="${listHotel}" var="item">
+                                    <option value="${item.id}">${item.dictItemText}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">

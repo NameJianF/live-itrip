@@ -189,7 +189,7 @@ function editSaveModuleInfo() {
             }
         }, function () {
             // complete
-            $('#formEditApikey').modal('hide');
+            $('#formEditModule').modal('hide');
         });
 }
 

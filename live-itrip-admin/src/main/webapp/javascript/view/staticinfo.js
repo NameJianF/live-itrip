@@ -143,7 +143,7 @@ function editSaveStaticInfo() {
             }
         }, function () {
             // complete
-            $('#formEditApikey').modal('hide');
+            $('#formEditStaticInfo').modal('hide');
         });
 }
 

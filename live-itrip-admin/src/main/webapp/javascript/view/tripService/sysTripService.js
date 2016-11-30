@@ -158,7 +158,7 @@ function editSaveOrderInfo() {
             }
         }, function () {
             // complete
-            $('#formEditApikey').modal('hide');
+            $('#formEditOrder').modal('hide');
         });
 }
 

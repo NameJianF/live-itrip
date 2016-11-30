@@ -134,7 +134,7 @@ function editSaveGroupInfo() {
             }
         }, function () {
             // complete
-            $('#formEditApikey').modal('hide');
+            $('#formEditGroup').modal('hide');
         });
 }
 

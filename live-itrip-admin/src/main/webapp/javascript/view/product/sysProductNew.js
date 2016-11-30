@@ -550,7 +550,7 @@ function editSavePlanInfo() {
             }
         }, function () {
             // complete
-            $('#formEditApikey').modal('hide');
+            $('#formPlanDetail').modal('hide');
         });
 }
 

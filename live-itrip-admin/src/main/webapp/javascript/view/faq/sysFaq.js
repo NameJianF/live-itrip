@@ -166,7 +166,7 @@ function editSaveFaqInfo() {
             }
         }, function () {
             // complete
-            $('#formEditApikey').modal('hide');
+            $('#formEditFaq').modal('hide');
         });
 }
 

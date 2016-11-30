@@ -26,6 +26,8 @@
             window.top.location = window.location
         }
     </script>
+    <!-- Toastr -->
+    <script src="/js/plugins/toastr/toastr.min.js"></script>
 
     <!-- itrip -->
     <script src="/js/itrip/itrip-ui.js"></script>

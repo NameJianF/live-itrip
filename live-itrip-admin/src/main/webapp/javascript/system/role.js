@@ -134,7 +134,7 @@ function editSaveRoleInfo() {
             }
         }, function () {
             // complete
-            $('#formEditApikey').modal('hide');
+            $('#formEditRole').modal('hide');
         });
 }
 

@@ -134,7 +134,7 @@ function editSaveOperationInfo() {
             }
         }, function () {
             // complete
-            $('#formEditApikey').modal('hide');
+            $('#formEditOperation').modal('hide');
         });
 }
 

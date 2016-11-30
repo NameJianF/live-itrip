@@ -148,6 +148,33 @@ public class AdminRouterController extends AbstractController {
         String id = request.getParameter("id");
         model.addAttribute("productId", id);
 
+        Integer typeid = 0;
+        Integer daysid = 0;
+        Integer cityid = 0;
+        Integer trafficid = 0;
+        Integer dinnerid = 0;
+        Integer hotelid = 0;
+        List<AdminDict> dicts = iAdminDictService.selectAllDicts();
+        for (AdminDict dict : dicts) {
+            if ("productType".equalsIgnoreCase(dict.getDictName())) {
+                typeid = dict.getId();
+            }
+            if ("productDays".equalsIgnoreCase(dict.getDictName())) {
+                daysid = dict.getId();
+            }
+            if ("jpCity".equalsIgnoreCase(dict.getDictName())) {
+                cityid = dict.getId();
+            }
+            if ("productTraffic".equalsIgnoreCase(dict.getDictName())) {
+                trafficid = dict.getId();
+            }
+            if ("dinnerType".equalsIgnoreCase(dict.getDictName())) {
+                dinnerid = dict.getId();
+            }
+            if ("hotelType".equalsIgnoreCase(dict.getDictName())) {
+                hotelid = dict.getId();
+            }
+        }
 
         // 加载数据
         List<AdminDictItem> itemList = iAdminDictItemService.selectAllDictItems();
@@ -155,19 +182,27 @@ public class AdminRouterController extends AbstractController {
         List<AdminDictItem> listDays = new ArrayList<>();
         List<AdminDictItem> listCity = new ArrayList<>();
         List<AdminDictItem> listTraffic = new ArrayList<>();
+        List<AdminDictItem> listDinner = new ArrayList<>();
+        List<AdminDictItem> listHotel = new ArrayList<>();
         for (AdminDictItem item : itemList) {
-            if (item.getDictId().equals(5)) {
+            if (item.getDictId().equals(typeid)) {
                 // 线路类型
                 listType.add(item);
-            } else if (item.getDictId().equals(6)) {
+            } else if (item.getDictId().equals(daysid)) {
                 // 天数
                 listDays.add(item);
-            } else if (item.getDictId().equals(7)) {
+            } else if (item.getDictId().equals(cityid)) {
                 // 城市
                 listCity.add(item);
-            } else if (item.getDictId().equals(8)) {
+            } else if (item.getDictId().equals(trafficid)) {
                 // 交通
                 listTraffic.add(item);
+            } else if (item.getDictId().equals(dinnerid)) {
+                // 用餐
+                listDinner.add(item);
+            } else if (item.getDictId().equals(hotelid)) {
+                // 酒店
+                listHotel.add(item);
             }
         }
 
@@ -175,6 +210,8 @@ public class AdminRouterController extends AbstractController {
         model.addAttribute("listDays", listDays);
         model.addAttribute("listCity", listCity);
         model.addAttribute("listTraffic", listTraffic);
+        model.addAttribute("listDinner", listDinner);
+        model.addAttribute("listHotel", listHotel);
 
         // 费用
         List<WebStaticInfo> infoList = iWebStaticInfoService.selectAllIdAndTitle();

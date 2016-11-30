@@ -149,7 +149,7 @@ function editSaveDictItemInfo() {
             }
         }, function () {
             // complete
-            $('#formEditApikey').modal('hide');
+            $('#formEditDictItem').modal('hide');
         });
 }
 

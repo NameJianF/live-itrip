@@ -63,9 +63,11 @@ public class WebFileInfoService extends BaseService implements IWebFileInfoServi
                 String fileExt = originalFilename.substring(originalFilename.lastIndexOf(".") + 1).toLowerCase();
                 // 本地相对路径：新文件名
                 String fileUrl = getLocalFilePath(fileExt);
+                Logger.debug("File url:" + fileUrl);
 
                 // 文件本地文件绝对路径：新文件名
                 String filepath = multipartRequest.getSession().getServletContext().getRealPath(fileUrl);
+                Logger.debug("File Local Path:" + filepath);
 
                 // 保存文件到本地
                 File file = FileUtils.saveFile(filepath, multipartFile.getBytes());

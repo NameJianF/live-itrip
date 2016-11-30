@@ -266,7 +266,7 @@ function editSaveMemberInfo() {
             }
         }, function () {
             // complete
-            $('#formEditApikey').modal('hide');
+            $('#formEditMember').modal('hide');
         });
 }
 

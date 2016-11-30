@@ -166,7 +166,7 @@ function editSaveCustomerInfo() {
             }
         }, function () {
             // complete
-            $('#formEditApikey').modal('hide');
+            $('#formEditCustomer').modal('hide');
         });
 }
 
