@@ -1,5 +1,7 @@
 package live.itrip.admin.service.intefaces;
 
+import live.itrip.admin.model.WebProduct;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,6 +13,8 @@ public interface IWebProductService {
 
     void selectProductById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 
+    WebProduct selectProductById(Integer productId);
+
     void editProductById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 
     void deleteProductById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
@@ -18,4 +22,7 @@ public interface IWebProductService {
     void selectHotProductsByCityId(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 
     void selectProductListByType(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void selectProductListAbouts(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
 }

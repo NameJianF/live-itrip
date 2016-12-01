@@ -34,6 +34,11 @@ public class ViewConstants {
 
     public class ProductType {
         /**
+         * 自由行
+         */
+        public static final String Free = "自由行";
+
+        /**
          * 乡村民宿
          */
         public static final String Town = "乡村民宿";

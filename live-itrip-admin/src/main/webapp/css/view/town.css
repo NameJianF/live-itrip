@@ -1,17 +1,17 @@
 .townbg {
-    background-image: url('/images/web/town/townbg.jpg');
+    /*background-image: url('/images/web/town/townbg.jpg');*/
     background-position: 50% 50%;
     background-repeat: no-repeat;
-    margin-top: 65px;
+    margin-top: 90px;
     background-color: rgb(242, 216, 155);
-    height: 325px;
+    /*height: 325px;*/
 }
 
 .towncenter {
     margin: 20px;
 }
 
-.product-box-padding{
+.product-box-padding {
     padding-top: 10px;
     padding-left: 10px;
     padding-right: 5px;

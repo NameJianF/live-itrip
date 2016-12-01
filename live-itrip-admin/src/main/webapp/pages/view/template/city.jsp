@@ -79,6 +79,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <input id="cityId" type="hidden" value="${id}">
+                    <input id="cityName" type="hidden" value="${cityName}">
                     ${cityName}
                 </div>
                 <div class="panel-body">
@@ -88,66 +89,15 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3 animated fadeInRight">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     推荐线路
                 </div>
-                <div class="panel-body" style="padding: 5px">
-                    <div class="wrapper wrapper-content animated fadeInRight">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="ibox">
-                                    <div class="ibox-content product-box">
-                                        <div class="product-imitation" style="padding: 0px">
-                                            <a href="#">
-                                                <img src="/images/web/theme/wq01.jpg" style="width: 280px;">
-                                            </a>
-                                        </div>
-                                        <div class="product-desc">
-                                            <span class="product-price">&yen; 10688</span>
-                                            <a href="#" class="product-name"> 北海道-北海道-北海道-北海道</a>
-                                            <div class="vote-info" style="margin-left: 0px;">
-                                                <i class="fa fa-comments-o"></i> <a
-                                                    href="#">Comments(32)</a>
-                                                <i class="fa fa-user"></i>
-                                                <a href="#">Andrew Williams</a>
-                                            </div>
-                                            <div class="m-t text-right">
-                                                <a href="#"
-                                                   class="btn btn-xs btn-outline btn-primary">详细 <i
-                                                        class="fa fa-long-arrow-right"></i> </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="ibox">
-                                    <div class="ibox-content product-box">
-                                        <div class="product-imitation" style="padding: 0px">
-                                            <a href="#">
-                                                <img src="/images/web/theme/wq01.jpg" style="width: 280px;">
-                                            </a>
-                                        </div>
-                                        <div class="product-desc">
-                                            <span class="product-price">&yen; 10688</span>
-                                            <a href="#" class="product-name"> 北海道-北海道-北海道-北海道</a>
-                                            <div class="vote-info" style="margin-left: 0px;">
-                                                <i class="fa fa-comments-o"></i> <a
-                                                    href="#">Comments(32)</a>
-                                                <i class="fa fa-user"></i>
-                                                <a href="#">Andrew Williams</a>
-                                            </div>
-                                            <div class="m-t text-right">
-                                                <a href="#"
-                                                   class="btn btn-xs btn-outline btn-primary">详细 <i
-                                                        class="fa fa-long-arrow-right"></i> </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="panel-body">
+                    <div class="wrapper wrapper-content">
+                        <div class="row" id="hotProducts">
+
                         </div>
                     </div>
                 </div>

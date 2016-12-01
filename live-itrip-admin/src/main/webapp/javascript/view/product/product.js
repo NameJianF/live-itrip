@@ -1,24 +1,22 @@
 /**
- * Created by Feng on 2016/11/23.
+ * Created by Feng on 2016/12/1.
  */
 
 $(function () {
     $("#footer").load("/view/footer.html");
 
-    loadHotProducts();
+    loadAboutProducts();
 });
 
-
-function loadHotProducts() {
-    console.log('loading products ...');
-    var cityId = $("#cityId").val();
-    var cityName = $("#cityName").val();
+function loadAboutProducts() {
+    var productId = $("#productId").val();
+    var productType = $("#productType").val();
 
     var jsondata = {
-        'op': 'product.selectByCity',
+        'op': 'product.selectAbouts',
         'token': parent.token,
-        'cityId': cityId,
-        'cityName': cityName
+        'productId': productId,
+        'productType': productType
     };
 
     execAjaxDataForView("/view/product.action", JSON.stringify(jsondata), true
@@ -29,9 +27,14 @@ function loadHotProducts() {
             if (response.code == 0) {
                 var jsonarray = eval(response.data);
                 var content = getProductsHtml(jsonarray);
-                $('#hotProducts').html(content);
+                $('#aboutProducts').html(content);
             }
         }, function () {
             // complete
         });
+}
+
+// 提交问题
+function submitQuestion() {
+
 }

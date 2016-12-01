@@ -147,7 +147,33 @@ public class AdminRouterController extends AbstractController {
     public String viewEditProduct(HttpServletRequest request, Model model) {
         String id = request.getParameter("id");
         model.addAttribute("productId", id);
+        // 加载数据
+        getProductInitDatas(model);
 
+        return "/pages/view/productNew";
+    }
+
+    /**
+     * 行程计划:添加
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/system/view/newProduct", method = RequestMethod.GET)
+    public String viewNewProduct(HttpServletRequest request, Model model) {
+        // 加载数据
+        getProductInitDatas(model);
+
+        return "/pages/view/productNew";
+    }
+
+    /**
+     * 初始化产品页面基础数据
+     *
+     * @param model
+     */
+    private void getProductInitDatas(Model model) {
         Integer typeid = 0;
         Integer daysid = 0;
         Integer cityid = 0;
@@ -235,72 +261,7 @@ public class AdminRouterController extends AbstractController {
         model.addAttribute("listCosts", listCosts);
         model.addAttribute("listReserves", listReserves);
         model.addAttribute("listNotices", listNotices);
-
-        return "/pages/view/productNew";
     }
-
-    /**
-     * 行程计划:添加
-     *
-     * @param request
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "/system/view/newProduct", method = RequestMethod.GET)
-    public String viewNewProduct(HttpServletRequest request, Model model) {
-        // 加载数据
-        List<AdminDictItem> itemList = iAdminDictItemService.selectAllDictItems();
-        List<AdminDictItem> listType = new ArrayList<>();
-        List<AdminDictItem> listDays = new ArrayList<>();
-        List<AdminDictItem> listCity = new ArrayList<>();
-        List<AdminDictItem> listTraffic = new ArrayList<>();
-        for (AdminDictItem item : itemList) {
-            if (item.getDictId().equals(5)) {
-                // 线路类型
-                listType.add(item);
-            } else if (item.getDictId().equals(6)) {
-                // 天数
-                listDays.add(item);
-            } else if (item.getDictId().equals(7)) {
-                // 城市
-                listCity.add(item);
-            } else if (item.getDictId().equals(8)) {
-                // 交通
-                listTraffic.add(item);
-            }
-        }
-
-        model.addAttribute("listType", listType);
-        model.addAttribute("listDays", listDays);
-        model.addAttribute("listCity", listCity);
-        model.addAttribute("listTraffic", listTraffic);
-
-        // 费用
-        List<WebStaticInfo> infoList = iWebStaticInfoService.selectAllIdAndTitle();
-        List<WebStaticInfo> listCosts = new ArrayList<>();
-        List<WebStaticInfo> listReserves = new ArrayList<>();
-        List<WebStaticInfo> listNotices = new ArrayList<>();
-        if (infoList != null) {
-            for (WebStaticInfo info : infoList) {
-                if (ViewConstants.STATIC_TYPE_COST.equals(info.getType())) {
-                    // 费用
-                    listCosts.add(info);
-                } else if (ViewConstants.STATIC_TYPE_RESERVE.equals(info.getType())) {
-                    // 预定
-                    listReserves.add(info);
-                } else if (ViewConstants.STATIC_TYPE_NOTICE.equals(info.getType())) {
-                    // 提醒
-                    listNotices.add(info);
-                }
-            }
-        }
-        model.addAttribute("listCosts", listCosts);
-        model.addAttribute("listReserves", listReserves);
-        model.addAttribute("listNotices", listNotices);
-
-        return "/pages/view/productNew";
-    }
-
 
     /**
      * 客户定制

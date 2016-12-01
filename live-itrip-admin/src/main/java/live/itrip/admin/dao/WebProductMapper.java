@@ -26,4 +26,8 @@ public interface WebProductMapper {
     List<WebProduct> selectProducts(@Param("start") int start, @Param("length") int length);
 
     List<WebProduct> selectListByType(@Param("topCount") int topCount, @Param("type") String type);
+
+    List<WebProduct> selectListAbouts(@Param("topCount") int topCount, @Param("productId") Integer productId, @Param("type") String type);
+
+    List<WebProduct> selectHotProductsByCity(@Param("topCount") int topCount, @Param("cityName") String cityName);
 }

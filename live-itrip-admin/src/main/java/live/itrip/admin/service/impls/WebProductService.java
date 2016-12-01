@@ -36,6 +36,7 @@ public class WebProductService extends BaseService implements IWebProductService
     @Autowired
     private IWebFileInfoService iWebFileInfoService;
 
+
     @Override
     public void selectProductList(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BootStrapDataTableList<WebProduct> result = new BootStrapDataTableList<WebProduct>();
@@ -81,6 +82,11 @@ public class WebProductService extends BaseService implements IWebProductService
 
         result.setError(ErrorCode.UNKNOWN);
         this.writeResponse(response, result);
+    }
+
+    @Override
+    public WebProduct selectProductById(Integer productId) {
+        return this.webProductMapper.selectByPrimaryKey(productId);
     }
 
     @Override
@@ -144,6 +150,9 @@ public class WebProductService extends BaseService implements IWebProductService
 
     /**
      * 根据 城市 查询相关推荐产品
+     * <p>
+     * 1. 查询城市相关的产品
+     * 2. 按照点击 参与人数倒序排列
      *
      * @param decodeJson
      * @param response
@@ -151,8 +160,56 @@ public class WebProductService extends BaseService implements IWebProductService
      */
     @Override
     public void selectHotProductsByCityId(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        BaseResult result = new BaseResult();
+        JSONObject jsonObject = JSON.parseObject(decodeJson);
+//        Integer cityId = jsonObject.getInteger("cityId");
+        String cityName = jsonObject.getString("cityName");
 
+        if (StringUtils.isEmpty(cityName)) {
+            cityName = "东京";
+        }
+        int topCount = 5;
+        List<WebProduct> list = this.webProductMapper.selectHotProductsByCity(topCount, cityName);
+
+        if (list == null || list.size() == 0) {
+            list = this.webProductMapper.selectHotProductsByCity(topCount, "");
+        }
+
+        result.setCode(ErrorCode.SUCCESS.getCode());
+        result.setData(list);
+        this.writeResponse(response, result);
     }
+
+    /**
+     * 查询产品相关产品列表
+     * <p>
+     * 1. 查询同产品类型下的其他产品
+     *
+     * @param decodeJson
+     * @param response
+     * @param request
+     */
+    @Override
+    public void selectProductListAbouts(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        BaseResult result = new BaseResult();
+        JSONObject jsonObject = JSON.parseObject(decodeJson);
+        Integer productId = jsonObject.getInteger("productId");
+        String productType = jsonObject.getString("productType");
+
+        if (productId == null) {
+            productId = 0;
+        }
+        if (StringUtils.isEmpty(productType)) {
+            productType = ViewConstants.ProductType.Free;
+        }
+        int topCount = 5;
+        List<WebProduct> list = this.webProductMapper.selectListAbouts(topCount, productId, productType);
+
+        result.setCode(ErrorCode.SUCCESS.getCode());
+        result.setData(list);
+        this.writeResponse(response, result);
+    }
+
 
     @Override
     public void selectProductListByType(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
@@ -195,4 +252,6 @@ public class WebProductService extends BaseService implements IWebProductService
         result.setError(ErrorCode.UNKNOWN);
         this.writeResponse(response, result);
     }
+
+
 }

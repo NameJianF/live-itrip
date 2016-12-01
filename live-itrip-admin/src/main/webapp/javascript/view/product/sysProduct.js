@@ -41,10 +41,16 @@ $(function () {
             {
                 "mData": "status",
                 render: function (data, type, row) {
-                    if (data == null) {
+                    //0：初始状态，1：进行中，2：已结束
+                    if (data == 0) {
+                        return "初始状态";
+                    } else if (data == 1) {
+                        return "进行中";
+                    } else if (data == 2) {
+                        return "已结束";
+                    } else {
                         return "";
                     }
-                    return data;
                 }
             },
             {

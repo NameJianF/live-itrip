@@ -3,7 +3,11 @@ package live.itrip.admin.controller;
 import live.itrip.admin.common.HtmlUtils;
 import live.itrip.admin.controller.base.AbstractController;
 import live.itrip.admin.model.WebCityInfo;
+import live.itrip.admin.model.WebProduct;
+import live.itrip.admin.model.WebProductPlan;
 import live.itrip.admin.service.intefaces.IWebCityInfoService;
+import live.itrip.admin.service.intefaces.IWebProductPlanService;
+import live.itrip.admin.service.intefaces.IWebProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.File;
+import java.util.List;
 
 /**
  * Created by Feng on 2016/8/4.
@@ -25,9 +30,12 @@ import java.io.File;
 public class ViewRouterController extends AbstractController {
     @Autowired
     private ServletContext servletContext;
-
     @Autowired
     private IWebCityInfoService iWebCityInfoService;
+    @Autowired
+    private IWebProductService iWebProductService;
+    @Autowired
+    private IWebProductPlanService iWebProductPlanService;
 
     /**
      * city by id
@@ -42,7 +50,7 @@ public class ViewRouterController extends AbstractController {
 
         Integer id = Integer.valueOf(request.getParameter("id"));
         if (id == null) {
-            response.sendRedirect("/cityerror.html");
+            response.sendRedirect("/cityError.html");
             return;
         }
 
@@ -60,7 +68,7 @@ public class ViewRouterController extends AbstractController {
 
             WebCityInfo city = iWebCityInfoService.selectCityInfoById(id);
             if (city == null) {
-                response.sendRedirect("/cityerror.html");
+                response.sendRedirect("/cityError.html");
                 return;
             }
             servletContext.setAttribute("id", city.getId());
@@ -84,9 +92,40 @@ public class ViewRouterController extends AbstractController {
      */
     @RequestMapping(value = "/view/product", method = RequestMethod.GET)
     public void viewProduct(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+        String rootPath = servletContext.getRealPath("");
+
         Integer pid = Integer.valueOf(request.getParameter("pid"));
-        if (pid.equals(1000)) {
-            response.sendRedirect("/view/products/1000.html");
+        if (pid == null) {
+            response.sendRedirect("/productError.html");
+            return;
         }
+
+        String url = "/view/product/" + pid + ".html";
+        String htmlPath = rootPath + url;
+        File file = new File(htmlPath);
+        if (file.exists()) {
+            // html 文件存在
+            response.sendRedirect(url);
+            return;
+        }
+
+        // html 文件不存在，生成html文件
+        try {
+            WebProduct product = this.iWebProductService.selectProductById(pid);
+            if (product == null) {
+                response.sendRedirect("/productError.html");
+                return;
+            }
+            List<WebProductPlan> planList = iWebProductPlanService.selectPlanList(pid);
+
+            servletContext.setAttribute("product", product);
+            servletContext.setAttribute("planList", planList);
+
+            String jspPath = "/pages/view/template/prod.jsp";
+            HtmlUtils.createHtmlFile(servletContext, request, response, jspPath, htmlPath);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        response.sendRedirect(url);
     }
 }

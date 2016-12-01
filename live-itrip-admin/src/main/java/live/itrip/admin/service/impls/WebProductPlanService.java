@@ -43,7 +43,7 @@ public class WebProductPlanService extends BaseService implements IWebProductPla
         JSONObject jsonObject = JSON.parseObject(decodeJson);
         Integer productId = jsonObject.getInteger("productId");
         if (productId != null) {
-            List<WebProductPlan> list = webProductPlanMapper.selectPlanDetailsByProductId(productId);
+            List<WebProductPlan> list = selectPlanList(productId);
             result.setCode(ErrorCode.SUCCESS.getCode());
             result.setData(list);
             this.writeResponse(response, result);
@@ -52,6 +52,17 @@ public class WebProductPlanService extends BaseService implements IWebProductPla
 
         result.setError(ErrorCode.UNKNOWN);
         this.writeResponse(response, result);
+    }
+
+    /**
+     * @param productId
+     */
+    @Override
+    public List<WebProductPlan> selectPlanList(Integer productId) {
+        if (productId != null) {
+            return webProductPlanMapper.selectPlanDetailsByProductId(productId);
+        }
+        return null;
     }
 
     /**

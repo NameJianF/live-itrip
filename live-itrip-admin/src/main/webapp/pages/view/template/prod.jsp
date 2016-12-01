@@ -1,10 +1,21 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Feng
+  Date: 2016/12/1
+  Time: 10:38
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>和旅行-专业日本地接,日本旅行</title>
+    <title>${product.title}</title>
     <link rel="shortcut icon" href="/img/shortcut.png">
     <meta name="keywords" content="日本旅游,日本自由行,日本旅游价格,赴日旅游,行程报价,日本报价"/>
     <meta name="description" content="日本中和旅行是日本本地知名旅行服务商,提供华人到日本旅游包括日本跟团游、日本自由行、日本自驾游、机场接送等一站式日本旅游服务。"/>
@@ -25,8 +36,25 @@
 
 </head>
 <body id="page-top" class="landing-page">
-
-<div id="navbar" class="navbar-wrapper">
+<div class="navbar-wrapper">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="background: rgba(138, 109, 59, 0.70);">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <a class="navbar-brand" href="/index.html">和旅行</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class="page-scroll" href="/index.html">首页</a></li>
+                    <li><a class="page-scroll" href="/view/customer.html">私人定制</a></li>
+                    <li><a class="page-scroll" href="/view/theme.html">主题旅游</a></li>
+                    <li><a class="page-scroll" href="/view/town.html">乡村民宿体验游</a></li>
+                    <li><a class="page-scroll" href="/view/plan.html">参考行程</a></li>
+                    <li><a class="page-scroll" href="/view/service.html">旅行服务</a></li>
+                    <li><a class="page-scroll" href="/view/about.html">联系我们</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </div>
 
 <div class="row" style="margin: 20px;">
@@ -35,43 +63,46 @@
         <!--摘要-->
         <div class="row">
             <div class="panel panel-primary">
+                <input id="productId" type="hidden" value="${product.id}">
+                <input id="productType" type="hidden" value="${product.type}">
+
                 <div class="panel-heading" style="font-size: 20px;">
-                    岐阜下吕/高山/白川乡深度乡村民宿体验4日游
+                    ${product.title}
                 </div>
                 <div class="panel-body">
                     <div class="col-md-6">
                         <div>
-                            <a href="#">
-                                <img src="/images/web/detail/p1.jpg">
+                            <a href="/view/product.action?pid=${product.id}">
+                                <img src="${product.imgSmall}">
                             </a>
                         </div>
                         <div style="margin-top: 10px;">
-                            独家特色：宜人的自然山水，婉然天成的人文古城，巧夺天工的传统工...
+                            ${product.description}
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div style="margin:0 auto; height: 60px; background-color: rgb(242, 77, 95);color: #ffffff;">
                             <div style="padding-top: 14px;padding-left: 20px;">参考价 <span
                                     style="font-size: 24px;margin-left: 30px;"> &yen;
-                                10688 </span></div>
+                                ${product.price} </span></div>
                         </div>
                         <table class="table small m-b-xs">
                             <tbody>
                             <tr>
                                 <td>
-                                    线路类型： <strong>乡村民宿体验游</strong>
+                                    线路类型： <strong>${product.type}</strong>
                                 </td>
                                 <td>
-                                    出发城市： <strong>出发城市</strong>
+                                    出发城市： <strong>${product.fromCity}</strong>
                                 </td>
 
                             </tr>
                             <tr>
                                 <td>
-                                    行程天数： <strong>6</strong>
+                                    行程天数： <strong>${product.days} 天</strong>
                                 </td>
                                 <td>
-                                    往返交通： <strong>大巴</strong>
+                                    往返交通： <strong>${product.traffic}</strong>
                                 </td>
                             </tr>
                             <tr>
@@ -152,92 +183,74 @@
                 <div class="tab-content">
                     <div id="tab-1" class="tab-pane active">
                         <div class="panel-body">
-                            宜人的自然山水，婉然天成的人文古城，巧夺天工的传统工艺，民风淳朴的日式民宿；高山，清流，白雪……
-                            一样的风景，不一样的视点，给你不一样的体验！
+                            ${product.specialty}
                         </div>
                     </div>
                     <div id="tab-2" class="tab-pane">
                         <div class="panel-body">
                             <div id="vertical-timeline" class="vertical-container light-timeline center-orientation">
-                                <div class="vertical-timeline-block">
-                                    <div class="vertical-timeline-icon navy-bg">
-                                        <i class="fa fa-briefcase"></i>
+                                <c:forEach items="${planList}" var="item" varStatus="myIndex">
+                                    <div class="vertical-timeline-block">
+                                        <div class="vertical-timeline-icon navy-bg">
+                                            <i class="fa fa-flag"></i>
+                                        </div>
+                                        <div class="vertical-timeline-content">
+                                            <h2>${item.title}</h2>
+                                            <table class="table small m-b-xs">
+                                                <tbody>
+                                                <tr style="height: 50px;">
+                                                    <td style="line-height: 40px;">
+                                                        <i class="fa fa-delicious" style="margin-right: 10px;"></i>
+                                                        早餐: <span class="label label-primary"
+                                                                  style="margin-right: 30px;">${item.breakfast}</span>
+                                                        中餐: <span class="label label-primary"
+                                                                  style="margin-right: 30px;">${item.lunch}</span>
+                                                        晚餐: <span class="label label-primary"
+                                                                  style="margin-right: 30px;">${item.dinner}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr style="height: 50px;">
+                                                    <td style="line-height: 40px;">
+                                                        <i class="fa fa-building" style="margin-right: 10px;"></i>
+                                                        住宿: <span class="label label-primary">${item.hotel}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr style="height: 50px;">
+                                                    <td style="line-height: 40px;">
+                                                        <i class="fa fa-building" style="margin-right: 10px;"></i>
+                                                        交通: <span class="label label-car">${item.traffic}</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <p>${item.content}</p>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <a href="#" class="btn btn-xs btn-primary"> More
+                                                info</a>
+                                            <span class="vertical-date"><small>第 ${myIndex.count} 天
+                                            </small> </span>
+                                        </div>
                                     </div>
-
-                                    <div class="vertical-timeline-content">
-                                        <h2>Meeting</h2>
-                                        <p>Conference on the sales results for the previous year. Monica please examine
-                                            sales trends in marketing and products. Below please find the current status
-                                            of
-                                            the sale.
-                                        </p>
-                                        <a href="landing.html#" class="btn btn-xs btn-primary"> More info</a>
-                                        <span class="vertical-date"> Today <br> <small>Dec 24</small> </span>
-                                    </div>
-                                </div>
-
-                                <div class="vertical-timeline-block">
-                                    <div class="vertical-timeline-icon navy-bg">
-                                        <i class="fa fa-file-text"></i>
-                                    </div>
-
-                                    <div class="vertical-timeline-content">
-                                        <h2>Decision</h2>
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem
-                                            Ipsum has been the industry's standard dummy text ever since.</p>
-                                        <a href="landing.html#" class="btn btn-xs btn-primary"> More info</a>
-                                        <span class="vertical-date"> Tomorrow <br> <small>Dec 26</small> </span>
-                                    </div>
-                                </div>
-
-                                <div class="vertical-timeline-block">
-                                    <div class="vertical-timeline-icon navy-bg">
-                                        <i class="fa fa-cogs"></i>
-                                    </div>
-
-                                    <div class="vertical-timeline-content">
-                                        <h2>Implementation</h2>
-                                        <p>Go to shop and find some products. Lorem Ipsum is simply dummy text of the
-                                            printing and typesetting industry. Lorem Ipsum has been the industry's. </p>
-                                        <a href="landing.html#" class="btn btn-xs btn-primary"> More info</a>
-                                        <span class="vertical-date"> Monday <br> <small>Jan 02</small> </span>
-                                    </div>
-                                </div>
-
+                                </c:forEach>
                             </div>
                         </div>
                     </div>
                     <div id="tab-3" class="tab-pane">
                         <div class="panel-body">
-                            费用包含：
-                            费用均为赴日本以后的费用：
-                            ♥ 车辆使用费，停车费，高速费，全程燃油费；
-                            ♥ 中文导游费；
-                            ♥ 客人的住宿，早餐；
-                            ♥ 4个人以上成团；
-
-                            费用不包含：
-                            ✔ 景点门票，及入场后的个人费用；
-                            ✔ 午餐和晚餐费用，游客个人消费及其他未提及费用
-
+                            ${product.cost}
                         </div>
                     </div>
                     <div id="tab-4" class="tab-pane">
                         <div class="panel-body">
-                            1. 请提供准确、完整的信息（姓名、性别、证件号码、国籍、联系方式、等），以免产生预订错误，影响出行。如因提供错误个人信息而造成损失，将自行承担责任；
-                            2. 自2015年8月1日起，全国机场安检级别提升。建议至少提前120分钟抵达机场办理乘机手续，为安检预留更多的时间；
-                            3. 游客自行前往的购物店所购商品出现质量问题，旅行社不承担任何责任；
-                            4. 请严格遵守境外旅游目的地有关国家法律法规，切勿从事违规违纪的行为，避免因触犯法律损害自身利益。
+                            ${product.reserve}
                         </div>
                     </div>
                     <div id="tab-5" class="tab-pane">
                         <div class="panel-body">
-                            1.日本与中国气候情况大致相同，但日本国土南北狭长，虽是同一时间，但因地点不同温差也较大，特别是北海道和九州，春秋两季去该地区旅游请注意适当的增减衣服。
-                            2.日本与中国有一个小时的时差，即日本13:00=中国12:00，请注意调整；,出入境旅客都可在国际机场和大多数银行办理外币兑换服务 (人民币不能兑换) ，兑换价格以当天国际牌价为准。
-                            3.日本的电压为110V，与国内的不同，插座的式样为两相扁插，如您携带的电器无法使用，可向酒店总台咨询转换插座借用服务。购买电器时，请留意输入电压是110V的还是220V的，以免发生回国后无法正常使用的状况。
-                            4.由于制式不同，中国手机在日本不能漫游使用，请使用当地电话卡或投币电话，或提前办理租赁手机业务。
-                            5.日本的旅游业非常成熟，很多酒店年份久已，设施陈旧，相对国内的同星级酒店，其大堂、电梯间、卫生间狭小，但是干净卫生，而且酒店的水龙头的水可以直接饮用。
+                            ${product.notice}
                         </div>
                     </div>
                     <div id="tab-6" class="tab-pane">
@@ -261,7 +274,7 @@
                                 <div class="hr-line-dashed"></div>
                                 <div class="form-group">
                                     <div class="col-sm-4 col-sm-offset-2">
-                                        <button class="btn btn-primary">提交</button>
+                                        <button class="btn btn-primary" onclick="submitQuestion();">提交</button>
                                     </div>
                                 </div>
                             </form>
@@ -272,68 +285,15 @@
         </div>
     </div>
     <!--侧边栏-->
-    <div class="col-md-3" style="margin-top: 15px;">
+    <div class="col-md-3  animated fadeInRight" style="margin-top: 15px;">
         <div class="panel panel-success">
             <div class="panel-heading">
                 相关线路
             </div>
             <div class="panel-body">
-                <div class="wrapper wrapper-content animated fadeInRight">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="ibox">
-                                <div class="ibox-content product-box">
+                <div class="wrapper wrapper-content">
+                    <div class="row" id="aboutProducts">
 
-                                    <div class="product-imitation">
-                                        [ INFO ]
-                                    </div>
-                                    <div class="product-desc">
-                                <span class="product-price">
-                                    &yen; 10688
-                                </span>
-                                        <small class="text-muted">Category</small>
-                                        <a href="ecommerce_products_grid.html#" class="product-name"> Product</a>
-                                        <div class="small m-t-xs">
-                                            Many desktop publishing packages and web page editors now.
-                                        </div>
-                                        <div class="m-t text-right">
-
-                                            <a href="ecommerce_products_grid.html#"
-                                               class="btn btn-xs btn-outline btn-primary">详细 <i
-                                                    class="fa fa-long-arrow-right"></i> </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="ibox">
-                                <div class="ibox-content product-box">
-
-                                    <div class="product-imitation">
-                                        [ INFO ]
-                                    </div>
-                                    <div class="product-desc">
-                                <span class="product-price">
-                                    &yen; 10688
-                                </span>
-                                        <small class="text-muted">Category</small>
-                                        <a href="ecommerce_products_grid.html#" class="product-name"> Product</a>
-
-
-                                        <div class="small m-t-xs">
-                                            Many desktop publishing packages and web page editors now.
-                                        </div>
-                                        <div class="m-t text-right">
-
-                                            <a href="ecommerce_products_grid.html#"
-                                               class="btn btn-xs btn-outline btn-primary">详细 <i
-                                                    class="fa fa-long-arrow-right"></i> </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -356,11 +316,9 @@
 <script src="/js/plugins/pace/pace.min.js"></script>
 <script src="/js/plugins/wow/wow.min.js"></script>
 
-<script>
-    $(function () {
-        $("#navbar").load("/view/navbar.html");
-        $("#footer").load("/view/footer.html");
-    });
-</script>
+<%--itrip--%>
+<script src="/javascript/viewcommon.js"></script>
+<script src="/javascript/view/product/product.js"></script>
+
 </body>
 </html>
