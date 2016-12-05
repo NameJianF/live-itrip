@@ -7,9 +7,13 @@ $(function () {
     //$("#divNavbar").load("/view/navbar.html");
     $("#footer").load("/view/footer.html");
     initNavbar();
-    loadDatas();
 
+    $("#divCarousel").removeClass('landing-page');
+
+    loadDatas();
     initHoverItems();
+
+    initSearchBox();
 });
 
 
@@ -96,4 +100,43 @@ function initHoverItems() {
             'left': '0'
         }, {duration: 100});
     });
+}
+
+// 初始化查询控件
+function initSearchBox() {
+    var options = {
+        //查询事件
+        "search": function (paramList) {
+            console.log('查询参数:' + JSON.stringify(paramList));
+        },
+        //默认展开条件数
+        "expandRow": 2,
+        //查询条件
+        "searchBoxs": [
+            {
+                "id": "theme",
+                "title": " 主 题 ",
+                "isMultiple": true,
+                "data": [
+                    {"value": "0", "text": "温泉旅游"},
+                    {"value": "1", "text": "滑雪之行"},
+                    {"value": "2", "text": "海岛旅游"},
+                    {"value": "3", "text": "快乐家族"},
+                    {"value": "4", "text": "见学体验"},
+                    {"value": "5", "text": "健康检查"}
+                ]
+            },
+            {
+                "id": "citys",
+                "title": " 城 市 ",
+                "data": [
+                    {"value": "0", "text": "东京"},
+                    {"value": "1", "text": "大阪"},
+                    {"value": "2", "text": "京都"},
+                    {"value": "3", "text": "北海道"}
+                ]
+            }
+        ]
+    };
+    $("#searchbox").fiterMore(options);
 }

@@ -30,8 +30,36 @@
 </head>
 <body id="page-top" class="landing-page">
 
-<div id="navbar" class="navbar-wrapper">
+<div class="navbar-wrapper">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header page-scroll">
+                <a class="navbar-brand" href="/index.html">
+                    <img src="/img/he.png" style="width: 30px;height: auto;margin: -5px;">
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-left">
+                    <li><a class="page-scroll" style="margin-left: 20px;" href="/index.html">首页</a></li>
+                    <li><a class="page-scroll" href="/view/customer.html">私人定制</a></li>
+                    <li><a class="page-scroll" href="/view/theme.html">主题旅游</a></li>
+                    <li><a class="page-scroll" href="/view/town.html">乡村民宿体验游</a></li>
+                    <li><a class="page-scroll" href="/view/plan.html">参考行程</a></li>
+                    <li><a class="page-scroll" href="/view/service.html">旅行服务</a></li>
+                    <li><a class="page-scroll" href="/view/about.html">联系我们</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class="page-scroll" style="padding-right: 5px;font-size: 14px;" onclick="login();">登录</a>
+                    </li>
+                    <li><a class="page-scroll" style="padding-right: 5px;font-size: 14px;" onclick="register();">注册</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </div>
+
 <div class="row" style="height: 80px">
 
 </div>
@@ -237,11 +265,9 @@
 <script src="/moose/js/jquery.sticky.js"></script>
 <script src="/moose/js/scripts.js"></script>
 
-<script>
-    $(function () {
-        $("#navbar").load("/view/navbar.html");
-        $("#footer").load("/view/footer.html");
-    });
-</script>
+<!--itirp-->
+<script src="/javascript/viewcommon.js"></script>
+<script src="/javascript/view/city/citylist.js"></script>
+
 </body>
 </html>

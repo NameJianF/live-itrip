@@ -4,6 +4,7 @@
 
 $(function () {
     $("#footer").load("/view/footer.html");
+    initNavbar();
 
     loadAboutProducts();
 });

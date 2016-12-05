@@ -2,6 +2,14 @@
  * Created by Feng on 2016/11/21.
  */
 
+$(function () {
+    $("#footer").load("/view/footer.html");
+
+    initNavbar();
+
+
+});
+
 function submitDatas() {
     $("#btnSubmit").button('loading');
     var jsondata = {

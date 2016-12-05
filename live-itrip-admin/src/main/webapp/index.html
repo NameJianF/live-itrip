@@ -19,12 +19,17 @@
 
     <!-- Custom styles for this template -->
     <link href="/css/style.css" rel="stylesheet">
+
     <link href="/basebox/base.css" rel="stylesheet">
     <link href="/moose/web.css" rel="stylesheet">
     <link href="/moose/css/color/blue.css" rel="stylesheet">
     <link href="/moose/type/fontello.css" rel="stylesheet">
 
     <style>
+        .landing-page .header-back {
+            height: 470px;
+            width: 100%;
+        }
         .landing-page .header-back.one {
             background: url('/images/web/index/header_one.jpg') 50% 0 no-repeat;
         }
@@ -43,6 +48,115 @@
 
         .landing-page .header-back.five {
             background: url('/images/web/index/header_five.jpg') 50% 0 no-repeat;
+        }
+        .landing-page .carousel {
+            height: 435px;
+        }
+
+        .landing-page .carousel-caption {
+            z-index: 10;
+        }
+
+        .landing-page .carousel .item {
+            height: 435px;
+            background-color: #777;
+        }
+
+        .landing-page .carousel-inner > .item > img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            height: 435px;
+        }
+
+        .landing-page .carousel-fade .carousel-inner .item {
+            opacity: 0;
+            -webkit-transition-property: opacity;
+            transition-property: opacity;
+        }
+
+        .landing-page .carousel-fade .carousel-inner .active {
+            opacity: 1;
+        }
+
+        .landing-page .carousel-fade .carousel-inner .active.left,
+        .landing-page .carousel-fade .carousel-inner .active.right {
+            left: 0;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .landing-page .carousel-fade .carousel-inner .next.left,
+        .landing-page .carousel-fade .carousel-inner .prev.right {
+            opacity: 1;
+        }
+
+        .landing-page .carousel-fade .carousel-control {
+            z-index: 2;
+        }
+
+        .landing-page .carousel-control.left,
+        .landing-page .carousel-control.right {
+            background: none;
+        }
+
+        .landing-page .carousel-control {
+            width: 6%;
+        }
+
+        .landing-page .carousel-inner .container {
+            position: relative;
+        }
+
+        .landing-page .carousel-inner {
+            overflow: visible;
+        }
+
+        .landing-page .carousel-caption {
+            position: absolute;
+            top: 100px;
+            left: 0;
+            bottom: auto;
+            right: auto;
+            text-align: left;
+        }
+
+        .landing-page .carousel-caption {
+            position: absolute;
+            top: 100px;
+            left: 0;
+            bottom: auto;
+            right: auto;
+            text-align: left;
+        }
+
+        .landing-page .carousel-caption.blank {
+            top: 140px;
+        }
+
+        .landing-page .carousel-image {
+            position: absolute;
+            right: 10px;
+            top: 150px;
+        }
+
+        .landing-page .carousel-indicators {
+            padding-right: 60px;
+        }
+
+        .landing-page .carousel-caption h1 {
+            font-weight: 700;
+            font-size: 38px;
+            text-transform: uppercase;
+            text-shadow: none;
+            letter-spacing: -1.5px;
+        }
+
+        .landing-page .carousel-caption p {
+            font-weight: 700;
+            text-transform: uppercase;
+            text-shadow: none;
         }
     </style>
 

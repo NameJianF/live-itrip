@@ -21,67 +21,129 @@ $(function () {
         format: "yyyy-mm-dd"
     });
 
-    Dropzone.options.myAwesomeDropzone = {
-        url: "/file/upload.action?flag=0",
-        autoProcessQueue: false,
-        uploadMultiple: true,
-        parallelUploads: 100,
-        maxFiles: 1,
+    //Dropzone.options.myAwesomeDropzone = {
+    //    url: "/file/upload.action?flag=0",
+    //    autoProcessQueue: false,
+    //    uploadMultiple: true,
+    //    parallelUploads: 100,
+    //    maxFiles: 1,
+    //
+    //    // Dropzone settings
+    //    init: function () {
+    //        myDropzone = this;
+    //
+    //        $('#btnUploadFile').click(function (e) {
+    //            e.preventDefault();
+    //            e.stopPropagation();
+    //            myDropzone.processQueue();
+    //        });
+    //        this.on('sendingmultiple', function (file, xhr, formData) {
+    //            formData.append('productId', $('#productId').val());
+    //            formData.append('imgFlag', imgFlag);
+    //        });
+    //        this.on("sendingmultiple", function () {
+    //        });
+    //        this.on("successmultiple", function (files, message) {
+    //            //console.log('successmultiple' + message);
+    //            var obj = jQuery.parseJSON(message)
+    //            if (imgFlag == 'small') {
+    //                $('#productImgSamll').val(obj.data.fileUrl);
+    //                $('#productImgSamllId').val(obj.data.fileId);
+    //            } else if (imgFlag == 'big') {
+    //                $('#productImgBig').val(obj.data.fileUrl);
+    //                $('#productImgBigId').val(obj.data.fileId);
+    //            }
+    //        });
+    //        this.on("errormultiple", function (files, message) {
+    //            parent.notifyDanger('', message);
+    //        });
+    //
+    //        this.on("addedfile", function (file) {
+    //
+    //            // Create the remove button
+    //            var removeButton = Dropzone.createElement("<button>删除</button>");
+    //
+    //            // Capture the Dropzone instance as closure.
+    //            var _this = this;
+    //
+    //            // Listen to the click event
+    //            removeButton.addEventListener("click", function (e) {
+    //                // Make sure the button click doesn't submit the form:
+    //                e.preventDefault();
+    //                e.stopPropagation();
+    //                // Remove the file preview.
+    //                _this.removeFile(file);
+    //                // If you want to the delete the file on the server as well,
+    //                // you can do the AJAX request here.
+    //            });
+    //
+    //            // Add the button to the file preview element.
+    //            file.previewElement.appendChild(removeButton);
+    //        });
+    //    }
+    //};
 
-        // Dropzone settings
-        init: function () {
-            myDropzone = this;
 
-            $('#btnUploadFile').click(function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                myDropzone.processQueue();
-            });
-            this.on('sendingmultiple', function (file, xhr, formData) {
-                formData.append('productId', $('#productId').val());
-                formData.append('imgFlag', imgFlag);
-            });
-            this.on("sendingmultiple", function () {
-            });
-            this.on("successmultiple", function (files, message) {
-                //console.log('successmultiple' + message);
-                var obj = jQuery.parseJSON(message)
-                if (imgFlag == 'small') {
-                    $('#productImgSamll').val(obj.data.fileUrl);
-                    $('#productImgSamllId').val(obj.data.fileId);
-                } else if (imgFlag == 'big') {
-                    $('#productImgBig').val(obj.data.fileUrl);
-                    $('#productImgBigId').val(obj.data.fileId);
-                }
-            });
-            this.on("errormultiple", function (files, message) {
-                parent.notifyDanger('', message);
-            });
 
-            this.on("addedfile", function (file) {
-
-                // Create the remove button
-                var removeButton = Dropzone.createElement("<button>删除</button>");
-
-                // Capture the Dropzone instance as closure.
-                var _this = this;
-
-                // Listen to the click event
-                removeButton.addEventListener("click", function (e) {
-                    // Make sure the button click doesn't submit the form:
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // Remove the file preview.
-                    _this.removeFile(file);
-                    // If you want to the delete the file on the server as well,
-                    // you can do the AJAX request here.
-                });
-
-                // Add the button to the file preview element.
-                file.previewElement.appendChild(removeButton);
-            });
+    var $image = $(".image-crop > img")
+    $($image).cropper({
+        aspectRatio: 1.618,
+        preview: ".img-preview",
+        done: function(data) {
+            // Output the result data for cropping image.
         }
-    };
+    });
+
+    var $inputImage = $("#inputImage");
+    if (window.FileReader) {
+        $inputImage.change(function() {
+            var fileReader = new FileReader(),
+                files = this.files,
+                file;
+
+            if (!files.length) {
+                return;
+            }
+
+            file = files[0];
+
+            if (/^image\/\w+$/.test(file.type)) {
+                fileReader.readAsDataURL(file);
+                fileReader.onload = function () {
+                    $inputImage.val("");
+                    $image.cropper("reset", true).cropper("replace", this.result);
+                };
+            } else {
+                showMessage("Please choose an image file.");
+            }
+        });
+    } else {
+        $inputImage.addClass("hide");
+    }
+
+    $("#download").click(function() {
+        window.open($image.cropper("getDataURL"));
+    });
+
+    $("#zoomIn").click(function() {
+        $image.cropper("zoom", 0.1);
+    });
+
+    $("#zoomOut").click(function() {
+        $image.cropper("zoom", -0.1);
+    });
+
+    $("#rotateLeft").click(function() {
+        $image.cropper("rotate", 45);
+    });
+
+    $("#rotateRight").click(function() {
+        $image.cropper("rotate", -45);
+    });
+
+    $("#setDrag").click(function() {
+        $image.cropper("setDragMode", "crop");
+    });
 
     initDataTable();
 
@@ -425,7 +487,7 @@ function saveProductNoticeInfo() {
 
 function formUploadImageShow(flag) {
     imgFlag = flag;
-    myDropzone.removeAllFiles(true);
+    //myDropzone.removeAllFiles(true);
     $('#formUploadImage').modal('show');
 }
 

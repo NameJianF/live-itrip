@@ -21,11 +21,14 @@
     <!-- Custom styles for this template -->
     <link href="/css/style.css" rel="stylesheet">
 
+    <!--itrip-->
+    <link href="/filtermore/css/filterMore.min.css" rel="stylesheet">
+
     <link href="/css/view/theme.css" rel="stylesheet">
     <link href="/css/view/footer.css" rel="stylesheet">
 </head>
 
-<body class="pace-done" style="background: white;">
+<body class="landing-page" style="background: white;">
 
 <div class="navbar-wrapper">
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -36,8 +39,8 @@
                 </a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a class="page-scroll" href="/index.html">首页</a></li>
+                <ul class="nav navbar-nav navbar-left">
+                    <li><a class="page-scroll" style="margin-left: 20px;" href="/index.html">首页</a></li>
                     <li><a class="page-scroll" href="/view/customer.html">私人定制</a></li>
                     <li><a class="page-scroll" href="/view/theme.html">主题旅游</a></li>
                     <li><a class="page-scroll" href="/view/town.html">乡村民宿体验游</a></li>
@@ -45,19 +48,26 @@
                     <li><a class="page-scroll" href="/view/service.html">旅行服务</a></li>
                     <li><a class="page-scroll" href="/view/about.html">联系我们</a></li>
                 </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class="page-scroll" style="padding-right: 5px;font-size: 14px;" onclick="login();">登录</a>
+                    </li>
+                    <li><a class="page-scroll" style="padding-right: 5px;font-size: 14px;" onclick="register();">注册</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
 </div>
 
-<div class="themebg">
-    <div class="row">
+
+<div class="container">
+    <div class="row themebg">
         <div class="col-lg-12">
             <img src="/images/web/theme/top.gif">
         </div>
     </div>
-</div>
-<section class="container" style="padding-left: 0px;padding-right: 0px;margin-bottom: 5px;">
+
     <div class="row">
         <div class="col-lg-8">
             <div class="carousel slide" id="carousel2">
@@ -107,7 +117,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12" style="margin-top: 5px;">
+                <div class="col-lg-12" style="margin-top: 3px;">
                     <div class="image-wrapper overlay-fade-in">
                         <img src="/img/p2.jpg"/>
                         <div class="image-overlay-content">
@@ -120,81 +130,25 @@
             </div>
         </div>
     </div>
-</section>
 
-
-<section class="container" style="padding-left: 0px;padding-right: 0px;">
     <div class="row">
-        <div class="col-lg-12">
-            <div class="panel panel-danger">
-                <div class="panel-heading">
-                    温泉旅游
-                </div>
-                <div class="panel-body" style="padding-bottom: 0px;">
-                    <div class="row" id="productList1">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    滑雪之行
-                </div>
-                <div class="panel-body" style="padding-bottom: 0px;">
-                    <div class="row" id="productList2">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="panel panel-warning">
-                <div class="panel-heading">
-                    海岛旅游
-                </div>
-                <div class="panel-body" style="padding-bottom: 0px;">
-                    <div class="row" id="productList3">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    快乐家族
-                </div>
-                <div class="panel-body" style="padding-bottom: 0px;">
-                    <div class="row" id="productList4">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12">
-            <div class="panel panel-info">
-                <div class="panel-heading">
-                    见学体验
-                </div>
-                <div class="panel-body" style="padding-bottom: 0px;">
-                    <div class="row" id="productList5">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    健康检查
-                </div>
-                <div class="panel-body" style="padding-bottom: 0px;">
-                    <div class="row" id="productList6">
-                    </div>
-                </div>
-            </div>
+        <div class="col-lg-12" style="margin-top: 10px;font-size: 16px;">
+            <div class="searchbox" id="searchbox"></div>
         </div>
     </div>
-</section>
-
+    <div class="row" id="productList1" style="margin-top: 10px;">
+    </div>
+    <div class="row" id="productList2">
+    </div>
+    <div class="row" id="productList3">
+    </div>
+    <div class="row" id="productList4">
+    </div>
+    <div class="row" id="productList5">
+    </div>
+    <div class="row" id="productList6">
+    </div>
+</div>
 
 <!--footer-->
 <section id="footer" class="gray-section contact">
@@ -213,6 +167,9 @@
 <script src="/js/plugins/wow/wow.min.js"></script>
 
 <!--itirp-->
+<script src="/filtermore/layer/layer.min.js"></script>
+<script src="/filtermore/filterMore.min.js"></script>
+
 <script src="/javascript/viewcommon.js"></script>
 <script src="/javascript/view/theme/theme.js"></script>
 
