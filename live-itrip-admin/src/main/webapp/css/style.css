@@ -4309,7 +4309,8 @@ body.body-small .footer.fixed {
 }
 
 .nav-tabs > li > a {
-    color: #A7B1C2;
+    /*color: #A7B1C2;*/
+    color: #ffffff;
     font-weight: 600;
     padding: 10px 20px 10px 25px;
 }
@@ -8045,7 +8046,6 @@ body.landing-page {
     padding: 10px;
     height: auto;
 }
-
 
 .landing-page .caption-link {
     color: #fff;

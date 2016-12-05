@@ -3,6 +3,9 @@
  */
 
 $(function () {
+    $("#footer").load("/view/footer.html");
+
+    initNavbar();
     //基本例子
     initSearchBox();
 });
