@@ -16,15 +16,12 @@
     <link href="/css/plugins/summernote/summernote.css" rel="stylesheet">
     <link href="/css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
     <link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
-
-    <%--<link href="/css/plugins/dropzone/basic.css" rel="stylesheet">--%>
-    <%--<link href="/css/plugins/dropzone/dropzone.css" rel="stylesheet">--%>
-    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
-
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/plugins/dropzone/basic.css" rel="stylesheet">
+    <link href="/css/plugins/dropzone/dropzone.css" rel="stylesheet">
+    <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
 
-    <link href="/css/plugins/cropper/cropper.min.css">
     <style>
         .dropzone {
             width: 500px;
@@ -349,7 +346,7 @@
 
 <%--图片上传--%>
 <div class="modal fade modal-default" id="formUploadImage">
-    <div class="modal-dialog" style="width: 1000px;">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -357,74 +354,9 @@
                 <h4 class="modal-title" id="formEditTitle">图片上传</h4>
             </div>
             <div class="modal-body">
-                <%--<form id="my-awesome-dropzone" class="dropzone">--%>
-                <%--<div class="dropzone-previews"></div>--%>
-                <%--</form>--%>
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="ibox float-e-margins">
-                                <div class="ibox-title  back-change">
-                                    <h5>Image cropper <small>http://fengyuanchen.github.io/cropper/</small></h5>
-                                    <div class="ibox-tools">
-                                        <a class="collapse-link">
-                                            <i class="fa fa-chevron-up"></i>
-                                        </a>
-                                        <a class="dropdown-toggle" data-toggle="dropdown" href="form_advanced.html#">
-                                            <i class="fa fa-wrench"></i>
-                                        </a>
-                                        <ul class="dropdown-menu dropdown-user">
-                                            <li><a href="form_advanced.html#">Config option 1</a>
-                                            </li>
-                                            <li><a href="form_advanced.html#">Config option 2</a>
-                                            </li>
-                                        </ul>
-                                        <a class="close-link">
-                                            <i class="fa fa-times"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="ibox-content">
-                                    <p>
-                                        A simple jQuery image cropping plugin.
-                                    </p>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="image-crop">
-                                                <img src="/img/p3.jpg">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <h4>Preview image</h4>
-                                            <div class="img-preview img-preview-sm"></div>
-                                            <h4>Comon method</h4>
-                                            <p>
-                                                You can upload new image to crop container and easy download new cropped image.
-                                            </p>
-                                            <div class="btn-group">
-                                                <label title="Upload image file" for="inputImage" class="btn btn-primary">
-                                                    <input type="file" accept="image/*" name="file" id="inputImage" class="hide">
-                                                    Upload new image
-                                                </label>
-                                                <label title="Donload image" id="download" class="btn btn-primary">Download</label>
-                                            </div>
-                                            <h4>Other method</h4>
-                                            <p>
-                                                You may set cropper options with <code>$(image}).cropper(options)</code>
-                                            </p>
-                                            <div class="btn-group">
-                                                <button class="btn btn-white" id="zoomIn" type="button">Zoom In</button>
-                                                <button class="btn btn-white" id="zoomOut" type="button">Zoom Out</button>
-                                                <button class="btn btn-white" id="rotateLeft" type="button">Rotate Left</button>
-                                                <button class="btn btn-white" id="rotateRight" type="button">Rotate Right</button>
-                                                <button class="btn btn-warning" id="setDrag" type="button">New crop</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <form id="my-awesome-dropzone" class="dropzone">
+                    <div class="dropzone-previews"></div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" id="btnUploadFile" style="margin-right: 10px;">上传文件</button>
@@ -698,10 +630,9 @@
 <!-- Mainly scripts -->
 <script src="/js/jquery-2.1.1.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="/js/itrip/jquery.cookie.js"></script>
-
-<script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 
 <!-- Custom and plugin javascript -->
 <script src="/js/inspinia.js"></script>
@@ -714,15 +645,11 @@
 <script src="/js/plugins/datapicker/bootstrap-datepicker.js"></script>
 
 <!-- DROPZONE -->
-<%--<script src="/js/plugins/dropzone/dropzone.js"></script>--%>
+<script src="/js/plugins/dropzone/dropzone.js"></script>
 
 <script src="/js/plugins/dataTables/datatables.min.js"></script>
 
-<script src="/js/plugins/cropper/cropper.min.js"></script>
-
-<%--itirp--%>
 <script src="/javascript/view/product/sysProductNew.js"></script>
-
 
 </body>
 
