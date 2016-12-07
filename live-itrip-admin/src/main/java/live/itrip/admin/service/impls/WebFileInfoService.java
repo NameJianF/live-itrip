@@ -60,7 +60,17 @@ public class WebFileInfoService extends BaseService implements IWebFileInfoServi
                 // 原始文件名
                 String originalFilename = multipartFile.getOriginalFilename();
                 // 文件后缀
-                String fileExt = originalFilename.substring(originalFilename.lastIndexOf(".") + 1).toLowerCase();
+                String fileExt = "jpg";
+
+                if (originalFilename.equalsIgnoreCase("blob")) {
+                    String contentType = multipartFile.getContentType();
+                    // 文件后缀
+                    fileExt = contentType.substring(contentType.lastIndexOf("/") + 1).toLowerCase();
+                } else {
+                    // 文件后缀
+                    fileExt = originalFilename.substring(originalFilename.lastIndexOf(".") + 1).toLowerCase();
+                }
+
                 // 本地相对路径：新文件名
                 String fileUrl = getLocalFilePath(fileExt);
                 Logger.debug("File url:" + fileUrl);

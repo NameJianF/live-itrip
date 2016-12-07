@@ -18,17 +18,8 @@
     <link href="/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
     <link href="/css/animate.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
-    <link href="/css/plugins/dropzone/basic.css" rel="stylesheet">
-    <link href="/css/plugins/dropzone/dropzone.css" rel="stylesheet">
     <link href="/css/plugins/dataTables/datatables.min.css" rel="stylesheet">
 
-    <style>
-        .dropzone {
-            width: 500px;
-            height: 230px;
-            min-height: 0px !important;
-        }
-    </style>
 </head>
 <body>
 <div class="wrapper wrapper-content animated fadeInRight ecommerce">
@@ -346,7 +337,7 @@
 
 <%--图片上传--%>
 <div class="modal fade modal-default" id="formUploadImage">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="width: 900px">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -354,12 +345,13 @@
                 <h4 class="modal-title" id="formEditTitle">图片上传</h4>
             </div>
             <div class="modal-body">
-                <form id="my-awesome-dropzone" class="dropzone">
-                    <div class="dropzone-previews"></div>
-                </form>
+                <div id="divCropper">
+                </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" id="btnUploadFile" style="margin-right: 10px;">上传文件</button>
+                <button class="btn btn-primary" id="btnUploadFile" style="margin-right: 10px;" onclick="uploadImage();">
+                    上传文件
+                </button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
             </div>
         </div>
@@ -474,7 +466,7 @@
                         aria-hidden="true">×</span></button>
                 <h4 class="modal-title">预览</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="background: #e6e6e6;">
                 <!--摘要-->
                 <div class="row">
                     <div class="panel panel-primary">
@@ -643,9 +635,6 @@
 
 <!-- Data picker -->
 <script src="/js/plugins/datapicker/bootstrap-datepicker.js"></script>
-
-<!-- DROPZONE -->
-<script src="/js/plugins/dropzone/dropzone.js"></script>
 
 <script src="/js/plugins/dataTables/datatables.min.js"></script>
 

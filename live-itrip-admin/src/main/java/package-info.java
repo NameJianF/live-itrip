@@ -7,10 +7,10 @@
  * 3.
  *
  *
- * product list : 360 * 200     1.8
-   product detail 左边: 440 * 355  1.3
+ * product list : 360 * 200     16:9
    theme top 左边: 750 * 422
-   theme top 右边: 360 * 200     1.8
+   theme top 右边: 360 * 200
 
+   product detail 左边: 440 * 355  4:3
 
  */

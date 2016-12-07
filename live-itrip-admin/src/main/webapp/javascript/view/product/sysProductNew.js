@@ -2,7 +2,6 @@
  * Created by Feng on 2016/11/12.
  */
 
-var myDropzone;
 var imgFlag = 'small';
 var tabPlanDetails;
 
@@ -20,68 +19,6 @@ $(function () {
         todayBtn: true,
         format: "yyyy-mm-dd"
     });
-
-    Dropzone.options.myAwesomeDropzone = {
-        url: "/file/upload.action?flag=0",
-        autoProcessQueue: false,
-        uploadMultiple: true,
-        parallelUploads: 100,
-        maxFiles: 1,
-
-        // Dropzone settings
-        init: function () {
-            myDropzone = this;
-
-            $('#btnUploadFile').click(function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                myDropzone.processQueue();
-            });
-            this.on('sendingmultiple', function (file, xhr, formData) {
-                formData.append('productId', $('#productId').val());
-                formData.append('imgFlag', imgFlag);
-            });
-            this.on("sendingmultiple", function () {
-            });
-            this.on("successmultiple", function (files, message) {
-                //console.log('successmultiple' + message);
-                var obj = jQuery.parseJSON(message)
-                if (imgFlag == 'small') {
-                    $('#productImgSamll').val(obj.data.fileUrl);
-                    $('#productImgSamllId').val(obj.data.fileId);
-                } else if (imgFlag == 'big') {
-                    $('#productImgBig').val(obj.data.fileUrl);
-                    $('#productImgBigId').val(obj.data.fileId);
-                }
-            });
-            this.on("errormultiple", function (files, message) {
-                parent.notifyDanger('', message);
-            });
-
-            this.on("addedfile", function (file) {
-
-                // Create the remove button
-                var removeButton = Dropzone.createElement("<button>删除</button>");
-
-                // Capture the Dropzone instance as closure.
-                var _this = this;
-
-                // Listen to the click event
-                removeButton.addEventListener("click", function (e) {
-                    // Make sure the button click doesn't submit the form:
-                    e.preventDefault();
-                    e.stopPropagation();
-                    // Remove the file preview.
-                    _this.removeFile(file);
-                    // If you want to the delete the file on the server as well,
-                    // you can do the AJAX request here.
-                });
-
-                // Add the button to the file preview element.
-                file.previewElement.appendChild(removeButton);
-            });
-        }
-    };
 
     initDataTable();
 
@@ -425,8 +362,41 @@ function saveProductNoticeInfo() {
 
 function formUploadImageShow(flag) {
     imgFlag = flag;
-    myDropzone.removeAllFiles(true);
+    $('#divCropper').load("/pages/view/cropper/cropper.jsp");
     $('#formUploadImage').modal('show');
+}
+
+function uploadImage() {
+    imageCropper.cropper('getCroppedCanvas').toBlob(function (blob) {
+        var formData = new FormData();
+
+        formData.append('croppedImage', blob);
+        formData.append('productId', $('#productId').val());
+        formData.append('imgFlag', imgFlag);
+
+        $.ajax('/file/upload.action?flag=0', {
+            method: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (message) {
+                //console.log('Upload success');
+                var obj = jQuery.parseJSON(message)
+                if (imgFlag == 'small') {
+                    $('#productImgSamll').val(obj.data.fileUrl);
+                    $('#productImgSamllId').val(obj.data.fileId);
+                } else if (imgFlag == 'big') {
+                    $('#productImgBig').val(obj.data.fileUrl);
+                    $('#productImgBigId').val(obj.data.fileId);
+                }
+                console.log('Upload success');
+                $('#formUploadImage').modal('hide');
+            },
+            error: function () {
+                console.log('Upload error');
+            }
+        });
+    });
 }
 
 
