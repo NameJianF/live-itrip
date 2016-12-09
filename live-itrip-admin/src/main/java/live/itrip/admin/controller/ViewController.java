@@ -2,6 +2,7 @@ package live.itrip.admin.controller;
 
 import com.alibaba.fastjson.JSON;
 import live.itrip.admin.controller.base.AbstractController;
+import live.itrip.admin.service.impls.UserService;
 import live.itrip.admin.service.intefaces.IWebCustomerAskService;
 import live.itrip.admin.service.intefaces.IWebProductService;
 import live.itrip.admin.service.intefaces.IWebServiceOrderService;
@@ -33,6 +34,57 @@ public class ViewController extends AbstractController {
     private IWebServiceOrderService iWebServiceOrderService;
     @Autowired
     private IWebProductService iWebProductService;
+    @Autowired
+    private UserService userService;
+
+    /**
+     * 前台用户登录
+     *
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/view/login")
+    public
+    @ResponseBody
+    void login(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+        String decodeJson = JsonStringUtils.decoderForJsonString(json);
+        Logger.debug(
+                String.format("timestamp:%s action:%s json:%s",
+                        System.currentTimeMillis(), "user", decodeJson));
+
+        if (StringUtils.isEmpty(decodeJson)) {
+            this.paramInvalid(response, "JSON");
+            return;
+        }
+
+        userService.userLogin(decodeJson, response, request);
+    }
+
+    /**
+     * 前台用户退出
+     *
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/view/logout")
+    public
+    @ResponseBody
+    void logout(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+
+    }
+
+    /**
+     * 前台用户注册
+     *
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/view/register")
+    public
+    @ResponseBody
+    void register(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+
+    }
 
     /**
      * @param response
