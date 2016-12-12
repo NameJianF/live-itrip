@@ -3,6 +3,7 @@ package live.itrip.admin.controller;
 import com.alibaba.fastjson.JSON;
 import live.itrip.admin.controller.base.AbstractController;
 import live.itrip.admin.service.impls.UserService;
+import live.itrip.admin.service.intefaces.IUserService;
 import live.itrip.admin.service.intefaces.IWebCustomerAskService;
 import live.itrip.admin.service.intefaces.IWebProductService;
 import live.itrip.admin.service.intefaces.IWebServiceOrderService;
@@ -35,7 +36,7 @@ public class ViewController extends AbstractController {
     @Autowired
     private IWebProductService iWebProductService;
     @Autowired
-    private UserService userService;
+    private IUserService iUserService;
 
     /**
      * 前台用户登录
@@ -57,7 +58,7 @@ public class ViewController extends AbstractController {
             return;
         }
 
-        userService.userLogin(decodeJson, response, request);
+        iUserService.userLogin(decodeJson, response, request);
     }
 
     /**

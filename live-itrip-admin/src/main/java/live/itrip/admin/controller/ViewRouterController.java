@@ -128,4 +128,20 @@ public class ViewRouterController extends AbstractController {
         }
         response.sendRedirect(url);
     }
+
+    /**
+     * user profile
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/view/profile", method = RequestMethod.GET)
+    public String profile(HttpServletRequest request, Model model) throws IOException {
+//        AdminUser user = iUserService.getCurrentLoginUser();
+//        model.addAttribute("user", user);
+        return "view/user/profile";
+
+    }
+
 }
