@@ -63,6 +63,7 @@ function loadDatas() {
 
                     // 产品特色
                     $('#productImgSamll').val(response.data.imgSmall);
+                    $('#productImgMidd').val(response.data.imgMiddle);
                     $('#productImgBig').val(response.data.imgBig);
                     $('#productDesr').val(response.data.description);
                     $('#productSpecialty').code(response.data.specialty);
@@ -252,6 +253,8 @@ function saveProductDescInfo() {
     var productId = $('#productId').val();
     var productImgSamll = $('#productImgSamll').val();
     var productImgSamllId = $('#productImgSamllId').val();
+    var productImgMidd = $('#productImgMidd').val();
+    var productImgMiddId = $('#productImgMiddId').val();
     var productImgBig = $('#productImgBig').val();
     var productImgBigId = $('#productImgBigId').val();
 
@@ -264,6 +267,8 @@ function saveProductDescInfo() {
         'id': productId,
         'imgSmall': productImgSamll,
         'productImgSamllId': productImgSamllId,
+        'imgMiddle': productImgMidd,
+        'productImgMiddId': productImgMiddId,
         'imgBig': productImgBig,
         'productImgBigId': productImgBigId,
         'description': productDesr,
@@ -385,6 +390,9 @@ function uploadImage() {
                 if (imgFlag == 'small') {
                     $('#productImgSamll').val(obj.data.fileUrl);
                     $('#productImgSamllId').val(obj.data.fileId);
+                } else if (imgFlag == 'middle') {
+                    $('#productImgMidd').val(obj.data.fileUrl);
+                    $('#productImgMiddId').val(obj.data.fileId);
                 } else if (imgFlag == 'big') {
                     $('#productImgBig').val(obj.data.fileUrl);
                     $('#productImgBigId').val(obj.data.fileId);
@@ -563,7 +571,7 @@ function showPreview() {
     var days = $('#productDays').find("option:selected").text();
     var trafic = $('#productTraffic').find("option:selected").text();
     $('#preTitle').html($('#productTitle').val());
-    $("#preImgSmall").attr("src", $('#productImgSamll').val());
+    $("#preImgMidd").attr("src", $('#productImgMidd').val());
     $('#preDesr').html($('#productDesr').val());
     $('#prePrice').html('&yen;' + $('#productPrice').val());
     $('#preType').html(productType);

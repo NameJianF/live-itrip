@@ -8,6 +8,7 @@
         <result column="price_favoured" property="priceFavoured" jdbcType="INTEGER"/>
         <result column="days" property="days" jdbcType="INTEGER"/>
         <result column="img_small" property="imgSmall" jdbcType="VARCHAR"/>
+        <result column="img_middle" property="imgMiddle" jdbcType="VARCHAR"/>
         <result column="img_big" property="imgBig" jdbcType="VARCHAR"/>
         <result column="description" property="description" jdbcType="VARCHAR"/>
         <result column="type" property="type" jdbcType="VARCHAR"/>
@@ -29,7 +30,7 @@
         <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, title, price, price_favoured, days, img_small, img_big, description, type, from_city, 
+    id, title, price, price_favoured, days, img_small, img_middle, img_big, description, type, from_city,
     traffic, start_day, detail, content, specialty, cost, reserve, notice, click_count, 
     join_mans, local_html, status, is_delete, create_time, update_time
   </sql>
@@ -45,7 +46,7 @@
   </delete>
     <insert id="insert" parameterType="live.itrip.admin.model.WebProduct" keyProperty="id" useGeneratedKeys="true">
     insert into web_product (id, title, price, 
-      price_favoured, days, img_small, 
+      price_favoured, days, img_small, img_middle,
       img_big, description, type, 
       from_city, traffic, start_day, 
       detail, content, specialty, 
@@ -54,7 +55,7 @@
       status, is_delete, create_time, 
       update_time)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, 
-      #{priceFavoured,jdbcType=INTEGER}, #{days,jdbcType=INTEGER}, #{imgSmall,jdbcType=VARCHAR}, 
+      #{priceFavoured,jdbcType=INTEGER}, #{days,jdbcType=INTEGER}, #{imgSmall,jdbcType=VARCHAR}, #{imgMiddle,jdbcType=VARCHAR},
       #{imgBig,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
       #{fromCity,jdbcType=VARCHAR}, #{traffic,jdbcType=VARCHAR}, #{startDay,jdbcType=VARCHAR}, 
       #{detail,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{specialty,jdbcType=VARCHAR}, 
@@ -84,6 +85,9 @@
             </if>
             <if test="imgSmall != null">
                 img_small,
+            </if>
+            <if test="imgMiddle != null">
+                img_middle,
             </if>
             <if test="imgBig != null">
                 img_big,
@@ -162,6 +166,9 @@
             <if test="imgSmall != null">
                 #{imgSmall,jdbcType=VARCHAR},
             </if>
+            <if test="imgMiddle != null">
+                #{imgMiddle,jdbcType=VARCHAR},
+            </if>
             <if test="imgBig != null">
                 #{imgBig,jdbcType=VARCHAR},
             </if>
@@ -239,6 +246,9 @@
             <if test="imgSmall != null">
                 img_small = #{imgSmall,jdbcType=VARCHAR},
             </if>
+            <if test="imgMiddle != null">
+                img_middle = #{imgMiddle,jdbcType=VARCHAR},
+            </if>
             <if test="imgBig != null">
                 img_big = #{imgBig,jdbcType=VARCHAR},
             </if>
@@ -306,6 +316,7 @@
       price_favoured = #{priceFavoured,jdbcType=INTEGER},
       days = #{days,jdbcType=INTEGER},
       img_small = #{imgSmall,jdbcType=VARCHAR},
+      img_middle = #{imgMiddle,jdbcType=VARCHAR},
       img_big = #{imgBig,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},

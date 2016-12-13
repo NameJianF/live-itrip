@@ -34,6 +34,21 @@
     <link href="/css/view/town.css" rel="stylesheet">
     <link href="/css/view/footer.css" rel="stylesheet">
 
+    <style>
+        .nav-tabs > li > a {
+            color: #1ab394;
+            font-weight: 600;
+            padding: 10px 20px 10px 25px;
+        }
+
+        .topbg {
+            margin-top: 65px;
+            margin-bottom: -19px;
+            margin-left: -15px;
+            height: 80px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body id="page-top" class="landing-page">
 
@@ -67,9 +82,15 @@
     </nav>
 </div>
 
-
+<div class="row">
+    <div class="col-lg-12">
+        <div class="topbg">
+            <img src="/images/web/theme/top.gif" style="width: 95%">
+        </div>
+    </div>
+</div>
 <div class="row" style="margin: 20px;">
-    <div class="navy-line"></div>
+
     <div class="col-md-9" style="margin-top: 15px;">
         <!--摘要-->
         <div class="row">
@@ -80,12 +101,12 @@
                 <div class="panel-heading" style="font-size: 20px;">
                     ${product.title}
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" style="padding-left: 0px; padding-right: 0px;">
                     <div class="col-md-6">
                         <div>
-                            <a href="/view/product.action?pid=${product.id}">
-                                <img src="${product.imgSmall}">
-                            </a>
+                            <%--<a href="/view/product.action?pid=${product.id}">--%>
+                            <img src="${product.imgMiddle}">
+                            <%--</a>--%>
                         </div>
                         <div style="margin-top: 10px;">
                             ${product.description}
@@ -301,7 +322,7 @@
             <div class="panel-heading">
                 相关线路
             </div>
-            <div class="panel-body">
+            <div class="panel-body" style="padding-top: 0px;">
                 <div class="wrapper wrapper-content">
                     <div class="row" id="aboutProducts">
 

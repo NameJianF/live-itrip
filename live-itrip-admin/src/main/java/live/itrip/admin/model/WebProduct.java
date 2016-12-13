@@ -13,6 +13,8 @@ public class WebProduct {
 
     private String imgSmall;
 
+    private String imgMiddle;
+
     private String imgBig;
 
     private String description;
@@ -97,6 +99,14 @@ public class WebProduct {
 
     public void setImgSmall(String imgSmall) {
         this.imgSmall = imgSmall == null ? null : imgSmall.trim();
+    }
+
+    public String getImgMiddle() {
+        return imgMiddle;
+    }
+
+    public void setImgMiddle(String imgMiddle) {
+        this.imgMiddle = imgMiddle;
     }
 
     public String getImgBig() {

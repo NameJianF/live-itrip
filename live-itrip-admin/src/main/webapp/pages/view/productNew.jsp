@@ -153,7 +153,8 @@
                                     <label for="productImgSamll" class="col-sm-2 control-label">小图</label>
                                     <input id="productImgSamllId" type="hidden">
                                     <div class="col-sm-8">
-                                        <input id="productImgSamll" type="text" readonly class="form-control">
+                                        <input id="productImgSamll" type="text" readonly class="form-control"
+                                               placeholder="大小： 355 * 200">
                                     </div>
                                     <button type="button" class="col-sm-2 btn btn-primary" style="max-width: 60px;"
                                             onclick="formUploadImageShow('small');">
@@ -161,10 +162,23 @@
                                     </button>
                                 </div>
                                 <div class="form-group">
+                                    <label for="productImgMidd" class="col-sm-2 control-label">中图</label>
+                                    <input id="productImgMiddId" type="hidden">
+                                    <div class="col-sm-8">
+                                        <input id="productImgMidd" type="text" readonly class="form-control"
+                                               placeholder="大小： 440 * 330">
+                                    </div>
+                                    <button type="button" class="col-sm-2 btn btn-primary" style="max-width: 60px;"
+                                            onclick="formUploadImageShow('middle');">
+                                        上传
+                                    </button>
+                                </div>
+                                <div class="form-group">
                                     <label for="productImgBig" class="col-sm-2 control-label">大图</label>
                                     <input id="productImgBigId" type="hidden">
                                     <div class="col-sm-8">
-                                        <input id="productImgBig" type="text" readonly class="form-control">
+                                        <input id="productImgBig" type="text" readonly class="form-control"
+                                               placeholder="大小： 750 * 422">
                                     </div>
                                     <button type="button" class="col-sm-2 btn btn-primary" style="max-width: 60px;"
                                             onclick="formUploadImageShow('big');">
@@ -475,7 +489,7 @@
                         <div class="panel-body">
                             <div class="col-md-6">
                                 <div>
-                                    <img id="preImgSmall">
+                                    <img id="preImgMidd">
                                 </div>
                                 <div style="margin-top: 10px;" id="preDesr">
                                 </div>

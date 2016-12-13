@@ -91,7 +91,38 @@ public class ViewRouterController extends AbstractController {
      * @return
      */
     @RequestMapping(value = "/view/product", method = RequestMethod.GET)
-    public void viewProduct(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+    public String viewProduct(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
+
+        Integer pid = Integer.valueOf(request.getParameter("pid"));
+        if (pid == null) {
+            response.sendRedirect("/productError.html");
+            return "";
+        }
+
+        WebProduct product = this.iWebProductService.selectProductById(pid);
+        if (product == null) {
+            response.sendRedirect("/productError.html");
+            return "";
+        }
+        List<WebProductPlan> planList = iWebProductPlanService.selectPlanList(pid);
+
+        model.addAttribute("product", product);
+        model.addAttribute("planList", planList);
+
+        return "/pages/view/template/prod";
+
+    }
+
+
+    /**
+     * product detail by id
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/view/productToHtml", method = RequestMethod.GET)
+    public void viewProductToHtml(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException {
         String rootPath = servletContext.getRealPath("");
 
         Integer pid = Integer.valueOf(request.getParameter("pid"));
@@ -129,6 +160,7 @@ public class ViewRouterController extends AbstractController {
         response.sendRedirect(url);
     }
 
+
     /**
      * user profile
      *
@@ -136,11 +168,11 @@ public class ViewRouterController extends AbstractController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/view/profile", method = RequestMethod.GET)
-    public String profile(HttpServletRequest request, Model model) throws IOException {
+    @RequestMapping(value = "/view/userHome", method = RequestMethod.GET)
+    public String userHome(HttpServletRequest request, Model model) throws IOException {
 //        AdminUser user = iUserService.getCurrentLoginUser();
 //        model.addAttribute("user", user);
-        return "view/user/profile";
+        return "view/user/home";
 
     }
 

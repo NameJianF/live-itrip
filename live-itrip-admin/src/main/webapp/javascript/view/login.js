@@ -18,7 +18,7 @@ function login() {
     execAjaxDataForView("/view/login.action", JSON.stringify(jsondata), false, function (response) {
     }, function (response) {
         if (response.code == 0) {
-            window.location.href = '/view/profile.action';
+            window.location.href = '/view/userHome.action';
         }
     }, function () {
         $("#btnLogin").button('reset');
