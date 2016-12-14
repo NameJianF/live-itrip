@@ -18,24 +18,14 @@ $(function () {
 
 
 function loadDatas() {
-    // 加载 温泉产品
-    loadProducts($('#productList1'), 1);
-    // 加载 滑雪之行
-    loadProducts($('#productList2'), 2);
-    // 加载 海岛旅游
-    loadProducts($('#productList3'), 3);
-    // 加载 快乐家族
-    loadProducts($('#productList4'), 4);
-    // 加载 见学体验
-    loadProducts($('#productList5'), 5);
-    // 加载 健康检查
-    loadProducts($('#productList6'), 6);
+    // 加载全部产品
+    loadProducts($('#productList'), "");
 }
 
-function loadProducts(ele, flag) {
+function loadProducts(ele, params) {
     var jsondata = {
         'op': 'product.selectProductList',
-        'flag': flag
+        'params': params
     };
 
     execAjaxDataForView("/view/product.action", JSON.stringify(jsondata), false
@@ -108,6 +98,7 @@ function initSearchBox() {
         //查询事件
         "search": function (paramList) {
             console.log('查询参数:' + JSON.stringify(paramList));
+            loadProducts($('#productList'), JSON.stringify(paramList));
         },
         //默认展开条件数
         "expandRow": 2,
@@ -116,26 +107,27 @@ function initSearchBox() {
             {
                 "id": "theme",
                 "title": " 主 题 ",
-                "isMultiple": true,
+                "isMultiple": false,
                 "data": [
-                    {"value": "0", "text": "温泉旅游"},
-                    {"value": "1", "text": "滑雪之行"},
-                    {"value": "2", "text": "海岛旅游"},
-                    {"value": "3", "text": "快乐家族"},
-                    {"value": "4", "text": "见学体验"},
-                    {"value": "5", "text": "健康检查"}
-                ]
-            },
-            {
-                "id": "citys",
-                "title": " 城 市 ",
-                "data": [
-                    {"value": "0", "text": "东京"},
-                    {"value": "1", "text": "大阪"},
-                    {"value": "2", "text": "京都"},
-                    {"value": "3", "text": "北海道"}
+                    {"value": "温泉旅游", "text": "温泉旅游"},
+                    {"value": "滑雪之行", "text": "滑雪之行"},
+                    {"value": "海岛旅游", "text": "海岛旅游"},
+                    {"value": "快乐家族", "text": "快乐家族"},
+                    {"value": "见学体验", "text": "见学体验"},
+                    {"value": "健康检查", "text": "健康检查"}
                 ]
             }
+            //,
+            //{
+            //    "id": "citys",
+            //    "title": " 城 市 ",
+            //    "data": [
+            //        {"value": "东京", "text": "东京"},
+            //        {"value": "大阪", "text": "大阪"},
+            //        {"value": "京都", "text": "京都"},
+            //        {"value": "北海道", "text": "北海道"}
+            //    ]
+            //}
         ]
     };
     $("#searchbox").fiterMore(options);

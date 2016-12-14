@@ -35,7 +35,7 @@
                 </li>
 
                 <li class="active">
-                    <a href="/view/profile.action"><i class="fa fa-diamond"></i> <span class="nav-label">Profile</span></a>
+                    <a href="/view/profile.action"><i class="fa fa-diamond"></i> <span class="nav-label">我的行程</span></a>
                 </li>
 
                 <li>
@@ -45,7 +45,7 @@
                     <a href="widgets.html"><i class="fa fa-flask"></i> <span class="nav-label">Widgets</span></a>
                 </li>
                 <li>
-                    <a href="grid_options.html"><i class="fa fa-laptop"></i> <span class="nav-label">Grid options</span></a>
+                    <a href="grid_options.html"><i class="fa fa-laptop"></i> <span class="nav-label">个人信息</span></a>
                 </li>
                 <%--<li class="special_link">--%>
                 <%--<a href="package.html"><i class="fa fa-database"></i> <span class="nav-label">Package</span></a>--%>

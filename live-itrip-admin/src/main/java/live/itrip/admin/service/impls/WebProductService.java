@@ -1,6 +1,7 @@
 package live.itrip.admin.service.impls;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import live.itrip.admin.bean.BootStrapDataTableList;
 import live.itrip.admin.bean.PagerInfo;
@@ -15,6 +16,7 @@ import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,7 +152,7 @@ public class WebProductService extends BaseService implements IWebProductService
 
     /**
      * 根据 城市 查询相关推荐产品
-     * <p>
+     * <p/>
      * 1. 查询城市相关的产品
      * 2. 按照点击 参与人数倒序排列
      *
@@ -182,7 +184,7 @@ public class WebProductService extends BaseService implements IWebProductService
 
     /**
      * 查询产品相关产品列表
-     * <p>
+     * <p/>
      * 1. 查询同产品类型下的其他产品
      *
      * @param decodeJson
@@ -215,34 +217,66 @@ public class WebProductService extends BaseService implements IWebProductService
     public void selectProductListByType(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BaseResult result = new BaseResult();
         JSONObject jsonObject = JSON.parseObject(decodeJson);
-        String flag = jsonObject.getString("flag");
-        if (StringUtils.isNotEmpty(flag)) {
-            int topCount = 4;
-            List<WebProduct> list = null;
-            if ("0".equals(flag)) {
-                // 乡村民宿
-                list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Town);
-            } else if ("1".equals(flag)) {
-                // 温泉旅游
-                list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.HotSpring);
-            } else if ("2".equals(flag)) {
-                // 滑雪之行
-                list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Skiing);
-            } else if ("3".equals(flag)) {
-                // 海岛旅游
-                list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Island);
-            } else if ("4".equals(flag)) {
-                // 快乐家族
-                list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Family);
-            } else if ("5".equals(flag)) {
-                // 见学体验
-                list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Learning);
-            } else if ("6".equals(flag)) {
-                // 健康检查
-                list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Health);
+        String params = jsonObject.getString("params");
+        List<WebProduct> list = null;
+
+        if (StringUtils.isNotEmpty(params)) {
+            // set params
+            int topCount = 100000;
+            String theme = null;
+            String city = null;
+            JSONArray array = JSON.parseArray(params);
+            for (int i = 0; i < array.size(); i++) {
+                JSONObject object = (JSONObject) array.get(i);
+                if ("theme".equalsIgnoreCase(object.getString("id"))) {
+                    JSONArray tmp = object.getJSONArray("ValueList");
+                    theme = tmp.toString().replace("[", "").replace("]", "").replaceAll("\"", "");
+                }
+                if ("citys".equalsIgnoreCase(object.getString("id"))) {
+                    JSONArray tmp = object.getJSONArray("ValueList");
+                    city = tmp.toString().replace("[", "").replace("]", "").replaceAll("\"", "");
+                }
             }
 
+            if (StringUtils.isEmpty(theme)) {
+                // select all
+                Integer count = this.webProductMapper.countAll();
+                if (count > 0) {
+                    list = this.webProductMapper.selectProducts(0, count);
+                }
+            } else {
+                if (ViewConstants.ProductType.Town.equals(theme)) {
+                    // 乡村民宿
+                    list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Town);
+                } else if (ViewConstants.ProductType.HotSpring.equals(theme)) {
+                    // 温泉旅游
+                    list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.HotSpring);
+                } else if (ViewConstants.ProductType.Skiing.equals(theme)) {
+                    // 滑雪之行
+                    list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Skiing);
+                } else if (ViewConstants.ProductType.Island.equals(theme)) {
+                    // 海岛旅游
+                    list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Island);
+                } else if (ViewConstants.ProductType.Family.equals(theme)) {
+                    // 快乐家族
+                    list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Family);
+                } else if (ViewConstants.ProductType.Learning.equals(theme)) {
+                    // 见学体验
+                    list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Learning);
+                } else if (ViewConstants.ProductType.Health.equals(theme)) {
+                    // 健康检查
+                    list = this.webProductMapper.selectListByType(topCount, ViewConstants.ProductType.Health);
+                }
+            }
+        } else {
+            // select all
+            Integer count = this.webProductMapper.countAll();
+            if (count > 0) {
+                list = this.webProductMapper.selectProducts(0, count);
+            }
+        }
 
+        if (list != null) {
             result.setCode(ErrorCode.SUCCESS.getCode());
             result.setData(list);
             this.writeResponse(response, result);
