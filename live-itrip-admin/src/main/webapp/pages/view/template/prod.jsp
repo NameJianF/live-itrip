@@ -219,8 +219,8 @@
                         </div>
                     </div>
                     <div id="tab-2" class="tab-pane">
-                        <div class="panel-body">
-                            <div id="vertical-timeline" class="vertical-container light-timeline center-orientation">
+                        <div class="panel-body" style=" background-color: #f3f3f4;">
+                            <div id="vertical-timeline" class="vertical-container light-timeline">
                                 <c:forEach items="${planList}" var="item" varStatus="myIndex">
                                     <div class="vertical-timeline-block">
                                         <div class="vertical-timeline-icon navy-bg">

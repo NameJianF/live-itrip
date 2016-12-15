@@ -604,7 +604,7 @@
                             <div id="pretab-2" class="tab-pane">
                                 <div class="panel-body" style=" background-color: #f3f3f4;">
                                     <div id="vertical-timeline"
-                                         class="vertical-container light-timeline center-orientation">
+                                         class="vertical-container light-timeline">
 
                                     </div>
                                 </div>
