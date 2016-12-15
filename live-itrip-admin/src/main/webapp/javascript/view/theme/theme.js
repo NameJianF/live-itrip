@@ -106,7 +106,7 @@ function initSearchBox() {
         "searchBoxs": [
             {
                 "id": "theme",
-                "title": " 主 题 ",
+                "title": "主题",
                 "isMultiple": false,
                 "data": [
                     {"value": "温泉旅游", "text": "温泉旅游"},
@@ -117,17 +117,17 @@ function initSearchBox() {
                     {"value": "健康检查", "text": "健康检查"}
                 ]
             }
-            //,
-            //{
-            //    "id": "citys",
-            //    "title": " 城 市 ",
-            //    "data": [
-            //        {"value": "东京", "text": "东京"},
-            //        {"value": "大阪", "text": "大阪"},
-            //        {"value": "京都", "text": "京都"},
-            //        {"value": "北海道", "text": "北海道"}
-            //    ]
-            //}
+            ,
+            {
+                "id": "citys",
+                "title": "城市",
+                "data": [
+                    {"value": "东京", "text": "东京"},
+                    {"value": "大阪", "text": "大阪"},
+                    {"value": "京都", "text": "京都"},
+                    {"value": "北海道", "text": "北海道"}
+                ]
+            }
         ]
     };
     $("#searchbox").fiterMore(options);

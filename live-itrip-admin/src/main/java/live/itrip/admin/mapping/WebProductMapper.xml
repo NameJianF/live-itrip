@@ -361,11 +361,25 @@
         limit 0,${topCount}
     </select>
 
+    <select id="selectListByTypeAndCity" resultMap="BaseResultMap" parameterType="map">
+        select
+        id, title, price,img_small
+        from web_product
+        where is_delete = '0'
+        <if test="type != ''">
+            AND type = '${type}'
+        </if>
+        AND title LIKE '%${cityName}%'
+        ORDER BY id DESC
+    </select>
+
     <select id="selectListAbouts" resultMap="BaseResultMap" parameterType="map">
         select
         id, title, price,img_small, click_count, join_mans
         from web_product
-        where is_delete = '0' AND type = '${type}' AND id != ${productId}
+        where is_delete = '0'
+        AND type = '${type}'
+        AND id != ${productId}
         ORDER BY click_count DESC
         limit 0,${topCount}
     </select>

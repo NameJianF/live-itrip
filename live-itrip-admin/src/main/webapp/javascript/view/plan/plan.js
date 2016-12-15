@@ -40,7 +40,7 @@ function initSearchBox() {
                     {"value": "0", "text": "大阪＋东京"},
                     {"value": "1", "text": "大阪＋京都"},
                     {"value": "2", "text": "高山温泉线"},
-                    {"value": "3", "text": "东京 ＋富士山 ＋京都 ＋大阪"}
+                    {"value": "3", "text": "东京＋富士山＋京都＋大阪"}
                 ]
             },
             {
