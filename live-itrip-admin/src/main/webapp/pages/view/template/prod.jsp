@@ -64,9 +64,9 @@
                 <ul class="nav navbar-nav navbar-left">
                     <li><a class="page-scroll" style="margin-left: 20px;" href="/index.html">首页</a></li>
                     <li><a class="page-scroll" href="/view/customer.html">私人定制</a></li>
+                    <li><a class="page-scroll" href="/view/plan.html">自由行</a></li>
                     <li><a class="page-scroll" href="/view/theme.html">主题旅游</a></li>
                     <li><a class="page-scroll" href="/view/town.html">乡村民宿体验游</a></li>
-                    <li><a class="page-scroll" href="/view/plan.html">参考行程</a></li>
                     <li><a class="page-scroll" href="/view/service.html">旅行服务</a></li>
                     <li><a class="page-scroll" href="/view/about.html">联系我们</a></li>
                 </ul>
@@ -227,7 +227,12 @@
                                             <i class="fa fa-flag"></i>
                                         </div>
                                         <div class="vertical-timeline-content">
-                                            <h2>${item.title}</h2>
+                                            <h2>
+                                                <span class="vertical-date" style="margin-right: 20px">
+                                                    <small>第 ${myIndex.count} 天</small>
+                                                </span>
+                                                ${item.title}
+                                            </h2>
                                             <table class="table small m-b-xs">
                                                 <tbody>
                                                 <tr style="height: 50px;">
@@ -253,17 +258,13 @@
                                                         交通: <span class="label label-car">${item.traffic}</span>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td>
-                                                        <p>${item.content}</p>
-                                                    </td>
-                                                </tr>
                                                 </tbody>
                                             </table>
-                                            <a href="#" class="btn btn-xs btn-primary"> More
-                                                info</a>
-                                            <span class="vertical-date"><small>第 ${myIndex.count} 天
-                                            </small> </span>
+                                            <div style="overflow: auto;margin-bottom: 5px;">${item.content}</div>
+
+                                                <%--<a href="#" class="btn btn-xs btn-primary"> More--%>
+                                                <%--info</a>--%>
+
                                         </div>
                                     </div>
                                 </c:forEach>

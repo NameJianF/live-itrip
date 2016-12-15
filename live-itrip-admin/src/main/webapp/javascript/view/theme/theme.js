@@ -8,10 +8,9 @@ $(function () {
     $("#footer").load("/view/footer.html");
     initNavbar();
 
-    $("#divCarousel").removeClass('landing-page');
+
 
     loadDatas();
-    initHoverItems();
 
     initSearchBox();
 });
@@ -64,33 +63,6 @@ function loadProducts(ele, params) {
         });
 }
 
-function initHoverItems() {
-    //移动像素的图像
-    var move = -15;
-    //缩放比例，1.2 =120％
-    var zoom = 1.01;
-    //在对这些缩略图的鼠标滑过事件
-    $('.itemHover').hover(function () {
-        //根据缩放百分比设置宽度和高度
-        var width = $('.itemHover').width() * zoom;
-        var height = $('.itemHover').height() * zoom;
-        //移动和缩放图像
-        $(this).find('img').stop(false, true).animate({
-            'width': width,
-            'height': height,
-            'top': move,
-            'left': move
-        }, {duration: 200});
-    }, function () {
-        //复位图像
-        $(this).find('img').stop(false, true).animate({
-            'width': $('.itemHover').width(),
-            'height': $('.itemHover').height(),
-            'top': '0',
-            'left': '0'
-        }, {duration: 100});
-    });
-}
 
 // 初始化查询控件
 function initSearchBox() {
