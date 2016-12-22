@@ -48,6 +48,14 @@
             height: 80px;
             text-align: center;
         }
+
+        .panel-head-my {
+            background-color: #1ab394;
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            font-size: 16px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body id="page-top" class="landing-page">
@@ -189,132 +197,132 @@
 
         <!--明细-->
         <div class="row">
-            <div class="tabs-container">
-                <ul class="nav nav-tabs" style="font-size: 16px;">
-                    <!--产品特色-->
-                    <li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true"> <i
-                            class="fa fa-laptop"></i>产品特色</a></li>
-
-                    <!--行程详情-->
-                    <li class=""><a data-toggle="tab" href="#tab-2" aria-expanded="false"><i
-                            class="fa fa-desktop"></i>行程详情</a></li>
-
-                    <!--费用说明-->
-                    <li class=""><a data-toggle="tab" href="#tab-3" aria-expanded="false"><i
-                            class="fa fa-database"></i>费用说明</a></li>
-                    <!--预定须知-->
-                    <li class=""><a data-toggle="tab" href="#tab-4" aria-expanded="false"><i
-                            class="fa fa-database"></i>预定须知</a></li>
-                    <!--出游提醒-->
-                    <li class=""><a data-toggle="tab" href="#tab-5" aria-expanded="false"><i
-                            class="fa fa-database"></i>出游提醒</a></li>
-                    <!--在线咨询-->
-                    <li class=""><a data-toggle="tab" href="#tab-6" aria-expanded="false"><i
-                            class="fa fa-database"></i>在线咨询</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div id="tab-1" class="tab-pane active">
-                        <div class="panel-body">
-                            ${product.specialty}
-                        </div>
-                    </div>
-                    <div id="tab-2" class="tab-pane">
-                        <div class="panel-body" style=" background-color: #f3f3f4;">
-                            <div id="vertical-timeline" class="vertical-container light-timeline">
-                                <c:forEach items="${planList}" var="item" varStatus="myIndex">
-                                    <div class="vertical-timeline-block">
-                                        <div class="vertical-timeline-icon navy-bg">
-                                            <i class="fa fa-flag"></i>
-                                        </div>
-                                        <div class="vertical-timeline-content">
-                                            <h2>
+            <div class="panel panel-primary">
+                <div class="panel-heading" style="font-size: 16px;font-weight: bold;">
+                    产品特色
+                </div>
+                <div class="panel-body">
+                    ${product.specialty}
+                </div>
+            </div>
+            <div class="panel panel-primary" style="border-radius: 0px;margin-top: -23px;">
+                <div class="panel-heading panel-head-my">
+                    行程详情
+                </div>
+                <div class="panel-body" style=" background-color: #f3f3f4;padding: 0px;">
+                    <div id="vertical-timeline" class="vertical-container light-timeline"
+                         style="margin-left: 10px;width: 97%">
+                        <c:forEach items="${planList}" var="item" varStatus="myIndex">
+                            <div class="vertical-timeline-block">
+                                <div class="vertical-timeline-icon navy-bg">
+                                    <i class="fa fa-flag"></i>
+                                </div>
+                                <div class="vertical-timeline-content">
+                                    <h2>
                                                 <span class="vertical-date" style="margin-right: 20px">
                                                     <small>第 ${myIndex.count} 天</small>
                                                 </span>
-                                                ${item.title}
-                                            </h2>
-                                            <table class="table small m-b-xs">
-                                                <tbody>
-                                                <tr style="height: 50px;">
-                                                    <td style="line-height: 40px;">
-                                                        <i class="fa fa-delicious" style="margin-right: 10px;"></i>
-                                                        早餐: <span class="label label-primary"
-                                                                  style="margin-right: 30px;">${item.breakfast}</span>
-                                                        中餐: <span class="label label-primary"
-                                                                  style="margin-right: 30px;">${item.lunch}</span>
-                                                        晚餐: <span class="label label-primary"
-                                                                  style="margin-right: 30px;">${item.dinner}</span>
-                                                    </td>
-                                                </tr>
-                                                <tr style="height: 50px;">
-                                                    <td style="line-height: 40px;">
-                                                        <i class="fa fa-building" style="margin-right: 10px;"></i>
-                                                        住宿: <span class="label label-primary">${item.hotel}</span>
-                                                    </td>
-                                                </tr>
-                                                <tr style="height: 50px;">
-                                                    <td style="line-height: 40px;">
-                                                        <i class="fa fa-building" style="margin-right: 10px;"></i>
-                                                        交通: <span class="label label-car">${item.traffic}</span>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            <div style="overflow: auto;margin-bottom: 5px;">${item.content}</div>
+                                            ${item.title}
+                                    </h2>
+                                    <table class="table small m-b-xs">
+                                        <tbody>
+                                        <tr style="height: 50px;">
+                                            <td style="line-height: 40px;">
+                                                <i class="fa fa-delicious" style="margin-right: 10px;"></i>
+                                                早餐: <span class="label label-primary"
+                                                          style="margin-right: 30px;">${item.breakfast}</span>
+                                                中餐: <span class="label label-primary"
+                                                          style="margin-right: 30px;">${item.lunch}</span>
+                                                晚餐: <span class="label label-primary"
+                                                          style="margin-right: 30px;">${item.dinner}</span>
+                                            </td>
+                                        </tr>
+                                        <tr style="height: 50px;">
+                                            <td style="line-height: 40px;">
+                                                <i class="fa fa-building" style="margin-right: 10px;"></i>
+                                                住宿: <span class="label label-primary">${item.hotel}</span>
+                                            </td>
+                                        </tr>
+                                        <tr style="height: 50px;">
+                                            <td style="line-height: 40px;">
+                                                <i class="fa fa-building" style="margin-right: 10px;"></i>
+                                                交通: <span class="label label-car">${item.traffic}</span>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div style="overflow: auto;margin-bottom: 5px;">${item.content}</div>
 
-                                                <%--<a href="#" class="btn btn-xs btn-primary"> More--%>
-                                                <%--info</a>--%>
+                                        <%--<a href="#" class="btn btn-xs btn-primary"> More--%>
+                                        <%--info</a>--%>
 
-                                        </div>
-                                    </div>
-                                </c:forEach>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-primary" style="border-radius: 0px;margin-top: -23px;">
+                <div class="panel-heading panel-head-my">
+                    费用说明
+                </div>
+                <div class="panel-body">
+                    <div class="panel-body">
+                        ${product.cost}
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-primary" style="border-radius: 0px;margin-top: -23px;">
+                <div class="panel-heading panel-head-my">
+                    预定须知
+                </div>
+                <div class="panel-body">
+                    <div class="panel-body">
+                        ${product.reserve}
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-primary" style="border-radius: 0px;margin-top: -23px;">
+                <div class="panel-heading panel-head-my">
+                    出游提醒
+                </div>
+                <div class="panel-body">
+                    <div class="panel-body">
+                        ${product.notice}
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-primary" style="border-radius: 0px;margin-top: -23px;">
+                <div class="panel-heading panel-head-my">
+                    在线咨询
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">联系方式</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control">
                             </div>
                         </div>
-                    </div>
-                    <div id="tab-3" class="tab-pane">
-                        <div class="panel-body">
-                            ${product.cost}
-                        </div>
-                    </div>
-                    <div id="tab-4" class="tab-pane">
-                        <div class="panel-body">
-                            ${product.reserve}
-                        </div>
-                    </div>
-                    <div id="tab-5" class="tab-pane">
-                        <div class="panel-body">
-                            ${product.notice}
-                        </div>
-                    </div>
-                    <div id="tab-6" class="tab-pane">
-                        <div class="panel-body">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">联系方式</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="hr-line-dashed"></div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">咨询内容</label>
-                                    <div class="col-sm-10">
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">咨询内容</label>
+                            <div class="col-sm-10">
                                         <textarea type="text" aria-multiline="true" class="form-control"
                                                   style="height: 100px;"></textarea>
-                                        <span class="help-block m-b-none">请详细描述咨询内容.</span>
-                                    </div>
-                                </div>
-                                <div class="hr-line-dashed"></div>
-                                <div class="form-group">
-                                    <div class="col-sm-4 col-sm-offset-2">
-                                        <button class="btn btn-primary" onclick="submitQuestion();">提交</button>
-                                    </div>
-                                </div>
-                            </form>
+                                <span class="help-block m-b-none">请详细描述咨询内容.</span>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <button class="btn btn-primary" onclick="submitQuestion();">提交</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
     <!--侧边栏-->
