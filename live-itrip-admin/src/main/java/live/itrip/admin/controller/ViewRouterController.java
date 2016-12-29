@@ -2,9 +2,11 @@ package live.itrip.admin.controller;
 
 import live.itrip.admin.common.HtmlUtils;
 import live.itrip.admin.controller.base.AbstractController;
+import live.itrip.admin.model.AdminUser;
 import live.itrip.admin.model.WebCityInfo;
 import live.itrip.admin.model.WebProduct;
 import live.itrip.admin.model.WebProductPlan;
+import live.itrip.admin.service.intefaces.IUserService;
 import live.itrip.admin.service.intefaces.IWebCityInfoService;
 import live.itrip.admin.service.intefaces.IWebProductPlanService;
 import live.itrip.admin.service.intefaces.IWebProductService;
@@ -36,6 +38,9 @@ public class ViewRouterController extends AbstractController {
     private IWebProductService iWebProductService;
     @Autowired
     private IWebProductPlanService iWebProductPlanService;
+    @Autowired
+    private IUserService iUserService;
+
 
     /**
      * city by id
@@ -160,6 +165,74 @@ public class ViewRouterController extends AbstractController {
         response.sendRedirect(url);
     }
 
+    /**
+     * user index
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/view/index", method = RequestMethod.GET)
+    public String userIndex(HttpServletRequest request, Model model) throws IOException {
+        AdminUser user = iUserService.getCurrentLoginUser();
+        if (user == null) {
+            return "redirect:/login.html";
+        }
+        model.addAttribute("user", user);
+        return "view/user/index";
+    }
+
+    /**
+     * user Home
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/view/home")
+    public String userHome(HttpServletRequest request, Model model) throws IOException {
+        AdminUser user = iUserService.getCurrentLoginUser();
+        model.addAttribute("user", user);
+        return "view/user/home";
+    }
+
+    /**
+     * user orders
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/view/orders")
+    public String userOrders(HttpServletRequest request, Model model) throws IOException {
+        return "view/user/orders";
+    }
+
+    /**
+     * user collect
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/view/collect")
+    public String userCollect(HttpServletRequest request, Model model) throws IOException {
+        return "view/user/collect";
+    }
+
+    /**
+     * user blogs
+     *
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/view/blogs")
+    public String userBlogs(HttpServletRequest request, Model model) throws IOException {
+
+
+        return "view/user/blogs";
+    }
 
     /**
      * user profile
@@ -168,12 +241,10 @@ public class ViewRouterController extends AbstractController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/view/userHome", method = RequestMethod.GET)
-    public String userHome(HttpServletRequest request, Model model) throws IOException {
-//        AdminUser user = iUserService.getCurrentLoginUser();
-//        model.addAttribute("user", user);
-        return "view/user/home";
+    @RequestMapping(value = "/view/profile")
+    public String userProfile(HttpServletRequest request, Model model) throws IOException {
 
+
+        return "view/user/profile";
     }
-
 }

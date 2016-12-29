@@ -1,11 +1,11 @@
 ﻿$(function () {
     //document.body.className = localStorage.getItem('config-skin');
     $("[data-toggle='tooltip']").tooltip();
-})
+});
 $.reload = function () {
     location.reload();
     return false;
-}
+};
 $.loading = function (bool, text) {
     var $loadingpage = top.$("#loadingPage");
     var $loadingtext = $loadingpage.find('.loading-content');
@@ -23,7 +23,7 @@ $.loading = function (bool, text) {
     }
     $loadingtext.css("left", (top.$('body').width() - $loadingtext.width()) / 2 - 50);
     $loadingtext.css("top", (top.$('body').height() - $loadingtext.height()) / 2);
-}
+};
 $.request = function (name) {
     var search = location.search.slice(1);
     var arr = search.split("&");
@@ -38,17 +38,17 @@ $.request = function (name) {
         }
     }
     return "";
-}
+};
 $.currentWindow = function () {
     var iframeId = top.$(".itrip_iframe:visible").attr("id");
     return top.frames[iframeId];
-}
+};
 $.browser = function () {
     var userAgent = navigator.userAgent;
     var isOpera = userAgent.indexOf("Opera") > -1;
     if (isOpera) {
         return "Opera"
-    };
+    }
     if (userAgent.indexOf("Firefox") > -1) {
         return "FF";
     }
@@ -64,8 +64,8 @@ $.browser = function () {
     }
     if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) {
         return "IE";
-    };
-}
+    }
+};
 $.download = function (url, data, method) {
     if (url && data) {
         data = typeof data == 'string' ? data : jQuery.param(data);
@@ -75,7 +75,7 @@ $.download = function (url, data, method) {
             inputs += '<input type="hidden" name="' + pair[0] + '" value="' + pair[1] + '" />';
         });
         $('<form action="' + url + '" method="' + (method || 'post') + '">' + inputs + '</form>').appendTo('body').submit().remove();
-    };
+    }
 };
 $.modalOpen = function (options) {
     var defaults = {
@@ -108,7 +108,7 @@ $.modalOpen = function (options) {
             return true;
         }
     });
-}
+};
 $.modalConfirm = function (content, callBack) {
     top.layer.confirm(content, {
         icon: "fa-exclamation-circle",
@@ -120,7 +120,7 @@ $.modalConfirm = function (content, callBack) {
     }, function () {
         callBack(false)
     });
-}
+};
 $.modalAlert = function (content, type) {
     var icon = "";
     if (type == 'success') {
@@ -138,7 +138,7 @@ $.modalAlert = function (content, type) {
         btn: ['确认'],
         btnclass: ['btn btn-primary'],
     });
-}
+};
 $.modalMsg = function (content, type) {
     if (type != undefined) {
         var icon = "";
@@ -156,7 +156,7 @@ $.modalMsg = function (content, type) {
     } else {
         top.layer.msg(content);
     }
-}
+};
 $.modalClose = function () {
     var index = top.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
     var $IsdialogClose = top.$("#layui-layer" + index).find('.layui-layer-btn').find("#IsdialogClose");
@@ -169,7 +169,7 @@ $.modalClose = function () {
     } else {
         location.reload();
     }
-}
+};
 $.submitForm = function (options) {
     var defaults = {
         url: "",
@@ -212,7 +212,7 @@ $.submitForm = function (options) {
             }
         });
     }, 500);
-}
+};
 $.deleteForm = function (options) {
     var defaults = {
         prompt: "注：您确定要删除该项数据吗？",
@@ -258,7 +258,7 @@ $.deleteForm = function (options) {
         }
     });
 
-}
+};
 $.jsonWhere = function (data, action) {
     if (action == null) return;
     var reval = new Array();
@@ -268,7 +268,7 @@ $.jsonWhere = function (data, action) {
         }
     })
     return reval;
-}
+};
 $.fn.jqGridRowValue = function () {
     var $grid = $(this);
     var selectedRowIds = $grid.jqGrid("getGridParam", "selarrrow");
@@ -283,7 +283,7 @@ $.fn.jqGridRowValue = function () {
     } else {
         return $grid.jqGrid('getRowData', $grid.jqGrid('getGridParam', 'selrow'));
     }
-}
+};
 $.fn.formValid = function () {
     return $(this).valid({
         errorPlacement: function (error, element) {
@@ -300,7 +300,7 @@ $.fn.formValid = function () {
             element.parent().removeClass('has-error');
         }
     });
-}
+};
 $.fn.formSerialize = function (formdate) {
     var element = $(this);
     if (!!formdate) {
@@ -389,7 +389,7 @@ $.fn.bindSelect = function (options) {
             minimumResultsForSearch: -1
         });
     }
-}
+};
 $.fn.authorizeButton = function () {
     var moduleId = top.$(".itrip_iframe:visible").attr("id").substr(6);
     var dataJson = top.clients.authorizeButton[moduleId];
@@ -403,7 +403,7 @@ $.fn.authorizeButton = function () {
     $element.find("[authorize=no]").parents('li').prev('.split').remove();
     $element.find("[authorize=no]").parents('li').remove();
     $element.find('[authorize=no]').remove();
-}
+};
 $.fn.dataGrid = function (options) {
     var defaults = {
         datatype: "json",
