@@ -16,8 +16,8 @@ public enum ErrorCode {
     USERNAME_PWD_INVALID(100, "用户名/密码错误"),
     CAPTCHA_INVALID(101, "验证码错误"),
     USER_INVALID(102, "该用户无效"),
-    USER_AUTH_INVALID(103, "用户未认证");
-
+    USER_AUTH_INVALID(103, "用户未认证"),
+    USER_AUTH_EXIST(104,"该用户已存在");
 
     private Integer code;
     private String message;

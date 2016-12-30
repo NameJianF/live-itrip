@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Created by Feng on 2016/8/4.
@@ -70,8 +71,18 @@ public class ViewController extends AbstractController {
     @RequestMapping("/view/logout")
     public
     @ResponseBody
-    void logout(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+    void logout(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) throws IOException {
+        String decodeJson = JsonStringUtils.decoderForJsonString(json);
+        Logger.debug(
+                String.format("timestamp:%s action:%s json:%s",
+                        System.currentTimeMillis(), "user", decodeJson));
 
+        if (StringUtils.isEmpty(decodeJson)) {
+            this.paramInvalid(response, "JSON");
+            return;
+        }
+
+        iUserService.userLogout(decodeJson, response, request);
     }
 
     /**
@@ -84,7 +95,17 @@ public class ViewController extends AbstractController {
     public
     @ResponseBody
     void register(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+        String decodeJson = JsonStringUtils.decoderForJsonString(json);
+        Logger.debug(
+                String.format("timestamp:%s action:%s json:%s",
+                        System.currentTimeMillis(), "user", decodeJson));
 
+        if (StringUtils.isEmpty(decodeJson)) {
+            this.paramInvalid(response, "JSON");
+            return;
+        }
+
+        iUserService.register(decodeJson, response, request);
     }
 
     /**

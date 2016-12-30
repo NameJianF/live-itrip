@@ -6,6 +6,7 @@ import live.itrip.admin.bean.WebLoginData;
 import live.itrip.admin.common.Constants;
 import live.itrip.admin.dao.UserMapper;
 import live.itrip.admin.dao.UserOnlineMapper;
+import live.itrip.admin.email.EmailHandler;
 import live.itrip.admin.model.AdminModule;
 import live.itrip.admin.model.AdminUser;
 import live.itrip.admin.model.User;
@@ -177,26 +178,50 @@ public class UserService extends BaseService implements IUserService {
         BaseResult userRegisterResponse = new BaseResult();
         User user = JSON.parseObject(decodeJson, User.class);
         if (user != null) {
-            String salt = UuidUtils.getUuidLowerCase(false);
-            String pwd = Md5Utils.getStringMD5(salt + user.getPassword());
-            user.setPassword(pwd);
-            user.setSalt(salt);
-            user.setCreateTime(System.currentTimeMillis());
+            String oldPwd = user.getPassword();
 
-            int userid = userMapper.insertSelective(user);
-            if (userid > 0) {
-                userRegisterResponse.setCode(ErrorCode.SUCCESS.getCode());
+            User local = userMapper.selectByUserName(user.getEmail());
+            if (local == null) {
 
-                JSONObject data = new JSONObject();
-                data.put("uid", userid);
-                userRegisterResponse.setData(data);
+                String salt = UuidUtils.getUuidLowerCase(false);
+                String pwd = Md5Utils.getStringMD5(salt + user.getPassword());
+                user.setPassword(pwd);
+                user.setSalt(salt);
+                user.setStatus(User.STATUS_NORMAL);
+                user.setCreateTime(System.currentTimeMillis());
+
+                int ret = userMapper.insertSelective(user);
+                if (ret > 0) {
+                    userRegisterResponse.setCode(ErrorCode.SUCCESS.getCode());
+
+                    // send email
+                    EmailHandler.getInstance().put(new EmailHandler.EmailEntity());
+
+                    // do login
+                    Subject currentSubject = SecurityUtils.getSubject();
+                    // 身份验证
+                    UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getEmail(), oldPwd);
+                    // 记住我
+                    boolean rememberMe = true;
+                    if (rememberMe) {
+                        usernamePasswordToken.setRememberMe(rememberMe);
+                    }
+                    currentSubject.login(usernamePasswordToken);
+
+                    // 写入session
+                    currentSubject.getSession().setAttribute(Constants.SESSION_USER, user);
+                    // 写入 cookie
+                    CookieUtils.setCookie(request, response, Constants.COOKIE_TOKEN_NAME, user.getToken());
+                } else {
+                    userRegisterResponse.setCode(ErrorCode.UNKNOWN.getCode());
+                }
             } else {
-                userRegisterResponse.setCode(ErrorCode.UNKNOWN.getCode());
+                userRegisterResponse.setCode(ErrorCode.USER_AUTH_EXIST.getCode());
+                userRegisterResponse.setMsg(ErrorCode.USER_AUTH_EXIST.getMessage());
             }
         }
 
         this.writeResponse(response, userRegisterResponse);
-
     }
 
     /**

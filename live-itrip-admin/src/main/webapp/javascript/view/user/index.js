@@ -35,5 +35,18 @@ function loadPageFromUrl(url) {
 }
 
 function logout() {
+    var jsondata = {
+        'userName': ''
+    };
+    execAjaxDataForView("/view/logout.action", JSON.stringify(jsondata), false, function (response) {
+    }, function (response) {
+        if (response.code == 0) {
+            window.location.href = '/login.html';
+        }
+    }, function () {
+    });
+}
 
+function saveProfileDatas() {
+    
 }
