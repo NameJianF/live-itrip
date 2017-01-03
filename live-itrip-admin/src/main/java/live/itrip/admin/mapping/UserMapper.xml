@@ -246,7 +246,7 @@
 
     <update id="updatePasswordById" parameterType="map">
         UPDATE user
-        SET password = ${pwd}
+        SET password = '${pwd}'
         WHERE id = ${uid}
     </update>
 </mapper>

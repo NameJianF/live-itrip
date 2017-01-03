@@ -157,16 +157,8 @@ public class AdminUserService extends BaseService implements IAdminUserService {
     @Override
     public void editAdminUserById(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BaseResult result = new BaseResult();
-        AdminUser AdminUser = JSON.parseObject(decodeJson, AdminUser.class);
-        Integer ret;
-        if (AdminUser.getId() == null) {
-            // new
-            AdminUser.setCreateTime(System.currentTimeMillis());
-            ret = this.adminUserMapper.insertSelective(AdminUser);
-        } else {
-            // update
-            ret = this.adminUserMapper.updateByPrimaryKeySelective(AdminUser);
-        }
+        AdminUser adminUser = JSON.parseObject(decodeJson, AdminUser.class);
+        Integer ret = this.editAdminUser(adminUser);
         if (ret > 0) {
             result.setCode(ErrorCode.SUCCESS.getCode());
             this.writeResponse(response, result);
@@ -176,6 +168,21 @@ public class AdminUserService extends BaseService implements IAdminUserService {
         result.setError(ErrorCode.UNKNOWN);
         this.writeResponse(response, result);
     }
+
+    @Override
+    public int editAdminUser(AdminUser adminUser) {
+        Integer ret;
+        if (adminUser.getId() == null) {
+            // new
+            adminUser.setCreateTime(System.currentTimeMillis());
+            ret = this.adminUserMapper.insertSelective(adminUser);
+        } else {
+            // update
+            ret = this.adminUserMapper.updateByPrimaryKeySelective(adminUser);
+        }
+        return ret;
+    }
+
 
     @Override
     public String login(String userName, String pwd) {

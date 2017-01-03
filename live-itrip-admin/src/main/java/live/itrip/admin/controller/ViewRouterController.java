@@ -1,11 +1,9 @@
 package live.itrip.admin.controller;
 
+import live.itrip.admin.common.Constants;
 import live.itrip.admin.common.HtmlUtils;
 import live.itrip.admin.controller.base.AbstractController;
-import live.itrip.admin.model.AdminUser;
-import live.itrip.admin.model.WebCityInfo;
-import live.itrip.admin.model.WebProduct;
-import live.itrip.admin.model.WebProductPlan;
+import live.itrip.admin.model.*;
 import live.itrip.admin.service.intefaces.IUserService;
 import live.itrip.admin.service.intefaces.IWebCityInfoService;
 import live.itrip.admin.service.intefaces.IWebProductPlanService;
@@ -244,7 +242,13 @@ public class ViewRouterController extends AbstractController {
     @RequestMapping(value = "/view/profile")
     public String userProfile(HttpServletRequest request, Model model) throws IOException {
         AdminUser user = iUserService.getCurrentLoginUser();
+        UserExpand userExpand = iUserService.selectUserExpand(user.getId());
+        if (userExpand == null) {
+            userExpand = new UserExpand();
+            userExpand.setSex(Constants.Sex.UNKNOWN);
+        }
         model.addAttribute("user", user);
+        model.addAttribute("userExpand", userExpand);
         return "view/user/profile";
     }
 }

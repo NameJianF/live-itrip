@@ -19,6 +19,8 @@ function login() {
     }, function (response) {
         if (response.code == 0) {
             window.location.href = '/view/index.action';
+        } else {
+            alert(response.msg);
         }
     }, function () {
         $("#btnLogin").button('reset');

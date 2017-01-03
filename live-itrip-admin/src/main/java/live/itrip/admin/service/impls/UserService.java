@@ -4,12 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import live.itrip.admin.bean.WebLoginData;
 import live.itrip.admin.common.Constants;
+import live.itrip.admin.dao.UserExpandMapper;
 import live.itrip.admin.dao.UserMapper;
 import live.itrip.admin.dao.UserOnlineMapper;
 import live.itrip.admin.email.EmailHandler;
 import live.itrip.admin.model.AdminModule;
 import live.itrip.admin.model.AdminUser;
 import live.itrip.admin.model.User;
+import live.itrip.admin.model.UserExpand;
 import live.itrip.admin.service.BaseService;
 import live.itrip.admin.service.intefaces.IAdminModuleService;
 import live.itrip.admin.service.intefaces.IUserService;
@@ -23,6 +25,7 @@ import live.itrip.common.util.UuidUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +47,8 @@ public class UserService extends BaseService implements IUserService {
     private UserOnlineMapper userOnlineMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private UserExpandMapper userExpandMapper;
 
     @Override
     public AdminUser getCurrentLoginUser() {
@@ -249,7 +254,6 @@ public class UserService extends BaseService implements IUserService {
             return;
         }
 
-
         if (StringUtils.isEmpty(password)) {
             this.paramInvalid(response, "password");
             return;
@@ -382,6 +386,26 @@ public class UserService extends BaseService implements IUserService {
         retrievePwdResponse.setCode(ErrorCode.UNKNOWN.getCode());
         this.writeResponse(response, retrievePwdResponse);
 
+    }
+
+    @Override
+    public UserExpand selectUserExpand(Long uid) {
+        return userExpandMapper.selectByPrimaryKey(uid);
+    }
+
+    @Override
+    public int updateUserExpand(UserExpand userExpand) {
+        if (userExpandMapper.selectByPrimaryKey(userExpand.getId()) == null) {
+            return userExpandMapper.insertSelective(userExpand);
+        }
+        return userExpandMapper.updateByPrimaryKeySelective(userExpand);
+    }
+
+    @Override
+    public void refreshCache(AdminUser currentUser) {
+        Subject currentSubject = SecurityUtils.getSubject();
+        Session session = currentSubject.getSession();
+        session.setAttribute(Constants.SESSION_USER, currentUser);
     }
 
 

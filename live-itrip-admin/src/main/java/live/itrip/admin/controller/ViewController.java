@@ -1,14 +1,16 @@
 package live.itrip.admin.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import live.itrip.admin.controller.base.AbstractController;
+import live.itrip.admin.model.AdminUser;
+import live.itrip.admin.model.UserExpand;
 import live.itrip.admin.service.impls.UserService;
-import live.itrip.admin.service.intefaces.IUserService;
-import live.itrip.admin.service.intefaces.IWebCustomerAskService;
-import live.itrip.admin.service.intefaces.IWebProductService;
-import live.itrip.admin.service.intefaces.IWebServiceOrderService;
+import live.itrip.admin.service.intefaces.*;
+import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.request.RequestHeader;
+import live.itrip.common.response.BaseResult;
 import live.itrip.common.util.JsonStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,8 @@ public class ViewController extends AbstractController {
     private IWebProductService iWebProductService;
     @Autowired
     private IUserService iUserService;
+    @Autowired
+    private IAdminUserService iAdminUserService;
 
     /**
      * 前台用户登录
@@ -107,6 +111,88 @@ public class ViewController extends AbstractController {
 
         iUserService.register(decodeJson, response, request);
     }
+
+    /**
+     * 用户信息编辑
+     *
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/view/userEdit")
+    public
+    @ResponseBody
+    void userEdit(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+        String decodeJson = JsonStringUtils.decoderForJsonString(json);
+        Logger.debug(
+                String.format("timestamp:%s action:%s json:%s",
+                        System.currentTimeMillis(), "user", decodeJson));
+
+        if (StringUtils.isEmpty(decodeJson)) {
+            this.paramInvalid(response, "JSON");
+            return;
+        }
+
+        JSONObject jsonObject = JSON.parseObject(decodeJson);
+
+        if (!jsonObject.containsKey("id")) {
+            this.paramInvalid(response, "id");
+            return;
+        }
+
+        AdminUser adminUser = new AdminUser();
+        adminUser.setId(jsonObject.getLong("id"));
+        if (jsonObject.containsKey("userName")) {
+            adminUser.setUserName(jsonObject.getString("userName"));
+        }
+        if (jsonObject.containsKey("mobile")) {
+            adminUser.setMobile(jsonObject.getString("mobile"));
+        }
+        int ret = iAdminUserService.editAdminUser(adminUser);
+        if (ret > 0) {
+            AdminUser user = iUserService.getCurrentLoginUser();
+            user.setUserName(adminUser.getUserName());
+            user.setMobile(adminUser.getMobile());
+            iUserService.refreshCache(user);
+        }
+
+        UserExpand userExpand = new UserExpand();
+        userExpand.setId(adminUser.getId());
+        if (jsonObject.containsKey("realName")) {
+            userExpand.setRealName(jsonObject.getString("realName"));
+        }
+        if (jsonObject.containsKey("sex")) {
+            userExpand.setSex(jsonObject.getString("sex"));
+        }
+
+        ret = iUserService.updateUserExpand(userExpand);
+        BaseResult result = new BaseResult();
+        result.setCode(ErrorCode.SUCCESS.getCode());
+        this.writeResponse(response, result);
+    }
+
+    /**
+     * 前台用户修改密码
+     *
+     * @param response
+     * @param request
+     */
+    @RequestMapping("/view/password")
+    public
+    @ResponseBody
+    void updatePwd(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
+        String decodeJson = JsonStringUtils.decoderForJsonString(json);
+        Logger.debug(
+                String.format("timestamp:%s action:%s json:%s",
+                        System.currentTimeMillis(), "user", decodeJson));
+
+        if (StringUtils.isEmpty(decodeJson)) {
+            this.paramInvalid(response, "JSON");
+            return;
+        }
+
+        iUserService.updatePassword(decodeJson, response, request);
+    }
+
 
     /**
      * @param response

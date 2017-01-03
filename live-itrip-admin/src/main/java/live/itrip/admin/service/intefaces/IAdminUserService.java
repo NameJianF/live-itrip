@@ -23,6 +23,8 @@ public interface IAdminUserService {
 
     void editAdminUserById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 
+    int editAdminUser(AdminUser user);
+
     String login(String userName, String password);
 
 }

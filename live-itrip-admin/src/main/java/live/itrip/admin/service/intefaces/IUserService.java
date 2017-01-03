@@ -1,6 +1,7 @@
 package live.itrip.admin.service.intefaces;
 
 import live.itrip.admin.model.AdminUser;
+import live.itrip.admin.model.UserExpand;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,4 +35,9 @@ public interface IUserService {
     void retrievePassword(String decodeJson, HttpServletResponse response,
                           HttpServletRequest request);
 
+    UserExpand selectUserExpand(Long uid);
+
+    int updateUserExpand(UserExpand userExpand);
+
+    void refreshCache(AdminUser currentUser);
 }

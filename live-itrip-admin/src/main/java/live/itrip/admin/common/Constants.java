@@ -42,4 +42,11 @@ public class Constants {
      * 不可用标记
      */
     public static final String FLAG_UNAVAILABLE = "0";
+
+
+    public static class Sex {
+        public static final String MAN = "1";
+        public static final String WOMEN = "0";
+        public static final String UNKNOWN = "-1";
+    }
 }
