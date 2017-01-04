@@ -7,7 +7,7 @@ var tabPlanDetails;
 
 $(function () {
     $('#productSpecialty').summernote({
-        height: 200,
+        //height: 400,
         onImageUpload: function (files, editor, welEditable) {
             uploadImageFile(files[0], editor, welEditable);
         }
@@ -15,7 +15,12 @@ $(function () {
     $('#productCost').summernote();
     $('#productReserve').summernote();
     $('#productNotice').summernote();
-    $('#planContent').summernote();
+    $('#planContent').summernote({
+        //height: 400,
+        onImageUpload: function (files, editor, welEditable) {
+            uploadImageFile(files[0], editor, welEditable);
+        }
+    });
 
     $('#productStartDate').datepicker({
         language: "zh-CN",
@@ -44,7 +49,8 @@ function uploadImageFile(file, editor, welEditable) {
         processData: false,
         contentType: false,
         success: function (message) {
-            var obj = jQuery.parseJSON(message)
+            var obj = jQuery.parseJSON(message);
+            console.log(obj.data.fileUrl);
             editor.insertImage(welEditable, obj.data.fileUrl);
         },
         error: function () {
@@ -503,6 +509,7 @@ function editPlanDetail(planId) {
         }, function (response) {
             // success
             if (response.code == 0) {
+                $('#planId').val(response.data.id);
                 $('#planTitle').val(response.data.title);
                 $('#planBreakfast').val(response.data.breakfast);
                 $('#planLunch').val(response.data.lunch);
