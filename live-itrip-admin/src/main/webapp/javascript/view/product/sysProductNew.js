@@ -6,7 +6,12 @@ var imgFlag = 'small';
 var tabPlanDetails;
 
 $(function () {
-    $('#productSpecialty').summernote();
+    $('#productSpecialty').summernote({
+        height: 200,
+        onImageUpload: function (files, editor, welEditable) {
+            uploadImageFile(files[0], editor, welEditable);
+        }
+    });
     $('#productCost').summernote();
     $('#productReserve').summernote();
     $('#productNotice').summernote();
@@ -25,6 +30,28 @@ $(function () {
     // load data
     loadDatas();
 });
+
+function uploadImageFile(file, editor, welEditable) {
+    var imageData = new FormData();
+    imageData.append("file", file);
+    imageData.append('productId', $('#productId').val());
+    imageData.append('imgFlag', 'details');
+
+    $.ajax('/file/upload.action?flag=0', {
+        method: "POST",
+        data: imageData,
+        cache: false,
+        processData: false,
+        contentType: false,
+        success: function (message) {
+            var obj = jQuery.parseJSON(message)
+            editor.insertImage(welEditable, obj.data.fileUrl);
+        },
+        error: function () {
+            console.log('Upload error');
+        }
+    });
+}
 
 function loadDatas() {
     var productId = $('#productId').val();
@@ -382,6 +409,7 @@ function uploadImage() {
         $.ajax('/file/upload.action?flag=0', {
             method: "POST",
             data: formData,
+            cache: false,
             processData: false,
             contentType: false,
             success: function (message) {
