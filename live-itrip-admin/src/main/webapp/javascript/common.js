@@ -28,6 +28,7 @@ function execAjaxData(url, jsondata, async, error, success, complete) {
             error(data);
             // 隐藏loading
             $.loading(false);
+            window.location.href = '/system/login.action';
         },
         success: function (data) {
             console.log(data);

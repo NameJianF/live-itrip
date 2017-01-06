@@ -38,10 +38,10 @@ public class AuthorizedInterceptor implements HandlerInterceptor {
 
 //                PrintWriter out;
 //                out = response.getWriter();
-//                out.print("<script>window.location.href='/login.action'</script>");
+//                out.print("<script>parent.window.location.href='/system/login.action'</script>");
 //                out.flush();
 //                out.close();
-                response.sendRedirect("/login.action");
+                response.sendRedirect("/system/login.action");
                 return false;
             }
         }
