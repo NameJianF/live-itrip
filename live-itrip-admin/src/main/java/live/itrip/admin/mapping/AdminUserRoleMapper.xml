@@ -8,6 +8,14 @@
         <result column="create_time" property="createTime" jdbcType="BIGINT"/>
         <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
     </resultMap>
+    <resultMap id="ResultMapRole" type="live.itrip.admin.model.AdminRole">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <result column="role_text" jdbcType="VARCHAR" property="roleText"/>
+        <result column="create_time" jdbcType="BIGINT" property="createTime"/>
+        <result column="update_time" jdbcType="BIGINT" property="updateTime"/>
+    </resultMap>
+
     <sql id="Base_Column_List">
     id, user_id, role_id, create_time, update_time
   </sql>
@@ -89,5 +97,14 @@
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
-  </update>
+    </update>
+
+    <!--自定义查询-->
+
+    <select id="selectRoleNameByUserId" resultMap="ResultMapRole" parameterType="map">
+        SELECT admin_role.id,admin_role.role_name,admin_role.role_text
+        FROM admin_role INNER JOIN admin_user_role
+        ON admin_role.id = admin_user_role.id
+        WHERE admin_user_role.user_id = ${uid};
+    </select>
 </mapper>

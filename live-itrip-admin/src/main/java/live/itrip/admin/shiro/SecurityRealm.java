@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * Created by Feng on 2016/7/29.
- * <p/>
+ * <p>
  * 用户身份验证,授权 Realm 组件
  */
 @Component(value = "securityRealm")
@@ -45,24 +45,26 @@ public class SecurityRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         iTripAdminAuthorizationInfo authorizationInfo = new iTripAdminAuthorizationInfo();
-        User user = (User) principals.fromRealm(getName()).iterator().next();
+        AdminUser user = (AdminUser) principals.fromRealm(getName()).iterator().next();
 
         // 查询角色
         final List<AdminRole> roleInfos = iAdminUserRoleService.selectRolesByUserId(user.getId());
 
-        // 添加角色
-        for (AdminRole role : roleInfos) {
-            System.err.println(role);
-            authorizationInfo.addRole(role.getRoleName());
-        }
+        if (roleInfos != null) {
+            // 添加角色
+            for (AdminRole role : roleInfos) {
+                authorizationInfo.addRole(role.getRoleName());
+            }
 
-        final List<AdminUserPermission> permissions = iAdminUserPermissionService.selectUserPermissionsByUserId(user.getId());
+            final List<AdminUserPermission> permissions = iAdminUserPermissionService.selectUserPermissionsByUserId(user.getId());
 
-        for (AdminUserPermission permission : permissions) {
-            // 添加权限
-            String tmp = String.format("%s:%s", permission.getModuleId(), permission.getOperation());
-            System.err.println(permission);
-            authorizationInfo.addStringPermission(tmp);
+            if (permissions != null) {
+                for (AdminUserPermission permission : permissions) {
+                    // 添加权限
+                    String tmp = String.format("%s:%s", permission.getModuleId(), permission.getOperation());
+                    authorizationInfo.addStringPermission(tmp);
+                }
+            }
         }
         return authorizationInfo;
     }
@@ -98,6 +100,7 @@ public class SecurityRealm extends AuthorizingRealm {
                 }
                 if (localUser != null) {
                     localUser.setToken(user.getToken());
+
                     return new SimpleAuthenticationInfo(localUser, password, getName());
                 }
 

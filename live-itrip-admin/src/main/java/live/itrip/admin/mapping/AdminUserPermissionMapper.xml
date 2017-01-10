@@ -106,10 +106,9 @@
 
 
     <!--自定义查询-->
-    <select id="selectUserPermissionsByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long"
-            flushCache="false" useCache="true">
+    <select id="selectUserPermissionsByUserId" resultMap="BaseResultMap" parameterType="map">
         select
         <include refid="Base_Column_List"/>
-        from admin_user_permission where user_id = ${userId}
+        from admin_user_permission where user_id = ${uid}
     </select>
 </mapper>

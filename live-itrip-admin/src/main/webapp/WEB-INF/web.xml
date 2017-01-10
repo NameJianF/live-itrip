@@ -6,6 +6,8 @@
          version="3.0">
     <display-name>admin</display-name>
 
+    <!-- Web容器加载顺序ServletContext context-param listener filter servlet -->
+
     <!-- 声明spring配置文件 -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -13,7 +15,23 @@
         </param-value>
     </context-param>
 
+
+    <!-- 防止发生java.beans.Introspector内存泄露,应将它配置在ContextLoaderListener的前面 -->
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+
+    <!-- 实例化Spring容器 -->
+    <!-- 应用启动时,该监听器被执行,它会读取Spring相关配置文件,其默认会到WEB-INF中查找applicationContext.xml -->
+    <listener>
+        <description>spring监听器</description>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+
     <!-- 使用UTF-8编码 -->
+    <!-- forceEncoding默认为false,此时效果可大致理解为request.setCharacterEncoding("UTF-8") -->
+    <!-- forceEncoding=true后,可大致理解为request.setCharacterEncoding("UTF-8")和response.setCharacterEncoding("UTF-8") -->
     <filter>
         <description>字符集过滤器</description>
         <filter-name>encodingFilter</filter-name>
@@ -23,22 +41,38 @@
             <param-name>encoding</param-name>
             <param-value>UTF-8</param-value>
         </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!-- 负责初始化spring上下文 -->
-    <listener>
-        <description>spring监听器</description>
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    <listener>
-        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
-    </listener>
 
-    <!-- springMVC控制器 -->
+    <!-- 配置Shiro过滤器,先让Shiro过滤系统接收到的请求 -->
+    <!-- 这里filter-name必须对应applicationContext.xml中定义的<bean id="shiroFilter"/> -->
+    <!-- 使用[/*]匹配所有请求,保证所有的可控请求都经过Shiro的过滤 -->
+    <!-- 通常会将此filter-mapping放置到最前面(即其他filter-mapping前面),以保证它是过滤器链中第一个起作用的 -->
+    <filter>
+        <filter-name>shiroFilter</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+        <async-supported>true</async-supported>
+        <init-param>
+            <!-- 该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理 -->
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>shiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+
+    <!-- SpringMVC核心分发器 -->
     <servlet>
         <description>spring mvc servlet</description>
         <servlet-name>springMvc</servlet-name>
@@ -51,50 +85,36 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
-    <!-- shiro 安全过滤器 -->
-    <filter>
-        <filter-name>shiroFilter</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-        <async-supported>true</async-supported>
-        <init-param>
-            <param-name>targetFilterLifecycle</param-name>
-            <param-value>true</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>shiroFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
     <!-- .action 配置 -->
     <servlet-mapping>
         <servlet-name>springMvc</servlet-name>
         <url-pattern>*.action</url-pattern>
     </servlet-mapping>
 
-    <!-- timeout 配置 -->
+    <!-- Session超时30分钟(零或负数表示会话永不超时) -->
     <session-config>
-        <session-timeout>60</session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
 
+    <!-- 默认欢迎页 -->
     <welcome-file-list>
         <welcome-file>/index.jsp</welcome-file>
         <welcome-file>/index.html</welcome-file>
         <welcome-file>/index.htm</welcome-file>
     </welcome-file-list>
 
-    <!-- 错误页 -->
-    <!--<error-page>-->
-    <!--<error-code>404</error-code>-->
-    <!--<location>/pages/404.html</location>-->
-    <!--</error-page>-->
-    <!--<error-page>-->
-    <!--<error-code>500</error-code>-->
-    <!--<location>/pages/500.html</location>-->
-    <!--</error-page>-->
-    <!--<error-page>-->
-    <!--<exception-type>org.apache.shiro.authz.AuthorizationException</exception-type>-->
-    <!--<location>/pages/401.html</location>-->
-    <!--</error-page>-->
+    <!--错误页-->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/404.html</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/500.html</location>
+    </error-page>
+    <error-page>
+        <exception-type>org.apache.shiro.authz.AuthorizationException</exception-type>
+        <location>/401.html</location>
+    </error-page>
 
 </web-app>

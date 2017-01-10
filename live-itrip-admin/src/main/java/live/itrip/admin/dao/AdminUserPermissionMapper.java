@@ -1,6 +1,7 @@
 package live.itrip.admin.dao;
 
 import live.itrip.admin.model.AdminUserPermission;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,5 +19,5 @@ public interface AdminUserPermissionMapper {
     int updateByPrimaryKey(AdminUserPermission record);
 
     // ======================== add =================
-    List<AdminUserPermission> selectUserPermissionsByUserId(Long userId);
+    List<AdminUserPermission> selectUserPermissionsByUserId(@Param("uid") Long uid);
 }

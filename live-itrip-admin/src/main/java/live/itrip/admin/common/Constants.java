@@ -49,4 +49,9 @@ public class Constants {
         public static final String WOMEN = "0";
         public static final String UNKNOWN = "-1";
     }
+
+    public static class RoleName {
+        public static final String ADMINISTRATOR = "administrator";
+        public static final String ADMIN = "admin";
+    }
 }

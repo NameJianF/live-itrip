@@ -1,10 +1,14 @@
 package live.itrip.admin.controller;
 
+import live.itrip.admin.common.Constants;
 import live.itrip.admin.common.ViewConstants;
 import live.itrip.admin.controller.base.AbstractController;
 import live.itrip.admin.model.*;
 import live.itrip.admin.service.intefaces.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -36,10 +41,17 @@ public class AdminRouterController extends AbstractController {
     private IWebStaticInfoService iWebStaticInfoService;
 
     @RequestMapping(value = "/system/index", method = RequestMethod.GET)
-    public String pagesIndex(HttpServletRequest request, Model model) {
-        AdminUser user = iUserService.getCurrentLoginUser();
-        model.addAttribute("user", user);
-        return "pages/index";
+    public String pagesIndex(HttpServletResponse response, HttpServletRequest request, Model model) {
+        //权限校验。判断是否包含权限。
+        Subject subject = SecurityUtils.getSubject();
+
+        if (subject.hasRole(Constants.RoleName.ADMINISTRATOR) || subject.hasRole(Constants.RoleName.ADMIN)) {
+            AdminUser user = iUserService.getCurrentLoginUser();
+            model.addAttribute("user", user);
+            return "pages/index";
+        } else {
+            throw new AuthorizationException();
+        }
     }
 
     @RequestMapping(value = "/system/login", method = RequestMethod.GET)
