@@ -21,5 +21,5 @@ public interface AdminDepartMapper {
     // ================ add ===========
     Integer countAll();
 
-    List<AdminDepart> selectDeparts(@Param("start") Integer start, @Param("length") Integer length);
+    List<AdminDepart> selectDeparts(@Param("queryContent") String queryContent, @Param("start") Integer start, @Param("length") Integer length);
 }

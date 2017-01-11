@@ -77,7 +77,8 @@ $(function () {
 function funSelectDicts(sSource, aoData, fnCallback) {
     console.log("========== selectDicts ==========");
     sSource = "/sysCfg.action?flag=dict";
-
+    var queryContent = $("#dictText").val();
+    aoData.push({name: "queryContent", value: queryContent});
     aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 

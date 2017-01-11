@@ -87,6 +87,11 @@
     <select id="selectDeparts" resultMap="BaseResultMap" parameterType="map">
         select
         <include refid="Base_Column_List"/>
-        from admin_depart limit ${start},${length}
+        from admin_depart
+        WHERE TRUE
+        <if test="queryContent != null and queryContent != '' ">
+           AND depart_name LIKE ${queryContent}
+        </if>
+        limit ${start},${length}
     </select>
 </mapper>

@@ -89,6 +89,9 @@ function funSelectApikeys(sSource, aoData, fnCallback) {
     console.log("========== select apikeys ==========");
     sSource = "/sysCfg.action?flag=apikey";
 
+    var queryContent = $("#clientName").val();
+
+    aoData.push({name: "queryContent", value: queryContent});
     aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 

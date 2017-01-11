@@ -113,7 +113,12 @@
     <select id="selectDicts" resultMap="BaseResultMap" parameterType="map">
         select
         <include refid="Base_Column_List"/>
-        from admin_dict limit ${start},${length}
+        from admin_dict
+        WHERE TRUE
+        <if test="queryContent != null and queryContent != '' ">
+            AND  dict_text LIKE ${queryContent}
+        </if>
+        limit ${start},${length}
     </select>
     <select id="selectAllDicts" resultMap="BaseResultMap" parameterType="map">
         select

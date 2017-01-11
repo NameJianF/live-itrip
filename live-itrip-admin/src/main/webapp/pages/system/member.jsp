@@ -15,10 +15,10 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
-            <div class="ibox-content table-responsive">
-                <div style="border-bottom:solid 1px lightgray; margin-bottom: 4px;">
+            <div class="ibox-title">
+                <div class="ibox-tools">
                     <div class="row">
-                        <div class="col-sm-12 form-inline">
+                        <div class="col-sm-8 form-inline" style="text-align: left;">
                             <label class="control-label">部门:</label>
                             <select class="form-control" id="selectDepart" onchange="departChangeEvent(event,1);"
                                     style="width: 120px;">
@@ -34,13 +34,24 @@
                             <label class="control-label">姓名:</label>
                             <input type="text" class="form-control" id="userName" placeholder="Email or Name">
                             <button type="button" onclick="funRefresh();" class="btn btn-primary ">查询</button>
-                            <button type="button" onclick="funClickAddRow();" class="btn btn-primary ">
-                                添加
-                            </button>
+
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="btn-group">
+                                <a onclick="funRefresh();" class="btn btn-primary ">
+                                    <span class="fa fa-refresh"></span> 刷新
+                                </a>
+                            </div>
+                            <div class="btn-group">
+                                <a class="btn btn-primary dropdown-text" onclick="funClickAddRow()">
+                                    <i class="fa fa-plus"></i> 新增
+                                </a>
+                            </div>
                         </div>
                     </div>
-
                 </div>
+            </div>
+            <div class="ibox-content table-responsive">
                 <table class="table table-hover table-bordered dataTables-example table-responsive" id="tableUsers"
                        style="font-size: 12px;">
                     <thead>

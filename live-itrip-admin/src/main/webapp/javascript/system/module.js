@@ -107,12 +107,8 @@ function funSelectModules(sSource, aoData, fnCallback) {
     sSource = "/sysCfg.action?flag=module";
 
     // 添加查询条件
-    //var queryContent = $("#queryContent").val();
-    //var querySort = $("#querySort").val();
-    //var queryStatus = $("#queryStatus").val();
-    //aoData.push({name: "queryContent", value: queryContent});
-    //aoData.push({name: "querySort", value: querySort});
-    //aoData.push({name: "queryStatus", value: queryStatus});
+    var queryContent = $("#moduleName").val();
+    aoData.push({name: "queryContent", value: queryContent});
 
     aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);

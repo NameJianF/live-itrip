@@ -79,6 +79,10 @@ function funSelectDictItems(sSource, aoData, fnCallback) {
     console.log("========== selectDictItems ==========");
     sSource = "/sysCfg.action?flag=dictItem";
 
+    var queryContent = $("#dictItemText").val();
+    var queryDictId = $("#selectDict").val();
+    aoData.push({name: "queryContent", value: queryContent});
+    aoData.push({name: "queryDictId", value: queryDictId});
     aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 
@@ -207,4 +211,3 @@ function funClickAddRow() {
 
     $('#formEditDictItem').modal('show');
 }
-

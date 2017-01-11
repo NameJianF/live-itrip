@@ -17,15 +17,24 @@
         <div class="col-lg-12">
             <div class="ibox-title">
                 <div class="ibox-tools">
-                    <div class="btn-group">
-                        <a onclick="funRefresh();" class="btn btn-primary ">
-                            <span class="fa fa-refresh"></span> 刷新
-                        </a>
-                    </div>
-                    <div class="btn-group">
-                        <a class="btn btn-primary dropdown-text" onclick="funClickAddRow()">
-                            <i class="fa fa-plus"></i> 新增
-                        </a>
+                    <div class="row">
+                        <div class="col-sm-8 form-inline" style="text-align: left;">
+                            <label class="control-label">显示文本:</label>
+                            <input type="text" class="form-control" id="dictText">
+                            <button type="button" onclick="funRefresh();" class="btn btn-primary ">查询</button>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="btn-group">
+                                <a onclick="funRefresh();" class="btn btn-primary ">
+                                    <span class="fa fa-refresh"></span> 刷新
+                                </a>
+                            </div>
+                            <div class="btn-group">
+                                <a class="btn btn-primary dropdown-text" onclick="funClickAddRow()">
+                                    <i class="fa fa-plus"></i> 新增
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,7 @@
 package live.itrip.admin.service.impls;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import live.itrip.admin.bean.BootStrapDataTableList;
 import live.itrip.admin.bean.PagerInfo;
@@ -14,6 +15,7 @@ import live.itrip.admin.service.intefaces.IAdminDictItemService;
 import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,9 +45,25 @@ public class AdminDictItemService extends BaseService implements IAdminDictItemS
     public void selectDictItems(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BootStrapDataTableList<AdminDictItem> result = new BootStrapDataTableList<>();
         try {
-            PagerInfo pagerInfo = this.getPagerInfo(decodeJson);
+            // 解析查询条件
+            JSONArray jsonarray = JSONArray.parseArray(decodeJson);
+            String queryContent = null;
+            Integer queryDictId = null;
+            for (int i = 0; i < jsonarray.size(); i++) {
+                JSONObject obj = (JSONObject) jsonarray.get(i);
+                if (obj.get("name").equals("queryContent")) {
+                    queryContent = obj.get("value").toString();
+                } else if (obj.get("name").equals("queryDictId")) {
+                    queryDictId = obj.getInteger("value");
+                }
+            }
+            if (StringUtils.isNotEmpty(queryContent)) {
+                queryContent = "'%" + queryContent.trim() + "%'";
+            }
+
+            PagerInfo pagerInfo = this.getPagerInfo(jsonarray);
             Integer count = adminDictItemMapper.countAll();
-            List<AdminDictItem> dictItemList = adminDictItemMapper.selectDictItems(pagerInfo.getStart(), pagerInfo.getLength());
+            List<AdminDictItem> dictItemList = adminDictItemMapper.selectDictItems(queryDictId, queryContent, pagerInfo.getStart(), pagerInfo.getLength());
             if (dictItemList != null) {
 
                 List<AdminDict> dicts = adminDictMapper.selectAllDicts("0");

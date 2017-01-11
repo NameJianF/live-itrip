@@ -1,6 +1,7 @@
 package live.itrip.admin.service.impls;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import live.itrip.admin.bean.BootStrapDataTableList;
 import live.itrip.admin.bean.PagerInfo;
@@ -12,6 +13,7 @@ import live.itrip.admin.service.intefaces.IAdminDepartService;
 import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,16 +32,29 @@ public class AdminDepartService extends BaseService implements IAdminDepartServi
 
     @Override
     public List<AdminDepart> selectAllDeparts() {
-        return adminDepartMapper.selectDeparts(0, 1000);
+        return adminDepartMapper.selectDeparts("", 0, 1000);
     }
 
     @Override
     public void selectDeparts(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BootStrapDataTableList<AdminDepart> result = new BootStrapDataTableList<>();
         try {
-            PagerInfo pagerInfo = this.getPagerInfo(decodeJson);
+            // 解析查询条件
+            JSONArray jsonarray = JSONArray.parseArray(decodeJson);
+            String queryContent = null;
+            for (int i = 0; i < jsonarray.size(); i++) {
+                JSONObject obj = (JSONObject) jsonarray.get(i);
+                if (obj.get("name").equals("queryContent")) {
+                    queryContent = obj.get("value").toString();
+                }
+            }
+            if (StringUtils.isNotEmpty(queryContent)) {
+                queryContent = "'%" + queryContent.trim() + "%'";
+            }
+
+            PagerInfo pagerInfo = this.getPagerInfo(jsonarray);
             Integer count = adminDepartMapper.countAll();
-            List<AdminDepart> departList = adminDepartMapper.selectDeparts(pagerInfo.getStart(), pagerInfo.getLength());
+            List<AdminDepart> departList = adminDepartMapper.selectDeparts(queryContent, pagerInfo.getStart(), pagerInfo.getLength());
             if (departList != null) {
                 result.setsEcho(String.valueOf(pagerInfo.getDraw() + 1));
                 result.setiTotalRecords(count);

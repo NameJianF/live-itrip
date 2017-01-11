@@ -24,7 +24,7 @@ public interface AdminModuleMapper {
 
     List<AdminModule> selectModulesByIds(@Param("listModuleId") List<Integer> listModuleId);
 
-    List<AdminModule> selectModules(@Param("start") Integer start, @Param("length") Integer length);
+    List<AdminModule> selectModules(@Param("queryContent") String queryContent, @Param("start") Integer start, @Param("length") Integer length);
 
     Integer countAll();
 }

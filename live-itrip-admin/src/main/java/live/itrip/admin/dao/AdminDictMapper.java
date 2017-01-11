@@ -21,7 +21,7 @@ public interface AdminDictMapper {
     // ==================== add ==========
     Integer countAll();
 
-    List<AdminDict> selectDicts(@Param("start") Integer start, @Param("length") Integer length);
+    List<AdminDict> selectDicts(@Param("queryContent") String queryContent, @Param("start") Integer start, @Param("length") Integer length);
 
     List<AdminDict> selectAllDicts(@Param("flag") String flag);
 }

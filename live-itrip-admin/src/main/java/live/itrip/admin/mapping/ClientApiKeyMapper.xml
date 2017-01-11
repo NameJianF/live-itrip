@@ -158,6 +158,11 @@
     <select id="selectApikeys" resultMap="BaseResultMap" parameterType="map">
         select
         <include refid="Base_Column_List"/>
-        from client_api_key limit ${start},${length}
+        from client_api_key
+        WHERE TRUE
+        <if test="queryContent != null and queryContent != '' ">
+            AND  client_name LIKE ${queryContent}
+        </if>
+        limit ${start},${length}
     </select>
 </mapper>

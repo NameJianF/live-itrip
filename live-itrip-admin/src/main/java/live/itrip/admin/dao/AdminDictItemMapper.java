@@ -22,7 +22,7 @@ public interface AdminDictItemMapper {
 
     Integer countAll();
 
-    List<AdminDictItem> selectDictItems(@Param("start") Integer start, @Param("length") Integer length);
+    List<AdminDictItem> selectDictItems(@Param("queryDictId") Integer queryDictId, @Param("queryContent") String queryContent, @Param("start") Integer start, @Param("length") Integer length);
 
     List<AdminDictItem> selectAllDictItems();
 

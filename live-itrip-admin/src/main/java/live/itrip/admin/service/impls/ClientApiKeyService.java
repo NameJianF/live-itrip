@@ -1,6 +1,7 @@
 package live.itrip.admin.service.impls;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import live.itrip.admin.bean.BootStrapDataTableList;
 import live.itrip.admin.bean.PagerInfo;
@@ -14,6 +15,7 @@ import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
 import live.itrip.common.response.BaseResult;
 import live.itrip.common.security.DESUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -90,9 +92,22 @@ public class ClientApiKeyService extends BaseService implements IClientApiKeySer
     public void selectApikeys(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BootStrapDataTableList<ClientApiKey> result = new BootStrapDataTableList<>();
         try {
-            PagerInfo pagerInfo = this.getPagerInfo(decodeJson);
+            // 解析查询条件
+            JSONArray jsonarray = JSONArray.parseArray(decodeJson);
+            String queryContent = null;
+            for (int i = 0; i < jsonarray.size(); i++) {
+                JSONObject obj = (JSONObject) jsonarray.get(i);
+                if (obj.get("name").equals("queryContent")) {
+                    queryContent = obj.get("value").toString();
+                }
+            }
+            if (StringUtils.isNotEmpty(queryContent)) {
+                queryContent = "'%" + queryContent.trim() + "%'";
+            }
+
+            PagerInfo pagerInfo = this.getPagerInfo(jsonarray);
             Integer count = clientApiKeyMapper.countAll();
-            List<ClientApiKey> list = clientApiKeyMapper.selectApikeys(pagerInfo.getStart(), pagerInfo.getLength());
+            List<ClientApiKey> list = clientApiKeyMapper.selectApikeys(queryContent, pagerInfo.getStart(), pagerInfo.getLength());
             if (list != null) {
                 result.setsEcho(String.valueOf(pagerInfo.getDraw() + 1));
                 result.setiTotalRecords(count);

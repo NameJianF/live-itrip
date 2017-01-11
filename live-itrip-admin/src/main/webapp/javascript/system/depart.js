@@ -67,6 +67,9 @@ function funSelectDeparts(sSource, aoData, fnCallback) {
     console.log("========== selectDeparts ==========");
     sSource = "/sysCfg.action?flag=depart";
 
+    var queryContent = $("#departName").val();
+
+    aoData.push({name: "queryContent", value: queryContent});
     aoData.push({name: "token", value: parent.token});
     aoData = JSON.stringify(aoData);
 

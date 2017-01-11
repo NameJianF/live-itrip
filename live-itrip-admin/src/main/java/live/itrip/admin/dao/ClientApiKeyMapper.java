@@ -29,5 +29,5 @@ public interface ClientApiKeyMapper {
 
     Integer countAll();
 
-    List<ClientApiKey> selectApikeys(@Param("start") Integer start, @Param("length") Integer length);
+    List<ClientApiKey> selectApikeys(@Param("queryContent") String queryContent, @Param("start") Integer start, @Param("length") Integer length);
 }
