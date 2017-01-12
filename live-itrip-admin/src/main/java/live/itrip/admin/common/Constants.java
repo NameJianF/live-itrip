@@ -52,6 +52,6 @@ public class Constants {
 
     public static class RoleName {
         public static final String ADMINISTRATOR = "administrator";
-        public static final String ADMIN = "admin";
+        public static final String ADMIN = "manager";
     }
 }

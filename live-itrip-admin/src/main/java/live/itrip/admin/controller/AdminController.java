@@ -99,6 +99,8 @@ public class AdminController extends AbstractController {
                 iClientApiKeyService.selectApikeys(decodeJson, response, request);
             } else if ("member".equalsIgnoreCase(flag)) {
                 iAdminUserService.selectAdminUsers(decodeJson, response, request);
+            } else if ("modulePermissions".equalsIgnoreCase(flag)) {
+                iAdminModuleService.modulePermissions(decodeJson, response, request);
             }
         } else {
             try {

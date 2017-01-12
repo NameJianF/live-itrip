@@ -8,10 +8,12 @@ import live.itrip.admin.bean.PagerInfo;
 import live.itrip.admin.common.Constants;
 import live.itrip.admin.dao.AdminModuleMapper;
 import live.itrip.admin.model.AdminModule;
+import live.itrip.admin.model.AdminOperation;
 import live.itrip.admin.model.AdminUserPermission;
 import live.itrip.admin.model.User;
 import live.itrip.admin.service.BaseService;
 import live.itrip.admin.service.intefaces.IAdminModuleService;
+import live.itrip.admin.service.intefaces.IAdminOperationService;
 import live.itrip.admin.service.intefaces.IAdminUserPermissionService;
 import live.itrip.common.ErrorCode;
 import live.itrip.common.Logger;
@@ -37,6 +39,8 @@ public class AdminModuleService extends BaseService implements IAdminModuleServi
 
     @Autowired
     private IAdminUserPermissionService iAdminUserPermissionService;
+    @Autowired
+    private IAdminOperationService iAdminOperationService;
 
 
     /**
@@ -91,7 +95,7 @@ public class AdminModuleService extends BaseService implements IAdminModuleServi
 
             PagerInfo pagerInfo = this.getPagerInfo(jsonarray);
             Integer count = adminModuleMapper.countAll();
-            List<AdminModule> moduleList = adminModuleMapper.selectModules(queryContent,pagerInfo.getStart(), pagerInfo.getLength());
+            List<AdminModule> moduleList = adminModuleMapper.selectModules(queryContent, pagerInfo.getStart(), pagerInfo.getLength());
             if (moduleList != null) {
                 result.setsEcho(String.valueOf(pagerInfo.getDraw() + 1));
                 result.setiTotalRecords(count);
@@ -193,6 +197,61 @@ public class AdminModuleService extends BaseService implements IAdminModuleServi
         }
 
         result.setError(ErrorCode.UNKNOWN);
+        this.writeResponse(response, result);
+    }
+
+    /**
+     * 获取页面和操作
+     *
+     * @param decodeJson
+     * @param response
+     * @param request
+     */
+    @Override
+    public void modulePermissions(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        List<AdminModule> moduleList = selectAllModules();
+        List<AdminOperation> operationList = iAdminOperationService.selectAllOperations();
+
+        // 目录
+        JSONArray arrayRoot = new JSONArray();
+        for (AdminModule module : moduleList) {
+            if (module.getParentId() == 0) {
+                JSONObject objectParent = new JSONObject();
+                objectParent.put("id", module.getId());
+                objectParent.put("text", module.getModuleName());
+
+                JSONArray arrayChild = new JSONArray();
+                for (AdminModule m : moduleList) {
+                    if (m.getParentId().equals(module.getId())) {
+                        JSONObject objectChild = new JSONObject();
+                        objectChild.put("id", module.getId() + "_" + m.getId());
+                        objectChild.put("text", m.getModuleName());
+
+                        JSONArray arrayOP = new JSONArray();
+                        for (AdminOperation operation : operationList) {
+                            JSONObject objectOP = new JSONObject();
+                            objectOP.put("id", module.getId() + "_" + m.getId() + "_" + operation.getId());
+                            objectOP.put("text", operation.getOpText());
+                            objectOP.put("icon", "glyphicon glyphicon-flash");
+
+                            arrayOP.add(objectOP);
+                        }
+
+                        objectChild.put("children", arrayOP);
+
+                        arrayChild.add(objectChild);
+                    }
+                }
+                objectParent.put("children", arrayChild);
+
+                arrayRoot.add(objectParent);
+            }
+        }
+
+        // response
+        BaseResult result = new BaseResult();
+        result.setCode(ErrorCode.SUCCESS.getCode());
+        result.setData(arrayRoot);
         this.writeResponse(response, result);
     }
 }

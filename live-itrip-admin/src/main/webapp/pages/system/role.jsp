@@ -10,7 +10,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <c:import url="/pages/importcss.jsp"/>
-<c:import url="/pages/importjs.jsp"/>
+<link href="/css/plugins/jsTree/style.min.css" rel="stylesheet">
+
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
@@ -82,9 +83,32 @@
                 <button type="button" id="publicBtn" class="btn   btn-primary" onclick="editSaveRoleInfo()">确定
                 </button>
             </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
+        </div>
+    </div>
 </div>
+
+<div class="modal fade modal-default" id="formEditPermission">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">权限编辑</h4>
+            </div>
+            <div class="modal-body">
+                <div id="permissionTree"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn   btn-primary" data-dismiss="modal">取消</button>
+                <button type="button" id="btnSavePermission" class="btn btn-primary" onclick="editSavePermission()">确定
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<c:import url="/pages/importjs.jsp"/>
+<script src="/js/plugins/jsTree/jstree.min.js"></script>
 
 <script src="/javascript/system/role.js"></script>
 

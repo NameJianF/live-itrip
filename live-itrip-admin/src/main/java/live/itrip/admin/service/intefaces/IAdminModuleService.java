@@ -43,4 +43,6 @@ public interface IAdminModuleService {
      * @param request
      */
     void editModuleById(String decodeJson, HttpServletResponse response, HttpServletRequest request);
+
+    void modulePermissions(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 }

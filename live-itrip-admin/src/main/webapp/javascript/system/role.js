@@ -39,7 +39,8 @@ $(function () {
                 render: function (data, type, row) {
                     if (type === 'display') {
                         return '<button type="button" class="btn btn-link btn-xs" onclick="funEditGetRoleInfo(' + row.id + ')">编辑</button>' +
-                            '<button type="button" class="btn btn-link btn-xs" onclick="funDeleteRoleInfo(' + row.id + ')">删除</button>';
+                            '<button type="button" class="btn btn-link btn-xs" onclick="funDeleteRoleInfo(' + row.id + ')">删除</button>' +
+                            '<button type="button" class="btn btn-link btn-xs" onclick="funEditPermission(' + row.id + ')">权限</button>';
                     }
                     return data;
                 }
@@ -61,8 +62,41 @@ $(function () {
 
     });
 
+    //树
+    $('#permissionTree').jstree({
+            'core': {
+                'data': modulePermissions
+            },
+            "checkbox": {
+                "keep_selected_style": false
+            },
+            "plugins": ["checkbox"]
+        }
+    );
+
 });
 
+
+function modulePermissions(obj, cb) {
+    var jsondata = {
+        'token': parent.token
+    };
+
+    parent.execAjaxData("/sysCfg.action?flag=modulePermissions", JSON.stringify(jsondata), false
+        , function (response) {
+            // error
+        }, function (response) {
+            // success
+            if (response.code == 0) {
+                console.log(response.data);
+                cb.call(this, response.data);
+            } else {
+            }
+        }, function () {
+            // complete
+        });
+
+}
 
 function funSelectRoles(sSource, aoData, fnCallback) {
     console.log("========== selectRoles ==========");
@@ -190,3 +224,14 @@ function funClickAddRow() {
     $('#formEditRole').modal('show');
 }
 
+function funEditPermission(roleId) {
+    $('#formEditPermission').modal('show');
+
+    var selectedElms = $('#permissionTree').jstree("get_selected", true);
+
+    console.log(selectedElms);
+}
+
+function editSavePermission() {
+
+}

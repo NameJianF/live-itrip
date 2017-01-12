@@ -22,4 +22,7 @@ public interface AdminOperationMapper {
     Integer countAll();
 
     List<AdminOperation> selectOperations(@Param("start") Integer start, @Param("length") Integer length);
+
+    List<AdminOperation> selectAllOperations();
+
 }

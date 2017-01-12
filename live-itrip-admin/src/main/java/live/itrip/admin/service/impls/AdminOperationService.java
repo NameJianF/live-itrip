@@ -26,6 +26,12 @@ public class AdminOperationService extends BaseService implements IAdminOperatio
     @Autowired
     private AdminOperationMapper adminOperationMapper;
 
+    @Autowired
+    public List<AdminOperation> selectAllOperations() {
+        return adminOperationMapper.selectAllOperations();
+    }
+
+
     @Override
     public void selectOperations(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         BootStrapDataTableList<AdminOperation> result = new BootStrapDataTableList<>();

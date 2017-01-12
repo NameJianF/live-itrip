@@ -100,4 +100,10 @@
         <include refid="Base_Column_List"/>
         from admin_operation limit ${start},${length}
     </select>
+
+    <select id="selectAllOperations" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from admin_operation
+    </select>
 </mapper>
