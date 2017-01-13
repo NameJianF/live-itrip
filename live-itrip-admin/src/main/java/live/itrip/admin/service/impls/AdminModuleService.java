@@ -230,7 +230,7 @@ public class AdminModuleService extends BaseService implements IAdminModuleServi
                         JSONArray arrayOP = new JSONArray();
                         for (AdminOperation operation : operationList) {
                             JSONObject objectOP = new JSONObject();
-                            objectOP.put("id", module.getId() + "_" + m.getId() + "_" + operation.getId());
+                            objectOP.put("id", module.getId() + "_" + m.getId() + "_" + operation.getOpName());
                             objectOP.put("text", operation.getOpText());
                             objectOP.put("icon", "glyphicon glyphicon-flash");
 

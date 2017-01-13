@@ -96,6 +96,7 @@
                 <h4 class="modal-title">权限编辑</h4>
             </div>
             <div class="modal-body">
+                <input id="editPermissionRoleId" type="hidden">
                 <div id="permissionTree"></div>
             </div>
             <div class="modal-footer">

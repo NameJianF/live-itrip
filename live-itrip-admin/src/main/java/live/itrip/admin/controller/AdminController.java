@@ -54,6 +54,8 @@ public class AdminController extends AbstractController {
     private IWebFaqService iWebFaqService;
     @Autowired
     private IWebCityInfoService webCityInfoService;
+    @Autowired
+    private IAdminRolePermissionService iAdminRolePermissionService;
 
     // =================== system config ==============
 
@@ -180,6 +182,12 @@ public class AdminController extends AbstractController {
                         iAdminUserService.deleteAdminUserById(decodeJson, response, request);
                     } else if ("member.edit".equalsIgnoreCase(op)) {
                         iAdminUserService.editAdminUserById(decodeJson, response, request);
+                    }
+                    // RolePermission
+                    else if ("rolePermission.detail".equalsIgnoreCase(op)) {
+                        iAdminRolePermissionService.selectPermissionsByRoleId(decodeJson, response, request);
+                    }else if ("rolePermission.edit".equalsIgnoreCase(op)) {
+                        iAdminRolePermissionService.modifyPermissionsByRoleId(decodeJson, response, request);
                     }
                 }
             } catch (Exception ex) {

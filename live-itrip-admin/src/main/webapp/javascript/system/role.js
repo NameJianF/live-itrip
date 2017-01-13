@@ -225,13 +225,72 @@ function funClickAddRow() {
 }
 
 function funEditPermission(roleId) {
-    $('#formEditPermission').modal('show');
+    $('#editPermissionRoleId').val(roleId);
+    $('#permissionTree').jstree("uncheck_all");
+    var jsondata = {
+        'op': 'rolePermission.detail',
+        'token': parent.token,
+        'roleId': roleId
+    };
 
-    var selectedElms = $('#permissionTree').jstree("get_selected", true);
+    parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
+        , function (response) {
+            // error
+        }, function (response) {
+            // success
+            if (response.code == 0) {
+                // set checkbox checked
+                var jsonarray = eval(response.data);
+                for (var i = 0; i < jsonarray.length; i++) {
+                    var moduleid = jsonarray[i].moduleId;
+                    var parentid = jsonarray[i].parentId;
+                    var operations = jsonarray[i].operation.split(";");
+                    for (var j = 0; j < operations.length; j++) {
+                        var op = operations[j];
+                        $('#permissionTree').jstree("check_node", parentid + '_' + moduleid + '_' + op);
+                    }
+                }
+                $('#formEditPermission').modal('show');
+            } else {
+            }
+        }, function () {
+            // complete
+        });
 
-    console.log(selectedElms);
+
 }
 
 function editSavePermission() {
+    var checkedElms = $('#permissionTree').jstree("get_bottom_checked", true);
+    console.log(checkedElms);
+
+    var elms = new Array();
+    for (var i = 0; i < checkedElms.length; i++) {
+        var item = {'id': checkedElms[i].id};
+        elms.push(item);
+    }
+
+    var roleId = $('#editPermissionRoleId').val();
+
+    var jsondata = {
+        'op': 'rolePermission.edit',
+        'token': parent.token,
+        'roleId': roleId,
+        'checkedElms': elms
+    };
+
+    parent.execAjaxData("/sysCfg.action", JSON.stringify(jsondata), true
+        , function (response) {
+            // error
+        }, function (response) {
+            // success
+            if (response.code == 0) {
+                $('#formEditPermission').modal('hide');
+
+            } else {
+            }
+        }, function () {
+            // complete
+        });
 
 }

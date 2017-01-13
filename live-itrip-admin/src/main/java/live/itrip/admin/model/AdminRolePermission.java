@@ -1,13 +1,11 @@
 package live.itrip.admin.model;
 
-import java.io.Serializable;
+public class AdminRolePermission {
+    private Integer id;
 
-public class AdminRolePermission implements Serializable {
-    private Long id;
+    private Integer roleId;
 
-    private Long roleId;
-
-    private Long moduleId;
+    private Integer moduleId;
 
     private String operation;
 
@@ -15,27 +13,27 @@ public class AdminRolePermission implements Serializable {
 
     private Long updateTime;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getRoleId() {
+    public Integer getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(Long roleId) {
+    public void setRoleId(Integer roleId) {
         this.roleId = roleId;
     }
 
-    public Long getModuleId() {
+    public Integer getModuleId() {
         return moduleId;
     }
 
-    public void setModuleId(Long moduleId) {
+    public void setModuleId(Integer moduleId) {
         this.moduleId = moduleId;
     }
 
