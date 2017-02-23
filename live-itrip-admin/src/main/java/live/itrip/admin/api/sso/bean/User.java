@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Feng on 2016/7/15.
  */
-class User implements Serializable {
+public class User implements Serializable {
     private Long id;
 
     private String userName;

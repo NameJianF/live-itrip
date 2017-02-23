@@ -9,6 +9,7 @@ import live.itrip.common.request.RequestHeader;
 import live.itrip.common.response.BaseResult;
 import live.itrip.common.util.JsonStringUtils;
 import live.itrip.sso.common.SsoOprations;
+import live.itrip.sso.rpc.service.RpcSsoService;
 import live.itrip.sso.service.interfaces.ISsoService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class SsoController extends AbstractController {
 
     @Autowired
     private ISsoService iSsoService;
+
 
     /**
      * sso 用户相关操作

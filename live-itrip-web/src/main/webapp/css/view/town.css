@@ -1,0 +1,16 @@
+.townbg {
+    margin-top: 65px;
+    margin-bottom: 15px;
+    height: 180px;
+    text-align: center;
+}
+
+.towncenter {
+    margin: 20px;
+}
+
+.product-box-padding {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 5px;
+}

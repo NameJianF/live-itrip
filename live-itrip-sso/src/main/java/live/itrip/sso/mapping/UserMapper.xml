@@ -5,6 +5,7 @@
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
         <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="img" property="img" jdbcType="VARCHAR"/>
         <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="CHAR"/>
         <result column="salt" property="salt" jdbcType="VARCHAR"/>
@@ -21,7 +22,7 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
     </resultMap>
     <sql id="Base_Column_List">
-        id, user_name, email, mobile, password, salt, uid_qq, uid_weibo, uid_weixin, uid_ali,
+        id, user_name, email,img, mobile, password, salt, uid_qq, uid_weibo, uid_weixin, uid_ali,
         source, subsource, level, status, identity, create_time, update_time
     </sql>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
@@ -35,13 +36,13 @@
         where id = #{id,jdbcType=BIGINT}
     </delete>
     <insert id="insert" parameterType="live.itrip.sso.model.User" useGeneratedKeys="true" keyProperty="id">
-        insert into user (id, user_name, email,
+        insert into user (id, user_name, email,img,
         mobile, password, salt,
         uid_qq, uid_weibo, uid_weixin,
         uid_ali, source, subsource,
         level, status, identity, create_time,
         update_time)
-        values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+        values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},#{img,jdbcType=VARCHAR},
         #{mobile,jdbcType=VARCHAR}, #{password,jdbcType=CHAR}, #{salt,jdbcType=VARCHAR},
         #{uidQq,jdbcType=VARCHAR}, #{uidWeibo,jdbcType=VARCHAR}, #{uidWeixin,jdbcType=VARCHAR},
         #{uidAli,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, #{subsource,jdbcType=VARCHAR},
@@ -59,6 +60,9 @@
             </if>
             <if test="email != null">
                 email,
+            </if>
+            <if test="img != null">
+                img,
             </if>
             <if test="mobile != null">
                 mobile,
@@ -113,6 +117,9 @@
             <if test="email != null">
                 #{email,jdbcType=VARCHAR},
             </if>
+            <if test="img != null">
+                #{img,jdbcType=VARCHAR},
+            </if>
             <if test="mobile != null">
                 #{mobile,jdbcType=VARCHAR},
             </if>
@@ -166,6 +173,9 @@
             <if test="email != null">
                 email = #{email,jdbcType=VARCHAR},
             </if>
+            <if test="img != null">
+                img = #{img,jdbcType=VARCHAR},
+            </if>
             <if test="mobile != null">
                 mobile = #{mobile,jdbcType=VARCHAR},
             </if>
@@ -215,6 +225,7 @@
     update user
     set user_name = #{userName,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
+      img = #{img,jdbcType=VARCHAR},
       mobile = #{mobile,jdbcType=VARCHAR},
       password = #{password,jdbcType=CHAR},
       salt = #{salt,jdbcType=VARCHAR},

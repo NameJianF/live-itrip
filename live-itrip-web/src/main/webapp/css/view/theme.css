@@ -1,0 +1,30 @@
+.themebg {
+    /*background-image: url('/images/web/theme/theme_bg.jpg');*/
+    /*background-position: 50% 50%;*/
+    /*background-repeat: no-repeat;*/
+    margin-top: 65px;
+    margin-bottom: 15px;
+    /*background-color: rgb(216, 232, 255);*/
+    height: 80px;
+    text-align: center;
+}
+
+.themeplan {
+    margin: 20px;
+}
+
+.themeplan-text {
+    font-size: 14px;
+}
+
+.themeplan-price {
+    color: red;
+    font-size: 20px;
+}
+
+.contact {
+    background-image: url(/img/landing/word_map.png);
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    margin-top: 60px;
+}

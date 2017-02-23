@@ -44,6 +44,26 @@
                         iTrip
                     </div>
                 </li>
+
+
+                <li class="active"><a data-id="1"><i class="fa fa-th-large"></i><span class="nav-label">系统设置</span><span
+                        class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse in">
+                        <%--<li><a class="menuItem" data-id="3" href="module.action" data-index="100"><i--%>
+                                <%--class="fa fa-diamond"></i>模块设置</a>--%>
+                        <%--</li>--%>
+                        <%--<li><a class="menuItem" data-id="5" href="dict.action" data-index="102"><i--%>
+                                <%--class="fa fa-diamond"></i>字典设置</a>--%>
+                        <%--</li>--%>
+                        <%--<li><a class="menuItem" data-id="6" href="dictItem.action" data-index="103"><i--%>
+                                <%--class="fa fa-diamond"></i>字典子项</a></li>--%>
+                        <%--<li><a class="menuItem" data-id="7" href="operation.action" data-index="104"><i--%>
+                                <%--class="fa fa-diamond"></i>操作设置</a></li>--%>
+                        <li><a class="menuItem" data-id="10" href="apikey.action" data-index="107"><i
+                                class="fa fa-diamond"></i>ApiKey</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </nav>
@@ -752,7 +772,7 @@
     });
 
     // 加载模块信息
-    loadModules();
+    //    loadModules();
 </script>
 
 <div id="loadingPage" style="display: none;">

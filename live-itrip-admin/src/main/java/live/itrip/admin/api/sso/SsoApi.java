@@ -1,16 +1,22 @@
 package live.itrip.admin.api.sso;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import live.itrip.admin.api.AbstractApi;
 import live.itrip.admin.api.sso.bean.LoginRequest;
 import live.itrip.admin.api.sso.bean.LoginResponse;
 import live.itrip.admin.common.Constants;
+import live.itrip.sso.rpc.service.RpcSsoService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created by Feng on 2016/7/14.
  */
 public class SsoApi extends AbstractApi {
     private static final String USER_ACTION = "sso.action";
+
+    @Reference
+    private RpcSsoService ssoService;
 
     /**
      * 用户登录
@@ -27,6 +33,7 @@ public class SsoApi extends AbstractApi {
         data.setPassword(password);
         data.setSource(Constants.NORMAL);
         loginRequest.setData(data);
+
 
         String res = postJsonString(loginRequest, USER_ACTION);
         return JSON.parseObject(res, LoginResponse.class);

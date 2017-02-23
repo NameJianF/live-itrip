@@ -15,8 +15,15 @@
         <module>live-itrip-sso</module>
         <module>live-itrip-web</module>
         <module>live-itrip-wechat</module>
-        <module>live-itrip-shiro</module>
+        <!--<module>live-itrip-shiro</module>-->
         <module>live-itrip-email</module>
+        <module>live-itrip-file</module>
+        <module>live-itrip-sso</module>
+        <module>live-itrip-sso</module>
+        <module>live-itrip-sso</module>
+        <module>sso-rpc</module>
+        <module>live-itrip-sso-rpc</module>
+        <module>live-itrip-admin-rpc</module>
     </modules>
     <url>http://maven.apache.org</url>
     <build>
@@ -333,6 +340,28 @@
             <version>2.8.1</version>
         </dependency>
 
-
+        <!--dubbo-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>2.5.3</version>
+            <!--去除引入的spring-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.sgroschupf</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>0.1</version>
+        </dependency>
     </dependencies>
 </project>

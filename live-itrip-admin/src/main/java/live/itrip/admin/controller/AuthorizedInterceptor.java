@@ -1,13 +1,13 @@
 package live.itrip.admin.controller;
 
-import live.itrip.admin.model.AdminUser;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
+import live.itrip.admin.common.Constants;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import live.itrip.admin.api.sso.bean.User;
 
 
 /**
@@ -19,32 +19,21 @@ public class AuthorizedInterceptor implements HandlerInterceptor {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         String action = request.getServletPath();
-        Subject currentSubject = SecurityUtils.getSubject();
-        if (currentSubject != null) {
 
-            AdminUser user = (AdminUser) currentSubject.getPrincipal();
-            if (user == null) {
+        User user = (User) request.getSession().getAttribute(Constants.SESSION_USER);
+        if (user == null) {
 
-                // 不检测登录用户的 action
-                if (action.equals("/apikeys.action")
-                        || action.equals("/system/login.action")
-                        || action.equals("/user.action")
-                        || action.startsWith("/index.action")
-                        || action.startsWith("/login.action")) {
-                    return true;
-                } else if (action.startsWith("/view/")) {
-                    return true;
-                }
-
-//                PrintWriter out;
-//                out = response.getWriter();
-//                out.print("<script>parent.window.location.href='/system/login.action'</script>");
-//                out.flush();
-//                out.close();
-                response.sendRedirect("/system/login.action");
-                return false;
+            // 不检测登录用户的 action
+            if (action.equals("/apikeys.action")
+                    || action.equals("/system/login.action")
+                    || action.equals("/user.action")) {
+                return true;
             }
+
+            response.sendRedirect("/system/login.action");
+            return false;
         }
+
         return true;
     }
 

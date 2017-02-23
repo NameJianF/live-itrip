@@ -10,7 +10,6 @@ import live.itrip.sso.bean.AuthUserRequest;
 import live.itrip.sso.bean.LoginRequest;
 import live.itrip.sso.bean.LogoutRequest;
 import live.itrip.sso.common.Constants;
-import live.itrip.sso.common.exception.ApiException;
 import live.itrip.sso.dao.UserMapper;
 import live.itrip.sso.dao.UserOnlineMapper;
 import live.itrip.sso.dao.UserTokenMapper;
@@ -48,72 +47,16 @@ public class SsoService extends BaseService implements ISsoService {
      * @param request
      */
     @Override
-    public void login(String decodeJson, HttpServletResponse response, HttpServletRequest request) throws ApiException {
-        BaseResult result = new BaseResult();
+    public void login(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
+        BaseResult result = null;
 
         try {
             LoginRequest loginRequest = JSON.parseObject(decodeJson, LoginRequest.class);
-            result.setOp(loginRequest.getOp());
-
             if (Constants.NORMAL.equals(loginRequest.getData().getSource())) {
                 // 正常登录： email/mobile/username
-                User user = null;
-                try {
-                    user = this.userMapper.selectByUserName(loginRequest.getData().getEmail());
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                if (user == null) {
-                    // 该用户不存在
-                    result.setCode(ErrorCode.USERNAME_PWD_INVALID.getCode());
-                    result.setMsg(ErrorCode.USERNAME_PWD_INVALID.getMessage());
-                } else {
-                    if (user.getStatus() == null || user.getStatus().equals("0")) {
-                        // 新用户，未验证
-                        result.setCode(ErrorCode.USER_AUTH_INVALID.getCode());
-                        result.setMsg(ErrorCode.USER_AUTH_INVALID.getMessage());
-                    } else if (user.getStatus().equals("1")) {
-                        // 正常用户
-                        // 验证密码
-                        String password = Md5Utils.getStringMD5(user.getSalt() + loginRequest.getData().getPassword());
+                result = this.login(loginRequest.getData().getEmail(), loginRequest.getData().getPassword(), loginRequest.getApikey(), loginRequest.getData().getSource(), request.getRemoteHost(), loginRequest.getData().getClientVersion());
+                result.setOp(loginRequest.getOp());
 
-                        if (password.equals(user.getPassword())) {
-                            // 生成并保存token
-                            UserToken token = generateUserToken(user, loginRequest, request);
-
-                            // insert into online table
-                            insertIntoOnlineTable(user);
-
-                            // 密码正确，保存 session信息
-                            request.getSession().setAttribute(Constants.SESSION_USER, user);
-                            result.setCode(ErrorCode.SUCCESS.getCode());
-
-                            // 处理用户返回信息
-                            user.setPassword(null);
-                            user.setSalt(null);
-                            user.setUpdateTime(null);
-                            user.setToken(token.getAuthToken());
-
-                            // 设置用户信息
-                            result.setData(user);
-
-                            result.setCode(ErrorCode.SUCCESS.getCode());
-                            this.writeResponse(response, result);
-                            return;
-                        } else {
-                            // 密码错误
-                            result.setCode(ErrorCode.USERNAME_PWD_INVALID.getCode());
-                            result.setMsg(ErrorCode.USERNAME_PWD_INVALID.getMessage());
-                        }
-
-                        result.setCode(ErrorCode.UNKNOWN.getCode());
-
-                    } else if (user.getStatus().equals("2")) {
-                        // 该用户无效
-                        result.setCode(ErrorCode.USER_INVALID.getCode());
-                        result.setMsg(ErrorCode.USER_INVALID.getMessage());
-                    }
-                }
             } else if (Constants.WEICHAT.equals(loginRequest.getData().getSource())) {
                 // 微信
             }
@@ -126,6 +69,78 @@ public class SsoService extends BaseService implements ISsoService {
         this.writeResponse(response, result);
     }
 
+
+    @Override
+    public BaseResult login(String email, String pwd, String apikey, String source, String host, String clientVersion) {
+        BaseResult result = new BaseResult();
+
+        try {
+            User user = null;
+            try {
+                user = this.userMapper.selectByUserName(email);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            if (user == null) {
+                // 该用户不存在
+                result.setCode(ErrorCode.USERNAME_PWD_INVALID.getCode());
+                result.setMsg(ErrorCode.USERNAME_PWD_INVALID.getMessage());
+            } else {
+                if (user.getStatus() == null || user.getStatus().equals("0")) {
+                    // 新用户，未验证
+                    result.setCode(ErrorCode.USER_AUTH_INVALID.getCode());
+                    result.setMsg(ErrorCode.USER_AUTH_INVALID.getMessage());
+                } else if (user.getStatus().equals("1")) {
+                    // 正常用户
+                    // 验证密码
+                    String password = Md5Utils.getStringMD5(user.getSalt() + pwd);
+
+                    if (password.equals(user.getPassword())) {
+                        // 生成并保存token
+                        UserToken token = generateUserToken(user, apikey, source, host, clientVersion);
+
+                        // insert into online table
+                        insertIntoOnlineTable(user);
+
+                        // 密码正确，保存 session信息
+//                            request.getSession().setAttribute(Constants.SESSION_USER, user);
+                        result.setCode(ErrorCode.SUCCESS.getCode());
+
+                        // 处理用户返回信息
+                        user.setPassword(null);
+                        user.setSalt(null);
+                        user.setUpdateTime(null);
+                        user.setToken(token.getAuthToken());
+
+                        // 设置用户信息
+                        result.setData(user);
+
+                        result.setCode(ErrorCode.SUCCESS.getCode());
+//                            this.writeResponse(response, result);
+                        return result;
+                    } else {
+                        // 密码错误
+                        result.setCode(ErrorCode.USERNAME_PWD_INVALID.getCode());
+                        result.setMsg(ErrorCode.USERNAME_PWD_INVALID.getMessage());
+                    }
+
+                    result.setCode(ErrorCode.UNKNOWN.getCode());
+
+                } else if (user.getStatus().equals("2")) {
+                    // 该用户无效
+                    result.setCode(ErrorCode.USER_INVALID.getCode());
+                    result.setMsg(ErrorCode.USER_INVALID.getMessage());
+                }
+            }
+
+
+        } catch (Exception e) {
+            Logger.error(e.getMessage(), e);
+        }
+        return result;
+    }
+
+
     /**
      * 用户退出
      *
@@ -134,7 +149,7 @@ public class SsoService extends BaseService implements ISsoService {
      * @param request
      */
     @Override
-    public void logout(String decodeJson, HttpServletResponse response, HttpServletRequest request) throws ApiException {
+    public void logout(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         try {
             LogoutRequest logoutRequest = JSON.parseObject(decodeJson, LogoutRequest.class);
             BaseResult result = new BaseResult();
@@ -148,7 +163,8 @@ public class SsoService extends BaseService implements ISsoService {
             }
             this.writeResponse(response, result);
         } catch (Exception e) {
-            throw new ApiException(e.getMessage(), e, true);
+//            throw new ApiException(e.getMessage(), e, true);
+            e.printStackTrace();
         }
     }
 
@@ -160,7 +176,7 @@ public class SsoService extends BaseService implements ISsoService {
      * @param request
      */
     @Override
-    public void authUser(String decodeJson, HttpServletResponse response, HttpServletRequest request) throws ApiException {
+    public void authUser(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         try {
             AuthUserRequest authUserRequest = JSON.parseObject(decodeJson, AuthUserRequest.class);
             BaseResult authUserResponse = new BaseResult();
@@ -188,7 +204,8 @@ public class SsoService extends BaseService implements ISsoService {
 
             this.writeResponse(response, authUserResponse);
         } catch (Exception e) {
-            throw new ApiException(e.getMessage(), e, true);
+//            throw new ApiException(e.getMessage(), e, true);
+            e.printStackTrace();
         }
     }
 
@@ -198,15 +215,15 @@ public class SsoService extends BaseService implements ISsoService {
      * @return
      */
 
-    private UserToken generateUserToken(User user, LoginRequest loginRequest, HttpServletRequest request) {
+    private UserToken generateUserToken(User user, String apikey, String source, String host, String clientVersion) {
         UserToken token = new UserToken();
         token.setAuthToken(UuidUtils.getUuidLowerCase(false));
         token.setUserEmail(user.getEmail());
         token.setUserId(user.getId());
-        token.setApiKey(loginRequest.getApikey());
-        token.setSource(loginRequest.getData().getSource());
-        token.setDomain(request.getRemoteHost());
-        token.setClientVersion(loginRequest.getData().getClientVersion());
+        token.setApiKey(apikey);
+        token.setSource(source);
+        token.setDomain(host);
+        token.setClientVersion(clientVersion);
         long time = System.currentTimeMillis();
         token.setExpireTime(time + Constants.TOKEN_EXPIRE_TIME);  //
         token.setCreateTime(time);

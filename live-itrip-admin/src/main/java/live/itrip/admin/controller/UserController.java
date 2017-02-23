@@ -62,35 +62,5 @@ public class UserController extends AbstractController {
         }
     }
 
-    /**
-     * @param response
-     * @param request
-     */
-    @RequestMapping("/userInfo")
-    public
-    @ResponseBody
-    void userInfo(@RequestBody String json, HttpServletResponse response, HttpServletRequest request) {
-        String decodeJson = JsonStringUtils.decoderForJsonString(json);
-        Logger.debug(
-                String.format("timestamp:%s action:%s json:%s",
-                        System.currentTimeMillis(), "user", decodeJson));
 
-        if (StringUtils.isEmpty(decodeJson)) {
-            this.paramInvalid(response, "JSON");
-            return;
-        }
-        try {
-            RequestHeader header = JSON.parseObject(decodeJson, RequestHeader.class);
-            // dispatch op
-            if (header != null && StringUtils.isNotEmpty(header.getOp())) {
-                String op = header.getOp();
-                if ("module.select".equalsIgnoreCase(op)) {
-                    // 根据用户查询模块信息
-                    iUserService.selectModulesByUser(decodeJson, response, request);
-                }
-            }
-        } catch (Exception ex) {
-            Logger.error("", ex);
-        }
-    }
 }

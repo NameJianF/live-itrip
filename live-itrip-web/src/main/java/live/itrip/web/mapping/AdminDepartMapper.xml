@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="live.itrip.web.dao.AdminDepartMapper">
+    <resultMap id="BaseResultMap" type="live.itrip.web.model.AdminDepart">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="depart_name" property="departName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="BIGINT"/>
+        <result column="update_time" property="updateTime" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, depart_name, create_time, update_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from admin_depart
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from admin_depart
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="live.itrip.web.model.AdminDepart">
+    insert into admin_depart (id, depart_name, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{departName,jdbcType=VARCHAR}, #{createTime,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=BIGINT})
+  </insert>
+    <insert id="insertSelective" parameterType="live.itrip.web.model.AdminDepart">
+        insert into admin_depart
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="departName != null">
+                depart_name,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="departName != null">
+                #{departName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="live.itrip.web.model.AdminDepart">
+        update admin_depart
+        <set>
+            <if test="departName != null">
+                depart_name = #{departName,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=BIGINT},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="live.itrip.web.model.AdminDepart">
+    update admin_depart
+    set depart_name = #{departName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <!--自定义查询-->
+    <select id="countAll" resultType="int">
+        select count(id) from admin_depart
+    </select>
+    <select id="selectDeparts" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from admin_depart
+        WHERE TRUE
+        <if test="queryContent != null and queryContent != '' ">
+           AND depart_name LIKE ${queryContent}
+        </if>
+        limit ${start},${length}
+    </select>
+</mapper>

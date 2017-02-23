@@ -90,7 +90,7 @@ public class ClientApiKeyService extends BaseService implements IClientApiKeySer
 
     @Override
     public void selectApikeys(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
-        BootStrapDataTableList<ClientApiKey> result = new BootStrapDataTableList<>();
+        BootStrapDataTableList<ClientApiKey> result = new BootStrapDataTableList<ClientApiKey>();
         try {
             // 解析查询条件
             JSONArray jsonarray = JSONArray.parseArray(decodeJson);

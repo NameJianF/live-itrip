@@ -1,16 +1,14 @@
 package live.itrip.sso.service.interfaces;
 
-
-import live.itrip.sso.common.exception.ApiException;
+import live.itrip.common.response.BaseResult;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by Feng on 2016/3/8.
+ * Created by Feng on 2017/2/21.
  */
 public interface ISsoService {
-
     /**
      * login
      *
@@ -19,7 +17,9 @@ public interface ISsoService {
      * @param request
      */
     void login(String decodeJson, HttpServletResponse response,
-               HttpServletRequest request) throws ApiException, ApiException;
+               HttpServletRequest request);
+
+    BaseResult login(String email, String pwd, String apikey, String source, String host, String clientVersion);
 
     /**
      * logout
@@ -29,7 +29,7 @@ public interface ISsoService {
      * @param request
      */
     void logout(String decodeJson, HttpServletResponse response,
-                HttpServletRequest request) throws ApiException;
+                HttpServletRequest request);
 
     /**
      * 用户鉴权
@@ -38,5 +38,5 @@ public interface ISsoService {
      * @param response
      * @param request
      */
-    void authUser(String decodeJson, HttpServletResponse response, HttpServletRequest request) throws ApiException;
+    void authUser(String decodeJson, HttpServletResponse response, HttpServletRequest request);
 }

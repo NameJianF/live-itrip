@@ -22,6 +22,8 @@ public class User {
 
     private String email;
 
+    private String img; //头像url
+
     private String mobile;
 
     private String password;
@@ -74,6 +76,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email == null ? null : email.trim();
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public String getMobile() {

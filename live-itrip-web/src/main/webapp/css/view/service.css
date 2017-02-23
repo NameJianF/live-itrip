@@ -1,0 +1,16 @@
+.service {
+    background-image: url('/images/web/service/service_bg.jpg');
+    margin-top: 65px;
+    margin-bottom: -60px;
+    height: 500px;
+}
+
+.cright {
+    background: rgba(10, 10, 10, 0.41);
+    padding: 20px 50px 50px 50px;
+    margin-top: 50px;
+}
+
+.cleft {
+    background: rgba(10, 10, 10, 0.41);
+}

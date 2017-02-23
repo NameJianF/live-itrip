@@ -45,7 +45,7 @@ public class UserService extends BaseService implements IUserService {
      * @param request
      */
     @Override
-    public void register(String decodeJson, HttpServletResponse response, HttpServletRequest request) throws ApiException {
+    public void register(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         try {
             UserRegisterRequest userRegisterRequest = JSON.parseObject(decodeJson, UserRegisterRequest.class);
             BaseResult userRegisterResponse = new BaseResult();
@@ -73,8 +73,10 @@ public class UserService extends BaseService implements IUserService {
 
             this.writeResponse(response, userRegisterResponse);
         } catch (Exception ex) {
-            throw new ApiException(ex.getMessage(), ex, true);
+//            throw new ApiException(ex.getMessage(), ex, true);
+            ex.printStackTrace();
         }
+
     }
 
     /**
@@ -85,7 +87,7 @@ public class UserService extends BaseService implements IUserService {
      * @param request
      */
     @Override
-    public void updatePassword(String decodeJson, HttpServletResponse response, HttpServletRequest request) throws ApiException {
+    public void updatePassword(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         try {
             UserUpdatePwdRequest userUpdatePwdRequest = JSON.parseObject(decodeJson, UserUpdatePwdRequest.class);
             BaseResult userUpdatePwdResponse = new BaseResult();
@@ -132,7 +134,8 @@ public class UserService extends BaseService implements IUserService {
             }
             this.writeResponse(response, userUpdatePwdResponse);
         } catch (Exception ex) {
-            throw new ApiException(ex.getMessage(), ex, true);
+//            throw new ApiException(ex.getMessage(), ex, true);
+            ex.printStackTrace();
         }
     }
 
@@ -144,7 +147,7 @@ public class UserService extends BaseService implements IUserService {
      * @param request
      */
     @Override
-    public void updateUserInfo(String decodeJson, HttpServletResponse response, HttpServletRequest request) throws ApiException {
+    public void updateUserInfo(String decodeJson, HttpServletResponse response, HttpServletRequest request) {
         try {
             UserUpdateRequest userUpdateRequest = JSON.parseObject(decodeJson, UserUpdateRequest.class);
             BaseResult userUpdateResponse = new BaseResult();
@@ -178,7 +181,8 @@ public class UserService extends BaseService implements IUserService {
 
             this.writeResponse(response, userUpdateResponse);
         } catch (Exception ex) {
-            throw new ApiException(ex.getMessage(), ex, true);
+//            throw new ApiException(ex.getMessage(), ex, true);
+            ex.printStackTrace();
         }
     }
 
@@ -190,7 +194,7 @@ public class UserService extends BaseService implements IUserService {
      */
     @Override
     public void retrievePassword(String decodeJson, HttpServletResponse response,
-                                 HttpServletRequest request) throws ApiException {
+                                 HttpServletRequest request) {
         try {
             RetrievePwdRequest retrievePwdRequest = JSON.parseObject(decodeJson, RetrievePwdRequest.class);
             BaseResult retrievePwdResponse = new BaseResult();
@@ -241,7 +245,8 @@ public class UserService extends BaseService implements IUserService {
             retrievePwdResponse.setCode(ErrorCode.UNKNOWN.getCode());
             this.writeResponse(response, retrievePwdResponse);
         } catch (Exception ex) {
-            throw new ApiException(ex.getMessage(), ex, true);
+//            throw new ApiException(ex.getMessage(), ex, true);
+            ex.printStackTrace();
         }
     }
 }

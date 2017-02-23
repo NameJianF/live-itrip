@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!-- 具体的实现bean -->
+    <bean id="rpcSsoService" class="live.itrip.sso.service.rpc.RpcSsoServiceImpls" />
+    <dubbo:application name="provider-sso"/>
+    <dubbo:registry protocol="zookeeper" address="zookeeper://192.168.17.128:2181"/>
+    <dubbo:protocol name="dubbo" port="29014"/>
+
+    <dubbo:service interface="live.itrip.sso.rpc.service.RpcSsoService" ref="rpcSsoService" timeout="100000"/>
+    <!--<dubbo:service interface="live.itrip.sso.rpc.service.RpcUserService" ref="rpcUserService" timeout="100000"/>-->
+</beans>
