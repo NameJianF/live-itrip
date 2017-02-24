@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="live.itrip.email.dao.SendEmailMapper" >
+  <resultMap id="BaseResultMap" type="live.itrip.email.model.SendEmail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="server_host" property="serverHost" jdbcType="VARCHAR" />
+    <result column="server_port" property="serverPort" jdbcType="VARCHAR" />
+    <result column="from_address" property="fromAddress" jdbcType="VARCHAR" />
+    <result column="to_address" property="toAddress" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="validate" property="validate" jdbcType="CHAR" />
+    <result column="subject" property="subject" jdbcType="VARCHAR" />
+    <result column="attach_file_name" property="attachFileName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="BIGINT" />
+    <result column="update_time" property="updateTime" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="live.itrip.email.model.SendEmail" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, server_host, server_port, from_address, to_address, user_name, validate, subject, 
+    attach_file_name, status, create_time, update_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from send_email
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from send_email
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="live.itrip.email.model.SendEmail" >
+    insert into send_email (id, server_host, server_port, 
+      from_address, to_address, user_name, 
+      validate, subject, attach_file_name, 
+      status, create_time, update_time, 
+      content)
+    values (#{id,jdbcType=BIGINT}, #{serverHost,jdbcType=VARCHAR}, #{serverPort,jdbcType=VARCHAR}, 
+      #{fromAddress,jdbcType=VARCHAR}, #{toAddress,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{validate,jdbcType=CHAR}, #{subject,jdbcType=VARCHAR}, #{attachFileName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="live.itrip.email.model.SendEmail" >
+    insert into send_email
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="serverHost != null" >
+        server_host,
+      </if>
+      <if test="serverPort != null" >
+        server_port,
+      </if>
+      <if test="fromAddress != null" >
+        from_address,
+      </if>
+      <if test="toAddress != null" >
+        to_address,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="validate != null" >
+        validate,
+      </if>
+      <if test="subject != null" >
+        subject,
+      </if>
+      <if test="attachFileName != null" >
+        attach_file_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="serverHost != null" >
+        #{serverHost,jdbcType=VARCHAR},
+      </if>
+      <if test="serverPort != null" >
+        #{serverPort,jdbcType=VARCHAR},
+      </if>
+      <if test="fromAddress != null" >
+        #{fromAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="toAddress != null" >
+        #{toAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="validate != null" >
+        #{validate,jdbcType=CHAR},
+      </if>
+      <if test="subject != null" >
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="attachFileName != null" >
+        #{attachFileName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="live.itrip.email.model.SendEmail" >
+    update send_email
+    <set >
+      <if test="serverHost != null" >
+        server_host = #{serverHost,jdbcType=VARCHAR},
+      </if>
+      <if test="serverPort != null" >
+        server_port = #{serverPort,jdbcType=VARCHAR},
+      </if>
+      <if test="fromAddress != null" >
+        from_address = #{fromAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="toAddress != null" >
+        to_address = #{toAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="validate != null" >
+        validate = #{validate,jdbcType=CHAR},
+      </if>
+      <if test="subject != null" >
+        subject = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="attachFileName != null" >
+        attach_file_name = #{attachFileName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=BIGINT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="live.itrip.email.model.SendEmail" >
+    update send_email
+    set server_host = #{serverHost,jdbcType=VARCHAR},
+      server_port = #{serverPort,jdbcType=VARCHAR},
+      from_address = #{fromAddress,jdbcType=VARCHAR},
+      to_address = #{toAddress,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      validate = #{validate,jdbcType=CHAR},
+      subject = #{subject,jdbcType=VARCHAR},
+      attach_file_name = #{attachFileName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="live.itrip.email.model.SendEmail" >
+    update send_email
+    set server_host = #{serverHost,jdbcType=VARCHAR},
+      server_port = #{serverPort,jdbcType=VARCHAR},
+      from_address = #{fromAddress,jdbcType=VARCHAR},
+      to_address = #{toAddress,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      validate = #{validate,jdbcType=CHAR},
+      subject = #{subject,jdbcType=VARCHAR},
+      attach_file_name = #{attachFileName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=BIGINT},
+      update_time = #{updateTime,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
