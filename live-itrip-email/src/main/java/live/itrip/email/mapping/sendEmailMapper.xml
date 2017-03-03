@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="live.itrip.email.dao.SendEmailMapper" >
-  <resultMap id="BaseResultMap" type="live.itrip.email.model.SendEmail" >
+<mapper namespace="live.itrip.email.dao.sendEmailMapper" >
+  <resultMap id="BaseResultMap" type="live.itrip.email.model.sendEmail" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="server_host" property="serverHost" jdbcType="VARCHAR" />
     <result column="server_port" property="serverPort" jdbcType="VARCHAR" />
@@ -12,15 +12,16 @@
     <result column="subject" property="subject" jdbcType="VARCHAR" />
     <result column="attach_file_name" property="attachFileName" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="CHAR" />
+    <result column="send_times" property="sendTimes" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="BIGINT" />
     <result column="update_time" property="updateTime" jdbcType="BIGINT" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="live.itrip.email.model.SendEmail" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="live.itrip.email.model.sendEmail" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, server_host, server_port, from_address, to_address, user_name, validate, subject, 
-    attach_file_name, status, create_time, update_time
+    attach_file_name, status, send_times, create_time, update_time
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -37,19 +38,19 @@
     delete from send_email
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="live.itrip.email.model.SendEmail" >
+  <insert id="insert" parameterType="live.itrip.email.model.sendEmail" >
     insert into send_email (id, server_host, server_port, 
       from_address, to_address, user_name, 
       validate, subject, attach_file_name, 
-      status, create_time, update_time, 
-      content)
+      status, send_times, create_time, 
+      update_time, content)
     values (#{id,jdbcType=BIGINT}, #{serverHost,jdbcType=VARCHAR}, #{serverPort,jdbcType=VARCHAR}, 
       #{fromAddress,jdbcType=VARCHAR}, #{toAddress,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
       #{validate,jdbcType=CHAR}, #{subject,jdbcType=VARCHAR}, #{attachFileName,jdbcType=VARCHAR}, 
-      #{status,jdbcType=CHAR}, #{createTime,jdbcType=BIGINT}, #{updateTime,jdbcType=BIGINT}, 
-      #{content,jdbcType=LONGVARCHAR})
+      #{status,jdbcType=CHAR}, #{sendTimes,jdbcType=INTEGER}, #{createTime,jdbcType=BIGINT}, 
+      #{updateTime,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="live.itrip.email.model.SendEmail" >
+  <insert id="insertSelective" parameterType="live.itrip.email.model.sendEmail" >
     insert into send_email
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -81,6 +82,9 @@
       </if>
       <if test="status != null" >
         status,
+      </if>
+      <if test="sendTimes != null" >
+        send_times,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -123,6 +127,9 @@
       <if test="status != null" >
         #{status,jdbcType=CHAR},
       </if>
+      <if test="sendTimes != null" >
+        #{sendTimes,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=BIGINT},
       </if>
@@ -134,7 +141,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="live.itrip.email.model.SendEmail" >
+  <update id="updateByPrimaryKeySelective" parameterType="live.itrip.email.model.sendEmail" >
     update send_email
     <set >
       <if test="serverHost != null" >
@@ -164,6 +171,9 @@
       <if test="status != null" >
         status = #{status,jdbcType=CHAR},
       </if>
+      <if test="sendTimes != null" >
+        send_times = #{sendTimes,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=BIGINT},
       </if>
@@ -176,7 +186,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="live.itrip.email.model.SendEmail" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="live.itrip.email.model.sendEmail" >
     update send_email
     set server_host = #{serverHost,jdbcType=VARCHAR},
       server_port = #{serverPort,jdbcType=VARCHAR},
@@ -187,12 +197,13 @@
       subject = #{subject,jdbcType=VARCHAR},
       attach_file_name = #{attachFileName,jdbcType=VARCHAR},
       status = #{status,jdbcType=CHAR},
+      send_times = #{sendTimes,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="live.itrip.email.model.SendEmail" >
+  <update id="updateByPrimaryKey" parameterType="live.itrip.email.model.sendEmail" >
     update send_email
     set server_host = #{serverHost,jdbcType=VARCHAR},
       server_port = #{serverPort,jdbcType=VARCHAR},
@@ -203,6 +214,7 @@
       subject = #{subject,jdbcType=VARCHAR},
       attach_file_name = #{attachFileName,jdbcType=VARCHAR},
       status = #{status,jdbcType=CHAR},
+      send_times = #{sendTimes,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=BIGINT},
       update_time = #{updateTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
